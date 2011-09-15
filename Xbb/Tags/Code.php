@@ -30,8 +30,10 @@ class Xbb_Tags_Code extends bbcode {
     public $behaviour = 'pre';
     /* Альтернативные названия языков и их трансляция в обозначения GeSHi */
     public $lang_synonym = array(
+        'algol'  => 'algol86',
         'c++'    => 'cpp',
         'c#'     => 'csharp',
+        'f++'    => 'fsharp',
         'html'   => 'html4strict',
         'html4'  => 'html4strict',
         'js'     => 'javascript',
@@ -104,14 +106,14 @@ class Xbb_Tags_Code extends bbcode {
         $result = '<span class="bb_code_lang">'
             . $this->_geshi->get_language_name() . '</span>';
         if (isset($this->attrib['title'])) {
-            $result = htmlspecialchars($this->attrib['title']);
+            $result = htmlspecialchars($this->attrib['title'], ENT_NOQUOTES);
         }
         // Получаем подсвеченный код
         $result = '<div class="bb_code"><div class="bb_code_header">' .$result
             . '</div>' . $this->_geshi->parse_code();
         // Формируем подпись под кодом
         if (isset($this->attrib['footer'])) {
-            $content = htmlspecialchars($this->attrib['footer']);
+            $content = htmlspecialchars($this->attrib['footer'], ENT_NOQUOTES);
             $content = '<div class="bb_code_footer">' . $content . '</div>';
             $result .= $content;
         }
