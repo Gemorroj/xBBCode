@@ -36,9 +36,9 @@ header('Content-type: text/html; charset=utf-8');
 <![endif]-->
 </head>
 <body>
-<p align="center"><font color="#999999">
-<strong>..:.:: Предварительный просмотр ::.:..</strong>
-</font></p>
+<p align="center">
+<strong style="color: #999999;">..:.:: Предварительный просмотр ::.:..</strong>
+</p>
 <?php
 $text = (isset($_POST['xbb_textarea'])) ? $_POST['xbb_textarea'] : '';
 if (get_magic_quotes_gpc()) { $text = stripslashes($text); }
@@ -49,8 +49,8 @@ require_once './bbcode.lib.php';
 $bb = new bbcode($text);
 echo $bb->get_html();
 ?>
-<p align="center"><font color="#999999">
-<strong>..:.:: Предварительный просмотр ::.:..</strong>
-</font></p>
+<p align="center">
+<strong style="color: #999999;">..:.:: Предварительный просмотр ::.:..</strong>
+</p>
 </body>
 </html>

@@ -26,7 +26,8 @@ if (! is_file('./i18n/'.$lang.'/lang.php')) {
     $lang = 'default';
 }
 require_once './i18n/default/lang.php';
-if ('default' != $lang) {	include_once './i18n/'.$lang.'/lang.php';
+if ('default' != $lang) {
+	include_once './i18n/'.$lang.'/lang.php';
 }
 $state = isset($_GET['state']) ? $_GET['state'] : '';
 if ('highlight' != $state) { $state = 'plain'; }
@@ -51,7 +52,8 @@ form {
     margin: 0px;
     padding: 0px;
 }
-a.button {    color: #000000;
+a.button {
+    color: #000000;
     font-weight: bold;
     text-decoration: none;
 }
@@ -61,7 +63,8 @@ a.button:hover {
 a.button:active {
     background-color: #eeee00;
 }
-a.opt {    color: #000000;
+a.opt {
+    color: #000000;
     text-decoration: none;
 }
 a.opt:hover {
@@ -70,7 +73,8 @@ a.opt:hover {
 a.opt:active {
     color: #ff00ff;
 }
-img.opt_color {    border: 1px solid gray;
+img.opt_color {
+    border: 1px solid gray;
 }
 #xbb_iframe {
     width: 100%;
@@ -78,18 +82,21 @@ img.opt_color {    border: 1px solid gray;
     margin: 0px;
     padding: 0px;
 }
-#xbb_textarea {    font-family: 'Monaco', 'Courier New', monospace;
+#xbb_textarea {
+    font-family: 'Monaco', 'Courier New', monospace;
     width: 100%;
     border: 1px solid #a9b8c2;
     margin: 0px;
     padding: 0px;
     color: #000000;
 }
-#hidden_div {    border: 1px solid #a9b8c2;
+#hidden_div {
+    border: 1px solid #a9b8c2;
     background-color: #ffffff;
     padding: 3px;
 }
-a.buttonMenu img {    width: 9px;
+a.buttonMenu img {
+    width: 9px;
 }
 a.toolbarButton img {
     width: 20px;
@@ -185,7 +192,8 @@ echo 'bb.colors=' . $colors . ';';
 phpArray2Javascript($smiles);
 echo 'bb.smiles=' . $smiles . ';';
 ?>
-var xbb_code_names = {    0:  {0: 'code',         1: 'Text'                  },
+var xbb_code_names = {
+    0:  {0: 'code',         1: 'Text'                  },
     1:  {0: 'actionscript', 1: 'ActionScript'          },
     2:  {0: 'c++',          1: 'C++'                   },
     3:  {0: 'css',          1: 'CSS'                   },
@@ -254,7 +262,8 @@ function xbb_changeState() {
         xbb_textarea.focus();
     } else {
         // Переключаемся с textarea на подсвеченный код
-        if (! document.execCommand) {            alert('<?php echo $xbb_lang['not_execCommand']; ?>');
+        if (! document.execCommand) {
+            alert('<?php echo $xbb_lang['not_execCommand']; ?>');
             return false;
         }
         bb.text = xbb_textarea.value;
@@ -275,7 +284,8 @@ function xbb_changeState() {
     return false;
 }
 
-function xbb_startLoader() {    document.getElementById('loader').style.display = '';
+function xbb_startLoader() {
+    document.getElementById('loader').style.display = '';
 }
 
 function xbb_stopLoader() {
@@ -286,7 +296,8 @@ function xbb_stopLoader() {
 function xbb_insertTags(begin, end) {
     if ('highlight' == bb.state) {
         xbb_insertTags2iframe(begin, end);
-    } else {        xbb_insertTags2textarea(begin, end);
+    } else {
+        xbb_insertTags2textarea(begin, end);
     }
     return false;
 }
@@ -300,7 +311,8 @@ function xbb_insertTags2iframe(begin, end) {
     if (wysiwyg.body.scrollTop) {
         var x = wysiwyg.body.scrollLeft;
         var y = wysiwyg.body.scrollTop;
-    } else {        var x = 0;
+    } else {
+        var x = 0;
         var y = 0;
     }
     // для браузеров, не поддерживающих работу с выделением
@@ -359,11 +371,13 @@ function xbb_insertTags2iframe(begin, end) {
     return false;
 }
 
-function xbb_insertTags2textarea(begin, end) {    surroundText(begin, end);
+function xbb_insertTags2textarea(begin, end) {
+    surroundText(begin, end);
 }
 
 // Выполняет некоторые действия при клике на кнопки
-function xbb_buttonClick() {    var sel;
+function xbb_buttonClick() {
+    var sel;
 	if (xbb_iframe.contentWindow.document.selection) { // IE, Opera
 	    sel = xbb_iframe.contentWindow.document.selection;
 	    xbb_current_range = sel.createRange();
@@ -373,16 +387,19 @@ function xbb_buttonClick() {    var sel;
 // Функция для удаления внешней ноды с сохранением ее дочерних нод.
 function xbb_removeNode(node) {
     if (node.removeNode) { // IE
-        node.removeNode(false);    } else { // FF
+        node.removeNode(false);
+    } else { // FF
         var docFragment = document.createDocumentFragment();
-        while (node.childNodes.length) {        	docFragment.appendChild(node.childNodes.item(0));
+        while (node.childNodes.length) {
+        	docFragment.appendChild(node.childNodes.item(0));
         }
         node.parentNode.replaceChild(docFragment, node);
     }
 }
 
 // Вставка простейших тегов (таких как [b], [i], [u] и т.п.)
-function xbb_insertSimpleTags(tag_name) {    xbb_buttonClick();
+function xbb_insertSimpleTags(tag_name) {
+    xbb_buttonClick();
     document.getElementById('hidden_div').style.display = 'none';
     if ('highlight' == bb.state) {
         begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
@@ -392,7 +409,8 @@ function xbb_insertSimpleTags(tag_name) {    xbb_buttonClick();
             + '<span class="bb_slash">/</span><span class="bb_tagname">'
             + tag_name + '</span><span class="bb_bracket">]</span></span>';
         xbb_insertTags(begin, end);
-    } else {        xbb_insertTags('[' + tag_name + ']', '[/' + tag_name + ']');
+    } else {
+        xbb_insertTags('[' + tag_name + ']', '[/' + tag_name + ']');
     }
 }
 
@@ -410,7 +428,8 @@ function xbb_insertSingleTag(tag_name) {
 }
 
 // Вставка смайликов
-function xbb_insertSmile(smile) {	xbb_buttonClick();
+function xbb_insertSmile(smile) {
+	xbb_buttonClick();
 	document.getElementById('hidden_div').style.display = 'none';
 	if ('highlight' == bb.state) {
         xbb_insertTags('<span class="bb_mnemonic">' + smile  + '</span>', '');
@@ -420,7 +439,8 @@ function xbb_insertSmile(smile) {	xbb_buttonClick();
 }
 
 // Insert tags [url] and [img]
-function xbb_insertLink(tag, text) {	xbb_buttonClick();
+function xbb_insertLink(tag, text) {
+	xbb_buttonClick();
 	if ('none' != document.getElementById('hidden_div').style.display) {
         document.getElementById('hidden_div').style.display = 'none';
     }
@@ -435,12 +455,15 @@ function xbb_insertLink(tag, text) {	xbb_buttonClick();
             + '<span class="bb_slash">/</span><span class="bb_tagname">' + tag
             + '</span><span class="bb_bracket">]</span></span>';
         xbb_insertTags(url, '');
-    } else {        xbb_insertTags('[' + tag + ']' + url + '[/' + tag + ']', '');
+    } else {
+        xbb_insertTags('[' + tag + ']' + url + '[/' + tag + ']', '');
     }
-    return false;}
+    return false;
+}
 
 // Показывает список подсветок кода
-function xbb_codeList() {    xbb_buttonClick();
+function xbb_codeList() {
+    xbb_buttonClick();
     var div = document.getElementById('hidden_div');
 	if ('none' != div.style.display) {
         div.style.display = 'none';
@@ -460,7 +483,8 @@ function xbb_codeList() {    xbb_buttonClick();
 }
 
 // Показывает список размеров шрифта
-function xbb_sizeList() {    xbb_buttonClick();
+function xbb_sizeList() {
+    xbb_buttonClick();
     var div = document.getElementById('hidden_div');
 	if ('none' != div.style.display) {
         div.style.display = 'none';
@@ -502,7 +526,8 @@ function xbb_insertSize(size) {
 }
 
 // Показывает палитру выбора цвета
-function xbb_colorList() {    xbb_buttonClick();
+function xbb_colorList() {
+    xbb_buttonClick();
     var div = document.getElementById('hidden_div');
 	if ('none' != div.style.display) {
         div.style.display = 'none';
@@ -514,7 +539,8 @@ function xbb_colorList() {    xbb_buttonClick();
     var html = '<table border="0" cellpadding="0" cellspacing="1">';
     for (var i = 0; bb.colors[i]; ++i) {
         html += '<tr>';
-        for (var j = 0; bb.colors[i][j]; ++j) {            html += '<td height="20" width="20" bgcolor="' + bb.colors[i][j]
+        for (var j = 0; bb.colors[i][j]; ++j) {
+            html += '<td height="20" width="20" bgcolor="' + bb.colors[i][j]
                 + '" onclick="xbb_insertColor(\'' + bb.colors[i][j]
                 + '\')"><a href="#" class="opt_color"><img alt="' + bb.colors[i][j]
                 + '"  src="./images/pixel.gif" height="20" width="20" class="opt_color" /></a></td>';
@@ -528,7 +554,8 @@ function xbb_colorList() {    xbb_buttonClick();
 }
 
 // Insert tag [color]
-function xbb_insertColor(color) {    if ('highlight' == bb.state) {
+function xbb_insertColor(color) {
+    if ('highlight' == bb.state) {
 	    begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
             + '<span class="bb_tagname">color</span>'
             + '<span class="bb_equal">=</span>'
@@ -551,7 +578,8 @@ function xbb_insertColor(color) {    if ('highlight' == bb.state) {
 function xbb_fontList() {
 	xbb_buttonClick();
 	var div = document.getElementById('hidden_div');
-	if ('none' != div.style.display) {        div.style.display = 'none';
+	if ('none' != div.style.display) {
+        div.style.display = 'none';
         return false;
     }
     var coords = xbb_getCoords(document.getElementById('img_font'));
@@ -581,12 +609,14 @@ function xbb_insertFont(font) {
             + '<span class="bb_slash">/</span>'
             + '<span class="bb_tagname">font</span>'
             + '<span class="bb_bracket">]</span></span>';
-    } else {        begin = '[font="' + font + '"]';
+    } else {
+        begin = '[font="' + font + '"]';
         end = '[/font]'
     }
     document.getElementById('hidden_div').style.display = 'none';
 	xbb_insertTags(begin, end);
-	return false;}
+	return false;
+}
 
 function xbb_insertTagWithAttribute(tag, text) {
     xbb_buttonClick();
@@ -606,7 +636,8 @@ function xbb_insertTagWithAttribute(tag, text) {
         end = '<span class="bb_tag"><span class="bb_bracket">[</span>'
             + '<span class="bb_slash">/</span><span class="bb_tagname">' + tag
             + '</span><span class="bb_bracket">]</span></span>';
-    } else {        begin = '[' + tag;
+    } else {
+        begin = '[' + tag;
         if (val) { begin += '="' + val + '"'; }
         begin += ']';
         end = '[/' + tag + ']';
@@ -623,7 +654,8 @@ function xbb_getCoords(element) {
         left += parent.offsetLeft - parent.scrollLeft;
         top += parent.offsetTop - parent.scrollTop
     }
-    return {    	left: left,
+    return {
+    	left: left,
     	top: top,
     	width: element.offsetWidth,
     	height: element.offsetHeight
@@ -631,7 +663,8 @@ function xbb_getCoords(element) {
 }
 
 // Выводит сведения о программе
-function xbb_aboutProgramm() {    xbb_buttonClick();
+function xbb_aboutProgramm() {
+    xbb_buttonClick();
 	var div = document.getElementById('hidden_div');
 	if ('none' != div.style.display) {
         div.style.display = 'none';
@@ -658,7 +691,8 @@ function xbb_aboutProgramm() {    xbb_buttonClick();
 }
 
 // Выводит список смайлов
-function xbb_smilesList() {    xbb_buttonClick();
+function xbb_smilesList() {
+    xbb_buttonClick();
     var div = document.getElementById('hidden_div');
 	if ('none' != div.style.display) {
         div.style.display = 'none';
@@ -686,7 +720,8 @@ function xbb_smilesList() {    xbb_buttonClick();
 }
 
 // Сабмитит форму xbb ради предварительного просмотра
-function xbb_submit() {    if ('highlight' == bb.state) {
+function xbb_submit() {
+    if ('highlight' == bb.state) {
         bb.text = bb.innerText(xbb_iframe.contentWindow.document.body);
         xbb_textarea.value = bb.text;
     }
@@ -699,7 +734,7 @@ function xbb_submit() {    if ('highlight' == bb.state) {
 <body onload="xbb_onload()">
 
 <img id="loader" src="./images/loader.gif" alt="идет загрузка"
-style="position:absolute;top:0px;left:50%" />
+style="position:absolute;top:0;left:50%" />
 <script type="text/javascript">
 var xbb_editor = parent.document.getElementById('xbb_editor');
 var xbb_height = 0;
@@ -868,7 +903,8 @@ onclick="xbb_changeState()" style="background-image:url(./images/background.gif)
 <tr><td><img src="./images/left.gif" alt="" /></td>
 <td align="center" width="150">
 <a href="#" class="button" id="changeState">&nbsp;<?php
-if ('highlight' == $state) {	echo $xbb_lang['changestate_highlight'];
+if ('highlight' == $state) {
+	echo $xbb_lang['changestate_highlight'];
 } else {
     echo $xbb_lang['changestate_plane'];
 }
@@ -878,7 +914,7 @@ if ('highlight' == $state) {	echo $xbb_lang['changestate_highlight'];
 </table>
 
 </td></tr></table>
-<div style="position:absolute;top:0px;left:0;display:none"
+<div style="position:absolute;top:0;left:0;display:none"
 id="hidden_div"></div>
 </body>
 </html>

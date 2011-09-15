@@ -29,7 +29,8 @@
 <title>xBBArea</title>
 <meta name="author" content="Dmitriy Skorobogatov" />
 <style type="text/css">
-body {    font-family: 'Monaco', 'Courier New', monospace;
+body {
+    font-family: 'Monaco', 'Courier New', monospace;
     color: #000000;
     margin: 0px;
     padding: 0px;
@@ -69,10 +70,11 @@ span.bb_autolink {
 }
 </style>
 <script type="text/javascript">
-onload = function() {    document.designMode = 'on';
-    // Для Gecko устанавливаем такой режим, чтобы форматирование ставилось
-    // тегами, а не стилями. Чтобы MSIE не выдавал ошибку, прячем это в
-    // конструкцию try-catch
+onload = function() {
+    document.designMode = 'on';
+    // Р”Р»СЏ Gecko СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј С‚Р°РєРѕР№ СЂРµР¶РёРј, С‡С‚РѕР±С‹ С„РѕСЂРјР°С‚РёСЂРѕРІР°РЅРёРµ СЃС‚Р°РІРёР»РѕСЃСЊ
+    // С‚РµРіР°РјРё, Р° РЅРµ СЃС‚РёР»СЏРјРё. Р§С‚РѕР±С‹ MSIE РЅРµ РІС‹РґР°РІР°Р» РѕС€РёР±РєСѓ, РїСЂСЏС‡РµРј СЌС‚Рѕ РІ
+    // РєРѕРЅСЃС‚СЂСѓРєС†РёСЋ try-catch
     try {
         document.execCommand("useCSS", false, true);
     } catch(e) {}
