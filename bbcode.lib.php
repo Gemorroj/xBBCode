@@ -232,11 +232,11 @@ class bbcode {
         return array($token_type, $token);
     }
 
-    function parse($code = '') {
+    function parse($code = null) {
         $time_start = $this->_getmicrotime();
         if (is_array($code)) {
             $is_tree = false;
-            foreach ($code as $key => $val) {
+            foreach ($code as $val) {
                 if (isset($val['val'])) {
                 	$this->tree = $code;
                 	$this->syntax = $this->get_syntax();
@@ -330,6 +330,8 @@ class bbcode {
         $decomposition = array();
         $token_key = -1;
         $value = '';
+        $name = '';
+        $type = false;
         $this ->_cursor = 0;
         // Сканируем массив лексем с помощью построенного автомата:
         while ($token = $this -> get_token()) {
@@ -342,7 +344,7 @@ class bbcode {
             }
             switch ($mode) {
             case 0:
-                if ('text' == $type) {
+                if ('text' === $type) {
                     $this -> syntax[$token_key]['str'] .= $token[1];
                 } else {
                     $this -> syntax[++$token_key] = array(
@@ -360,7 +362,7 @@ class bbcode {
                 );
                 break;
             case 2:
-                if ('text' == $type) {
+                if ('text' === $type) {
                     $this -> syntax[$token_key]['str'] .= $decomposition['str'];
                 } else {
                     $this -> syntax[++$token_key] = array(
@@ -376,7 +378,7 @@ class bbcode {
                 );
                 break;
             case 3:
-                if ('text' == $type) {
+                if ('text' === $type) {
                     $this -> syntax[$token_key]['str'] .= $decomposition['str'];
                     $this -> syntax[$token_key]['str'] .= $token[1];
                 } else {
@@ -487,7 +489,7 @@ class bbcode {
             }
         }
         if (count($decomposition)) {
-            if ('text' == $type) {
+            if ('text' === $type) {
                 $this -> syntax[$token_key]['str'] .= $decomposition['str'];
             } else {
                 $this -> syntax[++$token_key] = array(
@@ -586,14 +588,14 @@ class bbcode {
         $structure_key = -1;
         $level = 0;
         $open_tags = array();
-        foreach ($syntax as $syntax_key => $val) {
+        foreach ($syntax as $val) {
             unset($val['layout']);
             switch ($val['type']) {
                 case 'text':
                     $val['str'] = $this -> unspecialchars($val['str']);
                     $type = (-1 < $structure_key)
                         ? $structure[$structure_key]['type'] : false;
-                    if ('text' == $type) {
+                    if ('text' === $type) {
                         $structure[$structure_key]['str'] .= $val['str'];
                     } else {
                         $structure[++$structure_key] = $val;
@@ -651,7 +653,7 @@ class bbcode {
                     if (! count($open_tags)) {
                         $type = (-1 < $structure_key)
                             ? $structure[$structure_key]['type'] : false;
-                        if ( 'text' == $type ) {
+                        if ( 'text' === $type ) {
                             $structure[$structure_key]['str'] .= $val['str'];
                         } else {
                             $structure[++$structure_key] = array(
@@ -674,7 +676,7 @@ class bbcode {
                     if (! in_array($val['name'],$open_tags)) {
                         $type = (-1 < $structure_key)
                             ? $structure[$structure_key]['type'] : false;
-                        if ('text' == $type) {
+                        if ('text' === $type) {
                             $structure[$structure_key]['str'] .= $val['str'];
                         } else {
                             $structure[++$structure_key] = array(
@@ -726,12 +728,12 @@ class bbcode {
         $open_tags = array();
         $not_tags = array();
         $this -> stat['count_tags'] = 0;
-        foreach ($structure as $structure_key => $val) {
+        foreach ($structure as $val) {
             switch ($val['type']) {
                 case 'text':
                     $type = (-1 < $normal_key)
                         ? $normalized[$normal_key]['type'] : false;
-                    if ('text' == $type) {
+                    if ('text' === $type) {
                         $normalized[$normal_key]['str'] .= $val['str'];
                     } else {
                         $normalized[++$normal_key] = $val;
@@ -747,7 +749,7 @@ class bbcode {
                     if (! $permissibly) {
                         $type = (-1 < $normal_key)
                             ? $normalized[$normal_key]['type'] : false;
-                        if ( 'text' == $type ) {
+                        if ( 'text' === $type ) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = array(
@@ -772,7 +774,7 @@ class bbcode {
                         $not_tags[$val['level']] = $val['name'];
                         $type = (-1 < $normal_key)
                             ? $normalized[$normal_key]['type'] : false;
-                        if ( 'text' == $type ) {
+                        if ( 'text' === $type ) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = array(
@@ -796,7 +798,7 @@ class bbcode {
                         unset($not_tags[$val['level']]);
                         $type = (-1 < $normal_key)
                             ? $normalized[$normal_key]['type'] : false;
-                        if ( 'text' == $type ) {
+                        if ( 'text' === $type ) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = array(
@@ -820,9 +822,8 @@ class bbcode {
         $result = array();
         $result_key = -1;
         $open_tags = array();
-        $val_key = -1;
         $this -> stat['count_level'] = 0;
-        foreach ($normalized as $normal_key => $val) {
+        foreach ($normalized as $val) {
             switch ($val['type']) {
                 case 'text':
                     if (! $val['level']) {
@@ -954,7 +955,7 @@ class bbcode {
             $replace = $this -> preg_autolinks['replacement'];
             $text = preg_replace($search, $replace, $text);
         }
-        $text = str_replace('  ', '&nbsp;&nbsp;', nl2br($text));
+        $text = str_replace('  ', '&#160;&#160;', nl2br($text));
         $text = strtr($text, $this -> mnemonics);
         return $text;
     }
@@ -1033,7 +1034,7 @@ class bbcode {
             }
         }
         $str = nl2br($str);
-        $str = str_replace('  ', '&nbsp;&nbsp;', $str);
+        $str = str_replace('  ', '&#160;&#160;', $str);
         $this -> stat['time_html'] = $this -> _getmicrotime() - $time_start;
         return $str;
     }
@@ -1047,11 +1048,11 @@ class bbcode {
         $lbr = 0;
         $rbr = 0;
         foreach ($elems as $elem) {
-            if ('text' == $elem['type']) {
+            if ('text' === $elem['type']) {
                 $elem['str'] = $this -> insert_smiles($elem['str']);
                 for ($i=0; $i < $rbr; ++$i) {
                     $elem['str'] = ltrim($elem['str']);
-                    if ('<br />' == substr($elem['str'], 0, 6)) {
+                    if ('<br />' === substr($elem['str'], 0, 6)) {
                         $elem['str'] = substr_replace($elem['str'], '', 0, 6);
                     }
                 }
@@ -1065,7 +1066,7 @@ class bbcode {
                 $rbr = $class_vars['rbr'];
                 for ($i=0; $i < $lbr; ++$i) {
                     $result = rtrim($result);
-                    if ('<br />' == substr($result, -6)) {
+                    if ('<br />' === substr($result, -6)) {
                         $result = substr_replace($result, '', -6, 6);
                     }
                 }
@@ -1081,7 +1082,7 @@ class bbcode {
             }
         }
         $result = preg_replace(
-            "'\s*<br \/>\s*<br \/>\s*'si", "\n<br />&nbsp;<br />\n", $result
+            "'\s*<br \/>\s*<br \/>\s*'si", "\n<br />&#160;<br />\n", $result
         );
         $this->stat['time_html'] = $this->_getmicrotime() - $time_start;
         return $result;
@@ -1096,9 +1097,9 @@ class bbcode {
         );
         $is_http = false;
         foreach ($protocols as $val) {
-            if ($val == substr($url, 0, strlen($val))) {
+            if ($val === substr($url, 0, strlen($val))) {
                 $is_http = true;
-                if ('www.' == $val) {
+                if ('www.' === $val) {
                 	$url = 'http://'.$url;
                 }
                 break;

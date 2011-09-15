@@ -27,11 +27,11 @@ class Xbb_Tags_Nobb extends bbcode {
     function get_html($tree = null) {
         $str = '';
         foreach ($this -> tree as $item) {
-            if ('text' == $item['type']) {
+            if ('text' === $item['type']) {
                 $str .= nl2br(htmlspecialchars($item['str']));
             }
         }
-        $str = str_replace('  ', '&nbsp;&nbsp;', $str);
+        $str = str_replace('  ', '&#160;&#160;', $str);
         return $str;
     }
 }
