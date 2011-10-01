@@ -1105,7 +1105,7 @@ class bbcode {
                 break;
             }
         }
-        if (! $is_http) { $url = './'.$url; }
+        if (! $is_http) { $url = './' . $url; }
         $url = htmlentities($url, ENT_QUOTES);
         $url = str_replace('.', '&#'.ord('.').';', $url);
         $url = str_replace(':', '&#'.ord(':').';', $url);
@@ -1118,8 +1118,7 @@ class bbcode {
     Функция возвращает текущий UNIX timestamp с микросекундами в формате float
     */
     function _getmicrotime() {
-        list($usec, $sec) = explode(' ', microtime());
-        return (float) $usec + (float) $sec;
+        return microtime(true);
     }
 
     /*
