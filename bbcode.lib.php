@@ -156,8 +156,8 @@ class bbcode {
     3 - апостроф ("'")
     4 - равенство ("=")
     5 - прямой слэш ("/")
-    6 - последовательность пробельных символов
-        (" ", "\t", "\n", "\r", "\0" или "\x0B")
+    6 - последовательность пробельных символов (кроме пробела)
+        ("\t", "\n", "\r", "\0" или "\x0B")
     7 - последовательность прочих символов, не являющаяся именем тега
     8 - имя тега
     */
@@ -188,15 +188,15 @@ class bbcode {
                 case "'":
                     $char_type = 3;
                     break;
-                case "=":
+                case '=':
                     $char_type = 4;
                     break;
                 case '/':
                     $char_type = 5;
                     break;
-                case ' ':
-                    $char_type = 6;
-                    break;
+                //case ' ':
+                //    $char_type = 6;
+                //    break;
                 case "\t":
                     $char_type = 6;
                     break;
@@ -214,6 +214,7 @@ class bbcode {
                     break;
                 default:
                     $char_type = 7;
+                    break;
             }
             if (false === $token_type) {
                 $token = $char;
@@ -1039,6 +1040,11 @@ class bbcode {
         return $str;
     }
 
+    /**
+     * Возвращает HTML код
+     * @param array $elems
+     * @return string
+     */
     function get_html($elems = null) {
         $time_start = $this -> _getmicrotime();
         if (! is_array($elems)) {
