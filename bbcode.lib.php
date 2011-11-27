@@ -1088,34 +1088,47 @@ class bbcode {
         return $result;
     }
 
-    /* Функция преобразует строку URL с целью защиты от javascript-инъекции. */
+    /**
+     * Функция преобразует строку URL в соответствии с RFC 3986
+     * @param string $url
+     * @return string
+     */
     function checkUrl($url) {
-        if (! $url) { return ''; }
-        $protocols = array(
-            'ftp://', 'file://', 'http://', 'https://', 'mailto:', 'svn://',
-            '#',      '/',       '?',       './',       '../',     'www.'
-        );
-        $is_http = false;
-        foreach ($protocols as $val) {
-            if ($val === substr($url, 0, strlen($val))) {
-                $is_http = true;
-                if ('www.' === $val) {
-                	$url = 'http://'.$url;
-                }
-                break;
-            }
+        $parse = parse_url($url);
+
+        $out = '';
+        if (isset($parse['scheme'])) {
+            $out .= $parse['scheme'] . '://';
         }
-        if (! $is_http) { $url = './' . $url; }
-        $url = htmlentities($url, ENT_QUOTES);
-        $url = str_replace('.', '&#'.ord('.').';', $url);
-        $url = str_replace(':', '&#'.ord(':').';', $url);
-        $url = str_replace('(', '&#'.ord('(').';', $url);
-        $url = str_replace(')', '&#'.ord(')').';', $url);
-        return $url;
+        if (isset($parse['user']) && isset($parse['pass'])) {
+            $out .= rawurlencode($parse['user']) . ':' . rawurlencode($parse['pass']) . '@';
+        } else if (isset($parse['user'])) {
+            $out .= rawurlencode($parse['user']) . '@';
+        }
+        if (isset($parse['host'])) {
+            $out .= rawurlencode($parse['host']);
+        }
+        if (isset($parse['port'])) {
+            $out .= ':' . $parse['port'];
+        }
+        if (isset($parse['path'])) {
+            $out .= str_replace('%2F', '/', rawurlencode($parse['path']));
+        }
+        if (isset($parse['query'])) {
+            parse_str($parse['query'], $query);
+            // PHP 5.1.2
+            $out .= '?' . str_replace('+', '%20', http_build_query($query, '', '&'));
+        }
+        if (isset($parse['fragment'])) {
+            $out .= '#' . rawurlencode($parse['fragment']);
+        }
+
+        return $out;
     }
 
-    /*
-    Функция возвращает текущий UNIX timestamp с микросекундами в формате float
+    /**
+    * Функция возвращает текущий UNIX timestamp с микросекундами в формате float
+    * @return float
     */
     function _getmicrotime() {
         return microtime(true);
