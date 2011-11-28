@@ -1123,7 +1123,7 @@ class bbcode {
         if (isset($parse['query'])) {
             parse_str($parse['query'], $query);
             // PHP 5.1.2
-            $out .= '?' . str_replace('+', '%20', http_build_query($query, '', '&'));
+            $out .= '?' . str_replace('+', '%20', http_build_query($query, '', '&amp;'));
         }
         if (isset($parse['fragment'])) {
             $out .= '#' . rawurlencode($parse['fragment']);
