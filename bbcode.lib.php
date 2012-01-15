@@ -1094,6 +1094,30 @@ class bbcode {
         return $result;
     }
 
+
+    /**
+     * Аналог parse_str но без преобразования точек и пробелов в подчеркивания
+     *
+     * @todo не очень хорошая реализация
+     * @param string $str
+     * @return array
+     */
+    private function _parseStr ($str)
+    {
+        $dot = "xbbdot\txbbdot";
+        $space = "xbbspace\txbbspace";
+
+        parse_str(str_replace(array('.', ' '), array($dot, $space), $str), $query);
+
+        foreach ($query as $k => $v) {
+            unset($query[$k]);
+            $query[str_replace(array($dot, $space), array('.', ' '), $k)] = $v;
+        }
+
+        return $query;
+    }
+
+
     /**
      * Функция преобразует строку URL в соответствии с RFC 3986
      * @param string $url
@@ -1121,7 +1145,9 @@ class bbcode {
             $out .= str_replace('%2F', '/', rawurlencode($parse['path']));
         }
         if (isset($parse['query'])) {
-            parse_str($parse['query'], $query);
+            $query = $this->_parseStr($parse['query']);
+            //parse_str($parse['query'], $query); //replace spaces and dots
+
             // PHP 5.1.2
             $out .= '?' . str_replace('+', '%20', rtrim(http_build_query($query, '', '&amp;'), '='));
         }
