@@ -28,8 +28,18 @@ class Xbb_Tags_Img extends bbcode
 
     public function get_html($tree = null)
     {
-        //TODO:добавить аттрибуты alt и title
-        $attr = 'alt=""';
+        $attr = '';
+
+        if (isset($this -> attrib['alt'])) {
+            $attr .= ' alt="' . htmlspecialchars($this -> attrib['alt']) . '"';
+        } else {
+            // обязательный атрибут
+            $attr .= ' alt=""';
+        }
+
+        if (isset($this -> attrib['title'])) {
+            $attr .= ' title="' . htmlspecialchars($this -> attrib['title']) . '"';
+        }
         if (isset($this -> attrib['width'])) {
             $width = (int) $this -> attrib['width'];
             $attr .= $width ? ' width="' . $width . '"' : '';
