@@ -48,7 +48,9 @@ class Xbb_Tags_A extends bbcode
         if (! $href && ! isset($this -> attrib['anchor'])) {
             $href = $text;
         }
+
         $href = $this -> _checkUrl($href);
+
         $attr = 'class="bb"';
         if ($href) {
             $attr .= ' href="' . $href . '"';

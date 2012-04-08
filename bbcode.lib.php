@@ -1221,7 +1221,7 @@ class bbcode
 
         foreach ($query as $k => $v) {
             unset($query[$k]);
-            $query[str_replace($replace, $original, $k)] = $v;
+            $query[str_replace($replace, $original, $k)] = str_replace($replace, $original, $v);
         }
 
         return $query;

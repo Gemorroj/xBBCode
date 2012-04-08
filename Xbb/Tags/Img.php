@@ -58,6 +58,7 @@ class Xbb_Tags_Img extends bbcode
                 $src .= $text['str'];
             }
         }
+
         $src = $this -> _checkUrl($src);
 
         return '<img src="' . $src . '" ' . $attr . ' />';

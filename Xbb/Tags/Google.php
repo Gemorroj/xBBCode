@@ -28,6 +28,7 @@ class Xbb_Tags_Google extends bbcode
 
     public function get_html($tree = null)
     {
+        //TODO:добавить поддержку синтаксиса без атрибута. [google]test[/qoogle]
         $attr = rawurlencode($this -> attrib['google']);
         $attr = ' href="http://www.google.com/search?q=' . $attr . '"';
         $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
