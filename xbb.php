@@ -27,7 +27,7 @@ if (! is_file('./i18n/'.$lang.'/lang.php')) {
 }
 require_once './i18n/default/lang.php';
 if ('default' != $lang) {
-	include_once './i18n/'.$lang.'/lang.php';
+    include_once './i18n/'.$lang.'/lang.php';
 }
 $state = isset($_GET['state']) ? $_GET['state'] : '';
 if ('highlight' != $state) { $state = 'plain'; }
@@ -43,14 +43,14 @@ header('Content-type: text/html; charset='.$xbb_lang['charset']);
 <meta name="author" content="Dmitriy Skorobogatov" />
 <style type="text/css">
 body {
-    padding: 0px;
-    margin: 0px;
+    padding: 0;
+    margin: 0;
     background-color: #ffffff;
     font-size:14px;
 }
 form {
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 a.button {
     color: #000000;
@@ -79,15 +79,15 @@ img.opt_color {
 #xbb_iframe {
     width: 100%;
     border: 1px solid #a9b8c2;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
 }
 #xbb_textarea {
     font-family: 'Monaco', 'Courier New', monospace;
     width: 100%;
     border: 1px solid #a9b8c2;
-    margin: 0px;
-    padding: 0px;
+    margin: 0;
+    padding: 0;
     color: #000000;
 }
 #hidden_div {
@@ -102,44 +102,44 @@ a.toolbarButton img {
     width: 20px;
 }
 a.toolbarButton img, a.buttonMenu img {
-	height: 20px;
-	cursor: default;
-	margin-top: 0px;
-	margin-left: 2px;
-	border: 0 !important;
+    height: 20px;
+    cursor: default;
+    margin-top: 0;
+    margin-left: 2px;
+    border: 0 !important;
 }
 a.toolbarButton img:hover, a.buttonMenu img:hover {
-	border: 1px solid #eeee00 !important;
-	margin-left: 0px;
+    border: 1px solid #eeee00 !important;
+    margin-left: 0;
 }
 a.toolbarButton img:active, a.buttonMenu img:active {
-	border: 1px solid #eeee00 !important;
-	background-color: #eeee00;
-	margin-left: 0px;
+    border: 1px solid #eeee00 !important;
+    background-color: #eeee00;
+    margin-left: 0;
 }
 /* MSIE specific rules */
 * html a.toolbarButton img, * html a.buttonMenu img {
-	border: 0px;
-	margin-top: 3px;
-	margin-bottom: 1px;
-	margin-left: 2px;
+    border: 0;
+    margin-top: 3px;
+    margin-bottom: 1px;
+    margin-left: 2px;
 }
 * html a.toolbarButton, * html a.buttonMenu {
-	border: 0px;
+    border: 0;
 }
 * html a.toolbarButton:hover img, * html a.buttonMenu:hover img {
-	margin-left: 0;
+    margin-left: 0;
 }
 * html a.toolbarButton:hover, * html a.buttonMenu:hover {
-	border: 1px solid #eeee00;
-	margin-left: 0px;
-	cursor: default;
+    border: 1px solid #eeee00;
+    margin-left: 0;
+    cursor: default;
 }
 * html a.toolbarButton:active, * html a.buttonMenu:active {
-	border: 1px solid #eeee00;
-	margin-left: 0px;
-	cursor: default;
-	background-color: #eeee00;
+    border: 1px solid #eeee00;
+    margin-left: 0;
+    cursor: default;
+    background-color: #eeee00;
 }
 </style>
 <script type="text/javascript"><?php
@@ -167,8 +167,8 @@ $pak = file('./images/smiles/Set_Smiles_YarNET.pak');
 $mnemonics = '';
 foreach ($pak as $val) {
     $val = trim($val);
-    if (! $val || '#' == $val{0}) {
-    	continue;
+    if (! $val || '#' === $val{0}) {
+        continue;
     }
     list($gif, $alt, $symbol) = explode('=+:', $val);
     if ($mnemonics) {
@@ -321,15 +321,15 @@ function xbb_insertTags2iframe(begin, end) {
         return false;
     }
     if (wysiwyg.selection) { // IE, Opera
-		//retrieve selected range
-		sel = wysiwyg.selection;
-		if (null != sel) {
-			range = sel.createRange();
-			range = xbb_current_range;
-			range.select();
-		}
-	}
-	iframe.contentWindow.focus();
+        //retrieve selected range
+        sel = wysiwyg.selection;
+        if (null != sel) {
+            range = sel.createRange();
+            range = xbb_current_range;
+            range.select();
+        }
+    }
+    iframe.contentWindow.focus();
     // для браузеров,поддерживающих работу с выделением
     // Берем выделение в <font color="#000000">. Их может получиться несколько.
     wysiwyg.execCommand('ForeColor', false, '#000000');
@@ -341,28 +341,28 @@ function xbb_insertTags2iframe(begin, end) {
         html.innerHTML = begin + range + end;
         var range2 = range.cloneRange();
         // Insert text at cursor position
-		sel.removeAllRanges();
-		range.deleteContents();
-		range.insertNode(html);
+        sel.removeAllRanges();
+        range.deleteContents();
+        range.insertNode(html);
         // Move the cursor to the end of text
-		range2.selectNode(html);
-		range2.collapse(false);
-		sel.removeAllRanges();
-		sel.addRange(range2);
-		xbb_removeNode(html);
-		iframe.contentWindow.focus();
-		if (y && iframe.contentWindow.scrollTo) {
+        range2.selectNode(html);
+        range2.collapse(false);
+        sel.removeAllRanges();
+        sel.addRange(range2);
+        xbb_removeNode(html);
+        iframe.contentWindow.focus();
+        if (y && iframe.contentWindow.scrollTo) {
             iframe.contentWindow.scrollTo(x, y);
         }
         return false;
     }
     while (nodes.length) {
-    	// Вставляем begin и end
-    	if ('span' != nodes.item(0).parentNode.tagName.toLowerCase()) {
-    	    nodes.item(0).innerHTML = begin + nodes.item(0).innerHTML + end;
-    	}
-    	// Удаляем font
-    	xbb_removeNode(nodes.item(0));
+        // Вставляем begin и end
+        if ('span' != nodes.item(0).parentNode.tagName.toLowerCase()) {
+            nodes.item(0).innerHTML = begin + nodes.item(0).innerHTML + end;
+        }
+        // Удаляем font
+        xbb_removeNode(nodes.item(0));
     }
     iframe.contentWindow.focus();
     if (y && iframe.contentWindow.scrollTo) { // для Opera
@@ -378,10 +378,10 @@ function xbb_insertTags2textarea(begin, end) {
 // Выполняет некоторые действия при клике на кнопки
 function xbb_buttonClick() {
     var sel;
-	if (xbb_iframe.contentWindow.document.selection) { // IE, Opera
-	    sel = xbb_iframe.contentWindow.document.selection;
-	    xbb_current_range = sel.createRange();
-	}
+    if (xbb_iframe.contentWindow.document.selection) { // IE, Opera
+        sel = xbb_iframe.contentWindow.document.selection;
+        xbb_current_range = sel.createRange();
+    }
 }
 
 // Функция для удаления внешней ноды с сохранением ее дочерних нод.
@@ -391,7 +391,7 @@ function xbb_removeNode(node) {
     } else { // FF
         var docFragment = document.createDocumentFragment();
         while (node.childNodes.length) {
-        	docFragment.appendChild(node.childNodes.item(0));
+            docFragment.appendChild(node.childNodes.item(0));
         }
         node.parentNode.replaceChild(docFragment, node);
     }
@@ -429,9 +429,9 @@ function xbb_insertSingleTag(tag_name) {
 
 // Вставка смайликов
 function xbb_insertSmile(smile) {
-	xbb_buttonClick();
-	document.getElementById('hidden_div').style.display = 'none';
-	if ('highlight' == bb.state) {
+    xbb_buttonClick();
+    document.getElementById('hidden_div').style.display = 'none';
+    if ('highlight' == bb.state) {
         xbb_insertTags('<span class="bb_mnemonic">' + smile  + '</span>', '');
     } else {
         xbb_insertTags(smile, '');
@@ -440,14 +440,14 @@ function xbb_insertSmile(smile) {
 
 // Insert tags [url] and [img]
 function xbb_insertLink(tag, text) {
-	xbb_buttonClick();
-	if ('none' != document.getElementById('hidden_div').style.display) {
+    xbb_buttonClick();
+    if ('none' != document.getElementById('hidden_div').style.display) {
         document.getElementById('hidden_div').style.display = 'none';
     }
-	var url = prompt(text, "");
-	if (! url) { return false; }
-	if ('highlight' == bb.state) {
-	    url = '<span class="bb_tag"><span class="bb_bracket">[</span>'
+    var url = prompt(text, "");
+    if (! url) { return false; }
+    if ('highlight' == bb.state) {
+        url = '<span class="bb_tag"><span class="bb_bracket">[</span>'
             + '<span class="bb_tagname">' + tag
             + '</span><span class="bb_bracket">]</span></span>'
             + '<span class="bb_autolink">' + url
@@ -465,7 +465,7 @@ function xbb_insertLink(tag, text) {
 function xbb_codeList() {
     xbb_buttonClick();
     var div = document.getElementById('hidden_div');
-	if ('none' != div.style.display) {
+    if ('none' != div.style.display) {
         div.style.display = 'none';
         return false;
     }
@@ -486,7 +486,7 @@ function xbb_codeList() {
 function xbb_sizeList() {
     xbb_buttonClick();
     var div = document.getElementById('hidden_div');
-	if ('none' != div.style.display) {
+    if ('none' != div.style.display) {
         div.style.display = 'none';
         return false;
     }
@@ -507,7 +507,7 @@ function xbb_sizeList() {
 // Insert tag [size]
 function xbb_insertSize(size) {
     if ('highlight' == bb.state) {
-	    begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
+        begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
             + '<span class="bb_tagname">size</span>'
             + '<span class="bb_equal">=</span>'
             + '<span class="bb_attrib_val">' + size + '</span>'
@@ -521,15 +521,15 @@ function xbb_insertSize(size) {
         end = '[/size]'
     }
     document.getElementById('hidden_div').style.display = 'none';
-	xbb_insertTags(begin, end);
-	return false;
+    xbb_insertTags(begin, end);
+    return false;
 }
 
 // Показывает палитру выбора цвета
 function xbb_colorList() {
     xbb_buttonClick();
     var div = document.getElementById('hidden_div');
-	if ('none' != div.style.display) {
+    if ('none' != div.style.display) {
         div.style.display = 'none';
         return false;
     }
@@ -556,7 +556,7 @@ function xbb_colorList() {
 // Insert tag [color]
 function xbb_insertColor(color) {
     if ('highlight' == bb.state) {
-	    begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
+        begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
             + '<span class="bb_tagname">color</span>'
             + '<span class="bb_equal">=</span>'
             + '<span class="bb_attrib_val">' + color + '</span>'
@@ -570,15 +570,15 @@ function xbb_insertColor(color) {
         end = '[/color]'
     }
     document.getElementById('hidden_div').style.display = 'none';
-	xbb_insertTags(begin, end);
-	return false;
+    xbb_insertTags(begin, end);
+    return false;
 }
 
 // Показыват список шрифтов для выбора
 function xbb_fontList() {
-	xbb_buttonClick();
-	var div = document.getElementById('hidden_div');
-	if ('none' != div.style.display) {
+    xbb_buttonClick();
+    var div = document.getElementById('hidden_div');
+    if ('none' != div.style.display) {
         div.style.display = 'none';
         return false;
     }
@@ -598,8 +598,8 @@ function xbb_fontList() {
 
 // Insert tag [font]
 function xbb_insertFont(font) {
-	if ('highlight' == bb.state) {
-	    begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
+    if ('highlight' == bb.state) {
+        begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
             + '<span class="bb_tagname">font</span>'
             + '<span class="bb_equal">=</span><span class="bb_quote">"</span>'
             + '<span class="bb_attrib_val">' + font + '</span>'
@@ -614,8 +614,8 @@ function xbb_insertFont(font) {
         end = '[/font]'
     }
     document.getElementById('hidden_div').style.display = 'none';
-	xbb_insertTags(begin, end);
-	return false;
+    xbb_insertTags(begin, end);
+    return false;
 }
 
 function xbb_insertTagWithAttribute(tag, text) {
@@ -623,8 +623,8 @@ function xbb_insertTagWithAttribute(tag, text) {
     var begin;
     var end;
     var val = prompt(text, "");
-	if ('highlight' == bb.state) {
-	    begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
+    if ('highlight' == bb.state) {
+        begin = '<span class="bb_tag"><span class="bb_bracket">[</span>'
             + '<span class="bb_tagname">' + tag + '</span>';
         if (val) {
             begin += '<span class="bb_equal">=</span>'
@@ -655,18 +655,18 @@ function xbb_getCoords(element) {
         top += parent.offsetTop - parent.scrollTop
     }
     return {
-    	left: left,
-    	top: top,
-    	width: element.offsetWidth,
-    	height: element.offsetHeight
+        left: left,
+        top: top,
+        width: element.offsetWidth,
+        height: element.offsetHeight
     };
 }
 
 // Выводит сведения о программе
 function xbb_aboutProgramm() {
     xbb_buttonClick();
-	var div = document.getElementById('hidden_div');
-	if ('none' != div.style.display) {
+    var div = document.getElementById('hidden_div');
+    if ('none' != div.style.display) {
         div.style.display = 'none';
         return false;
     }
@@ -694,7 +694,7 @@ function xbb_aboutProgramm() {
 function xbb_smilesList() {
     xbb_buttonClick();
     var div = document.getElementById('hidden_div');
-	if ('none' != div.style.display) {
+    if ('none' != div.style.display) {
         div.style.display = 'none';
         return false;
     }
@@ -904,7 +904,7 @@ onclick="xbb_changeState()" style="background-image:url(./images/background.gif)
 <td align="center" width="150">
 <a href="#" class="button" id="changeState">&nbsp;<?php
 if ('highlight' == $state) {
-	echo $xbb_lang['changestate_highlight'];
+    echo $xbb_lang['changestate_highlight'];
 } else {
     echo $xbb_lang['changestate_plane'];
 }

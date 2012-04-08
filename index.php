@@ -39,7 +39,8 @@ XBB.area_width = '700px';
 XBB.area_height = '400px';
 XBB.state = 'plain'; // 'plain' or 'highlight'
 XBB.lang = 'ru_utf8'; // локализация
-onload = function() {    XBB.init(); // инициалиизация редактора
+onload = function() {
+    XBB.init(); // инициалиизация редактора
 }
 </script>
 </head>

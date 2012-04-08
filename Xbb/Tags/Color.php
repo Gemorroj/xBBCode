@@ -22,12 +22,14 @@
  ******************************************************************************/
 
 // Класс для тега [color]
-class Xbb_Tags_Color extends bbcode {
+class Xbb_Tags_Color extends bbcode
+{
     public $behaviour = 'span';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $color = htmlspecialchars($this -> attrib['color']);
-        return '<font color="'.$color.'">'.parent::get_html($this -> tree)
-            .'</font>';
+        return '<font color="' . $color . '">' . parent::get_html($this -> tree)
+            . '</font>';
     }
 }
-?>

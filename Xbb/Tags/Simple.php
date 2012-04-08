@@ -22,9 +22,12 @@
  ******************************************************************************/
 
 // Класс для простейших тегов
-class Xbb_Tags_Simple extends bbcode {
+class Xbb_Tags_Simple extends bbcode
+{
     public $behaviour = 'span';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         switch ($this->tag) {
             case 'b':
                 $this->tag = 'strong';
@@ -33,9 +36,8 @@ class Xbb_Tags_Simple extends bbcode {
             case 'strike':
                 $this->tag = 'del';
         }
-        $html = '<' . $this->tag . ' class="bb">' . parent::get_html() . '</'
+
+        return '<' . $this->tag . ' class="bb">' . parent::get_html() . '</'
             . $this->tag . '>';
-        return $html;
     }
 }
-?>

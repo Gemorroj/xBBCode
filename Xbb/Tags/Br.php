@@ -22,11 +22,13 @@
  ******************************************************************************/
 
 // Класс для тега [br]
-class Xbb_Tags_Br extends bbcode {
+class Xbb_Tags_Br extends bbcode
+{
     public $is_close = true;
     public $behaviour = 'span';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         return '<br class="bb" />' . "\n";
     }
 }
-?>

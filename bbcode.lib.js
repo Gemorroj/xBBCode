@@ -33,12 +33,12 @@ function bbcode(code) {
         pattern   : [
             /(\w+:\/\/[A-z0-9\.\?\+\-\/_=&%#:;]+[\w/=]+)/,
             /([^/])(www\.[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+)/,
-            /([\w]+[\w\-\.]+@[\w\-\.]+\.[\w]+)/,
+            /([\w]+[\w\-\.]+@[\w\-\.]+\.[\w]+)/
         ],
         highlight : [
             '<' + 'span class="bb_autolink">$1<' + '/span>',
             '$1<' + 'span class="bb_autolink">$2<' + '/span>',
-            '<' + 'span class="bb_autolink">$1<' + '/span>',
+            '<' + 'span class="bb_autolink">$1<' + '/span>'
         ]
     };
     /* Подсвечиваемые смайлики и прочие мнемоники. */
@@ -154,7 +154,7 @@ function bbcode(code) {
             token_type = 8;
         }
         return [token_type, token];
-    }
+    };
 
     this.parse = function(code) {
         if (code) { this.text = code; }
@@ -414,7 +414,7 @@ function bbcode(code) {
                 };
             }
         }
-    }
+    };
 
     this.highlight = function() {
         var chars = [
@@ -497,7 +497,7 @@ function bbcode(code) {
         str = this.nl2br(str);
         str = str.replace(/\s\s/, '&nbsp;&nbsp;');
         return str;
-    }
+    };
 
     /*
     Текстовое содержимое узла с заменой <br /> на разрыв строки и окрыжением
@@ -508,7 +508,7 @@ function bbcode(code) {
             return node.innerText;
         }
         if (node.textContent) {
-            for (var t = [], l = (c = node.childNodes).length, p, i = 0; i < l; i++) {
+            for (var c, t = [], l = (c = node.childNodes).length, p, i = 0; i < l; i++) {
                 t[t.length] =
                     'p' == (p = c[i].nodeName.toLowerCase())
                         ? '\n' + c[i].textContent + '\n'
@@ -517,7 +517,7 @@ function bbcode(code) {
             return t.join('');
         }
         return '';
-    }
+    };
 
     /* Аналог функции in_array в PHP */
     this.in_array = function(needle, haystack) {
@@ -527,7 +527,7 @@ function bbcode(code) {
             }
         }
         return false;
-    }
+    };
 
     /* Аналог функции nl2br в PHP */
     this.nl2br = function(str) {
@@ -535,7 +535,7 @@ function bbcode(code) {
             return str.replace(/(\r\n)|(\n\r)|\r|\n/g, '<br />');
         }
         return str;
-    }
+    };
 
     /* Аналог функции htmlspecialchars в PHP */
     this.htmlspecialchars = function(str) {
@@ -545,7 +545,7 @@ function bbcode(code) {
         str = str.replace(/</g, '&lt;');
         str = str.replace(/>/g, '&gt;');
         return str
-    }
+    };
 
     /*
     Аналог функции strtr в PHP
@@ -555,18 +555,18 @@ function bbcode(code) {
     */
     this.strtr = function(str, pairs, to) {
         if ((typeof(pairs)=="object") && (pairs.length)) {
-            for (i in pairs) {
-                str = str.replace(RegExp(pairs[i][0], "g"), pairs[i][1]);
+            for (var i in pairs) {
+                str = str.replace(new RegExp(pairs[i][0], "g"), pairs[i][1]);
             }
             return str;
         } else {
-            pairs2 = new Array();
+            var pairs2 = new Array();
             for (i = 0; i < pairs.length; i++) {
                 pairs2[i] = [pairs.substr(i,1), to.substr(i,1)];
             }
             return strtr(str, pairs2);
         }
-    }
+    };
 
     this.parse();
 }
@@ -708,53 +708,50 @@ function doinsert(text1, text2) {
 
 function tag_url()
 {
-var FoundErrors = '';
-var enterURL   = prompt(text_enter_url, "http://");
-var enterTITLE = prompt(text_enter_url_name, "My WebPage");
+    var FoundErrors = '';
+    var enterURL   = prompt(text_enter_url, "http://");
+    var enterTITLE = prompt(text_enter_url_name, "My WebPage");
 
-if (!enterURL || enterURL=='http://') {FoundErrors = 1;}
-else if (!enterTITLE) {FoundErrors = 1;}
+    if (!enterURL || enterURL=='http://') {FoundErrors = 1;}
+    else if (!enterTITLE) {FoundErrors = 1;}
 
-if (FoundErrors) {return;}
+    if (FoundErrors) {return;}
 
-doinsert ('[url=' + enterURL + ']'+enterTITLE, '[/url]');
+    doinsert ('[url=' + enterURL + ']'+enterTITLE, '[/url]');
 }
 
 function tag_email()
 {
-var emailAddress = prompt(text_enter_email, "");
+    var emailAddress = prompt(text_enter_email, "");
 
-if (!emailAddress) {return;}
+    if (!emailAddress) {return;}
 
-doinsert("[email]"+emailAddress,"[/email]");
+    doinsert("[email]"+emailAddress,"[/email]");
 }
 
 function tag_image()
 {
-var FoundErrors = '';
-var enterURL   = prompt(text_enter_image, "http://");
+    var FoundErrors = '';
+    var enterURL   = prompt(text_enter_image, "http://");
 
-if (!enterURL || enterURL=='http://' || enterURL.length<10) {return;}
+    if (!enterURL || enterURL=='http://' || enterURL.length<10) {return;}
 
-doinsert("[img]"+enterURL,"[/img]");
+    doinsert("[img]"+enterURL,"[/img]");
 }
 
 function tag_list()
 {
-var listvalue = "init";
-var thelist = "";
+    var listvalue = "init";
+    var thelist = "";
 
-while ( (listvalue != "") && (listvalue != null) )
-{
-listvalue = prompt(list_prompt, "");
-if ( (listvalue != "") && (listvalue != null) )
-{
-thelist = thelist+"[*]"+listvalue+"\n";
-}
-}
+    while ( (listvalue != "") && (listvalue != null) ) {
+        listvalue = prompt(list_prompt, "");
+        if ( (listvalue != "") && (listvalue != null) ) {
+            thelist = thelist+"[*]"+listvalue+"\n";
+        }
+    }
 
-if ( thelist != "" )
-{
-doinsert( "[list]\n" + thelist, "[/list]\n");
-}
+    if ( thelist != "" ) {
+        doinsert( "[list]\n" + thelist, "[/list]\n");
+    }
 }

@@ -152,7 +152,7 @@ span.bb_code_lang:before {
 div.bb_code_footer {
     margin: 5px -5px -5px -5px;
     padding: 4px;
-    border-width: 1px 0px 0px 0px;
+    border-width: 1px 0 0 0;
     border-style: solid;
     border-color: #a9b8c2;
     color: #333333;

@@ -22,13 +22,18 @@
  ******************************************************************************/
 
 // Класс для тегов [a], [anchor] и [url]
-class Xbb_Tags_A extends bbcode {
+class Xbb_Tags_A extends bbcode
+{
     public $behaviour = 'a';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $this -> autolinks = false;
         $text = '';
         foreach ($this -> tree as $val) {
-            if ('text' == $val['type']) { $text .= $val['str']; }
+            if ('text' === $val['type']) {
+                $text .= $val['str'];
+            }
         }
         $href = '';
         if (isset($this -> attrib['url'])) {
@@ -40,15 +45,17 @@ class Xbb_Tags_A extends bbcode {
         if (! $href && isset($this -> attrib['href'])) {
             $href = $this -> attrib['href'];
         }
-        if (! $href && ! isset($this -> attrib['anchor'])) { $href = $text; }
-        $href = $this -> checkUrl($href);
+        if (! $href && ! isset($this -> attrib['anchor'])) {
+            $href = $text;
+        }
+        $href = $this -> _checkUrl($href);
         $attr = 'class="bb"';
         if ($href) {
-            $attr .= ' href="'.$href.'"';
+            $attr .= ' href="' . $href . '"';
         }
         if (isset($this -> attrib['title'])) {
             $title = $this -> attrib['title'];
-            $attr .= ' title="'.htmlspecialchars($title).'"';
+            $attr .= ' title="' . htmlspecialchars($title) . '"';
         }
         $id = '';
         if (isset($this -> attrib['id'])) {
@@ -62,14 +69,16 @@ class Xbb_Tags_A extends bbcode {
             if (! $id) { $id = $text; }
         }
         if ($id) {
-            if ($id{0} < 'A' || $id{0} > 'z') { $id = 'bb'.$id; }
-            $attr .= ' id="'.htmlspecialchars($id).'"';
+            if ($id{0} < 'A' || $id{0} > 'z') {
+                $id = 'bb' . $id;
+            }
+            $attr .= ' id="' . htmlspecialchars($id) . '"';
         }
         if (isset($this -> attrib['target'])) {
             $target = $this -> attrib['target'];
-            $attr .= ' target="'.htmlspecialchars($target).'"';
+            $attr .= ' target="' . htmlspecialchars($target) . '"';
         }
-        return '<a '.$attr.'>'.parent::get_html($this -> tree).'</a>';
+
+        return '<a ' . $attr . '>' . parent::get_html($this -> tree) . '</a>';
     }
 }
-?>

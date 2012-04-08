@@ -22,11 +22,14 @@
  ******************************************************************************/
 
 // Класс для тегов [list], [ol], [ul]
-class Xbb_Tags_List extends bbcode {
+class Xbb_Tags_List extends bbcode
+{
     public $lbr = 1;
     public $rbr = 1;
     public $behaviour = 'ul';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $tag_name = 'ul';
         $type = '';
         switch ($this->tag) {
@@ -42,14 +45,13 @@ class Xbb_Tags_List extends bbcode {
                 $this->tag = 'del';
         }
         $attr = ' class="bb"';
-        if ('1' == $type) {
+        if ('1' === $type) {
             $attr .= ' type="1"';
         } elseif ($type) {
             $attr .= ' type="a"';
         }
-        $str = '<' . $tag_name . $attr . '>' . parent::get_html() . '</'
+
+        return '<' . $tag_name . $attr . '>' . parent::get_html() . '</'
             . $tag_name . '>';
-        return $str;
     }
 }
-?>

@@ -22,19 +22,22 @@
  ******************************************************************************/
 
 // Класс для тегов [quote] и [blockquote]
-class Xbb_Tags_Quote extends bbcode {
+class Xbb_Tags_Quote extends bbcode
+{
     public $rbr = 1;
-    function get_html($tree = null) {
-        if ('blockquote' == $this->tag) {
-            $author = htmlspecialchars($this->attrib['blockquote']);
+
+    public function get_html($tree = null)
+    {
+        if ('blockquote' === $this->tag) {
+            $author = htmlspecialchars($this->attrib['blockquote'], ENT_NOQUOTES);
         } else {
-            $author = htmlspecialchars($this->attrib['quote']);
+            $author = htmlspecialchars($this->attrib['quote'], ENT_NOQUOTES);
         }
         if ($author) {
             $author = '<div class="bb_quote_author">' . $author . '</div>';
         }
+
         return '<blockquote class="bb_quote">' . $author
             . parent::get_html($this -> tree) . '</blockquote>';
     }
 }
-?>

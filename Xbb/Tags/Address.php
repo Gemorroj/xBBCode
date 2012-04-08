@@ -22,11 +22,13 @@
  ******************************************************************************/
 
 // Класс для тега [address]
-class Xbb_Tags_Address extends bbcode {
+class Xbb_Tags_Address extends bbcode
+{
     public $rbr = 1;
-    function get_html($tree = null) {
-        return '<address class="bb">'.parent::get_html($this -> tree)
-            .'</address>';
+
+    public function get_html($tree = null)
+    {
+        return '<address class="bb">' . parent::get_html($this -> tree)
+            . '</address>';
     }
 }
-?>

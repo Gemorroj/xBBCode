@@ -22,28 +22,34 @@
  ******************************************************************************/
 
 // Класс для тега [img]
-class Xbb_Tags_Img extends bbcode {
+class Xbb_Tags_Img extends bbcode
+{
     public $behaviour = 'img';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
+        //TODO:добавить аттрибуты alt и title
         $attr = 'alt=""';
         if (isset($this -> attrib['width'])) {
             $width = (int) $this -> attrib['width'];
-            $attr .= $width ? ' width="'.$width.'"' : '';
+            $attr .= $width ? ' width="' . $width . '"' : '';
         }
         if (isset($this -> attrib['height'])) {
             $height = (int) $this -> attrib['height'];
-            $attr .= $height ? ' height="'.$height.'"' : '';
+            $attr .= $height ? ' height="' . $height . '"' : '';
         }
         if (isset($this -> attrib['border'])) {
             $border = (int) $this -> attrib['border'];
-            $attr .= ' border="'.$border.'"';
+            $attr .= ' border="' . $border . '"';
         }
         $src = '';
         foreach ($this -> tree as $text) {
-            if ('text' == $text['type']) { $src .= $text['str']; }
+            if ('text' === $text['type']) {
+                $src .= $text['str'];
+            }
         }
-        $src = $this -> checkUrl($src);
-        return '<img src="'.$src.'" '.$attr.' />';
+        $src = $this -> _checkUrl($src);
+
+        return '<img src="' . $src . '" ' . $attr . ' />';
     }
 }
-?>

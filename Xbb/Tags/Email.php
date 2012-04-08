@@ -22,34 +22,39 @@
  ******************************************************************************/
 
 // Класс для тега [email]
-class Xbb_Tags_Email extends bbcode {
+class Xbb_Tags_Email extends bbcode
+{
     public $behaviour = 'a';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $this -> autolinks = false;
         $attr = ' class="bb_email"';
         $href = $this -> attrib['email'];
         if (! $href) {
             foreach ($this -> tree as $text) {
-                if ('text' == $text['type']) { $href .= $text['str']; }
+                if ('text' === $text['type']) {
+                    $href .= $text['str'];
+                }
             }
         }
         $protocols = array('mailto:');
         $is_http = false;
         foreach ($protocols as $val) {
-            if ($val == substr($href,0,strlen($val))) {
+            if ($val === substr($href, 0, strlen($val))) {
                 $is_http = true;
                 break;
             }
         }
-        if (! $is_http) { $href = 'mailto:'.$href; }
-        if ($href) { $attr .= ' href="'.htmlspecialchars($href).'"'; }
+        if (! $is_http) { $href = 'mailto:' . $href; }
+        if ($href) { $attr .= ' href="' . htmlspecialchars($href) . '"'; }
         $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
-        if ($title) { $attr .= ' title="'.htmlspecialchars($title).'"'; }
+        if ($title) { $attr .= ' title="' . htmlspecialchars($title) . '"'; }
         $name = isset($this -> attrib['name']) ? $this -> attrib['name'] : '';
-        if ($name) { $attr .= ' name="'.htmlspecialchars($name).'"'; }
+        if ($name) { $attr .= ' name="' . htmlspecialchars($name) . '"'; }
         $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
-        if ($target) { $attr .= ' target="'.htmlspecialchars($target).'"'; }
-        return '<a'.$attr.'>'.parent::get_html($this -> tree).'</a>';
+        if ($target) { $attr .= ' target="' . htmlspecialchars($target) . '"'; }
+
+        return '<a' . $attr . '>' . parent::get_html($this -> tree) . '</a>';
     }
 }
-?>

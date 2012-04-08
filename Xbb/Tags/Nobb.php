@@ -22,9 +22,12 @@
  ******************************************************************************/
 
 // Класс для тега [nobb]
-class Xbb_Tags_Nobb extends bbcode {
+class Xbb_Tags_Nobb extends bbcode
+{
     public $behaviour = 'code';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $str = '';
         foreach ($this -> tree as $item) {
             if ('text' === $item['type']) {
@@ -32,7 +35,7 @@ class Xbb_Tags_Nobb extends bbcode {
             }
         }
         $str = str_replace('  ', '&#160;&#160;', $str);
+
         return $str;
     }
 }
-?>

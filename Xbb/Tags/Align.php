@@ -22,9 +22,12 @@
  ******************************************************************************/
 
 // Класс для тегов [align], [center], [justify], [left] и [right]
-class Xbb_Tags_Align extends bbcode {
+class Xbb_Tags_Align extends bbcode
+{
     public $rbr = 1;
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $align = '';
         if (isset($this -> attrib['justify'])) { $align = 'justify'; }
         if (isset($this -> attrib['left'])) { $align = 'left'; }
@@ -46,8 +49,9 @@ class Xbb_Tags_Align extends bbcode {
                     break;
             }
         }
-        return '<div class="bb" align="'.$align.'">'
-            .parent::get_html($this -> tree).'</div>';
+
+        return '<div class="bb" align="' . $align . '">'
+            . parent::get_html($this -> tree) . '</div>';
     }
 }
 ?>

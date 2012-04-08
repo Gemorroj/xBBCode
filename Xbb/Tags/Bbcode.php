@@ -22,12 +22,17 @@
  ******************************************************************************/
 
 // Класс для тега [bbcode]
-class Xbb_Tags_Bbcode extends bbcode {
-	public $behaviour = 'code';
-    function get_html($tree = null) {
+class Xbb_Tags_Bbcode extends bbcode
+{
+    public $behaviour = 'code';
+
+    public function get_html($tree = null)
+    {
         $str = '';
         foreach ($this -> tree as $item) {
-            if ('item' == $item['type']) { continue; }
+            if ('item' === $item['type']) {
+                continue;
+            }
             $str .= $item['str'];
         }
         $bb = new bbcode();
@@ -35,7 +40,7 @@ class Xbb_Tags_Bbcode extends bbcode {
         $bb -> mnemonics = $this -> mnemonics;
         $bb -> autolinks = $this -> autolinks;
         $bb -> parse($str);
-        return '<code class="bb_code">'.$bb -> highlight().'</code>';
+
+        return '<code class="bb_code">' . $bb -> highlight() . '</code>';
     }
 }
-?>

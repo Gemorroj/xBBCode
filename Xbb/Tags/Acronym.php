@@ -22,16 +22,19 @@
  ******************************************************************************/
 
 // Класс для тега [acronym]
-class Xbb_Tags_Acronym extends bbcode {
+class Xbb_Tags_Acronym extends bbcode
+{
     public $behaviour = 'span';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $attrib = 'class="bb"';
         if ($this -> attrib['acronym']) {
-            $attrib .= ' title="'.htmlspecialchars($this -> attrib['acronym'])
-                .'"';
+            $attrib .= ' title="' . htmlspecialchars($this -> attrib['acronym'])
+                . '"';
         }
-        return '<acronym '.$attrib.'>'.parent::get_html($this -> tree)
-            .'</acronym>';
+
+        return '<acronym ' . $attrib . '>' . parent::get_html($this -> tree)
+            . '</acronym>';
     }
 }
-?>

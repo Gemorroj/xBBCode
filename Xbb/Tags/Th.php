@@ -22,27 +22,34 @@
  ******************************************************************************/
 
 // Класс для тега [th]
-class Xbb_Tags_Th extends bbcode {
+class Xbb_Tags_Th extends bbcode
+{
     public $behaviour = 'td';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $attr = ' class="bb"';
         $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : '';
-        if ($width) { $attr .= ' width="'.htmlspecialchars($width).'"'; }
+        if ($width) { $attr .= ' width="' . htmlspecialchars($width) . '"'; }
         $height = isset($this -> attrib['height']) ? $this -> attrib['height'] : '';
-        if ($height) { $attr .= ' height="'.htmlspecialchars($height).'"'; }
+        if ($height) { $attr .= ' height="' . htmlspecialchars($height) . '"'; }
         $align = isset($this -> attrib['align']) ? $this -> attrib['align'] : '';
-        if ($align) { $attr .= ' align="'.htmlspecialchars($align).'"'; }
+        if ($align) { $attr .= ' align="' . htmlspecialchars($align) . '"'; }
         $valign = isset($this -> attrib['valign']) ? $this -> attrib['valign'] : '';
-        if ($valign) { $attr .= ' valign="'.htmlspecialchars($valign).'"'; }
+        if ($valign) { $attr .= ' valign="' . htmlspecialchars($valign) . '"'; }
         if (isset($this -> attrib['colspan'])) {
             $colspan = (int) $this -> attrib['colspan'];
-            if ($colspan) { $attr .= ' colspan="'.$colspan.'"'; }
+            if ($colspan) {
+                $attr .= ' colspan="' . $colspan . '"';
+            }
         }
         if (isset($this -> attrib['rowspan'])) {
             $rowspan = (int) $this -> attrib['rowspan'];
-            if ($rowspan) { $attr .= ' rowspan="'.$rowspan.'"'; }
+            if ($rowspan) {
+                $attr .= ' rowspan="' . $rowspan . '"';
+            }
         }
-        return '<th'.$attr.'>'.parent::get_html($this -> tree).'</th>';
+
+        return '<th' . $attr . '>' . parent::get_html($this -> tree) . '</th>';
     }
 }
-?>

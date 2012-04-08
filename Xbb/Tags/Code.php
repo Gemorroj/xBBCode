@@ -22,7 +22,8 @@
  ******************************************************************************/
 
 /* Класс для тегов подсветки синтаксиса и для тегов [code] и [pre] */
-class Xbb_Tags_Code extends bbcode {
+class Xbb_Tags_Code extends bbcode
+{
     /* Число разрывов строк, которые должны быть игнорированы перед тегом */
     public $lbr = 0;
     /* Число разрывов строк, которые должны быть игнорированы после тега */
@@ -44,18 +45,22 @@ class Xbb_Tags_Code extends bbcode {
     );
     /* Объект GeSHi */
     private $_geshi;
+
     /* Конструктор класса */
-    function Xbb_Tags_Code() {
+    public function __construct()
+    {
         $geshi_path = realpath(
             dirname(__FILE__) . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR
             . '..' . DIRECTORY_SEPARATOR . 'lib' . DIRECTORY_SEPARATOR . 'geshi.php'
         );
         @include_once $geshi_path;
-        @$this->_geshi =  new GeSHi('', 'text');
+        $this->_geshi = new GeSHi('', 'text');
         $this->_geshi->set_header_type(GESHI_HEADER_NONE);
     }
+
     /* Описываем конвертацию в HTML */
-    function get_html($tree = null) {
+    public function get_html($tree = null)
+    {
         // Находим язык подсветки
         switch ($this->tag) {
             case 'code':
@@ -66,16 +71,19 @@ class Xbb_Tags_Code extends bbcode {
                 break;
             default:
                 $language = $this->tag;
+                break;
         }
         if (! $language) { $language = 'text'; }
         if (isset($this->lang_synonym[$language])) {
             $language = $this->lang_synonym[$language];
         }
-        @$this->_geshi->set_language($language);
+        $this->_geshi->set_language($language);
         // Находим подсвечиваемый код
         $source = '';
         foreach ($this->tree as $item) {
-            if ('item' == $item['type']) { continue; }
+            if ('item' === $item['type']) {
+                continue;
+            }
             $source .= $item['str'];
         }
         $this->_geshi->set_source($source);
@@ -109,7 +117,7 @@ class Xbb_Tags_Code extends bbcode {
             $result = htmlspecialchars($this->attrib['title'], ENT_NOQUOTES);
         }
         // Получаем подсвеченный код
-        $result = '<div class="bb_code"><div class="bb_code_header">' .$result
+        $result = '<div class="bb_code"><div class="bb_code_header">' . $result
             . '</div>' . $this->_geshi->parse_code();
         // Формируем подпись под кодом
         if (isset($this->attrib['footer'])) {
@@ -117,8 +125,8 @@ class Xbb_Tags_Code extends bbcode {
             $content = '<div class="bb_code_footer">' . $content . '</div>';
             $result .= $content;
         }
+
         // Возвращаем результат
         return $result . '</div>';
     }
 }
-?>

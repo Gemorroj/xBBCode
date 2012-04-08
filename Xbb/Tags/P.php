@@ -22,15 +22,18 @@
  ******************************************************************************/
 
 // Класс для тега [p] и тегов [h1], [h2], [h3], [h4], [h5], [h6].
-class Xbb_Tags_P extends bbcode {
+class Xbb_Tags_P extends bbcode
+{
     public $lbr = 2;
     public $rbr = 2;
     public $behaviour = 'p';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $str = "\n<" . $this->tag . ' class="bb"';
         $align = isset($this->attrib['align']) ? $this->attrib['align'] : '';
-        if ($align) { $str .= ' align="'.htmlspecialchars($align).'"'; }
+        if ($align) { $str .= ' align="' . htmlspecialchars($align) . '"'; }
+
         return $str . '>' . parent::get_html() . '</' . $this->tag . ">\n";
     }
 }
-?>

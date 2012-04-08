@@ -22,11 +22,13 @@
  ******************************************************************************/
 
 // Класс для тега [caption]
-class Xbb_Tags_Caption extends bbcode {
+class Xbb_Tags_Caption extends bbcode
+{
 	public $behaviour = 'caption';
-    function get_html($tree = null) {
-        return '<caption class="bb">'.parent::get_html($this -> tree)
-            .'</caption>';
+
+    public function get_html($tree = null)
+    {
+        return '<caption class="bb">' . parent::get_html($this -> tree)
+            . '</caption>';
     }
 }
-?>

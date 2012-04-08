@@ -22,14 +22,17 @@
  ******************************************************************************/
 
 // Класс для тега [size]
-class Xbb_Tags_Size extends bbcode {
+class Xbb_Tags_Size extends bbcode
+{
     public $behaviour = 'span';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $sign = '';
         if (strlen($this -> attrib['size'])) {
             $sign = $this -> attrib['size']{0};
         }
-        if ('+' != $sign) { $sign = ''; }
+        if ('+' !== $sign) { $sign = ''; }
         $size = (int) $this -> attrib['size'];
         if (7 < $size) {
             $size = 7;
@@ -42,8 +45,8 @@ class Xbb_Tags_Size extends bbcode {
         if (0 == $size) {
             $size = 3;
         }
-        $size = $sign.$size;
-        return '<font size="'.$size.'">'.parent::get_html($this -> tree).'</font>';
+        $size = $sign . $size;
+
+        return '<font size="' . $size . '">' . parent::get_html($this -> tree) . '</font>';
     }
 }
-?>

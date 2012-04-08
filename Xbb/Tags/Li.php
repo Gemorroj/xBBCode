@@ -22,15 +22,18 @@
  ******************************************************************************/
 
 // Класс для тега [*]
-class Xbb_Tags_Li extends bbcode {
+class Xbb_Tags_Li extends bbcode
+{
     public $behaviour = 'li';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $attrib = 'class="bb"';
         if ('' !== $this -> attrib['*']) {
             $this -> attrib['*'] = (int) $this -> attrib['*'];
-            $attrib .= ' value="'.$this -> attrib['*'].'"';
+            $attrib .= ' value="' . $this -> attrib['*'] . '"';
         }
-        return '<li '.$attrib.'>'.parent::get_html($this -> tree).'</li>';
+
+        return '<li ' . $attrib . '>' . parent::get_html($this -> tree) . '</li>';
     }
 }
-?>

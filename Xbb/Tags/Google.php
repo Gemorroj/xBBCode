@@ -22,18 +22,22 @@
  ******************************************************************************/
 
 // Класс для тега [google]
-class Xbb_Tags_Google extends bbcode {
+class Xbb_Tags_Google extends bbcode
+{
     public $behaviour = 'a';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
+        //TODO:нужен ли htmlspecialchars?
         $attr = htmlspecialchars(rawurlencode($this -> attrib['google']));
-        $attr = ' href="http://www.google.com/search?q='.$attr.'"';
+        $attr = ' href="http://www.google.com/search?q=' . $attr . '"';
         $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
-        if ($title) { $attr .= ' title="'.htmlspecialchars($title).'"'; }
+        if ($title) { $attr .= ' title="' . htmlspecialchars($title) . '"'; }
         $name = isset($this -> attrib['name']) ? $this -> attrib['name'] : '';
-        if ($name) { $attr .= ' name="'.htmlspecialchars($name).'"'; }
+        if ($name) { $attr .= ' name="' . htmlspecialchars($name) . '"'; }
         $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
-        if ($target) { $attr .= ' target="'.htmlspecialchars($target).'"'; }
-        return '<a class="bb_google" '.$attr.'>'.parent::get_html($this -> tree).'</a>';
+        if ($target) { $attr .= ' target="' . htmlspecialchars($target) . '"'; }
+
+        return '<a class="bb_google" ' . $attr . '>' . parent::get_html($this -> tree) . '</a>';
     }
 }
-?>

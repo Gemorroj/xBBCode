@@ -22,14 +22,16 @@
  ******************************************************************************/
 
 // Класс для тега [abbr]
-class Xbb_Tags_Abbr extends bbcode {
+class Xbb_Tags_Abbr extends bbcode
+{
     public $behaviour = 'span';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $attrib = 'class="bb"';
         if ($this -> attrib['abbr']) {
-            $attrib .= ' title="'.htmlspecialchars($this -> attrib['abbr']).'"';
+            $attrib .= ' title="' . htmlspecialchars($this -> attrib['abbr']) . '"';
         }
-        return '<abbr '.$attrib.'>'.parent::get_html($this -> tree).'</abbr>';
+        return '<abbr ' . $attrib . '>' . parent::get_html($this -> tree) . '</abbr>';
     }
 }
-?>

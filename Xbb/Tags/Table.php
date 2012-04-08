@@ -22,33 +22,38 @@
  ******************************************************************************/
 
 // Класс для тега [table]
-class Xbb_Tags_Table extends bbcode {
+class Xbb_Tags_Table extends bbcode
+{
     public $rbr = 1;
     public $behaviour = 'table';
-    function get_html($tree = null) {
+
+    public function get_html($tree = null)
+    {
         $attr = ' class="bb"';
         $border = isset($this -> attrib['border'])
             ? (int) $this -> attrib['border']
             : null;
-        if (null !== $border) { $attr .= ' border="'.$border.'"'; }
+        if (null !== $border) { $attr .= ' border="' . $border . '"'; }
         $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : '';
-        if ($width) { $attr .= ' width="'.htmlspecialchars($width).'"'; }
+        if ($width) { $attr .= ' width="' . htmlspecialchars($width) . '"'; }
         $cellspacing = isset($this -> attrib['cellspacing'])
             ? (int) $this -> attrib['cellspacing']
             : null;
-        if (null !== $cellspacing) { $attr .= ' cellspacing="'.$cellspacing.'"'; }
+        if (null !== $cellspacing) { $attr .= ' cellspacing="' . $cellspacing . '"'; }
         $cellpadding = isset($this -> attrib['cellpadding'])
             ? (int) $this -> attrib['cellpadding']
             : null;
-        if (null !== $cellpadding) { $attr .= ' cellpadding="'.$cellpadding.'"'; }
+        if (null !== $cellpadding) { $attr .= ' cellpadding="' . $cellpadding . '"'; }
         $align = isset($this -> attrib['align']) ? $this -> attrib['align'] : '';
-        if ($align) { $attr .= ' align="'.htmlspecialchars($align).'"'; }
-        $str = '<table'.$attr.'>';
+        if ($align) { $attr .= ' align="' . htmlspecialchars($align) . '"'; }
+        $str = '<table' . $attr . '>';
         foreach ($this -> tree as $key => $item) {
-            if ('text' == $item['type']) { unset($this -> tree[$key]); }
+            if ('text' === $item['type']) {
+                unset($this -> tree[$key]);
+            }
         }
-        $str .= parent::get_html($this -> tree).'</table>';
+        $str .= parent::get_html($this -> tree) . '</table>';
+
         return $str;
     }
 }
-?>
