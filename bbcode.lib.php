@@ -493,11 +493,20 @@ class bbcode
 				}
                 break;
             case 15:
-                $name = strtolower($token[1]);
-                $decomposition['str'] .= $token[1];
-                $decomposition['layout'][] = array(6, $token[1]);
-                $decomposition['attrib'][$name] = '';
-                break;
+				if ($oneattrib_set) // Аналогично 13
+				{
+					$decomposition['attrib'][$name] = $token[1];
+					$value = $token[1];
+					$decomposition['str'] .= $token[1];
+				}
+				else
+				{
+					$name = strtolower($token[1]);
+					$decomposition['str'] .= $token[1];
+					$decomposition['layout'][] = array(6, $token[1]);
+					$decomposition['attrib'][$name] = '';
+					break;
+				}
             case 16:
                 $decomposition['str'] .= $token[1];
                 $decomposition['attrib'][$name] .= $token[1];
