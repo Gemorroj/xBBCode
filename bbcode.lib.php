@@ -359,6 +359,7 @@ class bbcode
         $type = false;
         $this ->_cursor = 0;
 		$oneattrib_set = false;
+		$spacesave = '';
         // Сканируем массив лексем с помощью построенного автомата:
         while ($token = $this -> _get_token()) {
             $previous_mode = $mode;
@@ -427,18 +428,6 @@ class bbcode
                 $decomposition['str'] .= $token[1];
                 $decomposition['layout'][] = array(2, $token[1]);
                 $decomposition['attrib'][$name] = '';
-				/* Включаем режим пробельных незакавыченных тегов если нужно */
-				$this->_includeTagFile($decomposition['name']);
-            	$handler = $this->tags[$decomposition['name']];
-                $class_vars = get_class_vars($handler);
-				if ($class_vars['oneattrib']) // Переписываем некоторые обработки
-				{
-					$finite_automaton[8][6] = 13;
-					$finite_automaton[20][7] = 19;
-					$finite_automaton[20][8] = 19;
-					$finite_automaton[13][6] = 19;
-					$finite_automaton[19][6] = 19;
-				}
                 break;
             case 6:
                 if (! isset($decomposition['name'])) {
@@ -462,6 +451,7 @@ class bbcode
             case 8:
                 $decomposition['str'] .= '=';
                 $decomposition['layout'][] = array(3, '=');
+				$spacesave = '';
                 break;
             case 9:
                 $decomposition['type'] = 'open/close';
@@ -483,13 +473,26 @@ class bbcode
                 $value = '';
                 break;
             case 13:
-                $decomposition['attrib'][$name] = $token[1];
+                /* Включаем режим пробельных незакавыченных тегов если нужно */
+				$this->_includeTagFile($decomposition['name']);
+            	$handler = $this->tags[$decomposition['name']];
+                $class_vars = get_class_vars($handler);
+				if ($class_vars['oneattrib']) // Переписываем некоторые обработки
+				{
+					$finite_automaton[8][6] = 13;
+					$finite_automaton[20][7] = 19;
+					$finite_automaton[20][8] = 19;
+					$finite_automaton[13][6] = 19;
+					$finite_automaton[19][6] = 19;
+				}
+				$decomposition['attrib'][$name] = $token[1];
                 $value = $token[1];
-                $decomposition['str'] .= $token[1];
+                $decomposition['str'] .= $spacesave.$token[1];
                 break;
             case 14:
 				$decomposition['str'] .= $token[1];
 				$decomposition['layout'][] = array(4, $token[1]);
+				$spacesave .= $token[1];
                 break;
             case 15:
 				$name = strtolower($token[1]);
