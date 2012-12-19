@@ -37,7 +37,7 @@ class bbcode
     Задаёт возможность наличия лишь одного атрибута у тега, но без необходимости наличия кавычек для значений с пробелами. (Пример: [altfont=Comic Sans MS]sometext[/altfont])
 	По умолчанию выключено
     */
-    public $this->oneattrib = false;
+    public $oneattrib = false;
     /*
     Текст BBCode
     */
