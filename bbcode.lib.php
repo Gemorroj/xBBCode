@@ -357,6 +357,7 @@ class bbcode
         $name = '';
         $type = false;
         $this ->_cursor = 0;
+		$oneattrib_set = false;
         // Сканируем массив лексем с помощью построенного автомата:
         while ($token = $this -> _get_token()) {
             $previous_mode = $mode;
@@ -425,6 +426,11 @@ class bbcode
                 $decomposition['str'] .= $token[1];
                 $decomposition['layout'][] = array(2, $token[1]);
                 $decomposition['attrib'][$name] = '';
+				/* Включаем режим пробельных незакавыченных тегов если нужно */
+				$this->_includeTagFile($decomposition['name']);
+            	$handler = $this->tags[$decomposition['name']];
+                $class_vars = get_class_vars($handler);
+				$oneattrib_set = $class_vars['oneattrib'];
                 break;
             case 6:
                 if (! isset($decomposition['name'])) {
@@ -442,6 +448,8 @@ class bbcode
                 $decomposition['name'] = strtolower($token[1]);
                 $decomposition['str'] .= $token[1];
                 $decomposition['layout'][] = array(2, $token[1]);
+				/* При выходе из тега возвращаем умолчальное значение пробельных незакавыченных тегов */
+				$oneattrib_set = $this->oneattrib;
                 break;
             case 8:
                 $decomposition['str'] .= '=';
@@ -472,7 +480,7 @@ class bbcode
                 $decomposition['str'] .= $token[1];
                 break;
             case 14:
-				if ($this->oneattrib) // Аналогично 13
+				if ($oneattrib_set) // Аналогично 13
 				{
 					$decomposition['attrib'][$name] = $token[1];
 					$value = $token[1];
@@ -496,7 +504,7 @@ class bbcode
                 $value .= $token[1];
                 break;
             case 17:
-				if ($this->oneattrib && (13 == $previous_mode || 19 == $previous_mode) ) // Аналогично 19
+				if ($oneattrib_set && (13 == $previous_mode || 19 == $previous_mode) ) // Аналогично 19
 				{
 					$decomposition['str'] .= $token[1];
 					$decomposition['attrib'][$name] .= $token[1];
@@ -521,7 +529,7 @@ class bbcode
                 $value .= $token[1];
                 break;
             case 20:
-				if ($this->oneattrib && (13 == $previous_mode || 19 == $previous_mode) ) // Аналогично 19
+				if ($oneattrib_set && (13 == $previous_mode || 19 == $previous_mode) ) // Аналогично 19
 				{
 					$decomposition['str'] .= $token[1];
 					$decomposition['attrib'][$name] .= $token[1];
