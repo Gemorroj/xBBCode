@@ -493,11 +493,11 @@ class bbcode
 				}
                 break;
             case 15:
-				if ($oneattrib_set) // Аналогично 13
+				if ($oneattrib_set) // Аналогично 19
 				{
-					$decomposition['attrib'][$name] = $token[1];
-					$value = $token[1];
 					$decomposition['str'] .= $token[1];
+					$decomposition['attrib'][$name] .= $token[1];
+					$value .= $token[1];
 				}
 				else
 				{
