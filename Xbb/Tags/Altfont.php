@@ -34,7 +34,7 @@ class Xbb_Tags_Altfont extends bbcode
 		
 		if (isset($this->attrib['font']))
 		{
-			$face = this->attrib['font'];
+			$face = $this->attrib['font'];
 		}
 		else
 		    $face = $this -> attrib['altfont'];
