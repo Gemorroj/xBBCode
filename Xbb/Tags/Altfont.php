@@ -27,7 +27,9 @@ class Xbb_Tags_Altfont extends bbcode
     public $behaviour = 'span';
 	
 	public $oneattrib = true;
-
+	function __construct() {
+		   echo "ALTFONT CREATED<br><br>";
+	   }
     public function get_html($tree = null)
     {
         $attr = '';
