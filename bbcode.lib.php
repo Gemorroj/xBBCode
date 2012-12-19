@@ -33,6 +33,11 @@ class bbcode
     Пуст, если экземпляр не сопоставлен никакому тегу.
     */
     public $attrib = array();
+	/*
+    Задаёт возможность наличия лишь одного атрибута у тега, но без необходимости наличия кавычек для значений с пробелами. (Пример: [altfont=Comic Sans MS]sometext[/altfont])
+	По умолчанию выключено
+    */
+    public $this->oneattrib = false;
     /*
     Текст BBCode
     */
@@ -467,8 +472,17 @@ class bbcode
                 $decomposition['str'] .= $token[1];
                 break;
             case 14:
-                $decomposition['str'] .= $token[1];
-                $decomposition['layout'][] = array(4, $token[1]);
+				if ($this->oneattrib) // Аналогично 13
+				{
+					$decomposition['attrib'][$name] = $token[1];
+					$value = $token[1];
+					$decomposition['str'] .= $token[1];
+				}
+				else
+				{
+					$decomposition['str'] .= $token[1];
+					$decomposition['layout'][] = array(4, $token[1]);
+				}
                 break;
             case 15:
                 $name = strtolower($token[1]);
@@ -482,10 +496,19 @@ class bbcode
                 $value .= $token[1];
                 break;
             case 17:
-                $decomposition['str'] .= $token[1];
-                $decomposition['layout'][] = array(7, $value);
-                $value = '';
-                $decomposition['layout'][] = array(5, $token[1]);
+				if ($this->oneattrib && (13 == $previous_mode || 19 == $previous_mode) ) // Аналогично 19
+				{
+					$decomposition['str'] .= $token[1];
+					$decomposition['attrib'][$name] .= $token[1];
+					$value .= $token[1];
+				}
+				else
+				{
+					$decomposition['str'] .= $token[1];
+					$decomposition['layout'][] = array(7, $value);
+					$value = '';
+					$decomposition['layout'][] = array(5, $token[1]);
+				}
                 break;
             case 18:
                 $decomposition['str'] .= $token[1];
@@ -498,12 +521,21 @@ class bbcode
                 $value .= $token[1];
                 break;
             case 20:
-                $decomposition['str'] .= $token[1];
-                if ( 13 == $previous_mode || 19 == $previous_mode ) {
-                    $decomposition['layout'][] = array(7, $value);
-                }
-                $value = '';
-                $decomposition['layout'][] = array(4, $token[1]);
+				if ($this->oneattrib && (13 == $previous_mode || 19 == $previous_mode) ) // Аналогично 19
+				{
+					$decomposition['str'] .= $token[1];
+					$decomposition['attrib'][$name] .= $token[1];
+					$value .= $token[1];
+				}
+				else
+				{
+					$decomposition['str'] .= $token[1];
+					if ( 13 == $previous_mode || 19 == $previous_mode ) {
+						$decomposition['layout'][] = array(7, $value);
+					}
+					$value = '';
+					$decomposition['layout'][] = array(4, $token[1]);
+				}
                 break;
             }
         }

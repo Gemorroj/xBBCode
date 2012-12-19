@@ -48,6 +48,7 @@ $tags = array(
     'em'           => 'Xbb_Tags_Simple' ,
     'email'        => 'Xbb_Tags_Email'  ,
     'font'         => 'Xbb_Tags_Font'   ,
+	'altfont'         => 'Xbb_Tags_Altfont'   ,
     'google'       => 'Xbb_Tags_Google' ,
     'h1'           => 'Xbb_Tags_P'      ,
     'h2'           => 'Xbb_Tags_P'      ,
