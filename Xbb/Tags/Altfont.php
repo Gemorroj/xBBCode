@@ -31,7 +31,7 @@ class Xbb_Tags_Altfont extends bbcode
     public function get_html($tree = null)
     {
         $attr = '';
-        $face = $this -> attrib['altfont'];
+        $face = $this -> attrib['font'];
 		
         if ($face) {
             $attr .= ' face="' . htmlspecialchars($face) . '"';
