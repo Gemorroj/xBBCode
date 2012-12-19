@@ -141,11 +141,22 @@ class bbcode
      *
      * @param array|string $code
      */
-    public function __construct ($code = null)
+    public function __construct ($code = null, $allowed = null)
     {
         $this->_current_path = dirname(__FILE__) . DIRECTORY_SEPARATOR;
         require $this->_current_path . 'config' . DIRECTORY_SEPARATOR . 'parser.config.php';
         require $this->_current_path . 'config' . DIRECTORY_SEPARATOR . 'tags.php';
+		// Removing all traces of parsing of disallowed tags. In case if $allowed is not an array, assuming that everything is allowed
+		if (is_array($allowed))
+		{
+			foreach ($tags as $key => $value)
+			{
+				if (!in_array($key, $allowed))
+				{
+					unset($tags[$key]);
+				}
+			}
+		}
         $this->tags = $tags;
         $this->_children = $children;
         $this->_ends = $ends;
