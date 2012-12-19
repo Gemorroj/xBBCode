@@ -323,7 +323,7 @@ class bbcode
 
         Описание конечного автомата:
         */
-        $finite_automaton = array(
+        $finite_automaton_orig = array(
                // Предыдущие |   Состояния для текущих событий (лексем)   |
                //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
                    0 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
@@ -349,6 +349,7 @@ class bbcode
                 , 20 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 ,  3 , 15 , 15 )
             );
         // Закончили описание конечного автомата
+		$finite_automaton = $finite_automaton_orig;
         $mode = 0;
         $this->syntax = array();
         $decomposition = array();
@@ -430,7 +431,14 @@ class bbcode
 				$this->_includeTagFile($decomposition['name']);
             	$handler = $this->tags[$decomposition['name']];
                 $class_vars = get_class_vars($handler);
-				$oneattrib_set = $class_vars['oneattrib'];
+				if ($class_vars['oneattrib']) // Переписываем некоторые обработки
+				{
+					$finite_automaton[8][6] = 13;
+					$finite_automaton[20][7] = 19;
+					$finite_automaton[20][8] = 19;
+					$finite_automaton[13][6] = 19;
+					$finite_automaton[19][6] = 19;
+				}
                 break;
             case 6:
                 if (! isset($decomposition['name'])) {
@@ -449,7 +457,7 @@ class bbcode
                 $decomposition['str'] .= $token[1];
                 $decomposition['layout'][] = array(2, $token[1]);
 				/* При выходе из тега возвращаем умолчальное значение пробельных незакавыченных тегов */
-				$oneattrib_set = $this->oneattrib;
+				$finite_automaton = $finite_automaton_orig;
                 break;
             case 8:
                 $decomposition['str'] .= '=';
@@ -480,52 +488,25 @@ class bbcode
                 $decomposition['str'] .= $token[1];
                 break;
             case 14:
-				if ($oneattrib_set) // Аналогично 13
-				{
-					$decomposition['attrib'][$name] = $token[1];
-					$value = $token[1];
-					$decomposition['str'] .= $token[1];
-				}
-				else
-				{
-					$decomposition['str'] .= $token[1];
-					$decomposition['layout'][] = array(4, $token[1]);
-				}
+				$decomposition['str'] .= $token[1];
+				$decomposition['layout'][] = array(4, $token[1]);
                 break;
             case 15:
-				if ($oneattrib_set) // Аналогично 19
-				{
-					$decomposition['str'] .= $token[1];
-					$decomposition['attrib'][$name] .= $token[1];
-					$value .= $token[1];
-				}
-				else
-				{
-					$name = strtolower($token[1]);
-					$decomposition['str'] .= $token[1];
-					$decomposition['layout'][] = array(6, $token[1]);
-					$decomposition['attrib'][$name] = '';
-					break;
-				}
+				$name = strtolower($token[1]);
+				$decomposition['str'] .= $token[1];
+				$decomposition['layout'][] = array(6, $token[1]);
+				$decomposition['attrib'][$name] = '';
+				break;
             case 16:
                 $decomposition['str'] .= $token[1];
                 $decomposition['attrib'][$name] .= $token[1];
                 $value .= $token[1];
                 break;
             case 17:
-				if ($oneattrib_set && (13 == $previous_mode || 19 == $previous_mode) ) // Аналогично 19
-				{
-					$decomposition['str'] .= $token[1];
-					$decomposition['attrib'][$name] .= $token[1];
-					$value .= $token[1];
-				}
-				else
-				{
-					$decomposition['str'] .= $token[1];
-					$decomposition['layout'][] = array(7, $value);
-					$value = '';
-					$decomposition['layout'][] = array(5, $token[1]);
-				}
+				$decomposition['str'] .= $token[1];
+				$decomposition['layout'][] = array(7, $value);
+				$value = '';
+				$decomposition['layout'][] = array(5, $token[1]);
                 break;
             case 18:
                 $decomposition['str'] .= $token[1];
@@ -538,22 +519,13 @@ class bbcode
                 $value .= $token[1];
                 break;
             case 20:
-				if ($oneattrib_set && (13 == $previous_mode || 19 == $previous_mode) ) // Аналогично 19
-				{
-					$decomposition['str'] .= $token[1];
-					$decomposition['attrib'][$name] .= $token[1];
-					$value .= $token[1];
+				$decomposition['str'] .= $token[1];
+				if ( 13 == $previous_mode || 19 == $previous_mode ) {
+					$decomposition['layout'][] = array(7, $value);
 				}
-				else
-				{
-					$decomposition['str'] .= $token[1];
-					if ( 13 == $previous_mode || 19 == $previous_mode ) {
-						$decomposition['layout'][] = array(7, $value);
-					}
-					$value = '';
-					$decomposition['layout'][] = array(4, $token[1]);
-				}
-                break;
+				$value = '';
+				$decomposition['layout'][] = array(4, $token[1]);
+				break;
             }
 			
 			echo "TOKEN: ".$token[1]."<br>";
