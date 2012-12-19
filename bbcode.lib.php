@@ -485,9 +485,10 @@ class bbcode
 					$finite_automaton[13][6] = 19;
 					$finite_automaton[19][6] = 19;
 				}
-				$decomposition['attrib'][$name] = $token[1];
-                $value = $token[1];
-                $decomposition['str'] .= $spacesave.$token[1];
+				$decomposition['attrib'][$name] = $spacesave.$token[1];
+                $value = $spacesave.$token[1];
+                $decomposition['str'] .= $token[1];
+				$spacesave = '';
                 break;
             case 14:
 				$decomposition['str'] .= $token[1];
