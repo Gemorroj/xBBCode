@@ -538,6 +538,11 @@ class bbcode
 				}
                 break;
             }
+			
+			echo "TOKEN: ".$token[1]."<br>";
+			echo "VALUE: ".$value."<br>";
+			echo "MODE: ".$mode."<br>";
+			echo "PREVMODE: ".$previous_mode."<br><br>";
         }
         if ($decomposition) {
             if ('text' === $type) {
