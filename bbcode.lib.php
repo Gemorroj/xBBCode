@@ -1277,6 +1277,7 @@ class bbcode
             //parse_str($parse['query'], $query); //replace spaces and dots
 
             // PHP 5.1.2
+            // PHP 5.4.0 - PHP_QUERY_RFC3986
             $out .= '?' . str_replace('+', '%20', rtrim(http_build_query($query, '', '&amp;'), '='));
         }
         if (isset($parse['fragment'])) {
