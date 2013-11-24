@@ -10,4 +10,3 @@ $xbb_lang['email_prompt'] = 'Введите e-mail:';
 $xbb_lang['about'] = 'О программе';
 $xbb_lang['font_size'] = 'Размер';
 return;
-?>

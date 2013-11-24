@@ -1,0 +1,22 @@
+{
+    "name": "gemorroj/xbbcode",
+    "type": "library",
+    "description": "BBCode parser.",
+    "license": "GPLv2",
+    "require": {
+        "php": ">=5.1.2"
+    },
+    "homepage": "http://xbb.uz",
+    "support": {
+        "forum": "http://xbb.uz/docs/"
+    },
+    "authors": [
+        {
+            "name": "Dmitriy Skorobogatov",
+            "email": "info@xbb.uz"
+        }
+    ],
+    "autoload": {
+        "files": ["bbcode.lib.php"]
+    }
+}

@@ -10,4 +10,3 @@ $xbb_lang['email_prompt'] = 'Insert e-mail:';
 $xbb_lang['about'] = 'About';
 $xbb_lang['font_size'] = 'Font size';
 return;
-?>
