@@ -29,3 +29,6 @@
 
 * оставив сообщение на сайте PC.UZ в комментариях к моей статье:
   http://pc.uz/documents/text/1591.html
+
+
+TODO: youtobe, spoiler (hide)

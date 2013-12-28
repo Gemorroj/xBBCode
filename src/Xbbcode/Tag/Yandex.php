@@ -26,48 +26,35 @@ use Xbbcode\Xbbcode;
 
 
 /**
- * Class Img
- * Класс для тега [img]
+ * Class Yandex
+ * Класс для тега [yandex]
  */
-class Img extends Xbbcode
+class Yandex extends Xbbcode
 {
-    public $behaviour = 'img';
+    public $behaviour = 'a';
 
     public function getHtml($tree = null)
     {
-        $attr = '';
-
-        if (isset($this -> attrib['alt'])) {
-            $attr .= ' alt="' . $this->htmlspecialchars($this -> attrib['alt']) . '"';
-        } else {
-            // обязательный атрибут
-            $attr .= ' alt=""';
-        }
-
-        if (isset($this -> attrib['title'])) {
-            $attr .= ' title="' . $this->htmlspecialchars($this -> attrib['title']) . '"';
-        }
-        if (isset($this -> attrib['width'])) {
-            $width = (int) $this -> attrib['width'];
-            $attr .= $width ? ' width="' . $width . '"' : '';
-        }
-        if (isset($this -> attrib['height'])) {
-            $height = (int) $this -> attrib['height'];
-            $attr .= $height ? ' height="' . $height . '"' : '';
-        }
-        if (isset($this -> attrib['border'])) {
-            $border = (int) $this -> attrib['border'];
-            $attr .= ' border="' . $border . '"';
-        }
-        $src = '';
-        foreach ($this -> tree as $text) {
-            if ('text' === $text['type']) {
-                $src .= $text['str'];
+        $q = isset($this -> attrib['q']) ? $this -> attrib['q'] : '';
+        if (!$q) {
+            foreach ($this -> tree as $val) {
+                if ('text' === $val['type']) {
+                    $q .= $val['str'];
+                }
             }
         }
 
-        $src = $this -> checkUrl($src);
+        $attr = ' href="http://yandex.com/yandsearch?text=' . rawurlencode($q) . '"';
 
-        return '<img src="' . $src . '" ' . $attr . ' />';
+        $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
+        if ($title) { $attr .= ' title="' . $this->htmlspecialchars($title) . '"'; }
+
+        $name = isset($this -> attrib['name']) ? $this -> attrib['name'] : '';
+        if ($name) { $attr .= ' name="' . $this->htmlspecialchars($name) . '"'; }
+
+        $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
+        if ($target) { $attr .= ' target="' . $this->htmlspecialchars($target) . '"'; }
+
+        return '<a class="bb_yandex" ' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
     }
 }

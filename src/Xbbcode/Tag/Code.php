@@ -2,7 +2,6 @@
 
 /******************************************************************************
  *                                                                            *
- *   Code.php, v 0.06 2007/04/29 - This is part of xBB library                *
  *   Copyright (C) 2006-2007  Dmitriy Skorobogatov  dima@pc.uz                *
  *                                                                            *
  *   This program is free software; you can redistribute it and/or modify     *
@@ -25,7 +24,11 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Xbbcode;
 
-/* Класс для тегов подсветки синтаксиса и для тегов [code] и [pre] */
+
+/**
+ * Class Code
+ * Класс для тегов подсветки синтаксиса и для тегов [code] и [pre]
+ */
 class Code extends Xbbcode
 {
     /* Число разрывов строк, которые должны быть игнорированы перед тегом */
@@ -34,7 +37,7 @@ class Code extends Xbbcode
     public $rbr = 1;
     public $behaviour = 'pre';
     /* Альтернативные названия языков и их трансляция в обозначения GeSHi */
-    public $lang_synonym = array(
+    public $langSynonym = array(
         'algol'  => 'algol86',
         'c++'    => 'cpp',
         'c#'     => 'csharp',
@@ -73,8 +76,8 @@ class Code extends Xbbcode
                 break;
         }
         if (! $language) { $language = 'text'; }
-        if (isset($this->lang_synonym[$language])) {
-            $language = $this->lang_synonym[$language];
+        if (isset($this->langSynonym[$language])) {
+            $language = $this->langSynonym[$language];
         }
         $this->_geshi->set_language($language);
         // Находим подсвечиваемый код

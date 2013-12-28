@@ -2,7 +2,6 @@
 
 /******************************************************************************
  *                                                                            *
- *   Simple.php, v 0.00 2007/04/21 - This is part of xBB library              *
  *   Copyright (C) 2006-2007  Dmitriy Skorobogatov  dima@pc.uz                *
  *                                                                            *
  *   This program is free software; you can redistribute it and/or modify     *
@@ -25,7 +24,11 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Xbbcode;
 
-// Класс для простейших тегов
+
+/**
+ * Class Simple
+ * Класс для простейших тегов, например, [span]
+ */
 class Simple extends Xbbcode
 {
     public $behaviour = 'span';
@@ -39,6 +42,7 @@ class Simple extends Xbbcode
             case 's':
             case 'strike':
                 $this->tag = 'del';
+                break;
         }
 
         return '<' . $this->tag . ' class="bb">' . parent::getHtml() . '</'

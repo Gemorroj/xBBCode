@@ -2,7 +2,6 @@
 
 /******************************************************************************
  *                                                                            *
- *   Acronym.php, v 0.00 2007/04/21 - This is part of xBB library             *
  *   Copyright (C) 2006-2007  Dmitriy Skorobogatov  dima@pc.uz                *
  *                                                                            *
  *   This program is free software; you can redistribute it and/or modify     *
@@ -25,7 +24,11 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Xbbcode;
 
-// Класс для тега [acronym]
+
+/**
+ * Class Acronym
+ * Класс для тега [acronym]
+ */
 class Acronym extends Xbbcode
 {
     public $behaviour = 'span';

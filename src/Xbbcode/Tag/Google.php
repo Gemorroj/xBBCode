@@ -2,7 +2,6 @@
 
 /******************************************************************************
  *                                                                            *
- *   Google.php, v 0.00 2007/04/21 - This is part of xBB library              *
  *   Copyright (C) 2006-2007  Dmitriy Skorobogatov  dima@pc.uz                *
  *                                                                            *
  *   This program is free software; you can redistribute it and/or modify     *
@@ -25,21 +24,34 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Xbbcode;
 
-// Класс для тега [google]
+
+/**
+ * Class Google
+ * Класс для тега [google]
+ */
 class Google extends Xbbcode
 {
     public $behaviour = 'a';
 
     public function getHtml($tree = null)
     {
-        //TODO:добавить поддержку синтаксиса без атрибута. [google]test[/qoogle]
-        //TODO:добавить yandex
-        $attr = rawurlencode($this -> attrib['google']);
-        $attr = ' href="http://www.google.com/search?q=' . $attr . '"';
+        $q = isset($this -> attrib['q']) ? $this -> attrib['q'] : '';
+        if (!$q) {
+            foreach ($this -> tree as $val) {
+                if ('text' === $val['type']) {
+                    $q .= $val['str'];
+                }
+            }
+        }
+
+        $attr = ' href="http://www.google.com/search?q=' . rawurlencode($q) . '"';
+
         $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
         if ($title) { $attr .= ' title="' . $this->htmlspecialchars($title) . '"'; }
+
         $name = isset($this -> attrib['name']) ? $this -> attrib['name'] : '';
         if ($name) { $attr .= ' name="' . $this->htmlspecialchars($name) . '"'; }
+
         $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
         if ($target) { $attr .= ' target="' . $this->htmlspecialchars($target) . '"'; }
 

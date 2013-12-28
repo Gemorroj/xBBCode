@@ -2,7 +2,6 @@
 
 /******************************************************************************
  *                                                                            *
- *   P.php, v 0.01 2007/04/29 - This is part of xBB library                   *
  *   Copyright (C) 2006-2007  Dmitriy Skorobogatov  dima@pc.uz                *
  *                                                                            *
  *   This program is free software; you can redistribute it and/or modify     *
@@ -25,7 +24,11 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Xbbcode;
 
-// Класс для тега [p] и тегов [h1], [h2], [h3], [h4], [h5], [h6].
+
+/**
+ * Class P
+ * Класс для тега [p] и тегов [h1], [h2], [h3], [h4], [h5], [h6]
+ */
 class P extends Xbbcode
 {
     public $lbr = 2;
