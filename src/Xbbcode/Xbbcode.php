@@ -313,6 +313,7 @@ class Xbbcode
         'teraterm'          => 'Tag\Code'   ,
         'text'              => 'Tag\Code'   ,
         'thinbasic'         => 'Tag\Code'   ,
+        'twig'              => 'Tag\Code'   ,
         'typoscript'        => 'Tag\Code'   ,
         'unicon'            => 'Tag\Code'   ,
         'upc'               => 'Tag\Code'   ,
