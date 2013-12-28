@@ -471,11 +471,13 @@ class Xbbcode
      * Конструктор класса
      *
      * @param array|string $code Text
+     * @param string $webPath Web path
      * @param array $allowed Allowed tags
      */
-    public function __construct ($code = null, array $allowed = null)
+    public function __construct ($code = null, $webPath = '', array $allowed = null)
     {
         if ($code !== null) {
+            $this->webPath = $webPath;
             $this->mnemonics = $this->setSmiles();
 
             // Removing all traces of parsing of disallowed tags.
