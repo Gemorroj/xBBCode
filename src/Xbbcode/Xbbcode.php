@@ -85,6 +85,8 @@ class Xbbcode
         'google'       => 'Xbbcode\Tag\Google' ,
         'yandex'       => 'Xbbcode\Tag\Yandex' ,
         'youtube'      => 'Xbbcode\Tag\Youtube',
+        'spoiler'      => 'Xbbcode\Tag\Spoiler',
+        'hide'         => 'Xbbcode\Tag\Spoiler',
         'h1'           => 'Xbbcode\Tag\P'      ,
         'h2'           => 'Xbbcode\Tag\P'      ,
         'h3'           => 'Xbbcode\Tag\P'      ,
