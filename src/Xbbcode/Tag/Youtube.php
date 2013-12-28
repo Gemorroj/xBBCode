@@ -31,7 +31,7 @@ use Xbbcode\Xbbcode;
  */
 class Youtube extends Xbbcode
 {
-    public $behaviour = 'iframe';
+    public $behaviour = 'div';
 
     public function getHtml($tree = null)
     {
