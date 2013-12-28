@@ -36,6 +36,8 @@ class Spoiler extends Xbbcode
 
     public function getHtml($tree = null)
     {
-        return '<input type="button" value="' . $this->button . '" onclick="this.nextSibling.style.display == \'hidden\' ? this.nextSibling.style.display = \'block\' : this.nextSibling.style.display = \'hidden\';" /><div>' . parent::getHtml() . '</div>';
+        $id = uniqid('xbbcode');
+        return '<input class="bb_spoiler" type="button" value="' . $this->button . '" onclick="var node = document.getElementById(\'' . $id . '\'); node.style.display == \'hidden\' ? node.style.display = \'block\' : node.style.display = \'hidden\';" />'
+        . '<div id="' . $id . '" class="bb_spoiler" style="display: none">' . parent::getHtml() . '</div>';
     }
 }
