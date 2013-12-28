@@ -47,10 +47,10 @@ class Youtube extends Xbbcode
         }
         $attr .= ' src="//www.youtube.com/embed/' . $this->htmlspecialchars($src) . '"';
 
-        $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : '';
+        $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : 560;
         if ($width) { $attr .= ' width="' . abs($width) . '"'; }
 
-        $height = isset($this -> attrib['height']) ? $this -> attrib['height'] : '';
+        $height = isset($this -> attrib['height']) ? $this -> attrib['height'] : 315;
         if ($height) { $attr .= ' height="' . abs($height) . '"'; }
 
 
