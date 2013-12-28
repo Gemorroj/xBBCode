@@ -83,6 +83,8 @@ class Xbbcode
         'font'         => 'Xbbcode\Tag\Font'   ,
         'altfont'      => 'Xbbcode\Tag\Altfont',
         'google'       => 'Xbbcode\Tag\Google' ,
+        'yandex'       => 'Xbbcode\Tag\Yandex' ,
+        'youtube'      => 'Xbbcode\Tag\Youtube',
         'h1'           => 'Xbbcode\Tag\P'      ,
         'h2'           => 'Xbbcode\Tag\P'      ,
         'h3'           => 'Xbbcode\Tag\P'      ,
