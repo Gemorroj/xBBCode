@@ -4,7 +4,8 @@
     "description": "BBCode parser.",
     "license": "GPLv2",
     "require": {
-        "php": ">=5.1.2"
+        "php": ">=5.3.0",
+        "easybook/geshi": "*"
     },
     "homepage": "http://xbb.uz",
     "support": {
@@ -13,10 +14,17 @@
     "authors": [
         {
             "name": "Dmitriy Skorobogatov",
-            "email": "info@xbb.uz"
+            "email": "info@xbb.uz",
+            "role": "Owner"
+        },
+        {
+            "name": "Gemorroj",
+            "role": "Developer"
         }
     ],
     "autoload": {
-        "files": ["bbcode.lib.php"]
+        "psr-0": {
+            "Xbbcode": "src/"
+        }
     }
 }
