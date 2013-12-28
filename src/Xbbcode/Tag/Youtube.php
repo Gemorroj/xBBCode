@@ -26,35 +26,34 @@ use Xbbcode\Xbbcode;
 
 
 /**
- * Class Google
- * Класс для тега [google]
+ * Class Youtube
+ * Класс для тега [youtube]
  */
-class Google extends Xbbcode
+class Youtube extends Xbbcode
 {
-    public $behaviour = 'a';
+    public $behaviour = 'iframe';
 
     public function getHtml($tree = null)
     {
-        $q = isset($this -> attrib['q']) ? $this -> attrib['q'] : '';
-        if (!$q) {
+        $attr = ' frameborder="0" allowfullscreen="allowfullscreen"';
+
+        $src = isset($this -> attrib['src']) ? $this -> attrib['src'] : '';
+        if (!$src) {
             foreach ($this -> tree as $val) {
                 if ('text' === $val['type']) {
-                    $q .= $val['str'];
+                    $src .= $val['str'];
                 }
             }
         }
+        $attr .= ' src="//www.youtube.com/embed/' . $this->htmlspecialchars($src) . '"';
 
-        $attr = ' href="//www.google.com/search?q=' . rawurlencode($q) . '"';
+        $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : '';
+        if ($width) { $attr .= ' width="' . abs($width) . '"'; }
 
-        $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
-        if ($title) { $attr .= ' title="' . $this->htmlspecialchars($title) . '"'; }
+        $height = isset($this -> attrib['height']) ? $this -> attrib['height'] : '';
+        if ($height) { $attr .= ' height="' . abs($height) . '"'; }
 
-        $name = isset($this -> attrib['name']) ? $this -> attrib['name'] : '';
-        if ($name) { $attr .= ' name="' . $this->htmlspecialchars($name) . '"'; }
 
-        $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
-        if ($target) { $attr .= ' target="' . $this->htmlspecialchars($target) . '"'; }
-
-        return '<a class="bb_google" ' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
+        return '<iframe class="bb_youtube" ' . $attr . '>' . parent::getHtml($this -> tree) . '</iframe>';
     }
 }

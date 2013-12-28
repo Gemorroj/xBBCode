@@ -46,4 +46,4 @@ $ php composer.phar update gemorroj/xbbcode
 
 ---
 
-TODO: youtobe, spoiler (hide)
+TODO: spoiler (hide)

@@ -44,7 +44,7 @@ class Yandex extends Xbbcode
             }
         }
 
-        $attr = ' href="http://yandex.com/yandsearch?text=' . rawurlencode($q) . '"';
+        $attr = ' href="//yandex.com/yandsearch?text=' . rawurlencode($q) . '"';
 
         $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
         if ($title) { $attr .= ' title="' . $this->htmlspecialchars($title) . '"'; }
