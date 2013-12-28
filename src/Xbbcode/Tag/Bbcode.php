@@ -40,8 +40,8 @@ class Bbcode extends Xbbcode
             $str .= $item['str'];
         }
 
-        $bb = new self($str);
+        $this->parse($str);
 
-        return '<code class="bb_code">' . $bb -> highlight() . '</code>';
+        return '<code class="bb_code">' . $this -> highlight() . '</code>';
     }
 }

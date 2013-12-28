@@ -469,7 +469,7 @@ class Xbbcode
      * @param array|string $code
      * @param array $allowed
      */
-    public function __construct ($code, array $allowed = null)
+    public function __construct ($code = null, array $allowed = null)
     {
         // Формируем набор смайликов
         $path = $this->web_path . '/resources/images/smiles';
@@ -601,7 +601,7 @@ class Xbbcode
      * @param array|string $code
      * @return array
      */
-    public function parse($code)
+    public function parse($code = null)
     {
         $time_start = $this->_getmicrotime();
         if (is_array($code)) {
@@ -624,7 +624,7 @@ class Xbbcode
             }
             $this->stat['time_parse'] = $this->_getmicrotime() - $time_start;
             return $this->syntax;
-        } else {
+        } elseif ($code) {
             $this->text = $code;
         }
         /*
