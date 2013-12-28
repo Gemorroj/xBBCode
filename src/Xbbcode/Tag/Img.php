@@ -35,14 +35,14 @@ class Img extends Xbbcode
         $attr = '';
 
         if (isset($this -> attrib['alt'])) {
-            $attr .= ' alt="' . htmlspecialchars($this -> attrib['alt']) . '"';
+            $attr .= ' alt="' . $this->htmlspecialchars($this -> attrib['alt']) . '"';
         } else {
             // обязательный атрибут
             $attr .= ' alt=""';
         }
 
         if (isset($this -> attrib['title'])) {
-            $attr .= ' title="' . htmlspecialchars($this -> attrib['title']) . '"';
+            $attr .= ' title="' . $this->htmlspecialchars($this -> attrib['title']) . '"';
         }
         if (isset($this -> attrib['width'])) {
             $width = (int) $this -> attrib['width'];

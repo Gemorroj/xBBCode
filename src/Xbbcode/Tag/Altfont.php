@@ -30,7 +30,7 @@ class Altfont extends Xbbcode
 {
     public $behaviour = 'span';
     
-    public $oneattrib = true;
+    public $oneAttrib = true;
 
     public function getHtml($tree = null)
     {
@@ -44,7 +44,7 @@ class Altfont extends Xbbcode
             $face = $this -> attrib['altfont'];
         
         if ($face) {
-            $attr .= ' face="' . htmlspecialchars($face) . '"';
+            $attr .= ' face="' . $this->htmlspecialchars($face) . '"';
         }
         
         return '<font' . $attr . '>' . parent::getHtml($this -> tree) . '</font>';

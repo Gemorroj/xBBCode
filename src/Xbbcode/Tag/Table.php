@@ -39,7 +39,7 @@ class Table extends Xbbcode
             : null;
         if (null !== $border) { $attr .= ' border="' . $border . '"'; }
         $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : '';
-        if ($width) { $attr .= ' width="' . htmlspecialchars($width) . '"'; }
+        if ($width) { $attr .= ' width="' . $this->htmlspecialchars($width) . '"'; }
         $cellspacing = isset($this -> attrib['cellspacing'])
             ? (int) $this -> attrib['cellspacing']
             : null;
@@ -49,7 +49,7 @@ class Table extends Xbbcode
             : null;
         if (null !== $cellpadding) { $attr .= ' cellpadding="' . $cellpadding . '"'; }
         $align = isset($this -> attrib['align']) ? $this -> attrib['align'] : '';
-        if ($align) { $attr .= ' align="' . htmlspecialchars($align) . '"'; }
+        if ($align) { $attr .= ' align="' . $this->htmlspecialchars($align) . '"'; }
         $str = '<table' . $attr . '>';
         foreach ($this -> tree as $key => $item) {
             if ('text' === $item['type']) {

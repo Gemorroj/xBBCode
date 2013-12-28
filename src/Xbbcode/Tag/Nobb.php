@@ -35,7 +35,7 @@ class Nobb extends Xbbcode
         $str = '';
         foreach ($this -> tree as $item) {
             if ('text' === $item['type']) {
-                $str .= nl2br(htmlspecialchars($item['str']));
+                $str .= nl2br($this->htmlspecialchars($item['str']));
             }
         }
         $str = str_replace('  ', '&#160;&#160;', $str);

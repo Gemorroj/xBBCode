@@ -113,14 +113,14 @@ class Code extends Xbbcode
         $result = '<span class="bb_code_lang">'
             . $this->_geshi->get_language_name() . '</span>';
         if (isset($this->attrib['title'])) {
-            $result = htmlspecialchars($this->attrib['title'], ENT_NOQUOTES);
+            $result = $this->htmlspecialchars($this->attrib['title'], ENT_NOQUOTES);
         }
         // Получаем подсвеченный код
         $result = '<div class="bb_code"><div class="bb_code_header">' . $result
             . '</div>' . $this->_geshi->parse_code();
         // Формируем подпись под кодом
         if (isset($this->attrib['footer'])) {
-            $content = htmlspecialchars($this->attrib['footer'], ENT_NOQUOTES);
+            $content = $this->htmlspecialchars($this->attrib['footer'], ENT_NOQUOTES);
             $content = '<div class="bb_code_footer">' . $content . '</div>';
             $result .= $content;
         }

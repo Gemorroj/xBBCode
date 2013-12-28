@@ -37,11 +37,11 @@ class Google extends Xbbcode
         $attr = rawurlencode($this -> attrib['google']);
         $attr = ' href="http://www.google.com/search?q=' . $attr . '"';
         $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
-        if ($title) { $attr .= ' title="' . htmlspecialchars($title) . '"'; }
+        if ($title) { $attr .= ' title="' . $this->htmlspecialchars($title) . '"'; }
         $name = isset($this -> attrib['name']) ? $this -> attrib['name'] : '';
-        if ($name) { $attr .= ' name="' . htmlspecialchars($name) . '"'; }
+        if ($name) { $attr .= ' name="' . $this->htmlspecialchars($name) . '"'; }
         $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
-        if ($target) { $attr .= ' target="' . htmlspecialchars($target) . '"'; }
+        if ($target) { $attr .= ' target="' . $this->htmlspecialchars($target) . '"'; }
 
         return '<a class="bb_google" ' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
     }

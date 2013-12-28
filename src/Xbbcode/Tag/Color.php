@@ -32,7 +32,7 @@ class Color extends Xbbcode
 
     public function getHtml($tree = null)
     {
-        $color = htmlspecialchars($this -> attrib['color']);
+        $color = $this->htmlspecialchars($this -> attrib['color']);
         return '<font color="' . $color . '">' . parent::getHtml($this -> tree)
             . '</font>';
     }

@@ -28,7 +28,7 @@ use Xbbcode\Xbbcode;
 // Класс для тега [hr]
 class Hr extends Xbbcode
 {
-    public $is_close = true;
+    public $isClose = true;
     public $rbr = 1;
     public $behaviour = 'hr';
 

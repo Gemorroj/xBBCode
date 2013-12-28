@@ -28,7 +28,7 @@ use Xbbcode\Xbbcode;
 // Класс для тега [br]
 class Br extends Xbbcode
 {
-    public $is_close = true;
+    public $isClose = true;
     public $behaviour = 'span';
 
     public function getHtml($tree = null)

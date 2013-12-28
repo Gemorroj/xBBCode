@@ -40,7 +40,7 @@ class Xbbcode
      * Пример: [altfont=Comic Sans MS]sometext[/altfont] или [altfont size="22" font=Comic Sans MS]sometext[/altfont]
      * По умолчанию выключено
      */
-    public $oneattrib = false;
+    public $oneAttrib = false;
     /**
      * Текст BBCode
      */
@@ -350,7 +350,7 @@ class Xbbcode
     /**
      * Массив замен для автоматических ссылок.
      */
-    public $preg_autolinks = array(
+    public $pregAutolinks = array(
         'pattern' => array(
             "'[\w\+]+://[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+'si",
             "'([^/])(www\.[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+)'si",
@@ -367,17 +367,17 @@ class Xbbcode
             '<span class="bb_autolink">$0</span>',
         ),
     );
-    public $is_close = false;
+    public $isClose = false;
     public $lbr = 0;
     public $rbr = 0;
     /**
      * Статистические сведения по обработке BBCode
      */
     public $stat = array(
-        'time_parse' => 0,  // Время парсинга
-        'time_html' => 0,   // Время генерации HTML-а
-        'count_tags' => 0,  // Число тегов BBCode
-        'count_level' => 0  // Число уровней вложенности тегов BBCode
+        'time_parse'  => 0,  // Время парсинга
+        'time_html'   => 0,  // Время генерации HTML-а
+        'count_tags'  => 0,  // Число тегов BBCode
+        'count_level' => 0   // Число уровней вложенности тегов BBCode
     );
     /**
      * Модель поведения тега (в плане вложенности), которому сопоставлен экземпляр данного класса.
@@ -403,21 +403,21 @@ class Xbbcode
      * Публичная WEB директория.
      * Ссылается на директорию resources для формирования смайликов и CSS стилей
      */
-    public $web_path = '';
+    public $webPath = '';
     /**
      * Для нужд парсера. - Позиция очередного обрабатываемого символа.
      */
-    private $_cursor;
+    private $cursor;
     /**
      * Массив объектов, - представителей отдельных тегов.
      */
-    private $_tag_objects = array();
+    private $tagObjects = array();
     /**
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
      * Накладывает ограничения на вложенность тегов.
      * Теги с моделями поведения, не указанными в массиве справа, вложенные в тег с моделью поведения, указанной слева, будут игнорироваться как неправильно вложенные.
      */
-    protected $_children = array(
+    protected $children = array(
         'a'       => array('code','img','span'),
         'caption' => array('a','code','img','span'),
         'code'    => array(),
@@ -438,7 +438,7 @@ class Xbbcode
      * Накладывает ограничения на вложенность тегов.
      * Тег, принадлежащий указанной слева модели поведения тегов должен закрыться, как только начинается тег, принадлежащий какой-то из моделей поведения, указанных справа.
      */
-    protected $_ends = array(
+    protected $ends = array(
         'a'       => array(
             'a','caption','div','hr','li','p','pre','table','td','tr', 'ul'
         ),
@@ -466,46 +466,59 @@ class Xbbcode
     /**
      * Конструктор класса
      *
-     * @param array|string $code
-     * @param array $allowed
+     * @param array|string $code Text
+     * @param array $allowed Allowed tags
      */
     public function __construct ($code = null, array $allowed = null)
     {
-        // Формируем набор смайликов
-        $path = $this->web_path . '/resources/images/smiles';
-        $pak = file(__DIR__ . '/resources/images/smiles/Set_Smiles_YarNET.pak');
-        $smiles = array();
-        foreach ($pak as $val) {
-            $val = trim($val);
-            if ($val && '#' !== $val{0}) {
-                list($gif, $alt, $symbol) = explode('=+:', $val);
-                $smiles[$symbol] = '<img src="' . $path . '/' . htmlspecialchars($gif) . '" alt="' . htmlspecialchars($alt) . '" />';
-            }
-        }
-        // Задаем набор смайликов
-        $this->mnemonics = $smiles;
+        if ($code !== null) {
+            $this->mnemonics = $this->setSmiles();
 
-
-        // Removing all traces of parsing of disallowed tags. In case if $allowed is not an array, assuming that everything is allowed
-        if (is_array($allowed)) {
-            foreach ($this->tags as $key => $value) {
-                if (!in_array($key, $allowed)) {
-                    unset($this->tags[$key]);
+            // Removing all traces of parsing of disallowed tags.
+            // In case if $allowed is not an array, assuming that everything is allowed
+            if (is_array($allowed)) {
+                foreach ($this->tags as $key => $value) {
+                    if (!in_array($key, $allowed)) {
+                        unset($this->tags[$key]);
+                    }
                 }
             }
-        }
 
-        $this->parse($code);
+            $this->parse($code);
+        }
     }
 
 
     /**
-     * getToken() - Функция парсит текст BBCode и возвращает очередную пару
+     * Формируем набор смайликов
+     *
+     * @return array
+     */
+    protected function setSmiles()
+    {
+        $path = $this->webPath . '/resources/images/smiles';
+        $pak = file(__DIR__ . '/resources/images/smiles/Set_Smiles_YarNET.pak');
+        $smiles = array();
+
+        foreach ($pak as $val) {
+            $val = trim($val);
+            if ($val && '#' !== $val{0}) {
+                list($gif, $alt, $symbol) = explode('=+:', $val);
+                $smiles[$symbol] = '<img src="' . $path . '/' . $this->htmlspecialchars($gif) . '" alt="' . $this->htmlspecialchars($alt) . '" />';
+            }
+        }
+
+        return $smiles;
+    }
+
+
+    /**
+     * Функция парсит текст BBCode и возвращает очередную пару
      *
      *                     "число (тип лексемы) - лексема"
      *
      * Лексема - подстрока строки $this -> text, начинающаяся с позиции
-     * $this -> _cursor
+     * $this -> cursor
      * Типы лексем могут быть следующие:
      *
      * 0 - открывающая квадратная скобка ("[")
@@ -528,14 +541,14 @@ class Xbbcode
         $char_type = false;
         while (true) {
             $token_type = $char_type;
-            if (! isset($this -> text{$this -> _cursor})) {
+            if (! isset($this -> text{$this -> cursor})) {
                 if (false === $char_type) {
                     return false;
                 } else {
                     break;
                 }
             }
-            $char = $this -> text{$this -> _cursor};
+            $char = $this -> text{$this -> cursor};
             switch ($char) {
                 case '[':
                     $char_type = 0;
@@ -586,7 +599,7 @@ class Xbbcode
             } else {
                 break;
             }
-            $this -> _cursor += 1;
+            $this -> cursor += 1;
         }
         if (isset($this -> tags[strtolower($token)])) {
             $token_type = 8;
@@ -601,7 +614,7 @@ class Xbbcode
      * @param array|string $code
      * @return array
      */
-    public function parse($code = null)
+    public function parse($code)
     {
         $time_start = $this->getmicrotime();
         if (is_array($code)) {
@@ -624,7 +637,7 @@ class Xbbcode
             }
             $this->stat['time_parse'] = $this->getmicrotime() - $time_start;
             return $this->syntax;
-        } elseif ($code) {
+        } else {
             $this->text = $code;
         }
         /*
@@ -703,8 +716,7 @@ class Xbbcode
         $value = '';
         $name = '';
         $type = false;
-        $this ->_cursor = 0;
-        $oneattrib_set = false;
+        $this->cursor = 0;
         $spacesave = '';
         // Сканируем массив лексем с помощью построенного автомата:
         while ($token = $this -> getToken()) {
@@ -823,8 +835,7 @@ class Xbbcode
                 $this->includeTagFile($decomposition['name']);
                 $handler = $this->tags[$decomposition['name']];
                 $class_vars = get_class_vars($handler);
-                if ($class_vars['oneattrib']) // Переписываем некоторые обработки
-                {
+                if ($class_vars['oneAttrib']) { // Переписываем некоторые обработки
                     $finite_automaton[8][6] = 13;
                     $finite_automaton[20][7] = 19;
                     $finite_automaton[20][8] = 19;
@@ -957,8 +968,8 @@ class Xbbcode
             $next_behaviour = $this->behaviour;
         }
         $must_close = false;
-        if (isset($this->_ends[$current_behaviour])) {
-            $must_close = in_array($next_behaviour, $this->_ends[$current_behaviour]);;
+        if (isset($this->ends[$current_behaviour])) {
+            $must_close = in_array($next_behaviour, $this->ends[$current_behaviour]);;
         }
         return $must_close;
     }
@@ -993,9 +1004,9 @@ class Xbbcode
             $child_behaviour = $this->behaviour;
         }
         $permissibly = true;
-        if (isset($this->_children[$parent_behaviour])) {
+        if (isset($this->children[$parent_behaviour])) {
             $permissibly = in_array(
-                $child_behaviour, $this->_children[$parent_behaviour]
+                $child_behaviour, $this->children[$parent_behaviour]
             );
         }
         return $permissibly;
@@ -1067,7 +1078,7 @@ class Xbbcode
                         }
                     }
                     $class_vars = get_class_vars($this -> tags[$val['name']]);
-                    if ($class_vars['is_close']) {
+                    if ($class_vars['isClose']) {
                         $val['type'] = 'open/close';
                         $structure[++$structure_key] = $val;
                         $structure[$structure_key]['level'] = $level;
@@ -1400,10 +1411,10 @@ class Xbbcode
      */
     public function insertSmiles($text)
     {
-        $text = htmlspecialchars($text, ENT_NOQUOTES);
+        $text = $this->htmlspecialchars($text, ENT_NOQUOTES);
         if ($this -> autolinks) {
-            $search = $this -> preg_autolinks['pattern'];
-            $replace = $this -> preg_autolinks['replacement'];
+            $search = $this -> pregAutolinks['pattern'];
+            $replace = $this -> pregAutolinks['replacement'];
             $text = preg_replace($search, $replace, $text);
         }
         $text = str_replace('  ', '&#160;&#160;', nl2br($text));
@@ -1427,12 +1438,12 @@ class Xbbcode
             '@a;'  => '<span class="bb_spec_char">@a;</span>',
             '@at;' => '<span class="bb_spec_char">@at;</span>'
         );
-        $search = $this -> preg_autolinks['pattern'];
-        $replace = $this -> preg_autolinks['highlight'];
+        $search = $this -> pregAutolinks['pattern'];
+        $replace = $this -> pregAutolinks['highlight'];
         $str = '';
         foreach ($this -> syntax as $elem) {
             if ('text' === $elem['type']) {
-                $elem['str'] = strtr(htmlspecialchars($elem['str']), $chars);
+                $elem['str'] = strtr($this->htmlspecialchars($elem['str']), $chars);
                 foreach ($this -> mnemonics as $mnemonic => $value) {
                     $elem['str'] = str_replace(
                         $mnemonic,
@@ -1473,14 +1484,14 @@ class Xbbcode
                             break;
                         case 6:
                             $str .= '<span class="bb_attrib_name">'
-                                . htmlspecialchars($val[1]) . '</span>';
+                                . $this->htmlspecialchars($val[1]) . '</span>';
                             break;
                         case 7:
                             if (! trim($val[1])) {
                                 $str .= $val[1];
                             } else {
                                 $str .= '<span class="bb_attrib_val">'
-                                    . strtr(htmlspecialchars($val[1]), $chars)
+                                    . strtr($this->htmlspecialchars($val[1]), $chars)
                                     . '</span>';
                             }
                             break;
@@ -1537,7 +1548,7 @@ class Xbbcode
                     }
                 }
                 /* Обрабатываем содержимое элемента */
-                $tag = $this->_tag_objects[$handler];
+                $tag = $this->tagObjects[$handler];
                 $tag->autolinks = $this->autolinks;
                 $tag->tags = $this->tags;
                 $tag->mnemonics = $this->mnemonics;
@@ -1623,6 +1634,18 @@ class Xbbcode
 
 
     /**
+     * @param string $str
+     * @param int $flags
+     * @param string $encoding
+     * @return string
+     */
+    protected function htmlspecialchars($str, $flags = ENT_COMPAT, $encoding = 'UTF-8')
+    {
+        return htmlspecialchars($str, $flags, $encoding);
+    }
+
+
+    /**
      * Функция возвращает текущий UNIX timestamp с микросекундами в формате float
      *
      * @return float
@@ -1649,8 +1672,8 @@ class Xbbcode
         }
 
         $handler = $this->tags[$tagName];
-        if (!isset($this->_tag_objects[$handler])) {
-            $this->_tag_objects[$handler] = new $handler;
+        if (!isset($this->tagObjects[$handler])) {
+            $this->tagObjects[$handler] = new $handler;
         }
 
         return true;

@@ -46,7 +46,7 @@ class Bdo extends Xbbcode
         /* <bdo> может иметь следующие атрибуты: dir, lang, id, class, style, title. */
         $attr = 'dir="' . $dir . '" class="bb"';
         if (isset($this->attrib['lang'])) {
-            $attr .= ' lang="' . htmlspecialchars($this->attrib['lang']) . '"';
+            $attr .= ' lang="' . $this->htmlspecialchars($this->attrib['lang']) . '"';
         }
 
         return '<bdo ' . $attr . '>' . parent::getHtml() . '</bdo>';

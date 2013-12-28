@@ -61,7 +61,7 @@ class A extends Xbbcode
         }
         if (isset($this -> attrib['title'])) {
             $title = $this -> attrib['title'];
-            $attr .= ' title="' . htmlspecialchars($title) . '"';
+            $attr .= ' title="' . $this->htmlspecialchars($title) . '"';
         }
         $id = '';
         if (isset($this -> attrib['id'])) {
@@ -78,11 +78,11 @@ class A extends Xbbcode
             if ($id{0} < 'A' || $id{0} > 'z') {
                 $id = 'bb' . $id;
             }
-            $attr .= ' id="' . htmlspecialchars($id) . '"';
+            $attr .= ' id="' . $this->htmlspecialchars($id) . '"';
         }
         if (isset($this -> attrib['target'])) {
             $target = $this -> attrib['target'];
-            $attr .= ' target="' . htmlspecialchars($target) . '"';
+            $attr .= ' target="' . $this->htmlspecialchars($target) . '"';
         }
 
         return '<a ' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';

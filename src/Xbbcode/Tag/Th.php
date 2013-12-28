@@ -34,13 +34,13 @@ class Th extends Xbbcode
     {
         $attr = ' class="bb"';
         $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : '';
-        if ($width) { $attr .= ' width="' . htmlspecialchars($width) . '"'; }
+        if ($width) { $attr .= ' width="' . $this->htmlspecialchars($width) . '"'; }
         $height = isset($this -> attrib['height']) ? $this -> attrib['height'] : '';
-        if ($height) { $attr .= ' height="' . htmlspecialchars($height) . '"'; }
+        if ($height) { $attr .= ' height="' . $this->htmlspecialchars($height) . '"'; }
         $align = isset($this -> attrib['align']) ? $this -> attrib['align'] : '';
-        if ($align) { $attr .= ' align="' . htmlspecialchars($align) . '"'; }
+        if ($align) { $attr .= ' align="' . $this->htmlspecialchars($align) . '"'; }
         $valign = isset($this -> attrib['valign']) ? $this -> attrib['valign'] : '';
-        if ($valign) { $attr .= ' valign="' . htmlspecialchars($valign) . '"'; }
+        if ($valign) { $attr .= ' valign="' . $this->htmlspecialchars($valign) . '"'; }
         if (isset($this -> attrib['colspan'])) {
             $colspan = (int) $this -> attrib['colspan'];
             if ($colspan) {

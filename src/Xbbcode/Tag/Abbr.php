@@ -34,7 +34,7 @@ class Abbr extends Xbbcode
     {
         $attrib = 'class="bb"';
         if ($this -> attrib['abbr']) {
-            $attrib .= ' title="' . htmlspecialchars($this -> attrib['abbr']) . '"';
+            $attrib .= ' title="' . $this->htmlspecialchars($this -> attrib['abbr']) . '"';
         }
         return '<abbr ' . $attrib . '>' . parent::getHtml($this -> tree) . '</abbr>';
     }

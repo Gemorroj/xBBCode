@@ -34,7 +34,7 @@ class Acronym extends Xbbcode
     {
         $attrib = 'class="bb"';
         if ($this -> attrib['acronym']) {
-            $attrib .= ' title="' . htmlspecialchars($this -> attrib['acronym'])
+            $attrib .= ' title="' . $this->htmlspecialchars($this -> attrib['acronym'])
                 . '"';
         }
 

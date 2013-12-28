@@ -33,9 +33,9 @@ class Quote extends Xbbcode
     public function getHtml($tree = null)
     {
         if ('blockquote' === $this->tag) {
-            $author = htmlspecialchars($this->attrib['blockquote'], ENT_NOQUOTES);
+            $author = $this->htmlspecialchars($this->attrib['blockquote'], ENT_NOQUOTES);
         } else {
-            $author = htmlspecialchars($this->attrib['quote'], ENT_NOQUOTES);
+            $author = $this->htmlspecialchars($this->attrib['quote'], ENT_NOQUOTES);
         }
         if ($author) {
             $author = '<div class="bb_quote_author">' . $author . '</div>';

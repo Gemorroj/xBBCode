@@ -36,7 +36,7 @@ class P extends Xbbcode
     {
         $str = "\n<" . $this->tag . ' class="bb"';
         $align = isset($this->attrib['align']) ? $this->attrib['align'] : '';
-        if ($align) { $str .= ' align="' . htmlspecialchars($align) . '"'; }
+        if ($align) { $str .= ' align="' . $this->htmlspecialchars($align) . '"'; }
 
         return $str . '>' . parent::getHtml() . '</' . $this->tag . ">\n";
     }
