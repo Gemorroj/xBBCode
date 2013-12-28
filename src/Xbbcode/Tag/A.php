@@ -30,7 +30,7 @@ class A extends Xbbcode
 {
     public $behaviour = 'a';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $this -> autolinks = false;
         $text = '';
@@ -53,7 +53,7 @@ class A extends Xbbcode
             $href = $text;
         }
 
-        $href = $this -> _checkUrl($href);
+        $href = $this -> checkUrl($href);
 
         $attr = 'class="bb"';
         if ($href) {
@@ -85,6 +85,6 @@ class A extends Xbbcode
             $attr .= ' target="' . htmlspecialchars($target) . '"';
         }
 
-        return '<a ' . $attr . '>' . parent::get_html($this -> tree) . '</a>';
+        return '<a ' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
     }
 }

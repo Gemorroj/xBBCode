@@ -30,7 +30,7 @@ class Quote extends Xbbcode
 {
     public $rbr = 1;
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         if ('blockquote' === $this->tag) {
             $author = htmlspecialchars($this->attrib['blockquote'], ENT_NOQUOTES);
@@ -42,6 +42,6 @@ class Quote extends Xbbcode
         }
 
         return '<blockquote class="bb_quote">' . $author
-            . parent::get_html($this -> tree) . '</blockquote>';
+            . parent::getHtml($this -> tree) . '</blockquote>';
     }
 }

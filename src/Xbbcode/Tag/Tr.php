@@ -30,7 +30,7 @@ class Tr extends Xbbcode
 {
     public $behaviour = 'tr';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $str = '<tr class="bb">';
         foreach ($this -> tree as $key => $item) {
@@ -38,7 +38,7 @@ class Tr extends Xbbcode
                 unset($this -> tree[$key]);
             }
         }
-        $str .= parent::get_html($this -> tree) . '</tr>';
+        $str .= parent::getHtml($this -> tree) . '</tr>';
 
         return $str;
     }

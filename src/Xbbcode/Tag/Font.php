@@ -30,7 +30,7 @@ class Font extends Xbbcode
 {
     public $behaviour = 'span';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $attr = '';
         if (isset($this -> attrib['face'])) {
@@ -46,6 +46,6 @@ class Font extends Xbbcode
         $size = isset($this -> attrib['size']) ? $this -> attrib['size'] : '';
         if ($size) { $attr .= ' size="' . htmlspecialchars($size) . '"'; }
 
-        return '<font' . $attr . '>' . parent::get_html($this -> tree) . '</font>';
+        return '<font' . $attr . '>' . parent::getHtml($this -> tree) . '</font>';
     }
 }

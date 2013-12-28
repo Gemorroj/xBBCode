@@ -32,7 +32,7 @@ class Hr extends Xbbcode
     public $rbr = 1;
     public $behaviour = 'hr';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         return '<hr class="bb" />';
     }

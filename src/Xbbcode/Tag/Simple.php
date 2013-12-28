@@ -30,7 +30,7 @@ class Simple extends Xbbcode
 {
     public $behaviour = 'span';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         switch ($this->tag) {
             case 'b':
@@ -41,7 +41,7 @@ class Simple extends Xbbcode
                 $this->tag = 'del';
         }
 
-        return '<' . $this->tag . ' class="bb">' . parent::get_html() . '</'
+        return '<' . $this->tag . ' class="bb">' . parent::getHtml() . '</'
             . $this->tag . '>';
     }
 }

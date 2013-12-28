@@ -30,7 +30,7 @@ class Td extends Xbbcode
 {
     public $behaviour = 'td';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $attr = 'class="bb"';
         $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : '';
@@ -54,6 +54,6 @@ class Td extends Xbbcode
             }
         }
 
-        return '<td ' . $attr . '>' . parent::get_html($this -> tree) . '</td>';
+        return '<td ' . $attr . '>' . parent::getHtml($this -> tree) . '</td>';
     }
 }

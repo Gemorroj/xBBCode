@@ -31,7 +31,7 @@ class Table extends Xbbcode
     public $rbr = 1;
     public $behaviour = 'table';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $attr = ' class="bb"';
         $border = isset($this -> attrib['border'])
@@ -56,7 +56,7 @@ class Table extends Xbbcode
                 unset($this -> tree[$key]);
             }
         }
-        $str .= parent::get_html($this -> tree) . '</table>';
+        $str .= parent::getHtml($this -> tree) . '</table>';
 
         return $str;
     }

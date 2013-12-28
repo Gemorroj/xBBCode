@@ -30,7 +30,7 @@ class Email extends Xbbcode
 {
     public $behaviour = 'a';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $this -> autolinks = false;
         $attr = ' class="bb_email"';
@@ -59,6 +59,6 @@ class Email extends Xbbcode
         $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
         if ($target) { $attr .= ' target="' . htmlspecialchars($target) . '"'; }
 
-        return '<a' . $attr . '>' . parent::get_html($this -> tree) . '</a>';
+        return '<a' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
     }
 }

@@ -30,10 +30,10 @@ class Color extends Xbbcode
 {
     public $behaviour = 'span';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $color = htmlspecialchars($this -> attrib['color']);
-        return '<font color="' . $color . '">' . parent::get_html($this -> tree)
+        return '<font color="' . $color . '">' . parent::getHtml($this -> tree)
             . '</font>';
     }
 }

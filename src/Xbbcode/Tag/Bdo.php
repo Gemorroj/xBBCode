@@ -30,7 +30,7 @@ class Bdo extends Xbbcode
 {
     public $behaviour = 'span';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $dir = '';
         switch (strtolower($this->attrib['bdo'])) {
@@ -41,15 +41,14 @@ class Bdo extends Xbbcode
                 $dir = 'rtl';
         }
         if (! $dir) {
-            return parent::get_html();
+            return parent::getHtml();
         }
-        /* <bdo> может иметь следующие атрибуты: dir, lang, id, class, style,
-           title. */
+        /* <bdo> может иметь следующие атрибуты: dir, lang, id, class, style, title. */
         $attr = 'dir="' . $dir . '" class="bb"';
         if (isset($this->attrib['lang'])) {
             $attr .= ' lang="' . htmlspecialchars($this->attrib['lang']) . '"';
         }
 
-        return '<bdo ' . $attr . '>' . parent::get_html() . '</bdo>';
+        return '<bdo ' . $attr . '>' . parent::getHtml() . '</bdo>';
     }
 }

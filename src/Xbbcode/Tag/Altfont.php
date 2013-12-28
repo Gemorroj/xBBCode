@@ -32,7 +32,7 @@ class Altfont extends Xbbcode
     
     public $oneattrib = true;
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $attr = '';
         
@@ -47,6 +47,6 @@ class Altfont extends Xbbcode
             $attr .= ' face="' . htmlspecialchars($face) . '"';
         }
         
-        return '<font' . $attr . '>' . parent::get_html($this -> tree) . '</font>';
+        return '<font' . $attr . '>' . parent::getHtml($this -> tree) . '</font>';
     }
 }

@@ -30,7 +30,7 @@ class Li extends Xbbcode
 {
     public $behaviour = 'li';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $attrib = 'class="bb"';
         if ('' !== $this -> attrib['*']) {
@@ -38,6 +38,6 @@ class Li extends Xbbcode
             $attrib .= ' value="' . $this -> attrib['*'] . '"';
         }
 
-        return '<li ' . $attrib . '>' . parent::get_html($this -> tree) . '</li>';
+        return '<li ' . $attrib . '>' . parent::getHtml($this -> tree) . '</li>';
     }
 }

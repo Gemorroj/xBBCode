@@ -31,7 +31,7 @@ class Br extends Xbbcode
     public $is_close = true;
     public $behaviour = 'span';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         return '<br class="bb" />' . "\n";
     }

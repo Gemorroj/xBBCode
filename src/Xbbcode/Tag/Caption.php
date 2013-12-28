@@ -30,9 +30,9 @@ class Caption extends Xbbcode
 {
     public $behaviour = 'caption';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
-        return '<caption class="bb">' . parent::get_html($this -> tree)
+        return '<caption class="bb">' . parent::getHtml($this -> tree)
             . '</caption>';
     }
 }

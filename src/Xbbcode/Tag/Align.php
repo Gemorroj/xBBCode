@@ -30,7 +30,7 @@ class Align extends Xbbcode
 {
     public $rbr = 1;
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $align = '';
         if (isset($this -> attrib['justify'])) { $align = 'justify'; }
@@ -55,7 +55,6 @@ class Align extends Xbbcode
         }
 
         return '<div class="bb" align="' . $align . '">'
-            . parent::get_html($this -> tree) . '</div>';
+            . parent::getHtml($this -> tree) . '</div>';
     }
 }
-?>

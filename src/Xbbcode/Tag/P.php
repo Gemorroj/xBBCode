@@ -32,12 +32,12 @@ class P extends Xbbcode
     public $rbr = 2;
     public $behaviour = 'p';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $str = "\n<" . $this->tag . ' class="bb"';
         $align = isset($this->attrib['align']) ? $this->attrib['align'] : '';
         if ($align) { $str .= ' align="' . htmlspecialchars($align) . '"'; }
 
-        return $str . '>' . parent::get_html() . '</' . $this->tag . ">\n";
+        return $str . '>' . parent::getHtml() . '</' . $this->tag . ">\n";
     }
 }

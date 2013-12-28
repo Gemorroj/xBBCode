@@ -30,7 +30,7 @@ class Bbcode extends Xbbcode
 {
     public $behaviour = 'code';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $str = '';
         foreach ($this -> tree as $item) {

@@ -30,9 +30,9 @@ class Address extends Xbbcode
 {
     public $rbr = 1;
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
-        return '<address class="bb">' . parent::get_html($this -> tree)
+        return '<address class="bb">' . parent::getHtml($this -> tree)
             . '</address>';
     }
 }

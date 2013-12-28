@@ -30,12 +30,12 @@ class Abbr extends Xbbcode
 {
     public $behaviour = 'span';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $attrib = 'class="bb"';
         if ($this -> attrib['abbr']) {
             $attrib .= ' title="' . htmlspecialchars($this -> attrib['abbr']) . '"';
         }
-        return '<abbr ' . $attrib . '>' . parent::get_html($this -> tree) . '</abbr>';
+        return '<abbr ' . $attrib . '>' . parent::getHtml($this -> tree) . '</abbr>';
     }
 }

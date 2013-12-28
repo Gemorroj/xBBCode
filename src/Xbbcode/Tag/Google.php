@@ -30,7 +30,7 @@ class Google extends Xbbcode
 {
     public $behaviour = 'a';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         //TODO:добавить поддержку синтаксиса без атрибута. [google]test[/qoogle]
         //TODO:добавить yandex
@@ -43,6 +43,6 @@ class Google extends Xbbcode
         $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
         if ($target) { $attr .= ' target="' . htmlspecialchars($target) . '"'; }
 
-        return '<a class="bb_google" ' . $attr . '>' . parent::get_html($this -> tree) . '</a>';
+        return '<a class="bb_google" ' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
     }
 }

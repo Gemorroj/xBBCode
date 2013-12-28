@@ -417,7 +417,7 @@ class Xbbcode
      * Накладывает ограничения на вложенность тегов.
      * Теги с моделями поведения, не указанными в массиве справа, вложенные в тег с моделью поведения, указанной слева, будут игнорироваться как неправильно вложенные.
      */
-    private $_children = array(
+    protected $_children = array(
         'a'       => array('code','img','span'),
         'caption' => array('a','code','img','span'),
         'code'    => array(),
@@ -438,7 +438,7 @@ class Xbbcode
      * Накладывает ограничения на вложенность тегов.
      * Тег, принадлежащий указанной слева модели поведения тегов должен закрыться, как только начинается тег, принадлежащий какой-то из моделей поведения, указанных справа.
      */
-    private $_ends = array(
+    protected $_ends = array(
         'a'       => array(
             'a','caption','div','hr','li','p','pre','table','td','tr', 'ul'
         ),
@@ -500,7 +500,7 @@ class Xbbcode
 
 
     /**
-     * _get_token() - Функция парсит текст BBCode и возвращает очередную пару
+     * getToken() - Функция парсит текст BBCode и возвращает очередную пару
      *
      *                     "число (тип лексемы) - лексема"
      *
@@ -521,7 +521,7 @@ class Xbbcode
      *
      * @return array|bool
      */
-    protected function _get_token()
+    protected function getToken()
     {
         $token = '';
         $token_type = false;
@@ -603,26 +603,26 @@ class Xbbcode
      */
     public function parse($code = null)
     {
-        $time_start = $this->_getmicrotime();
+        $time_start = $this->getmicrotime();
         if (is_array($code)) {
             $is_tree = false;
             foreach ($code as $val) {
                 if (isset($val['val'])) {
                     $this->tree = $code;
-                    $this->syntax = $this->_get_syntax();
+                    $this->syntax = $this->getSyntax();
                     $is_tree = true;
                     break;
                 }
             }
             if (! $is_tree) {
                 $this->syntax = $code;
-                $this->_get_tree();
+                $this->getTree();
             }
             $this->text = '';
             foreach ($this->syntax as $val) {
                 $this->text .= $val['str'];
             }
-            $this->stat['time_parse'] = $this->_getmicrotime() - $time_start;
+            $this->stat['time_parse'] = $this->getmicrotime() - $time_start;
             return $this->syntax;
         } elseif ($code) {
             $this->text = $code;
@@ -707,7 +707,7 @@ class Xbbcode
         $oneattrib_set = false;
         $spacesave = '';
         // Сканируем массив лексем с помощью построенного автомата:
-        while ($token = $this -> _get_token()) {
+        while ($token = $this -> getToken()) {
             $previous_mode = $mode;
             $mode = $finite_automaton[$previous_mode][$token[0]];
             if (-1 < $token_key) {
@@ -820,7 +820,7 @@ class Xbbcode
                 break;
             case 13:
                 /* Включаем режим пробельных незакавыченных тегов если нужно */
-                $this->_includeTagFile($decomposition['name']);
+                $this->includeTagFile($decomposition['name']);
                 $handler = $this->tags[$decomposition['name']];
                 $class_vars = get_class_vars($handler);
                 if ($class_vars['oneattrib']) // Переписываем некоторые обработки
@@ -888,19 +888,19 @@ class Xbbcode
                 );
             }
         }
-        $this->_get_tree();
-        $this->stat['time_parse'] = $this->_getmicrotime() - $time_start;
+        $this->getTree();
+        $this->stat['time_parse'] = $this->getmicrotime() - $time_start;
         return $this->syntax;
     }
 
 
     /**
-     * _specialchars
+     * specialchars
      *
      * @param $string
      * @return string
      */
-    protected function _specialchars($string)
+    protected function specialchars($string)
     {
         $chars = array(
             '[' => '@l;',
@@ -914,12 +914,12 @@ class Xbbcode
 
 
     /**
-     * _unspecialchars
+     * unspecialchars
      *
      * @param $string
      * @return string
      */
-    protected function _unspecialchars($string)
+    protected function unspecialchars($string)
     {
         $chars = array(
             '@l;'  => '[',
@@ -940,17 +940,17 @@ class Xbbcode
      * @param string $next
      * @return bool
      */
-    protected function _must_close_tag($current, $next)
+    protected function mustCloseTag($current, $next)
     {
         if (isset($this -> tags[$current])) {
-            $this->_includeTagFile($current);
+            $this->includeTagFile($current);
             $class_vars = get_class_vars($this -> tags[$current]);
             $current_behaviour = $class_vars['behaviour'];
         } else {
             $current_behaviour = $this->behaviour;
         }
         if (isset($this -> tags[$next])) {
-            $this->_includeTagFile($next);
+            $this->includeTagFile($next);
             $class_vars = get_class_vars($this -> tags[$next]);
             $next_behaviour = $class_vars['behaviour'];
         } else {
@@ -974,19 +974,19 @@ class Xbbcode
      * @param string $child
      * @return bool
      */
-    protected function _isPermissiblyChild($parent, $child)
+    protected function isPermissiblyChild($parent, $child)
     {
         $parent = (string) $parent;
         $child = (string) $child;
         if (isset($this -> tags[$parent])) {
-            $this->_includeTagFile($parent);
+            $this->includeTagFile($parent);
             $class_vars = get_class_vars($this -> tags[$parent]);
             $parent_behaviour = $class_vars['behaviour'];
         } else {
             $parent_behaviour = $this->behaviour;
         }
         if (isset($this -> tags[$child])) {
-            $this->_includeTagFile($child);
+            $this->includeTagFile($child);
             $class_vars = get_class_vars($this -> tags[$child]);
             $child_behaviour = $class_vars['behaviour'];
         } else {
@@ -1003,12 +1003,12 @@ class Xbbcode
 
 
     /**
-     * _normalize_bracket
+     * normalizeBracket
      *
      * @param array $syntax
      * @return array
      */
-    protected function _normalize_bracket($syntax)
+    protected function normalizeBracket($syntax)
     {
         $structure = array();
         $structure_key = -1;
@@ -1018,7 +1018,7 @@ class Xbbcode
             unset($val['layout']);
             switch ($val['type']) {
                 case 'text':
-                    $val['str'] = $this -> _unspecialchars($val['str']);
+                    $val['str'] = $this -> unspecialchars($val['str']);
                     $type = (-1 < $structure_key)
                         ? $structure[$structure_key]['type'] : false;
                     if ('text' === $type) {
@@ -1030,10 +1030,10 @@ class Xbbcode
                     break;
                 case 'open/close':
                     $val['attrib'] = array_map(
-                        array($this, '_unspecialchars'), $val['attrib']
+                        array($this, 'unspecialchars'), $val['attrib']
                     );
                     foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
-                        if ($this -> _must_close_tag($ultimate, $val['name'])) {
+                        if ($this -> mustCloseTag($ultimate, $val['name'])) {
                             $structure[++$structure_key] = array(
                                     'type'  => 'close',
                                     'name'  => $ultimate,
@@ -1049,12 +1049,12 @@ class Xbbcode
                     $structure[$structure_key]['level'] = $level;
                     break;
                 case 'open':
-                    $this->_includeTagFile($val['name']);
+                    $this->includeTagFile($val['name']);
                     $val['attrib'] = array_map(
-                        array($this, '_unspecialchars'), $val['attrib']
+                        array($this, 'unspecialchars'), $val['attrib']
                     );
                     foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
-                        if ($this -> _must_close_tag($ultimate, $val['name'])) {
+                        if ($this -> mustCloseTag($ultimate, $val['name'])) {
                             $structure[++$structure_key] = array(
                                     'type'  => 'close',
                                     'name'  => $ultimate,
@@ -1147,14 +1147,14 @@ class Xbbcode
 
 
     /**
-     * _get_tree
+     * getTree
      *
      * @return array
      */
-    protected function _get_tree()
+    protected function getTree()
     {
         /* Превращаем $this -> syntax в правильную скобочную структуру */
-        $structure = $this -> _normalize_bracket($this -> syntax);
+        $structure = $this -> normalizeBracket($this -> syntax);
         /* Отслеживаем, имеют ли элементы неразрешенные подэлементы.
            Соответственно этому исправляем $structure. */
         $normalized = array();
@@ -1176,10 +1176,10 @@ class Xbbcode
                     }
                     break;
                 case 'open/close':
-                    $this->_includeTagFile($val['name']);
+                    $this->includeTagFile($val['name']);
                     end($open_tags);
                     $parent = $open_tags ? current($open_tags) : $this->tag;
-                    $permissibly = $this->_isPermissiblyChild($parent, $val['name']);
+                    $permissibly = $this->isPermissiblyChild($parent, $val['name']);
                     if (! $permissibly) {
                         $type = (-1 < $normal_key)
                             ? $normalized[$normal_key]['type'] : false;
@@ -1199,10 +1199,10 @@ class Xbbcode
                     $this -> stat['count_tags'] += 1;
                     break;
                 case 'open':
-                    $this->_includeTagFile($val['name']);
+                    $this->includeTagFile($val['name']);
                     end($open_tags);
                     $parent = $open_tags ? current($open_tags) : $this->tag;
-                    $permissibly = $this->_isPermissiblyChild($parent, $val['name']);
+                    $permissibly = $this->isPermissiblyChild($parent, $val['name']);
                     if (! $permissibly) {
                         $not_tags[$val['level']] = $val['name'];
                         $type = (-1 < $normal_key)
@@ -1316,12 +1316,12 @@ class Xbbcode
 
 
     /**
-     * _get_syntax
+     * getSyntax
      *
      * @param bool|array $tree
      * @return array
      */
-    function _get_syntax($tree = false)
+    protected function getSyntax($tree = false)
     {
         if (! is_array($tree)) {
             $tree = $this -> tree;
@@ -1331,14 +1331,14 @@ class Xbbcode
             if ('text' === $elem['type']) {
                 $syntax[] = array(
                     'type' => 'text',
-                    'str' => $this -> _specialchars($elem['str'])
+                    'str' => $this -> specialchars($elem['str'])
                 );
             } else {
-                $sub_elems = $this -> _get_syntax($elem['val']);
+                $sub_elems = $this -> getSyntax($elem['val']);
                 $str = '';
                 $layout = array(array(0, '['));
                 foreach ($elem['attrib'] as $name => $val) {
-                    $val = $this -> _specialchars($val);
+                    $val = $this -> specialchars($val);
                     if ($str) {
                         $str .= ' ';
                         $layout[] = array(4, ' ');
@@ -1393,12 +1393,12 @@ class Xbbcode
 
 
     /**
-     * insert_smiles
+     * insertSmiles
      *
      * @param string $text
      * @return string
      */
-    public function insert_smiles($text)
+    public function insertSmiles($text)
     {
         $text = htmlspecialchars($text, ENT_NOQUOTES);
         if ($this -> autolinks) {
@@ -1419,7 +1419,7 @@ class Xbbcode
      */
     public function highlight()
     {
-        $time_start = $this -> _getmicrotime();
+        $time_start = $this -> getmicrotime();
         $chars = array(
             '@l;'  => '<span class="bb_spec_char">@l;</span>',
             '@r;'  => '<span class="bb_spec_char">@r;</span>',
@@ -1493,7 +1493,7 @@ class Xbbcode
         }
         $str = nl2br($str);
         $str = str_replace('  ', '&#160;&#160;', $str);
-        $this -> stat['time_html'] = $this -> _getmicrotime() - $time_start;
+        $this -> stat['time_html'] = $this -> getmicrotime() - $time_start;
         return $str;
     }
 
@@ -1504,9 +1504,9 @@ class Xbbcode
      * @param array $elems
      * @return string
      */
-    public function get_html($elems = null)
+    public function getHtml($elems = null)
     {
-        $time_start = $this -> _getmicrotime();
+        $time_start = $this -> getmicrotime();
         if (! is_array($elems)) {
             $elems =& $this -> tree;
         }
@@ -1515,7 +1515,7 @@ class Xbbcode
         $rbr = 0;
         foreach ($elems as $elem) {
             if ('text' === $elem['type']) {
-                $elem['str'] = $this -> insert_smiles($elem['str']);
+                $elem['str'] = $this -> insertSmiles($elem['str']);
                 for ($i = 0; $i < $rbr; ++$i) {
                     $elem['str'] = ltrim($elem['str']);
                     if ('<br />' === substr($elem['str'], 0, 6)) {
@@ -1524,7 +1524,7 @@ class Xbbcode
                 }
                 $result .= $elem['str'];
             } else {
-                $this->_includeTagFile($elem['name']);
+                $this->includeTagFile($elem['name']);
                 $handler = $this->tags[$elem['name']];
                 /* Убираем лишние переводы строк */
                 $class_vars = get_class_vars($handler);
@@ -1544,13 +1544,13 @@ class Xbbcode
                 $tag->tag = $elem['name'];
                 $tag->attrib = $elem['attrib'];
                 $tag->tree = $elem['val'];
-                $result .= $tag -> get_html();
+                $result .= $tag -> getHtml();
             }
         }
         $result = preg_replace(
             "'\s*<br \/>\s*<br \/>\s*'si", "\n<br />&#160;<br />\n", $result
         );
-        $this->stat['time_html'] = $this->_getmicrotime() - $time_start;
+        $this->stat['time_html'] = $this->getmicrotime() - $time_start;
         return $result;
     }
 
@@ -1562,7 +1562,7 @@ class Xbbcode
      * @param string $str
      * @return array
      */
-    protected function _parseStr ($str)
+    protected function parseStr ($str)
     {
         $original = array('.', ' ');
         $replace = array("xbbdot\txbbdot", "xbbspace\txbbspace");
@@ -1584,7 +1584,7 @@ class Xbbcode
      * @param string $url
      * @return string
      */
-    protected function _checkUrl($url)
+    protected function checkUrl($url)
     {
         $parse = parse_url($url);
 
@@ -1607,7 +1607,7 @@ class Xbbcode
             $out .= str_replace('%2F', '/', rawurlencode($parse['path']));
         }
         if (isset($parse['query'])) {
-            $query = $this->_parseStr($parse['query']);
+            $query = $this->parseStr($parse['query']);
             //parse_str($parse['query'], $query); //replace spaces and dots
 
             // PHP 5.1.2
@@ -1627,7 +1627,7 @@ class Xbbcode
      *
      * @return float
      */
-    protected function _getmicrotime()
+    protected function getmicrotime()
     {
         return microtime(true);
     }
@@ -1642,7 +1642,7 @@ class Xbbcode
      * @param string $tagName
      * @return bool
      */
-    protected function _includeTagFile($tagName)
+    protected function includeTagFile($tagName)
     {
         if (!isset($this->tags[$tagName])) {
             $this->tags[$tagName] = 'bbcode';

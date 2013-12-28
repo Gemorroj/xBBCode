@@ -30,7 +30,7 @@ class Size extends Xbbcode
 {
     public $behaviour = 'span';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $sign = '';
         if (strlen($this -> attrib['size'])) {
@@ -51,6 +51,6 @@ class Size extends Xbbcode
         }
         $size = $sign . $size;
 
-        return '<font size="' . $size . '">' . parent::get_html($this -> tree) . '</font>';
+        return '<font size="' . $size . '">' . parent::getHtml($this -> tree) . '</font>';
     }
 }

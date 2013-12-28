@@ -32,7 +32,7 @@ class Ul extends Xbbcode
     public $rbr = 1;
     public $behaviour = 'ul';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $tag_name = 'ul';
         $type = '';
@@ -55,7 +55,7 @@ class Ul extends Xbbcode
             $attr .= ' type="a"';
         }
 
-        return '<' . $tag_name . $attr . '>' . parent::get_html() . '</'
+        return '<' . $tag_name . $attr . '>' . parent::getHtml() . '</'
             . $tag_name . '>';
     }
 }

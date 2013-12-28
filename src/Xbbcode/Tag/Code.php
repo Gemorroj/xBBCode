@@ -58,7 +58,7 @@ class Code extends Xbbcode
     }
 
     /* Описываем конвертацию в HTML */
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         // Находим язык подсветки
         switch ($this->tag) {

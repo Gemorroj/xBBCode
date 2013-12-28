@@ -30,7 +30,7 @@ class Img extends Xbbcode
 {
     public $behaviour = 'img';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $attr = '';
 
@@ -63,7 +63,7 @@ class Img extends Xbbcode
             }
         }
 
-        $src = $this -> _checkUrl($src);
+        $src = $this -> checkUrl($src);
 
         return '<img src="' . $src . '" ' . $attr . ' />';
     }

@@ -30,7 +30,7 @@ class Acronym extends Xbbcode
 {
     public $behaviour = 'span';
 
-    public function get_html($tree = null)
+    public function getHtml($tree = null)
     {
         $attrib = 'class="bb"';
         if ($this -> attrib['acronym']) {
@@ -38,7 +38,7 @@ class Acronym extends Xbbcode
                 . '"';
         }
 
-        return '<acronym ' . $attrib . '>' . parent::get_html($this -> tree)
+        return '<acronym ' . $attrib . '>' . parent::getHtml($this -> tree)
             . '</acronym>';
     }
 }
