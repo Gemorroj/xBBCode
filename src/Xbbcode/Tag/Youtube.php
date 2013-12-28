@@ -35,7 +35,7 @@ class Youtube extends Xbbcode
 
     public function getHtml($tree = null)
     {
-        $attr = ' frameborder="0" allowfullscreen="allowfullscreen"';
+        $attr = '';
 
         $src = isset($this -> attrib['src']) ? $this -> attrib['src'] : '';
         if (!$src) {
@@ -54,6 +54,6 @@ class Youtube extends Xbbcode
         if ($height) { $attr .= ' height="' . abs($height) . '"'; }
 
 
-        return '<iframe class="bb_youtube" ' . $attr . '>' . parent::getHtml($this -> tree) . '</iframe>';
+        return '<iframe frameborder="0" allowfullscreen="allowfullscreen" class="bb_youtube" ' . $attr . '>' . parent::getHtml($this -> tree) . '</iframe>';
     }
 }
