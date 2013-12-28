@@ -31,7 +31,7 @@ use Xbbcode\Xbbcode;
  */
 class Spoiler extends Xbbcode
 {
-    public $button = 'Spoiler';
+    public $button = 'Спойлер';
     public $behaviour = 'div';
 
     public function getHtml($tree = null)
