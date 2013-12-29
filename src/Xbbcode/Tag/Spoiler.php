@@ -42,13 +42,13 @@ class Spoiler extends Tag
     {
         return '<input class="bb_spoiler" type="button" value="' . htmlspecialchars(
             $this->showButton
-        ) . '" onclick="var node = document.getElementById(\'' . $id . '\'); (node.style.display == \'none\' ? (node.style.display = \'block\'; this.value = \'' . htmlspecialchars(
+        ) . '" onclick="var node = document.getElementById(\'' . $id . '\'); (node.style.display == \'none\' ? (node.style.display = \'block\', this.value = \'' . htmlspecialchars(
             $this->hideButton,
             ENT_QUOTES
-        ) . '\';) : (node.style.display = \'none\'; this.value = \'' . htmlspecialchars(
+        ) . '\') : (node.style.display = \'none\', this.value = \'' . htmlspecialchars(
             $this->showButton,
             ENT_QUOTES
-        ) . '\';);" />';
+        ) . '\'));" />';
     }
 
     /**
