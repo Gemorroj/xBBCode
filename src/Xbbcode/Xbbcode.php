@@ -425,18 +425,18 @@ class Xbbcode
      * Теги с моделями поведения, не указанными в массиве справа, вложенные в тег с моделью поведения, указанной слева, будут игнорироваться как неправильно вложенные.
      */
     protected $children = array(
-        'a'       => array('code','img','span'),
-        'caption' => array('a','code','img','span'),
+        'a'       => array('code', 'img', 'span'),
+        'caption' => array('a', 'code', 'img', 'span'),
         'code'    => array(),
-        'div'     => array('a','code','div','hr','img','p','pre','span','table','ul'),
+        'div'     => array('a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'),
         'hr'      => array(),
         'img'     => array(),
-        'li'      => array('a','code','div','hr','img','p','pre','span','table','ul'),
-        'p'       => array('a','code','img','span'),
+        'li'      => array('a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'),
+        'p'       => array('a', 'code', 'img', 'span'),
         'pre'     => array(),
-        'span'    => array('a','code','img','span'),
-        'table'   => array('caption','tr'),
-        'td'      => array('a','code','div','hr','img','p','pre','span','table','ul'),
+        'span'    => array('a', 'code', 'img', 'span'),
+        'table'   => array('caption', 'tr'),
+        'td'      => array('a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'),
         'tr'      => array('td'),
         'ul'      => array('li'),
     );
@@ -447,25 +447,23 @@ class Xbbcode
      */
     protected $ends = array(
         'a'       => array(
-            'a','caption','div','hr','li','p','pre','table','td','tr', 'ul'
+            'a', 'caption', 'div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'
         ),
         'caption' => array('tr'),
         'code'    => array(),
-        'div'     => array('li','tr','td'),
+        'div'     => array('li', 'tr', 'td'),
         'hr'      => array(
-            'a','caption','code','div','hr','img','li','p','pre','span','table',
-            'td','tr','ul'
+            'a', 'caption', 'code', 'div', 'hr', 'img', 'li', 'p', 'pre', 'span', 'table', 'td', 'tr', 'ul'
         ),
         'img'     => array(
-            'a','caption','code','div','hr','img','li','p','pre','span','table',
-            'td','tr','ul'
+            'a', 'caption', 'code', 'div', 'hr', 'img', 'li', 'p', 'pre', 'span', 'table', 'td', 'tr', 'ul'
         ),
-        'li'      => array('li','tr','td'),
-        'p'       => array('div','hr','li','p','pre','table','td','tr','ul'),
+        'li'      => array('li', 'tr', 'td'),
+        'p'       => array('div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'),
         'pre'     => array(),
-        'span'    => array('div','hr','li','p','pre','table','td','tr','ul'),
+        'span'    => array('div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'),
         'table'   => array('table'),
-        'td'      => array('td','tr'),
+        'td'      => array('td', 'tr'),
         'tr'      => array('tr'),
         'ul'      => array(),
     );

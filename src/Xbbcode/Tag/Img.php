@@ -32,6 +32,7 @@ use Xbbcode\Attributes;
 class Img extends Tag
 {
     public $behaviour = 'img';
+    public $isClose = true;
 
     /**
      * @return string

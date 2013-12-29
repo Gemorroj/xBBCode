@@ -31,6 +31,8 @@ use Xbbcode\Attributes;
  */
 class Youtube extends Tag
 {
+    public $isClose = true;
+
     /**
      * @return string
      */
