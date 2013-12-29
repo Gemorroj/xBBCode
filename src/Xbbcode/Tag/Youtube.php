@@ -66,6 +66,8 @@ class Youtube extends Tag
 
         $attr->set('frameborder', '0');
         $attr->set('allowfullscreen', 'allowfullscreen');
+        $attr->set('width', '560');
+        $attr->set('height', '315');
 
         $src = $this->getSrc();
         if ($src) {
