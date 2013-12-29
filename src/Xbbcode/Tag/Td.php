@@ -22,41 +22,71 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Td
  * Класс для тега [td]
  */
-class Td extends Xbbcode
+class Td extends Tag
 {
     public $behaviour = 'td';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $attr = 'class="bb"';
-        $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : '';
-        if ($width) { $attr .= ' width="' . $this->htmlspecialchars($width) . '"'; }
-        $height = isset($this -> attrib['height']) ? $this -> attrib['height'] : '';
-        if ($height) { $attr .= ' height="' . $this->htmlspecialchars($height) . '"'; }
-        $align = isset($this -> attrib['align']) ? $this -> attrib['align'] : '';
-        if ($align) { $attr .= ' align="' . $this->htmlspecialchars($align) . '"'; }
-        $valign = isset($this -> attrib['valign']) ? $this -> attrib['valign'] : '';
-        if ($valign) { $attr .= ' valign="' . $this->htmlspecialchars($valign) . '"'; }
-        if (isset($this -> attrib['colspan'])) {
-            $colspan = (int) $this -> attrib['colspan'];
-            if ($colspan) {
-                $attr .= ' colspan="' . $colspan . '"';
-            }
-        }
-        if (isset($this -> attrib['rowspan'])) {
-            $rowspan = (int) $this -> attrib['rowspan'];
-            if ($rowspan) {
-                $attr .= ' rowspan="' . $rowspan . '"';
+        $attr = new Attributes();
+
+        if (isset($this->attributes['width'])) {
+            if ($this->isValidSize($this->attributes['width'])) {
+                $attr->set('width', $this->attributes['width']);
             }
         }
 
-        return '<td ' . $attr . '>' . parent::getHtml($this -> tree) . '</td>';
+        if (isset($this->attributes['height'])) {
+            if ($this->isValidSize($this->attributes['height'])) {
+                $attr->set('height', $this->attributes['height']);
+            }
+        }
+
+        if (isset($this->attributes['colspan'])) {
+            if ($this->isValidNumber($this->attributes['colspan'])) {
+                $attr->set('colspan', $this->attributes['colspan']);
+            }
+        }
+
+        if (isset($this->attributes['rowspan'])) {
+            if ($this->isValidNumber($this->attributes['rowspan'])) {
+                $attr->set('rowspan', $this->attributes['rowspan']);
+            }
+        }
+
+        if (isset($this->attributes['align'])) {
+            if ($this->isValidAlign($this->attributes['align'])) {
+                $attr->set('align', $this->attributes['align']);
+            }
+        }
+
+        if (isset($this->attributes['valign'])) {
+            if ($this->isValidValign($this->attributes['valign'])) {
+                $attr->set('valign', $this->attributes['valign']);
+            }
+        }
+
+        return $attr;
+    }
+
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<td ' . $this->getAttributes() . '>' . $this->getBody() . '</td>';
     }
 }

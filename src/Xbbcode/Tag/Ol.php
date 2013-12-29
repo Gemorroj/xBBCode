@@ -22,14 +22,40 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
+
 
 /**
- * Class Th
- * Класс для тега [th]
+ * Class Ol
+ * Класс для тегов [ol]
  */
-class Th extends Td
+class Ol extends Tag
 {
-    public $behaviour = 'td';
+    public $lbr = 1;
+    public $rbr = 1;
+    public $behaviour = 'ul';
+
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
+    {
+        $attr = new Attributes();
+
+        if (isset($this->attributes['*'])) {
+            if ($this->isValidNumber($this->attributes['*'])) {
+                $attr->set('value', $this->attributes['*']);
+            }
+        }
+
+        if (isset($this->attributes['type'])) {
+            if ($this->isValidOlType($this->attributes['type'])) {
+                $attr->set('type', $this->attributes['type']);
+            }
+        }
+
+        return $attr;
+    }
 
     /**
      * Return html code
@@ -38,6 +64,6 @@ class Th extends Td
      */
     public function __toString()
     {
-        return '<th ' . $this->getAttributes() . '>' . $this->getBody() . '</th>';
+        return '<ol ' . $this->getAttributes() . '>' . $this->getBody() . '</ol>';
     }
 }

@@ -20,24 +20,84 @@
  *                                                                            *
  ******************************************************************************/
 
-namespace Xbbcode\Tag;
-
+namespace Xbbcode;
 
 /**
- * Class Th
- * Класс для тега [th]
+ * Class Attributes
  */
-class Th extends Td
+class Attributes extends \ArrayObject
 {
-    public $behaviour = 'td';
+    /**
+     * @var array
+     */
+    protected $attributes = array('class' => 'bb');
 
     /**
-     * Return html code
-     *
+     * @param string $name
+     * @return string
+     */
+    public function getAttributeValue($name)
+    {
+        return $this->attributes[$name];
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     * @return Attributes
+     */
+    public function set($name, $value)
+    {
+        $this->attributes[$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param string $value
+     * @return Attributes
+     */
+    public function add($name, $value)
+    {
+        if (isset($this->attributes[$name])) {
+            $this->attributes[$name] .= ' ' . $value;
+        } else {
+            $this->set($name, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @return Attributes
+     */
+    public function remove($name)
+    {
+        unset($this->attributes[$name]);
+
+        return $this;
+    }
+
+    /**
+     * @return \ArrayIterator
+     */
+    public function getIterator()
+    {
+        return new \ArrayIterator($this->attributes);
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
-        return '<th ' . $this->getAttributes() . '>' . $this->getBody() . '</th>';
+        $str = '';
+        foreach ($this->getIterator() as $name => $value) {
+            $str .= htmlspecialchars($name, ENT_NOQUOTES) . '="' . htmlspecialchars($value) . '" ';
+        }
+
+        return rtrim($str);
     }
 }

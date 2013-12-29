@@ -22,29 +22,58 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Quote
  * Класс для тегов [quote] и [blockquote]
  */
-class Quote extends Xbbcode
+class Quote extends Tag
 {
     public $rbr = 1;
 
-    public function getHtml($tree = null)
+    /**
+     * @return string
+     */
+    protected function getAuthor()
     {
-        if ('blockquote' === $this->tag) {
-            $author = $this->htmlspecialchars($this->attrib['blockquote'], ENT_NOQUOTES);
-        } else {
-            $author = $this->htmlspecialchars($this->attrib['quote'], ENT_NOQUOTES);
+        $author = '';
+
+        if (isset($this->attributes['quote'])) {
+            $author = $this->attributes['quote'];
         }
-        if ($author) {
-            $author = '<div class="bb_quote_author">' . $author . '</div>';
+        if (!$author && isset($this->attributes['blockquote'])) {
+            $author = $this->attributes['blockquote'];
         }
 
-        return '<blockquote class="bb_quote">' . $author
-            . parent::getHtml($this -> tree) . '</blockquote>';
+        if ($author) {
+            return '<div class="bb_quote_author">' . htmlspecialchars($author, ENT_NOQUOTES) . ':</div>';
+        }
+
+        return '';
+    }
+
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
+    {
+        $attr = new Attributes();
+
+        $attr->add('class', 'bb_quote');
+
+        return $attr;
+    }
+
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<blockquote ' . $this->getAttributes() . '>' . $this->getAuthor() . $this->getBody() . '</blockquote>';
     }
 }

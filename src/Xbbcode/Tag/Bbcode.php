@@ -22,21 +22,33 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Bbcode
  * Класс для тега [bbcode]
  */
-class Bbcode extends Xbbcode
+class Bbcode extends Tag
 {
     public $behaviour = 'code';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
+    {
+        $attr = new Attributes();
+
+        $attr->add('class', 'bb_code');
+
+        return $attr;
+    }
+
+    protected function build()
     {
         $str = '';
-        foreach ($this -> tree as $item) {
+        foreach ($this->tree as $item) {
             if ('item' === $item['type']) {
                 continue;
             }
@@ -44,7 +56,17 @@ class Bbcode extends Xbbcode
         }
 
         $this->parse($str);
+    }
 
-        return '<code class="bb_code">' . $this -> highlight() . '</code>';
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $this->build();
+
+        return '<code ' . $this->getAttributes() . '>' . $this->highlight() . '</code>';
     }
 }

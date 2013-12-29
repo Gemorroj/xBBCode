@@ -22,21 +22,36 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Hr
  * Класс для тега [hr]
  */
-class Hr extends Xbbcode
+class Hr extends Tag
 {
     public $isClose = true;
     public $rbr = 1;
     public $behaviour = 'hr';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        return '<hr class="bb" />';
+        $attr = new Attributes();
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<hr ' . $this->getAttributes() . ' />';
     }
 }

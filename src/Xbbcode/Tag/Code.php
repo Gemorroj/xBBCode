@@ -22,14 +22,14 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Code
  * Класс для тегов подсветки синтаксиса и для тегов [code] и [pre]
  */
-class Code extends Xbbcode
+class Code extends Tag
 {
     /* Число разрывов строк, которые должны быть игнорированы перед тегом */
     public $lbr = 0;
@@ -50,37 +50,68 @@ class Code extends Xbbcode
         't-sql'  => 'tsql',
         'vb.net' => 'vbnet',
     );
-    /* Объект GeSHi */
-    protected $_geshi;
+    /**
+     * @var \GeSHi
+     */
+    protected $geshi;
 
     /* Конструктор класса */
     public function __construct()
     {
-        $this->_geshi = new \GeSHi('', 'text');
-        $this->_geshi->set_header_type(GESHI_HEADER_NONE);
+        $this->geshi = new \GeSHi('', 'text');
+        $this->geshi->set_header_type(GESHI_HEADER_NONE);
     }
 
-    /* Описываем конвертацию в HTML */
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        // Находим язык подсветки
+        $attr = new Attributes();
+
+        return $attr;
+    }
+
+    /**
+     * Язык для подсветки
+     *
+     * @return Code
+     */
+    protected function setLanguage()
+    {
         switch ($this->tag) {
             case 'code':
-                $language = $this->attrib['code'];
+                $language = $this->attributes['code'];
                 break;
             case 'pre':
-                $language = $this->attrib['pre'];
+                $language = $this->attributes['pre'];
                 break;
             default:
                 $language = $this->tag;
                 break;
         }
-        if (! $language) { $language = 'text'; }
+
+        if (!$language) {
+            $language = 'text';
+        }
+
         if (isset($this->langSynonym[$language])) {
             $language = $this->langSynonym[$language];
         }
-        $this->_geshi->set_language($language);
-        // Находим подсвечиваемый код
+
+        $this->geshi->set_language($language);
+
+        return $this;
+    }
+
+
+    /**
+     * Подсвечиваемый код
+     *
+     * @return Code
+     */
+    protected function setSource()
+    {
         $source = '';
         foreach ($this->tree as $item) {
             if ('item' === $item['type']) {
@@ -88,47 +119,109 @@ class Code extends Xbbcode
             }
             $source .= $item['str'];
         }
-        $this->_geshi->set_source($source);
-        // Устанавливаем нумерацию строк
-        if (isset($this->attrib['num'])) {
-            $this->_geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
-            if ('' !== $this -> attrib['num']) {
-                $num = (int) $this->attrib['num'];
-                $this->_geshi->start_line_numbers_at($num);
+        $this->geshi->set_source($source);
+
+        return $this;
+    }
+
+    /**
+     * Нумерация строк
+     *
+     * @return Code
+     */
+    protected function setNum()
+    {
+        if (isset($this->attributes['num'])) {
+            $this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
+            if ('' !== $this->attributes['num']) {
+                $num = (int) $this->attributes['num'];
+                $this->geshi->start_line_numbers_at($num);
             }
         }
-        // Задаем величину табуляции
-        if (isset($this->attrib['tab'])) {
-            $this->attrib['tab'] = (int) $this->attrib['tab'];
-            if ($this->attrib['tab']) {
-                $this->_geshi -> set_tab_width($this->attrib['tab']);
+
+        return $this;
+    }
+
+    /**
+     * Величина табуляции
+     *
+     * @return Code
+     */
+    protected function setTab()
+    {
+        if (isset($this->attributes['tab'])) {
+            $this->attributes['tab'] = (int) $this->attributes['tab'];
+            if ($this->attributes['tab']) {
+                $this->geshi->set_tab_width($this->attributes['tab']);
             }
         }
-        // Устанавливаем выделение строк
-        if (isset($this->attrib['extra'])) {
-            $extra = explode(',', $this->attrib['extra']);
+
+        return $this;
+    }
+
+    /**
+     * Выделение строк
+     *
+     * @return Code
+     */
+    protected function setExtra()
+    {
+        if (isset($this->attributes['extra'])) {
+            $extra = explode(',', $this->attributes['extra']);
             foreach ($extra as $key => $val) {
                 $extra[$key] = (int) $val;
             }
-            $this->_geshi->highlight_lines_extra($extra);
-        }
-        // Формируем заголовок
-        $result = '<span class="bb_code_lang">'
-            . $this->_geshi->get_language_name() . '</span>';
-        if (isset($this->attrib['title'])) {
-            $result = $this->htmlspecialchars($this->attrib['title'], ENT_NOQUOTES);
-        }
-        // Получаем подсвеченный код
-        $result = '<div class="bb_code"><div class="bb_code_header">' . $result
-            . '</div>' . $this->_geshi->parse_code();
-        // Формируем подпись под кодом
-        if (isset($this->attrib['footer'])) {
-            $content = $this->htmlspecialchars($this->attrib['footer'], ENT_NOQUOTES);
-            $content = '<div class="bb_code_footer">' . $content . '</div>';
-            $result .= $content;
+            $this->geshi->highlight_lines_extra($extra);
         }
 
-        // Возвращаем результат
-        return $result . '</div>';
+        return $this;
+    }
+
+    /**
+     * Получаем заголовок
+     *
+     * @return string
+     */
+    protected function getHeader()
+    {
+        if (isset($this->attributes['title'])) {
+            $title = $this->attributes['title'];
+        } else {
+            $title = $this->geshi->get_language_name();
+        }
+
+        return '<div class="bb_code_header"><span class="bb_code_lang">' . htmlspecialchars($title, ENT_NOQUOTES) . '</span></div>';
+
+    }
+
+
+    /**
+     * Получаем подвал
+     *
+     * @return string
+     */
+    protected function getFooter()
+    {
+        if (isset($this->attributes['footer'])) {
+            return '<div class="bb_code_footer">' . htmlspecialchars($this->attributes['footer'], ENT_NOQUOTES) . '</div>';
+        }
+
+        return '';
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $this->setLanguage();
+        $this->setSource();
+        $this->setNum();
+        $this->setTab();
+        $this->setExtra();
+
+        return '<div class="bb_code">' . $this->getHeader() . $this->geshi->parse_code() . $this->getFooter() . '</div>';
     }
 }

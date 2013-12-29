@@ -22,6 +22,7 @@
 
 namespace Xbbcode;
 
+
 /**
  * Class Xbbcode
  */
@@ -36,13 +37,13 @@ class Xbbcode
      * Массив значений атрибутов тега, которому сопоставлен экземпляр класса.
      * Пуст, если экземпляр не сопоставлен никакому тегу.
      */
-    public $attrib = array();
+    public $attributes = array();
     /**
      * Задаёт возможность наличия у последнего атрибута у тега значений без необходимости наличия кавычек для значений с пробелами.
      * Пример: [altfont=Comic Sans MS]sometext[/altfont] или [altfont size="22" font=Comic Sans MS]sometext[/altfont]
      * По умолчанию выключено
      */
-    public $oneAttrib = false;
+    public $oneAttribute = false;
     /**
      * Текст BBCode
      */
@@ -101,7 +102,7 @@ class Xbbcode
         'left'         => 'Xbbcode\Tag\Align'  ,
         'list'         => 'Xbbcode\Tag\Ul'     ,
         'nobb'         => 'Xbbcode\Tag\Nobb'   ,
-        'ol'           => 'Xbbcode\Tag\Ul'     ,
+        'ol'           => 'Xbbcode\Tag\Ol'     ,
         'p'            => 'Xbbcode\Tag\P'      ,
         'quote'        => 'Xbbcode\Tag\Quote'  ,
         'right'        => 'Xbbcode\Tag\Align'  ,
@@ -480,7 +481,7 @@ class Xbbcode
     {
         if ($code !== null) {
             $this->webPath = $webPath;
-            $this->mnemonics = $this->setSmiles();
+            $this->mnemonics = $this->getSmiles();
 
             // Removing all traces of parsing of disallowed tags.
             // In case if $allowed is not an array, assuming that everything is allowed
@@ -502,7 +503,7 @@ class Xbbcode
      *
      * @return array
      */
-    protected function setSmiles()
+    protected function getSmiles()
     {
         $path = $this->webPath . '/resources/images/smiles';
         $pak = file(__DIR__ . '/resources/images/smiles/Set_Smiles_YarNET.pak');
@@ -512,7 +513,7 @@ class Xbbcode
             $val = trim($val);
             if ($val && '#' !== $val{0}) {
                 list($gif, $alt, $symbol) = explode('=+:', $val);
-                $smiles[$symbol] = '<img src="' . $path . '/' . $this->htmlspecialchars($gif) . '" alt="' . $this->htmlspecialchars($alt) . '" />';
+                $smiles[$symbol] = '<img src="' . $path . '/' . htmlspecialchars($gif) . '" alt="' . htmlspecialchars($alt) . '" />';
             }
         }
 
@@ -525,8 +526,8 @@ class Xbbcode
      *
      *                     "число (тип лексемы) - лексема"
      *
-     * Лексема - подстрока строки $this -> text, начинающаяся с позиции
-     * $this -> cursor
+     * Лексема - подстрока строки $this->text, начинающаяся с позиции
+     * $this->cursor
      * Типы лексем могут быть следующие:
      *
      * 0 - открывающая квадратная скобка ("[")
@@ -549,14 +550,14 @@ class Xbbcode
         $char_type = false;
         while (true) {
             $token_type = $char_type;
-            if (! isset($this -> text{$this -> cursor})) {
+            if (! isset($this->text{$this->cursor})) {
                 if (false === $char_type) {
                     return false;
                 } else {
                     break;
                 }
             }
-            $char = $this -> text{$this -> cursor};
+            $char = $this->text{$this->cursor};
             switch ($char) {
                 case '[':
                     $char_type = 0;
@@ -607,11 +608,13 @@ class Xbbcode
             } else {
                 break;
             }
-            $this -> cursor += 1;
+            $this->cursor += 1;
         }
-        if (isset($this -> tags[strtolower($token)])) {
+
+        if (isset($this->tags[strtolower($token)])) {
             $token_type = 8;
         }
+
         return array($token_type, $token);
     }
 
@@ -624,7 +627,7 @@ class Xbbcode
      */
     public function parse($code)
     {
-        $time_start = $this->getmicrotime();
+        $time_start = microtime(true);
         if (is_array($code)) {
             $is_tree = false;
             foreach ($code as $val) {
@@ -643,7 +646,7 @@ class Xbbcode
             foreach ($this->syntax as $val) {
                 $this->text .= $val['str'];
             }
-            $this->stat['time_parse'] = $this->getmicrotime() - $time_start;
+            $this->stat['time_parse'] = microtime(true) - $time_start;
             return $this->syntax;
         } else {
             $this->text = $code;
@@ -691,30 +694,30 @@ class Xbbcode
         Описание конечного автомата:
         */
         $finite_automaton_orig = array(
-               // Предыдущие |   Состояния для текущих событий (лексем)   |
-               //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
-                   0 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
-                ,  1 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 )
-                ,  2 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 )
-                ,  3 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
-                ,  4 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  7 )
-                ,  5 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 )
-                ,  6 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
-                ,  7 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 )
-                ,  8 => array( 13 , 13 , 11 , 12 , 13 , 13 , 14 , 13 , 13 )
-                ,  9 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 )
-                , 10 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 ,  3 , 15 , 15 )
-                , 11 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 )
-                , 12 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 )
-                , 13 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 17 , 19 , 19 )
-                , 14 => array(  2 ,  3 , 11 , 12 , 13 , 13 ,  3 , 13 , 13 )
-                , 15 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 )
-                , 16 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 )
-                , 17 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 , 20 , 15 , 15 )
-                , 18 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 )
-                , 19 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 20 , 19 , 19 )
-                , 20 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 ,  3 , 15 , 15 )
-            );
+           // Предыдущие |   Состояния для текущих событий (лексем)   |
+           //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
+               0 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
+            ,  1 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 )
+            ,  2 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 )
+            ,  3 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
+            ,  4 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  7 )
+            ,  5 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 )
+            ,  6 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
+            ,  7 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 )
+            ,  8 => array( 13 , 13 , 11 , 12 , 13 , 13 , 14 , 13 , 13 )
+            ,  9 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 )
+            , 10 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 ,  3 , 15 , 15 )
+            , 11 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 )
+            , 12 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 )
+            , 13 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 17 , 19 , 19 )
+            , 14 => array(  2 ,  3 , 11 , 12 , 13 , 13 ,  3 , 13 , 13 )
+            , 15 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 )
+            , 16 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 )
+            , 17 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 , 20 , 15 , 15 )
+            , 18 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 )
+            , 19 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 20 , 19 , 19 )
+            , 20 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 ,  3 , 15 , 15 )
+        );
         // Закончили описание конечного автомата
         $finite_automaton = $finite_automaton_orig;
         $mode = 0;
@@ -727,20 +730,20 @@ class Xbbcode
         $this->cursor = 0;
         $spacesave = '';
         // Сканируем массив лексем с помощью построенного автомата:
-        while ($token = $this -> getToken()) {
+        while ($token = $this->getToken()) {
             $previous_mode = $mode;
             $mode = $finite_automaton[$previous_mode][$token[0]];
             if (-1 < $token_key) {
-                $type = $this -> syntax[$token_key]['type'];
+                $type = $this->syntax[$token_key]['type'];
             } else {
                 $type = false;
             }
             switch ($mode) {
             case 0:
                 if ('text' === $type) {
-                    $this -> syntax[$token_key]['str'] .= $token[1];
+                    $this->syntax[$token_key]['str'] .= $token[1];
                 } else {
-                    $this -> syntax[++$token_key] = array(
+                    $this->syntax[++$token_key] = array(
                             'type' => 'text',
                             'str' => $token[1]
                         );
@@ -756,9 +759,9 @@ class Xbbcode
                 break;
             case 2:
                 if ('text' === $type) {
-                    $this -> syntax[$token_key]['str'] .= $decomposition['str'];
+                    $this->syntax[$token_key]['str'] .= $decomposition['str'];
                 } else {
-                    $this -> syntax[++$token_key] = array(
+                    $this->syntax[++$token_key] = array(
                         'type' => 'text',
                         'str' => $decomposition['str']
                     );
@@ -772,10 +775,10 @@ class Xbbcode
                 break;
             case 3:
                 if ('text' === $type) {
-                    $this -> syntax[$token_key]['str'] .= $decomposition['str'];
-                    $this -> syntax[$token_key]['str'] .= $token[1];
+                    $this->syntax[$token_key]['str'] .= $decomposition['str'];
+                    $this->syntax[$token_key]['str'] .= $token[1];
                 } else {
-                    $this -> syntax[++$token_key] = array(
+                    $this->syntax[++$token_key] = array(
                         'type' => 'text',
                         'str' => $decomposition['str'].$token[1]
                     );
@@ -793,7 +796,7 @@ class Xbbcode
                 $decomposition['name'] = $name;
                 $decomposition['str'] .= $token[1];
                 $decomposition['layout'][] = array(2, $token[1]);
-                $decomposition['attrib'][$name] = '';
+                $decomposition['attributes'][$name] = '';
                 break;
             case 6:
                 if (! isset($decomposition['name'])) {
@@ -804,7 +807,7 @@ class Xbbcode
                 }
                 $decomposition['str'] .= ']';
                 $decomposition['layout'][] = array( 0, ']' );
-                $this -> syntax[++$token_key] = $decomposition;
+                $this->syntax[++$token_key] = $decomposition;
                 $decomposition = array();
                 break;
             case 7:
@@ -843,14 +846,14 @@ class Xbbcode
                 $this->includeTagFile($decomposition['name']);
                 $handler = $this->tags[$decomposition['name']];
                 $class_vars = get_class_vars($handler);
-                if ($class_vars['oneAttrib']) { // Переписываем некоторые обработки
+                if ($class_vars['oneAttribute']) { // Переписываем некоторые обработки
                     $finite_automaton[8][6] = 13;
                     $finite_automaton[20][7] = 19;
                     $finite_automaton[20][8] = 19;
                     $finite_automaton[13][6] = 19;
                     $finite_automaton[19][6] = 19;
                 }
-                $decomposition['attrib'][$name] = $spacesave.$token[1];
+                $decomposition['attributes'][$name] = $spacesave.$token[1];
                 $value = $spacesave.$token[1];
                 $decomposition['str'] .= $token[1];
                 $spacesave = '';
@@ -864,11 +867,11 @@ class Xbbcode
                 $name = strtolower($token[1]);
                 $decomposition['str'] .= $token[1];
                 $decomposition['layout'][] = array(6, $token[1]);
-                $decomposition['attrib'][$name] = '';
+                $decomposition['attributes'][$name] = '';
                 break;
             case 16:
                 $decomposition['str'] .= $token[1];
-                $decomposition['attrib'][$name] .= $token[1];
+                $decomposition['attributes'][$name] .= $token[1];
                 $value .= $token[1];
                 break;
             case 17:
@@ -879,12 +882,12 @@ class Xbbcode
                 break;
             case 18:
                 $decomposition['str'] .= $token[1];
-                $decomposition['attrib'][$name] .= $token[1];
+                $decomposition['attributes'][$name] .= $token[1];
                 $value .= $token[1];
                 break;
             case 19:
                 $decomposition['str'] .= $token[1];
-                $decomposition['attrib'][$name] .= $token[1];
+                $decomposition['attributes'][$name] .= $token[1];
                 $value .= $token[1];
                 break;
             case 20:
@@ -899,16 +902,18 @@ class Xbbcode
         }
         if ($decomposition) {
             if ('text' === $type) {
-                $this -> syntax[$token_key]['str'] .= $decomposition['str'];
+                $this->syntax[$token_key]['str'] .= $decomposition['str'];
             } else {
-                $this -> syntax[++$token_key] = array(
+                $this->syntax[++$token_key] = array(
                     'type' => 'text',
                     'str' => $decomposition['str']
                 );
             }
         }
+
         $this->getTree();
-        $this->stat['time_parse'] = $this->getmicrotime() - $time_start;
+        $this->stat['time_parse'] = microtime(true) - $time_start;
+
         return $this->syntax;
     }
 
@@ -961,16 +966,16 @@ class Xbbcode
      */
     protected function mustCloseTag($current, $next)
     {
-        if (isset($this -> tags[$current])) {
+        if (isset($this->tags[$current])) {
             $this->includeTagFile($current);
-            $class_vars = get_class_vars($this -> tags[$current]);
+            $class_vars = get_class_vars($this->tags[$current]);
             $current_behaviour = $class_vars['behaviour'];
         } else {
             $current_behaviour = $this->behaviour;
         }
-        if (isset($this -> tags[$next])) {
+        if (isset($this->tags[$next])) {
             $this->includeTagFile($next);
-            $class_vars = get_class_vars($this -> tags[$next]);
+            $class_vars = get_class_vars($this->tags[$next]);
             $next_behaviour = $class_vars['behaviour'];
         } else {
             $next_behaviour = $this->behaviour;
@@ -997,16 +1002,16 @@ class Xbbcode
     {
         $parent = (string) $parent;
         $child = (string) $child;
-        if (isset($this -> tags[$parent])) {
+        if (isset($this->tags[$parent])) {
             $this->includeTagFile($parent);
-            $class_vars = get_class_vars($this -> tags[$parent]);
+            $class_vars = get_class_vars($this->tags[$parent]);
             $parent_behaviour = $class_vars['behaviour'];
         } else {
             $parent_behaviour = $this->behaviour;
         }
-        if (isset($this -> tags[$child])) {
+        if (isset($this->tags[$child])) {
             $this->includeTagFile($child);
-            $class_vars = get_class_vars($this -> tags[$child]);
+            $class_vars = get_class_vars($this->tags[$child]);
             $child_behaviour = $class_vars['behaviour'];
         } else {
             $child_behaviour = $this->behaviour;
@@ -1037,7 +1042,7 @@ class Xbbcode
             unset($val['layout']);
             switch ($val['type']) {
                 case 'text':
-                    $val['str'] = $this -> unspecialchars($val['str']);
+                    $val['str'] = $this->unspecialchars($val['str']);
                     $type = (-1 < $structure_key)
                         ? $structure[$structure_key]['type'] : false;
                     if ('text' === $type) {
@@ -1048,11 +1053,11 @@ class Xbbcode
                     }
                     break;
                 case 'open/close':
-                    $val['attrib'] = array_map(
-                        array($this, 'unspecialchars'), $val['attrib']
+                    $val['attributes'] = array_map(
+                        array($this, 'unspecialchars'), $val['attributes']
                     );
                     foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
-                        if ($this -> mustCloseTag($ultimate, $val['name'])) {
+                        if ($this->mustCloseTag($ultimate, $val['name'])) {
                             $structure[++$structure_key] = array(
                                     'type'  => 'close',
                                     'name'  => $ultimate,
@@ -1069,11 +1074,11 @@ class Xbbcode
                     break;
                 case 'open':
                     $this->includeTagFile($val['name']);
-                    $val['attrib'] = array_map(
-                        array($this, 'unspecialchars'), $val['attrib']
+                    $val['attributes'] = array_map(
+                        array($this, 'unspecialchars'), $val['attributes']
                     );
                     foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
-                        if ($this -> mustCloseTag($ultimate, $val['name'])) {
+                        if ($this->mustCloseTag($ultimate, $val['name'])) {
                             $structure[++$structure_key] = array(
                                     'type'  => 'close',
                                     'name'  => $ultimate,
@@ -1085,7 +1090,7 @@ class Xbbcode
                             break;
                         }
                     }
-                    $class_vars = get_class_vars($this -> tags[$val['name']]);
+                    $class_vars = get_class_vars($this->tags[$val['name']]);
                     if ($class_vars['isClose']) {
                         $val['type'] = 'open/close';
                         $structure[++$structure_key] = $val;
@@ -1172,8 +1177,8 @@ class Xbbcode
      */
     protected function getTree()
     {
-        /* Превращаем $this -> syntax в правильную скобочную структуру */
-        $structure = $this -> normalizeBracket($this -> syntax);
+        /* Превращаем $this->syntax в правильную скобочную структуру */
+        $structure = $this->normalizeBracket($this->syntax);
         /* Отслеживаем, имеют ли элементы неразрешенные подэлементы.
            Соответственно этому исправляем $structure. */
         $normalized = array();
@@ -1181,7 +1186,7 @@ class Xbbcode
         $level = 0;
         $open_tags = array();
         $not_tags = array();
-        $this -> stat['count_tags'] = 0;
+        $this->stat['count_tags'] = 0;
         foreach ($structure as $val) {
             switch ($val['type']) {
                 case 'text':
@@ -1215,7 +1220,7 @@ class Xbbcode
                     }
                     $normalized[++$normal_key] = $val;
                     $normalized[$normal_key]['level'] = $level;
-                    $this -> stat['count_tags'] += 1;
+                    $this->stat['count_tags'] += 1;
                     break;
                 case 'open':
                     $this->includeTagFile($val['name']);
@@ -1241,7 +1246,7 @@ class Xbbcode
                     $normalized[$normal_key]['level'] = $level++;
                     $ult_key = count($open_tags);
                     $open_tags[$ult_key] = $val['name'];
-                    $this -> stat['count_tags'] += 1;
+                    $this->stat['count_tags'] += 1;
                     break;
                 case 'close':
                     $not_normal = isset($not_tags[$val['level']])
@@ -1265,7 +1270,7 @@ class Xbbcode
                     $normalized[$normal_key]['level'] = --$level;
                     $ult_key = count($open_tags) - 1;
                     unset($open_tags[$ult_key]);
-                    $this -> stat['count_tags'] += 1;
+                    $this->stat['count_tags'] += 1;
                     break;
             }
         }
@@ -1274,7 +1279,7 @@ class Xbbcode
         $result = array();
         $result_key = -1;
         $open_tags = array();
-        $this -> stat['count_level'] = 0;
+        $this->stat['count_level'] = 0;
         foreach ($normalized as $val) {
             switch ($val['type']) {
                 case 'text':
@@ -1295,7 +1300,7 @@ class Xbbcode
                         $result[++$result_key] = array(
                             'type'   => 'item',
                             'name'   => $val['name'],
-                            'attrib' => $val['attrib'],
+                            'attributes' => $val['attributes'],
                             'val'    => array()
                         );
                         break;
@@ -1303,7 +1308,7 @@ class Xbbcode
                     $open_tags[$val['level'] - 1]['val'][] = array(
                         'type'   => 'item',
                         'name'   => $val['name'],
-                        'attrib' => $val['attrib'],
+                        'attributes' => $val['attributes'],
                         'val'    => array()
                     );
                     break;
@@ -1311,7 +1316,7 @@ class Xbbcode
                     $open_tags[$val['level']] = array(
                         'type'   => 'item',
                         'name'   => $val['name'],
-                        'attrib' => $val['attrib'],
+                        'attributes' => $val['attributes'],
                         'val'    => array()
                     );
                     break;
@@ -1325,11 +1330,11 @@ class Xbbcode
                     unset($open_tags[$val['level']]);
                     break;
             }
-            if ($val['level'] > $this -> stat['count_level']) {
-                $this -> stat['count_level'] += 1;
+            if ($val['level'] > $this->stat['count_level']) {
+                $this->stat['count_level'] += 1;
             }
         }
-        $this -> tree = $result;
+        $this->tree = $result;
         return $result;
     }
 
@@ -1343,21 +1348,21 @@ class Xbbcode
     protected function getSyntax($tree = false)
     {
         if (! is_array($tree)) {
-            $tree = $this -> tree;
+            $tree = $this->tree;
         }
         $syntax = array();
         foreach ($tree as $elem) {
             if ('text' === $elem['type']) {
                 $syntax[] = array(
                     'type' => 'text',
-                    'str' => $this -> specialchars($elem['str'])
+                    'str' => $this->specialchars($elem['str'])
                 );
             } else {
-                $sub_elems = $this -> getSyntax($elem['val']);
+                $sub_elems = $this->getSyntax($elem['val']);
                 $str = '';
                 $layout = array(array(0, '['));
-                foreach ($elem['attrib'] as $name => $val) {
-                    $val = $this -> specialchars($val);
+                foreach ($elem['attributes'] as $name => $val) {
+                    $val = $this->specialchars($val);
                     if ($str) {
                         $str .= ' ';
                         $layout[] = array(4, ' ');
@@ -1386,7 +1391,7 @@ class Xbbcode
                     'type' => $sub_elems ? 'open' : 'open/close',
                     'str' => $str,
                     'name' => $elem['name'],
-                    'attrib' => $elem['attrib'],
+                    'attributes' => $elem['attributes'],
                     'layout' => $layout
                 );
                 foreach ($sub_elems as $sub_elem) {
@@ -1419,14 +1424,14 @@ class Xbbcode
      */
     public function insertSmiles($text)
     {
-        $text = $this->htmlspecialchars($text, ENT_NOQUOTES);
-        if ($this -> autolinks) {
-            $search = $this -> pregAutolinks['pattern'];
-            $replace = $this -> pregAutolinks['replacement'];
+        $text = htmlspecialchars($text, ENT_NOQUOTES);
+        if ($this->autolinks) {
+            $search = $this->pregAutolinks['pattern'];
+            $replace = $this->pregAutolinks['replacement'];
             $text = preg_replace($search, $replace, $text);
         }
         $text = str_replace('  ', '&#160;&#160;', nl2br($text));
-        $text = strtr($text, $this -> mnemonics);
+        $text = strtr($text, $this->mnemonics);
         return $text;
     }
 
@@ -1438,7 +1443,7 @@ class Xbbcode
      */
     public function highlight()
     {
-        $time_start = $this -> getmicrotime();
+        $time_start = microtime(true);
         $chars = array(
             '@l;'  => '<span class="bb_spec_char">@l;</span>',
             '@r;'  => '<span class="bb_spec_char">@r;</span>',
@@ -1446,13 +1451,13 @@ class Xbbcode
             '@a;'  => '<span class="bb_spec_char">@a;</span>',
             '@at;' => '<span class="bb_spec_char">@at;</span>'
         );
-        $search = $this -> pregAutolinks['pattern'];
-        $replace = $this -> pregAutolinks['highlight'];
+        $search = $this->pregAutolinks['pattern'];
+        $replace = $this->pregAutolinks['highlight'];
         $str = '';
-        foreach ($this -> syntax as $elem) {
+        foreach ($this->syntax as $elem) {
             if ('text' === $elem['type']) {
-                $elem['str'] = strtr($this->htmlspecialchars($elem['str']), $chars);
-                foreach ($this -> mnemonics as $mnemonic => $value) {
+                $elem['str'] = strtr(htmlspecialchars($elem['str']), $chars);
+                foreach ($this->mnemonics as $mnemonic => $value) {
                     $elem['str'] = str_replace(
                         $mnemonic,
                         '<span class="bb_mnemonic">' . $mnemonic . '</span>',
@@ -1491,15 +1496,15 @@ class Xbbcode
                             }
                             break;
                         case 6:
-                            $str .= '<span class="bb_attrib_name">'
-                                . $this->htmlspecialchars($val[1]) . '</span>';
+                            $str .= '<span class="bb_attribute_name">'
+                                . htmlspecialchars($val[1]) . '</span>';
                             break;
                         case 7:
                             if (! trim($val[1])) {
                                 $str .= $val[1];
                             } else {
-                                $str .= '<span class="bb_attrib_val">'
-                                    . strtr($this->htmlspecialchars($val[1]), $chars)
+                                $str .= '<span class="bb_attribute_val">'
+                                    . strtr(htmlspecialchars($val[1]), $chars)
                                     . '</span>';
                             }
                             break;
@@ -1512,7 +1517,7 @@ class Xbbcode
         }
         $str = nl2br($str);
         $str = str_replace('  ', '&#160;&#160;', $str);
-        $this -> stat['time_html'] = $this -> getmicrotime() - $time_start;
+        $this->stat['time_html'] = microtime(true) - $time_start;
         return $str;
     }
 
@@ -1525,16 +1530,16 @@ class Xbbcode
      */
     public function getHtml($elems = null)
     {
-        $time_start = $this -> getmicrotime();
+        $time_start = microtime(true);
         if (! is_array($elems)) {
-            $elems =& $this -> tree;
+            $elems =& $this->tree;
         }
         $result = '';
         $lbr = 0;
         $rbr = 0;
         foreach ($elems as $elem) {
             if ('text' === $elem['type']) {
-                $elem['str'] = $this -> insertSmiles($elem['str']);
+                $elem['str'] = $this->insertSmiles($elem['str']);
                 for ($i = 0; $i < $rbr; ++$i) {
                     $elem['str'] = ltrim($elem['str']);
                     if ('<br />' === substr($elem['str'], 0, 6)) {
@@ -1545,6 +1550,7 @@ class Xbbcode
             } else {
                 $this->includeTagFile($elem['name']);
                 $handler = $this->tags[$elem['name']];
+
                 /* Убираем лишние переводы строк */
                 $class_vars = get_class_vars($handler);
                 $lbr = $class_vars['lbr'];
@@ -1555,112 +1561,24 @@ class Xbbcode
                         $result = substr_replace($result, '', -6, 6);
                     }
                 }
+
                 /* Обрабатываем содержимое элемента */
+                /** @var \Xbbcode\Tag\Tag $tag */
                 $tag = $this->tagObjects[$handler];
                 $tag->autolinks = $this->autolinks;
                 $tag->tags = $this->tags;
                 $tag->mnemonics = $this->mnemonics;
                 $tag->tag = $elem['name'];
-                $tag->attrib = $elem['attrib'];
+                $tag->attributes = $elem['attributes'];
                 $tag->tree = $elem['val'];
-                $result .= $tag -> getHtml();
+                $result .= $tag;
             }
         }
         $result = preg_replace(
             "'\s*<br \/>\s*<br \/>\s*'si", "\n<br />&#160;<br />\n", $result
         );
-        $this->stat['time_html'] = $this->getmicrotime() - $time_start;
+        $this->stat['time_html'] = microtime(true) - $time_start;
         return $result;
-    }
-
-
-    /**
-     * Аналог parse_str но без преобразования точек и пробелов в подчеркивания
-     *
-     * @todo не очень хорошая реализация
-     * @param string $str
-     * @return array
-     */
-    protected function parseStr ($str)
-    {
-        $original = array('.', ' ');
-        $replace = array("xbbdot\txbbdot", "xbbspace\txbbspace");
-
-        parse_str(str_replace($original, $replace, $str), $query);
-
-        foreach ($query as $k => $v) {
-            unset($query[$k]);
-            $query[str_replace($replace, $original, $k)] = str_replace($replace, $original, $v);
-        }
-
-        return $query;
-    }
-
-
-    /**
-     * Функция преобразует строку URL в соответствии с RFC 3986
-     *
-     * @param string $url
-     * @return string
-     */
-    protected function checkUrl($url)
-    {
-        $parse = parse_url($url);
-
-        $out = '';
-        if (isset($parse['scheme'])) {
-            $out .= $parse['scheme'] . '://';
-        }
-        if (isset($parse['user']) && isset($parse['pass'])) {
-            $out .= rawurlencode($parse['user']) . ':' . rawurlencode($parse['pass']) . '@';
-        } else if (isset($parse['user'])) {
-            $out .= rawurlencode($parse['user']) . '@';
-        }
-        if (isset($parse['host'])) {
-            $out .= rawurlencode($parse['host']);
-        }
-        if (isset($parse['port'])) {
-            $out .= ':' . $parse['port'];
-        }
-        if (isset($parse['path'])) {
-            $out .= str_replace('%2F', '/', rawurlencode($parse['path']));
-        }
-        if (isset($parse['query'])) {
-            $query = $this->parseStr($parse['query']);
-            //parse_str($parse['query'], $query); //replace spaces and dots
-
-            // PHP 5.1.2
-            // PHP 5.4.0 - PHP_QUERY_RFC3986
-            $out .= '?' . str_replace('+', '%20', rtrim(http_build_query($query, '', '&amp;'), '='));
-        }
-        if (isset($parse['fragment'])) {
-            $out .= '#' . rawurlencode($parse['fragment']);
-        }
-
-        return $out;
-    }
-
-
-    /**
-     * @param string $str
-     * @param int $flags
-     * @param string $encoding
-     * @return string
-     */
-    protected function htmlspecialchars($str, $flags = ENT_COMPAT, $encoding = 'UTF-8')
-    {
-        return htmlspecialchars($str, $flags, $encoding);
-    }
-
-
-    /**
-     * Функция возвращает текущий UNIX timestamp с микросекундами в формате float
-     *
-     * @return float
-     */
-    protected function getmicrotime()
-    {
-        return microtime(true);
     }
 
 

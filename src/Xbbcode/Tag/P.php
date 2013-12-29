@@ -22,25 +22,24 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
-
 
 /**
  * Class P
  * Класс для тега [p] и тегов [h1], [h2], [h3], [h4], [h5], [h6]
  */
-class P extends Xbbcode
+class P extends Align
 {
     public $lbr = 2;
     public $rbr = 2;
     public $behaviour = 'p';
 
-    public function getHtml($tree = null)
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
     {
-        $str = "\n<" . $this->tag . ' class="bb"';
-        $align = isset($this->attrib['align']) ? $this->attrib['align'] : '';
-        if ($align) { $str .= ' align="' . $this->htmlspecialchars($align) . '"'; }
-
-        return $str . '>' . parent::getHtml() . '</' . $this->tag . ">\n";
+        return '<' . $this->tag . ' ' . $this->getAttributes() . '>' . $this->getBody() . '</' . $this->tag . '>';
     }
 }

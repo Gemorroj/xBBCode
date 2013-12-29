@@ -22,21 +22,38 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Color
  * Класс для тега [color]
  */
-class Color extends Xbbcode
+class Color extends Tag
 {
     public $behaviour = 'span';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $color = $this->htmlspecialchars($this -> attrib['color']);
-        return '<font color="' . $color . '">' . parent::getHtml($this -> tree)
-            . '</font>';
+        $attr = new Attributes();
+
+        if (isset($this->attributes['color'])) {
+            $attr->set('color', $this->attributes['color']);
+        }
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<font ' . $this->getAttributes() . '>' . $this->getBody() . '</font>';
     }
 }

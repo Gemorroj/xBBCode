@@ -22,39 +22,33 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
-
 
 /**
  * Class Google
  * Класс для тега [google]
  */
-class Google extends Xbbcode
+class Google extends A
 {
-    public $behaviour = 'a';
-
-    public function getHtml($tree = null)
+    /**
+     * @return string
+     */
+    protected function getHref()
     {
-        $q = isset($this -> attrib['q']) ? $this -> attrib['q'] : '';
-        if (!$q) {
-            foreach ($this -> tree as $val) {
-                if ('text' === $val['type']) {
-                    $q .= $val['str'];
-                }
+        $text = '';
+        foreach ($this->tree as $val) {
+            if ('text' === $val['type']) {
+                $text .= $val['str'];
             }
         }
 
-        $attr = ' href="//www.google.com/search?q=' . rawurlencode($q) . '"';
+        $href = '';
+        if (isset($this->attributes['q'])) {
+            $href = $this->attributes['q'];
+        }
+        if (!$href) {
+            $href = $text;
+        }
 
-        $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
-        if ($title) { $attr .= ' title="' . $this->htmlspecialchars($title) . '"'; }
-
-        $name = isset($this -> attrib['name']) ? $this -> attrib['name'] : '';
-        if ($name) { $attr .= ' name="' . $this->htmlspecialchars($name) . '"'; }
-
-        $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
-        if ($target) { $attr .= ' target="' . $this->htmlspecialchars($target) . '"'; }
-
-        return '<a class="bb_google" ' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
+        return '//www.google.com/search?q=' . rawurlencode($href);
     }
 }

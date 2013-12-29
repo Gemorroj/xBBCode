@@ -22,72 +22,84 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class A
  * Класс для тегов [a], [anchor] и [url]
  */
-class A extends Xbbcode
+class A extends Tag
 {
     public $behaviour = 'a';
+    public $autolinks = false;
 
-    public function getHtml($tree = null)
+
+    /**
+     * @return string
+     */
+    protected function getHref()
     {
-        $this -> autolinks = false;
         $text = '';
-        foreach ($this -> tree as $val) {
+        foreach ($this->tree as $val) {
             if ('text' === $val['type']) {
                 $text .= $val['str'];
             }
         }
+
         $href = '';
-        if (isset($this -> attrib['url'])) {
-            $href = $this -> attrib['url'];
+        if (isset($this->attributes['url'])) {
+            $href = $this->attributes['url'];
         }
-        if (! $href && isset($this -> attrib['a'])) {
-            $href = $this -> attrib['a'];
+        if (!$href && isset($this->attributes['a'])) {
+            $href = $this->attributes['a'];
         }
-        if (! $href && isset($this -> attrib['href'])) {
-            $href = $this -> attrib['href'];
+        if (!$href && isset($this->attributes['href'])) {
+            $href = $this->attributes['href'];
         }
-        if (! $href && ! isset($this -> attrib['anchor'])) {
+        if (!$href && isset($this->attributes['anchor'])) {
+            $href = $this->attributes['anchor'];
+        }
+        if (!$href) {
             $href = $text;
         }
 
-        $href = $this -> checkUrl($href);
+        return $this->parseUrl($href);
+    }
 
-        $attr = 'class="bb"';
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
+    {
+        $attr = new Attributes();
+
+        $href = $this->getHref();
         if ($href) {
-            $attr .= ' href="' . $href . '"';
-        }
-        if (isset($this -> attrib['title'])) {
-            $title = $this -> attrib['title'];
-            $attr .= ' title="' . $this->htmlspecialchars($title) . '"';
-        }
-        $id = '';
-        if (isset($this -> attrib['id'])) {
-            $id = $this -> attrib['id'];
-        }
-        if (! $id && isset($this -> attrib['name'])) {
-            $id = $this -> attrib['name'];
-        }
-        if (! $id && isset($this -> attrib['anchor'])) {
-            $id = $this -> attrib['anchor'];
-            if (! $id) { $id = $text; }
-        }
-        if ($id) {
-            if ($id{0} < 'A' || $id{0} > 'z') {
-                $id = 'bb' . $id;
-            }
-            $attr .= ' id="' . $this->htmlspecialchars($id) . '"';
-        }
-        if (isset($this -> attrib['target'])) {
-            $target = $this -> attrib['target'];
-            $attr .= ' target="' . $this->htmlspecialchars($target) . '"';
+            $attr->set('href', $href);
         }
 
-        return '<a ' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
+        if (isset($this->attributes['title'])) {
+            $attr->set('title', $this->attributes['title']);
+        }
+
+        if (isset($this->attributes['target'])) {
+            if ($this->isValidTarget($this->attributes['target'])) {
+                $attr->set('target', $this->attributes['target']);
+            }
+        }
+
+        return $attr;
+    }
+
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<a ' . $this->getAttributes() . '>' . $this->getBody() . '</a>';
     }
 }

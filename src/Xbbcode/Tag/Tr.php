@@ -22,27 +22,35 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Tr
  * Класс для тега [tr]
  */
-class Tr extends Xbbcode
+class Tr extends Tag
 {
     public $behaviour = 'tr';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $str = '<tr class="bb">';
-        foreach ($this -> tree as $key => $item) {
-            if ('text' === $item['type']) {
-                unset($this -> tree[$key]);
-            }
-        }
-        $str .= parent::getHtml($this -> tree) . '</tr>';
+        $attr = new Attributes();
 
-        return $str;
+        return $attr;
+    }
+
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<tr ' . $this->getAttributes() . '>' . $this->getBody() . '</tr>';
     }
 }

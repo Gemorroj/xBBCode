@@ -22,23 +22,39 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Abbr
  * Класс для тега [abbr]
  */
-class Abbr extends Xbbcode
+class Abbr extends Tag
 {
     public $behaviour = 'span';
 
-    public function getHtml($tree = null)
+
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $attrib = 'class="bb"';
-        if ($this -> attrib['abbr']) {
-            $attrib .= ' title="' . $this->htmlspecialchars($this -> attrib['abbr']) . '"';
+        $attr = new Attributes();
+
+        if ($this->attributes['abbr']) {
+            $attr->set('title', $this->attributes['abbr']);
         }
-        return '<abbr ' . $attrib . '>' . parent::getHtml($this -> tree) . '</abbr>';
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<abbr ' . $this->getAttributes() . '>' . $this->getBody() . '</abbr>';
     }
 }

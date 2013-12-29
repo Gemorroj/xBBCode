@@ -22,36 +22,55 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Bdo
  * Класс для тега [bdo]
  */
-class Bdo extends Xbbcode
+class Bdo extends Tag
 {
     public $behaviour = 'span';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
+        $attr = new Attributes();
+
         $dir = '';
-        switch (strtolower($this->attrib['bdo'])) {
+        switch (strtolower($this->attributes['bdo'])) {
             case 'ltr':
                 $dir = 'ltr';
                 break;
             case 'rtl':
                 $dir = 'rtl';
+                break;
         }
-        if (! $dir) {
-            return parent::getHtml();
-        }
-        /* <bdo> может иметь следующие атрибуты: dir, lang, id, class, style, title. */
-        $attr = 'dir="' . $dir . '" class="bb"';
-        if (isset($this->attrib['lang'])) {
-            $attr .= ' lang="' . $this->htmlspecialchars($this->attrib['lang']) . '"';
+        if ($dir) {
+            $attr->set('dir', $dir);
         }
 
-        return '<bdo ' . $attr . '>' . parent::getHtml() . '</bdo>';
+        if (isset($this->attributes['lang'])) {
+            $attr->set('lang', $this->attributes['lang']);
+        }
+
+        if (isset($this->attributes['title'])) {
+            $attr->set('title', $this->attributes['title']);
+        }
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<bdo ' . $this->getAttributes() . '>' . $this->getBody() . '</bdo>';
     }
 }

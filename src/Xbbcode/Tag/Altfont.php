@@ -22,34 +22,46 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Altfont
  * Класс для тега [altfont]
  */
-class Altfont extends Xbbcode
+class Altfont extends Tag
 {
     public $behaviour = 'span';
-    
-    public $oneAttrib = true;
+    public $oneAttribute = true;
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $attr = '';
-        
-        if (isset($this->attrib['font']))
-        {
-            $face = $this->attrib['font'];
+        $attr = new Attributes();
+
+        $face = '';
+        if (isset($this->attributes['font'])) {
+            $face = $this->attributes['font'];
         }
-        else
-            $face = $this -> attrib['altfont'];
-        
+        if (isset($this->attributes['altfont'])) {
+            $face = $this->attributes['altfont'];
+        }
         if ($face) {
-            $attr .= ' face="' . $this->htmlspecialchars($face) . '"';
+            $attr->set('face', $face);
         }
-        
-        return '<font' . $attr . '>' . parent::getHtml($this -> tree) . '</font>';
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<font ' . $this->getAttributes() . '>' . $this->getBody() . '</font>';
     }
 }

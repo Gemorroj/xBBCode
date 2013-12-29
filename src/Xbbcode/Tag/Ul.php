@@ -22,43 +22,48 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Ul
- * Класс для тегов [list], [ol], [ul]
+ * Класс для тегов [list], [ul]
  */
-class Ul extends Xbbcode
+class Ul extends Tag
 {
     public $lbr = 1;
     public $rbr = 1;
     public $behaviour = 'ul';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $tag_name = 'ul';
-        $type = '';
-        switch ($this->tag) {
-            case 'ol':
-                $tag_name = 'ol';
-                $type = strtolower($this->attrib['ol']);
-                break;
-            case 'list':
-                if ($this->attrib['list']) {
-                    $tag_name = 'ol';
-                }
-                $type = strtolower($this->attrib['list']);
-                $this->tag = 'del';
-        }
-        $attr = ' class="bb"';
-        if ('1' === $type) {
-            $attr .= ' type="1"';
-        } elseif ($type) {
-            $attr .= ' type="a"';
+        $attr = new Attributes();
+
+        if (isset($this->attributes['*'])) {
+            if ($this->isValidNumber($this->attributes['*'])) {
+                $attr->set('value', $this->attributes['*']);
+            }
         }
 
-        return '<' . $tag_name . $attr . '>' . parent::getHtml() . '</'
-            . $tag_name . '>';
+        if (isset($this->attributes['type'])) {
+            if ($this->isValidUlType($this->attributes['type'])) {
+                $attr->set('type', $this->attributes['type']);
+            }
+        }
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<ul ' . $this->getAttributes() . '>' . $this->getAttributes() . '</ul>';
     }
 }

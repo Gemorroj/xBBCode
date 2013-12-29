@@ -1,6 +1,5 @@
 /******************************************************************************
  *                                                                            *
- *   style.css, v 0.04 2007/03/29 - This is part of xBB library               *
  *   Copyright (C) 2006-2007  Dmitriy Skorobogatov  dima@pc.uz                *
  *                                                                            *
  *   This program is free software; you can redistribute it and/or modify     *
@@ -44,9 +43,6 @@ div.bb_quote_author {
     font-weight: bold;
     text-align: center;
 }
-div.bb_quote_author:after {
-    content: " писал(а):";
-}
 div.bb_code {
     border: #d0d0d0 6px double;
     background-color: #f6f6f6;
@@ -65,9 +61,6 @@ div.bb_code_header {
     font-weight: bold;
     color: #404060;
     text-align: left;
-}
-span.bb_code_lang:before {
-    content: "Код: ";
 }
 div.bb_code_footer {
     margin: 5px -5px -5px -5px;
@@ -110,10 +103,10 @@ span.bb_equal {
 span.bb_quote {
     color: #009999;
 }
-span.bb_attrib_name {
+span.bb_attribute_name {
     color: #999900;
 }
-span.bb_attrib_val {
+span.bb_attribute_val {
     color: #009999;
 }
 span.bb_autolink {

@@ -22,26 +22,40 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Nobb
  * Класс для тега [nobb]
  */
-class Nobb extends Xbbcode
+class Nobb extends Tag
 {
     public $behaviour = 'code';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
+    {
+        $attr = new Attributes();
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
     {
         $str = '';
-        foreach ($this -> tree as $item) {
+        foreach ($this->tree as $item) {
             if ('text' === $item['type']) {
-                $str .= nl2br($this->htmlspecialchars($item['str']));
+                $str .= htmlspecialchars($item['str'], ENT_NOQUOTES);
             }
         }
-        $str = str_replace('  ', '&#160;&#160;', $str);
 
         return $str;
     }

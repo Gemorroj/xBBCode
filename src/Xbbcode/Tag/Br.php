@@ -22,20 +22,35 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Br
  * Класс для тега [br]
  */
-class Br extends Xbbcode
+class Br extends Tag
 {
     public $isClose = true;
     public $behaviour = 'span';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        return '<br class="bb" />' . "\n";
+        $attr = new Attributes();
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<br ' . $this->getAttributes() . ' />';
     }
 }

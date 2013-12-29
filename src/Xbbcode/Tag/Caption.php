@@ -22,20 +22,34 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Caption
  * Класс для тега [caption]
  */
-class Caption extends Xbbcode
+class Caption extends Tag
 {
     public $behaviour = 'caption';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        return '<caption class="bb">' . parent::getHtml($this -> tree)
-            . '</caption>';
+        $attr = new Attributes();
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<caption ' . $this->getAttributes() . '>' . $this->getBody() . '</caption>';
     }
 }

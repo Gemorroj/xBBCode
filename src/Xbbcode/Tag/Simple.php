@@ -22,18 +22,34 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Simple
- * Класс для простейших тегов, например, [span]
+ * Класс для простейших тегов, например, [b]
  */
-class Simple extends Xbbcode
+class Simple extends Tag
 {
     public $behaviour = 'span';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
+    {
+        $attr = new Attributes();
+
+        return $attr;
+    }
+
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
     {
         switch ($this->tag) {
             case 'b':
@@ -45,7 +61,6 @@ class Simple extends Xbbcode
                 break;
         }
 
-        return '<' . $this->tag . ' class="bb">' . parent::getHtml() . '</'
-            . $this->tag . '>';
+        return '<' . $this->tag . ' ' . $this->getAttributes() . '>' . $this->getBody() . '</' . $this->tag . '>';
     }
 }

@@ -22,38 +22,40 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Size
  * Класс для тега [size]
  */
-class Size extends Xbbcode
+class Size extends Tag
 {
     public $behaviour = 'span';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $sign = '';
-        if (strlen($this -> attrib['size'])) {
-            $sign = $this -> attrib['size']{0};
-        }
-        if ('+' !== $sign) { $sign = ''; }
-        $size = (int) $this -> attrib['size'];
-        if (7 < $size) {
-            $size = 7;
-            $sign = '';
-        }
-        if (-6 > $size) {
-            $size = '-6';
-            $sign = '';
-        }
-        if (0 == $size) {
-            $size = 3;
-        }
-        $size = $sign . $size;
+        $attr = new Attributes();
 
-        return '<font size="' . $size . '">' . parent::getHtml($this -> tree) . '</font>';
+        if (isset($this->attributes['size'])) {
+            if ($this->isValidFontSize($this->attributes['size'])) {
+                $attr->set('size', $this->attributes['size']);
+            }
+        }
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<font ' . $this->getAttributes() . '>' . $this->getBody() . '</font>';
     }
 }

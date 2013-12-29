@@ -22,20 +22,34 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Address
  * Класс для тега [address]
  */
-class Address extends Xbbcode
+class Address extends Tag
 {
     public $rbr = 1;
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        return '<address class="bb">' . parent::getHtml($this -> tree)
-            . '</address>';
+        $attr = new Attributes();
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<address ' . $this->getAttributes() . '>' . $this->getBody() . '</address>';
     }
 }

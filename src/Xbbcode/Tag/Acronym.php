@@ -22,26 +22,38 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Acronym
  * Класс для тега [acronym]
  */
-class Acronym extends Xbbcode
+class Acronym extends Tag
 {
     public $behaviour = 'span';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $attrib = 'class="bb"';
-        if ($this -> attrib['acronym']) {
-            $attrib .= ' title="' . $this->htmlspecialchars($this -> attrib['acronym'])
-                . '"';
+        $attr = new Attributes();
+
+        if ($this->attributes['acronym']) {
+            $attr->set('title', $this->attributes['acronym']);
         }
 
-        return '<acronym ' . $attrib . '>' . parent::getHtml($this -> tree)
-            . '</acronym>';
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<acronym ' . $this->getAttributes() . '>' . $this->getBody() . '</acronym>';
     }
 }

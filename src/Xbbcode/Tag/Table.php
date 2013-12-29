@@ -22,45 +22,71 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Table
  * Класс для тега [table]
  */
-class Table extends Xbbcode
+class Table extends Tag
 {
     public $rbr = 1;
     public $behaviour = 'table';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $attr = ' class="bb"';
-        $border = isset($this -> attrib['border'])
-            ? (int) $this -> attrib['border']
-            : null;
-        if (null !== $border) { $attr .= ' border="' . $border . '"'; }
-        $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : '';
-        if ($width) { $attr .= ' width="' . $this->htmlspecialchars($width) . '"'; }
-        $cellspacing = isset($this -> attrib['cellspacing'])
-            ? (int) $this -> attrib['cellspacing']
-            : null;
-        if (null !== $cellspacing) { $attr .= ' cellspacing="' . $cellspacing . '"'; }
-        $cellpadding = isset($this -> attrib['cellpadding'])
-            ? (int) $this -> attrib['cellpadding']
-            : null;
-        if (null !== $cellpadding) { $attr .= ' cellpadding="' . $cellpadding . '"'; }
-        $align = isset($this -> attrib['align']) ? $this -> attrib['align'] : '';
-        if ($align) { $attr .= ' align="' . $this->htmlspecialchars($align) . '"'; }
-        $str = '<table' . $attr . '>';
-        foreach ($this -> tree as $key => $item) {
-            if ('text' === $item['type']) {
-                unset($this -> tree[$key]);
+        $attr = new Attributes();
+
+        if (isset($this->attributes['width'])) {
+            if ($this->isValidSize($this->attributes['width'])) {
+                $attr->set('width', $this->attributes['width']);
             }
         }
-        $str .= parent::getHtml($this -> tree) . '</table>';
 
-        return $str;
+        if (isset($this->attributes['height'])) {
+            if ($this->isValidSize($this->attributes['height'])) {
+                $attr->set('height', $this->attributes['height']);
+            }
+        }
+
+        if (isset($this->attributes['border'])) {
+            if ($this->isValidNumber($this->attributes['border'])) {
+                $attr->set('border', $this->attributes['border']);
+            }
+        }
+
+        if (isset($this->attributes['cellspacing'])) {
+            if ($this->isValidNumber($this->attributes['cellspacing'])) {
+                $attr->set('cellspacing', $this->attributes['cellspacing']);
+            }
+        }
+
+        if (isset($this->attributes['cellpadding'])) {
+            if ($this->isValidNumber($this->attributes['cellpadding'])) {
+                $attr->set('cellpadding', $this->attributes['cellpadding']);
+            }
+        }
+
+        if (isset($this->attributes['align'])) {
+            if ($this->isValidAlign($this->attributes['align'])) {
+                $attr->set('align', $this->attributes['align']);
+            }
+        }
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<table ' . $this->getAttributes() . '>' . $this->getBody() . '</table>';
     }
 }

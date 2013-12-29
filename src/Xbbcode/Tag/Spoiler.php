@@ -22,22 +22,61 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Spoiler
  * Класс для тегов [spoiler] и [hide]
  */
-class Spoiler extends Xbbcode
+class Spoiler extends Tag
 {
-    public $button = 'Спойлер';
-    public $behaviour = 'div';
+    public $showButton = 'Показать';
+    public $hideButton = 'Скрыть';
 
-    public function getHtml($tree = null)
+    /**
+     * @param string $id
+     * @return string
+     */
+    protected function getSpoiler($id)
     {
+        return '<input class="bb_spoiler" type="button" value="' . htmlspecialchars(
+            $this->showButton
+        ) . '" onclick="var node = document.getElementById(\'' . $id . '\'); (node.style.display == \'none\' ? (node.style.display = \'block\'; this.value = \'' . htmlspecialchars(
+            $this->hideButton,
+            ENT_QUOTES
+        ) . '\';) : (node.style.display = \'none\'; this.value = \'' . htmlspecialchars(
+            $this->showButton,
+            ENT_QUOTES
+        ) . '\';);" />';
+    }
+
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
+    {
+        $attr = new Attributes();
+
+        $attr->add('class', 'bb_spoiler');
+        $attr->set('style', 'display: none');
+
         $id = uniqid('xbbcode');
-        return '<input class="bb_spoiler" type="button" value="' . $this->button . '" onclick="var node = document.getElementById(\'' . $id . '\'); node.style.display == \'none\' ? node.style.display = \'block\' : node.style.display = \'none\';" />'
-        . '<div id="' . $id . '" class="bb_spoiler" style="display: none">' . parent::getHtml() . '</div>';
+        $attr->set('id', $id);
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        $attr = $this->getAttributes();
+        $id = $attr->getAttributeValue('id');
+
+        return $this->getSpoiler($id) . '<div ' . $attr . '>' . $this->getBody() . '</div>';
     }
 }

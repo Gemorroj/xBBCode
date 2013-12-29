@@ -22,52 +22,98 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Img
  * Класс для тега [img]
  */
-class Img extends Xbbcode
+class Img extends Tag
 {
     public $behaviour = 'img';
 
-    public function getHtml($tree = null)
+    /**
+     * @return string
+     */
+    protected function getSrc()
     {
-        $attr = '';
-
-        if (isset($this -> attrib['alt'])) {
-            $attr .= ' alt="' . $this->htmlspecialchars($this -> attrib['alt']) . '"';
-        } else {
-            // обязательный атрибут
-            $attr .= ' alt=""';
-        }
-
-        if (isset($this -> attrib['title'])) {
-            $attr .= ' title="' . $this->htmlspecialchars($this -> attrib['title']) . '"';
-        }
-        if (isset($this -> attrib['width'])) {
-            $width = (int) $this -> attrib['width'];
-            $attr .= $width ? ' width="' . $width . '"' : '';
-        }
-        if (isset($this -> attrib['height'])) {
-            $height = (int) $this -> attrib['height'];
-            $attr .= $height ? ' height="' . $height . '"' : '';
-        }
-        if (isset($this -> attrib['border'])) {
-            $border = (int) $this -> attrib['border'];
-            $attr .= ' border="' . $border . '"';
-        }
-        $src = '';
-        foreach ($this -> tree as $text) {
-            if ('text' === $text['type']) {
-                $src .= $text['str'];
+        $text = '';
+        foreach ($this->tree as $val) {
+            if ('text' === $val['type']) {
+                $text .= $val['str'];
             }
         }
 
-        $src = $this -> checkUrl($src);
+        $href = '';
+        if (isset($this->attributes['url'])) {
+            $href = $this->attributes['url'];
+        }
+        if (!$href && isset($this->attributes['src'])) {
+            $href = $this->attributes['src'];
+        }
 
-        return '<img src="' . $src . '" ' . $attr . ' />';
+        if (!$href) {
+            $href = $text;
+        }
+
+        return $this->parseUrl($href);
+    }
+
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
+    {
+        $attr = new Attributes();
+
+        $src = $this->getSrc();
+        if ($src) {
+            $attr->set('src', $src);
+        }
+
+        $alt = '';
+        if (isset($this->attributes['alt'])) {
+            $alt = $this->attributes['alt'];
+        }
+        if (!$alt && isset($this->attributes['title'])) {
+            $alt = $this->attributes['title'];
+        }
+        $attr->set('alt', $alt); // обязательный
+
+        if (isset($this->attributes['title'])) {
+            $attr->set('title', $this->attributes['title']);
+        }
+
+        if (isset($this->attributes['width'])) {
+            if ($this->isValidSize($this->attributes['width'])) {
+                $attr->set('width', $this->attributes['width']);
+            }
+        }
+
+        if (isset($this->attributes['height'])) {
+            if ($this->isValidSize($this->attributes['height'])) {
+                $attr->set('height', $this->attributes['height']);
+            }
+        }
+
+        if (isset($this->attributes['border'])) {
+            if ($this->isValidNumber($this->attributes['border'])) {
+                $attr->set('border', $this->attributes['border']);
+            }
+        }
+
+        return $attr;
+    }
+
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<img ' . $this->getAttributes() . ' />';
     }
 }

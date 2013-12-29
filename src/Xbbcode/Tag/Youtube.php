@@ -22,38 +22,79 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Youtube
  * Класс для тега [youtube]
  */
-class Youtube extends Xbbcode
+class Youtube extends Tag
 {
-    public $behaviour = 'div';
-
-    public function getHtml($tree = null)
+    /**
+     * @return string
+     */
+    protected function getSrc()
     {
-        $attr = '';
+        $src = isset($this->attributes['src']) ? $this->attributes['src'] : '';
 
-        $src = isset($this -> attrib['src']) ? $this -> attrib['src'] : '';
         if (!$src) {
-            foreach ($this -> tree as $val) {
+            foreach ($this->tree as $val) {
                 if ('text' === $val['type']) {
                     $src .= $val['str'];
                 }
             }
         }
-        $attr .= ' src="//www.youtube.com/embed/' . $this->htmlspecialchars($src) . '"';
 
-        $width = isset($this -> attrib['width']) ? $this -> attrib['width'] : 560;
-        if ($width) { $attr .= ' width="' . abs($width) . '"'; }
+        $parse = parse_url($src);
+        if (isset($parse['path']) && isset($parse['query'])) {
+            parse_str($parse['query'], $query);
+            if (isset($query['v'])) {
+                $src = $query['v'];
+            }
+        }
 
-        $height = isset($this -> attrib['height']) ? $this -> attrib['height'] : 315;
-        if ($height) { $attr .= ' height="' . abs($height) . '"'; }
+        return '//www.youtube.com/embed/' . rawurlencode($src);
+    }
+
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
+    {
+        $attr = new Attributes();
+
+        $attr->set('frameborder', '0');
+        $attr->set('allowfullscreen', 'allowfullscreen');
+
+        $src = $this->getSrc();
+        if ($src) {
+            $attr->set('src', $src);
+        }
+
+        if (isset($this->attributes['width'])) {
+            if ($this->isValidSize($this->attributes['width'])) {
+                $attr->set('width', $this->attributes['width']);
+            }
+        }
+
+        if (isset($this->attributes['height'])) {
+            if ($this->isValidSize($this->attributes['height'])) {
+                $attr->set('height', $this->attributes['height']);
+            }
+        }
+
+        return $attr;
+    }
 
 
-        return '<iframe frameborder="0" allowfullscreen="allowfullscreen" class="bb_youtube" ' . $attr . '>' . parent::getHtml($this -> tree) . '</iframe>';
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<iframe ' . $this->getAttributes() . '></iframe>';
     }
 }

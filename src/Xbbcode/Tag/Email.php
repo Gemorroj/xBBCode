@@ -22,46 +22,36 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
-
-
 /**
  * Class Email
  * Класс для тега [email]
  */
-class Email extends Xbbcode
+class Email extends A
 {
-    public $behaviour = 'a';
-
-    public function getHtml($tree = null)
+    /**
+     * @return string
+     */
+    protected function getHref()
     {
-        $this -> autolinks = false;
-        $attr = ' class="bb_email"';
-        $href = $this -> attrib['email'];
-        if (! $href) {
-            foreach ($this -> tree as $text) {
-                if ('text' === $text['type']) {
-                    $href .= $text['str'];
-                }
+        $text = '';
+        foreach ($this->tree as $val) {
+            if ('text' === $val['type']) {
+                $text .= $val['str'];
             }
         }
-        $protocols = array('mailto:');
-        $is_http = false;
-        foreach ($protocols as $val) {
-            if ($val === substr($href, 0, strlen($val))) {
-                $is_http = true;
-                break;
-            }
-        }
-        if (! $is_http) { $href = 'mailto:' . $href; }
-        if ($href) { $attr .= ' href="' . $this->htmlspecialchars($href) . '"'; }
-        $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
-        if ($title) { $attr .= ' title="' . $this->htmlspecialchars($title) . '"'; }
-        $name = isset($this -> attrib['name']) ? $this -> attrib['name'] : '';
-        if ($name) { $attr .= ' name="' . $this->htmlspecialchars($name) . '"'; }
-        $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
-        if ($target) { $attr .= ' target="' . $this->htmlspecialchars($target) . '"'; }
 
-        return '<a' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
+        $href = '';
+        if (isset($this->attributes['email'])) {
+            $href = $this->attributes['email'];
+        }
+        if (!$href && isset($this->attributes['mail'])) {
+            $href = $this->attributes['mail'];
+        }
+
+        if (!$href) {
+            $href = $text;
+        }
+
+        return 'mailto:' . $href;
     }
 }

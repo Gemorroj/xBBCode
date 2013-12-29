@@ -22,6 +22,7 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
 use Xbbcode\Xbbcode;
 
 
@@ -29,26 +30,47 @@ use Xbbcode\Xbbcode;
  * Class Font
  * Класс для тега [font]
  */
-class Font extends Xbbcode
+class Font extends Tag
 {
     public $behaviour = 'span';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $attr = '';
-        if (isset($this -> attrib['face'])) {
-            $face = $this -> attrib['face'];
-        } else {
-            $face = $this -> attrib['font'];
+        $attr = new Attributes();
+
+        $face = '';
+        if (isset($this->attributes['face'])) {
+            $face = $this->attributes['face'];
+        }
+        if (isset($this->attributes['font'])) {
+            $face = $this->attributes['font'];
         }
         if ($face) {
-            $attr .= ' face="' . $this->htmlspecialchars($face) . '"';
+            $attr->set('face', $face);
         }
-        $color = isset($this -> attrib['color']) ? $this -> attrib['color'] : '';
-        if ($color) { $attr .= ' color="' . $this->htmlspecialchars($color) . '"'; }
-        $size = isset($this -> attrib['size']) ? $this -> attrib['size'] : '';
-        if ($size) { $attr .= ' size="' . $this->htmlspecialchars($size) . '"'; }
 
-        return '<font' . $attr . '>' . parent::getHtml($this -> tree) . '</font>';
+        if (isset($this->attributes['color'])) {
+            $attr->set('color', $this->attributes['color']);
+        }
+
+        if (isset($this->attributes['size'])) {
+            $attr->set('size', $this->attributes['size']);
+        }
+
+        return $attr;
+    }
+
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<font ' . $this->getAttributes() . '>' . $this->getBody() . '</font>';
     }
 }

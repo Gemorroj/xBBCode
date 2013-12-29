@@ -22,39 +22,33 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
-
 
 /**
  * Class Yandex
  * Класс для тега [yandex]
  */
-class Yandex extends Xbbcode
+class Yandex extends A
 {
-    public $behaviour = 'a';
-
-    public function getHtml($tree = null)
+    /**
+     * @return string
+     */
+    protected function getHref()
     {
-        $q = isset($this -> attrib['q']) ? $this -> attrib['q'] : '';
-        if (!$q) {
-            foreach ($this -> tree as $val) {
-                if ('text' === $val['type']) {
-                    $q .= $val['str'];
-                }
+        $text = '';
+        foreach ($this->tree as $val) {
+            if ('text' === $val['type']) {
+                $text .= $val['str'];
             }
         }
 
-        $attr = ' href="//yandex.com/yandsearch?text=' . rawurlencode($q) . '"';
+        $href = '';
+        if (isset($this->attributes['q'])) {
+            $href = $this->attributes['q'];
+        }
+        if (!$href) {
+            $href = $text;
+        }
 
-        $title = isset($this -> attrib['title']) ? $this -> attrib['title'] : '';
-        if ($title) { $attr .= ' title="' . $this->htmlspecialchars($title) . '"'; }
-
-        $name = isset($this -> attrib['name']) ? $this -> attrib['name'] : '';
-        if ($name) { $attr .= ' name="' . $this->htmlspecialchars($name) . '"'; }
-
-        $target = isset($this -> attrib['target']) ? $this -> attrib['target'] : '';
-        if ($target) { $attr .= ' target="' . $this->htmlspecialchars($target) . '"'; }
-
-        return '<a class="bb_yandex" ' . $attr . '>' . parent::getHtml($this -> tree) . '</a>';
+        return '//yandex.com/yandsearch?text=' . rawurlencode($href);
     }
 }

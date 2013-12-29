@@ -22,25 +22,40 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Li
  * Класс для тега [*]
  */
-class Li extends Xbbcode
+class Li extends Tag
 {
     public $behaviour = 'li';
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
-        $attrib = 'class="bb"';
-        if ('' !== $this -> attrib['*']) {
-            $this -> attrib['*'] = (int) $this -> attrib['*'];
-            $attrib .= ' value="' . $this -> attrib['*'] . '"';
+        $attr = new Attributes();
+
+        if (isset($this->attributes['*'])) {
+            if ($this->isValidNumber($this->attributes['*'])) {
+                $attr->set('value', $this->attributes['*']);
+            }
         }
 
-        return '<li ' . $attrib . '>' . parent::getHtml($this -> tree) . '</li>';
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<li ' . $this->getAttributes() . '>' . $this->getBody() . '</li>';
     }
 }

@@ -22,42 +22,57 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Xbbcode;
+use Xbbcode\Attributes;
 
 
 /**
  * Class Align
  * Класс для тегов [align], [center], [justify], [left] и [right]
  */
-class Align extends Xbbcode
+class Align extends Tag
 {
     public $rbr = 1;
 
-    public function getHtml($tree = null)
+    /**
+     * @return Attributes
+     */
+    protected function getAttributes()
     {
+        $attr = new Attributes();
+
         $align = '';
-        if (isset($this -> attrib['justify'])) { $align = 'justify'; }
-        if (isset($this -> attrib['left'])) { $align = 'left'; }
-        if (isset($this -> attrib['right'])) { $align = 'right'; }
-        if (isset($this -> attrib['center'])) { $align = 'center'; }
-        if (! $align && isset($this -> attrib['align'])) {
-            switch (strtolower($this -> attrib['align'])) {
-                case 'left':
-                    $align = 'left';
-                    break;
-                case 'right':
-                    $align = 'right';
-                    break;
-                case 'center':
-                    $align = 'center';
-                    break;
-                case 'justify':
-                    $align = 'justify';
-                    break;
+        if (isset($this->attributes['justify'])) {
+            $align = 'justify';
+        }
+        if (isset($this->attributes['left'])) {
+            $align = 'left';
+        }
+        if (isset($this->attributes['right'])) {
+            $align = 'right';
+        }
+        if (isset($this->attributes['center'])) {
+            $align = 'center';
+        }
+        if (!$align && isset($this->attributes['align'])) {
+            if ($this->isValidAlign($this->attributes['align'])) {
+                $align = $this->attributes['align'];
             }
         }
 
-        return '<div class="bb" align="' . $align . '">'
-            . parent::getHtml($this -> tree) . '</div>';
+        if ($align) {
+            $attr->set('align', $align);
+        }
+
+        return $attr;
+    }
+
+    /**
+     * Return html code
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return '<div ' . $this->getAttributes() . '">' . $this->getBody() . '</div>';
     }
 }
