@@ -26,7 +26,7 @@ use Xbbcode\Attributes;
 use Xbbcode\Xbbcode;
 
 /**
- * Interface Tag
+ * Abstract class Tag
  */
 abstract class Tag extends Xbbcode
 {
