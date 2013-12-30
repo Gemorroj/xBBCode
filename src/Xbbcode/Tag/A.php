@@ -32,7 +32,6 @@ use Xbbcode\Attributes;
 class A extends Tag
 {
     const BEHAVIOUR = 'a';
-    public $autolinks = false;
 
 
     /**
@@ -100,6 +99,8 @@ class A extends Tag
      */
     public function __toString()
     {
+        $this->setAutolinks(false);
+
         return '<a ' . $this->getAttributes() . '>' . $this->getBody() . '</a>';
     }
 }

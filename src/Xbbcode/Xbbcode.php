@@ -364,13 +364,13 @@ class Xbbcode
      *
      * @var bool
      */
-    public $autolinks = false;
+    protected $autolinks = false;
     /**
      * Массив замен для автоматических ссылок.
      *
      * @var array
      */
-    public $pregAutolinks = array(
+    protected $pregAutolinks = array(
         'pattern' => array(
             "'[\w\+]+://[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+'si",
             "'([^/])(www\.[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+)'si",
@@ -844,9 +844,8 @@ class Xbbcode
                     break;
                 case 13:
                     /* Включаем режим пробельных незакавыченных тегов если нужно */
-                    $this->includeTagFile($decomposition['name']);
-                    $handler = $this->tags[$decomposition['name']];
-                    if ($handler::ONE_ATTRIBUTE) { // Переписываем некоторые обработки
+                    $tag = $this->getTagObject($decomposition['name']);
+                    if ($tag::ONE_ATTRIBUTE) { // Переписываем некоторые обработки
                         $finite_automaton[8][6] = 13;
                         $finite_automaton[20][7] = 19;
                         $finite_automaton[20][8] = 19;
@@ -921,10 +920,10 @@ class Xbbcode
     /**
      * specialchars
      *
-     * @param $string
+     * @param string $str
      * @return string
      */
-    protected function specialchars($string)
+    protected function specialchars($str)
     {
         $chars = array(
             '[' => '@l;',
@@ -933,17 +932,17 @@ class Xbbcode
             "'" => '@a;',
             '@' => '@at;'
         );
-        return strtr($string, $chars);
+        return strtr($str, $chars);
     }
 
 
     /**
      * unspecialchars
      *
-     * @param $string
+     * @param string $str
      * @return string
      */
-    protected function unspecialchars($string)
+    protected function unspecialchars($str)
     {
         $chars = array(
             '@l;'  => '[',
@@ -952,7 +951,41 @@ class Xbbcode
             '@a;'  => "'",
             '@at;' => '@'
         );
-        return strtr($string, $chars);
+        return strtr($str, $chars);
+    }
+
+
+    /**
+     * @param bool $autolinks
+     *
+     * @return Xbbcode
+     */
+    public function setAutolinks($autolinks = false)
+    {
+        $this->autolinks = (bool)$autolinks;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getAutolinks()
+    {
+        return $this->autolinks;
+    }
+
+
+    /**
+     * @param string $tagName
+     *
+     * @return Tag
+     */
+    protected function getTagObject($tagName)
+    {
+        $this->includeTag($tagName);
+
+        return $this->tagObjects[$this->tags[$tagName]];
     }
 
 
@@ -967,14 +1000,14 @@ class Xbbcode
     protected function mustCloseTag($current, $next)
     {
         if (isset($this->tags[$current])) {
-            $this->includeTagFile($current);
-            $current_behaviour = $this->tags[$current]::BEHAVIOUR;
+            $tag = $this->getTagObject($current);
+            $current_behaviour = $tag::BEHAVIOUR;
         } else {
             $current_behaviour = Tag::BEHAVIOUR;
         }
         if (isset($this->tags[$next])) {
-            $this->includeTagFile($next);
-            $next_behaviour = $this->tags[$next]::BEHAVIOUR;
+            $tag = $this->getTagObject($next);
+            $next_behaviour = $tag::BEHAVIOUR;
         } else {
             $next_behaviour = Tag::BEHAVIOUR;
         }
@@ -1002,14 +1035,14 @@ class Xbbcode
         $parent = (string) $parent;
         $child = (string) $child;
         if (isset($this->tags[$parent])) {
-            $this->includeTagFile($parent);
-            $parent_behaviour = $this->tags[$parent]::BEHAVIOUR;
+            $tag = $this->getTagObject($parent);
+            $parent_behaviour = $tag::BEHAVIOUR;
         } else {
             $parent_behaviour = Tag::BEHAVIOUR;
         }
         if (isset($this->tags[$child])) {
-            $this->includeTagFile($child);
-            $child_behaviour = $this->tags[$child]::BEHAVIOUR;
+            $tag = $this->getTagObject($child);
+            $child_behaviour = $tag::BEHAVIOUR;
         } else {
             $child_behaviour = Tag::BEHAVIOUR;
         }
@@ -1028,7 +1061,7 @@ class Xbbcode
      * @param array $syntax
      * @return array
      */
-    protected function normalizeBracket($syntax)
+    protected function normalizeBracket(array $syntax)
     {
         $structure = array();
         $structure_key = -1;
@@ -1068,7 +1101,7 @@ class Xbbcode
                     $structure[$structure_key]['level'] = $level;
                     break;
                 case 'open':
-                    $this->includeTagFile($val['name']);
+                    $tag = $this->getTagObject($val['name']);
                     $val['attributes'] = array_map(array($this, 'unspecialchars'), $val['attributes']);
                     foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
                         if ($this->mustCloseTag($ultimate, $val['name'])) {
@@ -1083,7 +1116,7 @@ class Xbbcode
                             break;
                         }
                     }
-                    if ($this->tags[$val['name']]::IS_CLOSE) {
+                    if ($tag::IS_CLOSE) {
                         $val['type'] = 'open/close';
                         $structure[++$structure_key] = $val;
                         $structure[$structure_key]['level'] = $level;
@@ -1189,7 +1222,7 @@ class Xbbcode
                     }
                     break;
                 case 'open/close':
-                    $this->includeTagFile($val['name']);
+                    $this->includeTag($val['name']);
                     end($open_tags);
                     $parent = $open_tags ? current($open_tags) : $this->tag;
                     $permissibly = $this->isPermissiblyChild($parent, $val['name']);
@@ -1211,7 +1244,7 @@ class Xbbcode
                     $this->statistics['count_tags'] += 1;
                     break;
                 case 'open':
-                    $this->includeTagFile($val['name']);
+                    $this->includeTag($val['name']);
                     end($open_tags);
                     $parent = $open_tags ? current($open_tags) : $this->tag;
                     $permissibly = $this->isPermissiblyChild($parent, $val['name']);
@@ -1412,7 +1445,7 @@ class Xbbcode
     public function insertSmiles($text)
     {
         $text = htmlspecialchars($text, ENT_NOQUOTES);
-        if ($this->autolinks) {
+        if ($this->getAutolinks()) {
             $search = $this->pregAutolinks['pattern'];
             $replace = $this->pregAutolinks['replacement'];
             $text = preg_replace($search, $replace, $text);
@@ -1512,7 +1545,7 @@ class Xbbcode
      * @param array $elems
      * @return string
      */
-    public function getHtml($elems = null)
+    public function getHtml(array $elems = null)
     {
         $time_start = microtime(true);
         if (!is_array($elems)) {
@@ -1533,12 +1566,11 @@ class Xbbcode
                 }
                 $result .= $elem['str'];
             } else {
-                $this->includeTagFile($elem['name']);
-                $handler = $this->tags[$elem['name']];
+                $tag = $this->getTagObject($elem['name']);
 
                 /* Убираем лишние переводы строк */
-                $lbr = $handler::BR_LEFT;
-                $rbr = $handler::BR_RIGHT;
+                $lbr = $tag::BR_LEFT;
+                $rbr = $tag::BR_RIGHT;
                 for ($i = 0; $i < $lbr; ++$i) {
                     $result = rtrim($result);
                     if ('<br />' === substr($result, -6)) {
@@ -1547,15 +1579,13 @@ class Xbbcode
                 }
 
                 /* Обрабатываем содержимое элемента */
-                /** @var \Xbbcode\Tag\Tag $tag */
-                $tag = $this->tagObjects[$handler];
-                $tag->autolinks = $this->autolinks;
+                $tag->setAutolinks($this->getAutolinks());
                 $tag->tags = $this->tags;
                 $tag->mnemonics = $this->mnemonics;
                 $tag->tag = $elem['name'];
                 $tag->attributes = $elem['attributes'];
                 $tag->tree = $elem['val'];
-                $result .= $tag;
+                $result .= $tag; // вызывается __toString
             }
         }
         $result = preg_replace(
@@ -1576,7 +1606,7 @@ class Xbbcode
      * @param string $tagName
      * @return bool
      */
-    protected function includeTagFile($tagName)
+    protected function includeTag($tagName)
     {
         if (!isset($this->tags[$tagName])) {
             $this->tags[$tagName] = 'bbcode';
