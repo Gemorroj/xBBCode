@@ -34,19 +34,12 @@ class Google extends A
      */
     protected function getHref()
     {
-        $text = '';
-        foreach ($this->getTree() as $val) {
-            if ('text' === $val['type']) {
-                $text .= $val['str'];
-            }
-        }
-
         $href = '';
         if (isset($this->attributes['q'])) {
             $href = $this->attributes['q'];
         }
         if (!$href) {
-            $href = $text;
+            $href = $this->getTreeText();
         }
 
         return '//www.google.com/search?q=' . rawurlencode($href);

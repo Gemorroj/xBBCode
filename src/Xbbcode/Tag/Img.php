@@ -39,13 +39,6 @@ class Img extends Tag
      */
     protected function getSrc()
     {
-        $text = '';
-        foreach ($this->getTree() as $val) {
-            if ('text' === $val['type']) {
-                $text .= $val['str'];
-            }
-        }
-
         $href = '';
         if (isset($this->attributes['url'])) {
             $href = $this->attributes['url'];
@@ -55,7 +48,7 @@ class Img extends Tag
         }
 
         if (!$href) {
-            $href = $text;
+            $href = $this->getTreeText();
         }
 
         return $this->parseUrl($href);

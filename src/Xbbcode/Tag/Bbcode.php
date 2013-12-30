@@ -47,15 +47,7 @@ class Bbcode extends Tag
 
     protected function build()
     {
-        $str = '';
-        foreach ($this->getTree() as $item) {
-            if ('item' === $item['type']) {
-                continue;
-            }
-            $str .= $item['str'];
-        }
-
-        $this->parse($str);
+        $this->parse($this->getTreeText());
     }
 
     /**

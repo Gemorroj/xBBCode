@@ -39,13 +39,6 @@ class A extends Tag
      */
     protected function getHref()
     {
-        $text = '';
-        foreach ($this->getTree() as $val) {
-            if ('text' === $val['type']) {
-                $text .= $val['str'];
-            }
-        }
-
         $href = '';
         if (isset($this->attributes['url'])) {
             $href = $this->attributes['url'];
@@ -60,7 +53,7 @@ class A extends Tag
             $href = $this->attributes['anchor'];
         }
         if (!$href) {
-            $href = $text;
+            $href = $this->getTreeText();
         }
 
         return $this->parseUrl($href);

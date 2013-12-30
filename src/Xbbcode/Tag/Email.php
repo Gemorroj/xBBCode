@@ -33,13 +33,6 @@ class Email extends A
      */
     protected function getHref()
     {
-        $text = '';
-        foreach ($this->getTree() as $val) {
-            if ('text' === $val['type']) {
-                $text .= $val['str'];
-            }
-        }
-
         $href = '';
         if (isset($this->attributes['email'])) {
             $href = $this->attributes['email'];
@@ -49,7 +42,7 @@ class Email extends A
         }
 
         if (!$href) {
-            $href = $text;
+            $href = $this->getTreeText();
         }
 
         return 'mailto:' . $href;

@@ -111,14 +111,7 @@ class Code extends Tag
      */
     protected function setSource()
     {
-        $source = '';
-        foreach ($this->getTree() as $item) {
-            if ('item' === $item['type']) {
-                continue;
-            }
-            $source .= $item['str'];
-        }
-        $this->geshi->set_source($source);
+        $this->geshi->set_source($this->getTreeText());
 
         return $this;
     }

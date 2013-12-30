@@ -50,13 +50,6 @@ class Nobb extends Tag
      */
     public function __toString()
     {
-        $str = '';
-        foreach ($this->getTree() as $item) {
-            if ('text' === $item['type']) {
-                $str .= htmlspecialchars($item['str'], ENT_NOQUOTES);
-            }
-        }
-
-        return $str;
+        return htmlspecialchars($this->getTreeText(), ENT_NOQUOTES);
     }
 }

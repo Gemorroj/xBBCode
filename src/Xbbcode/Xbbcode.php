@@ -1085,7 +1085,6 @@ class Xbbcode
         return $this->tree;
     }
 
-
     /**
      * @param string $tagName
      *
@@ -1698,8 +1697,8 @@ class Xbbcode
                 $tag->setAutolinks($this->getAutolinks());
                 $tag->setTags($this->getTags());
                 $tag->setMnemonics($this->getMnemonics());
-                $tag->setTagName($this->getTagName());
-                $tag->setTree($this->getTree());
+                $tag->setTagName($elem['name']);
+                $tag->setTree($elem['val']);
                 $tag->setAttributes($elem['attributes']);
 
                 $result .= $tag; // вызывается __toString

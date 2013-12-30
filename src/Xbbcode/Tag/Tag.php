@@ -101,7 +101,7 @@ abstract class Tag extends Xbbcode
     /**
      *
      */
-    protected function cleanText()
+    protected function cleanTreeText()
     {
         foreach ($this->getTree() as $key => $item) {
             if ('text' === $item['type']) {
@@ -110,13 +110,29 @@ abstract class Tag extends Xbbcode
         }
     }
 
+
+    /**
+     * @return string
+     */
+    protected function getTreeText()
+    {
+        $text = '';
+        foreach ($this->getTree() as $val) {
+            if ('text' === $val['type']) {
+                $text .= $val['str'];
+            }
+        }
+
+        return $text;
+    }
+
     /**
      * @return string
      */
     protected function getBody()
     {
         if (in_array(self::BEHAVIOUR, array('table', 'tr', 'ul'))) {
-            $this->cleanText();
+            $this->cleanTreeText();
         }
 
         return $this->getHtml($this->getTree());

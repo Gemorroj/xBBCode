@@ -34,19 +34,12 @@ class Yandex extends A
      */
     protected function getHref()
     {
-        $text = '';
-        foreach ($this->getTree() as $val) {
-            if ('text' === $val['type']) {
-                $text .= $val['str'];
-            }
-        }
-
         $href = '';
         if (isset($this->attributes['q'])) {
             $href = $this->attributes['q'];
         }
         if (!$href) {
-            $href = $text;
+            $href = $this->getTreeText();
         }
 
         return '//yandex.com/yandsearch?text=' . rawurlencode($href);
