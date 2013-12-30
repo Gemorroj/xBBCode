@@ -595,12 +595,12 @@ class Xbbcode
     protected function getToken()
     {
         $token = '';
-        $token_type = false;
-        $char_type = false;
+        $tokenType = false;
+        $charType = false;
         while (true) {
-            $token_type = $char_type;
+            $tokenType = $charType;
             if (!isset($this->text{$this->cursor})) {
-                if (false === $char_type) {
+                if (false === $charType) {
                     return false;
                 } else {
                     break;
@@ -609,50 +609,50 @@ class Xbbcode
             $char = $this->text{$this->cursor};
             switch ($char) {
                 case '[':
-                    $char_type = 0;
+                    $charType = 0;
                     break;
                 case ']':
-                    $char_type = 1;
+                    $charType = 1;
                     break;
                 case '"':
-                    $char_type = 2;
+                    $charType = 2;
                     break;
                 case "'":
-                    $char_type = 3;
+                    $charType = 3;
                     break;
                 case '=':
-                    $char_type = 4;
+                    $charType = 4;
                     break;
                 case '/':
-                    $char_type = 5;
+                    $charType = 5;
                     break;
                 case ' ':
-                    $char_type = 6;
+                    $charType = 6;
                     break;
                 case "\t":
-                    $char_type = 6;
+                    $charType = 6;
                     break;
                 case "\n":
-                    $char_type = 6;
+                    $charType = 6;
                     break;
                 case "\r":
-                    $char_type = 6;
+                    $charType = 6;
                     break;
                 case "\0":
-                    $char_type = 6;
+                    $charType = 6;
                     break;
                 case "\x0B":
-                    $char_type = 6;
+                    $charType = 6;
                     break;
                 default:
-                    $char_type = 7;
+                    $charType = 7;
                     break;
             }
-            if (false === $token_type) {
+            if (false === $tokenType) {
                 $token = $char;
-            } elseif (5 >= $token_type) {
+            } elseif (5 >= $tokenType) {
                 break;
-            } elseif ($char_type === $token_type) {
+            } elseif ($charType === $tokenType) {
                 $token .= $char;
             } else {
                 break;
@@ -661,10 +661,10 @@ class Xbbcode
         }
 
         if (isset($this->tags[strtolower($token)])) {
-            $token_type = 8;
+            $tokenType = 8;
         }
 
-        return array($token_type, $token);
+        return array($tokenType, $token);
     }
 
 
@@ -1109,22 +1109,23 @@ class Xbbcode
     {
         if (isset($this->tags[$current])) {
             $tag = $this->getTagObject($current);
-            $current_behaviour = $tag::BEHAVIOUR;
+            $currentBehaviour = $tag::BEHAVIOUR;
         } else {
-            $current_behaviour = Tag::BEHAVIOUR;
+            $currentBehaviour = Tag::BEHAVIOUR;
         }
         if (isset($this->tags[$next])) {
             $tag = $this->getTagObject($next);
-            $next_behaviour = $tag::BEHAVIOUR;
+            $nextBehaviour = $tag::BEHAVIOUR;
         } else {
-            $next_behaviour = Tag::BEHAVIOUR;
-        }
-        $must_close = false;
-        if (isset($this->ends[$current_behaviour])) {
-            $must_close = in_array($next_behaviour, $this->ends[$current_behaviour]);;
+            $nextBehaviour = Tag::BEHAVIOUR;
         }
 
-        return $must_close;
+        $mustClose = false;
+        if (isset($this->ends[$currentBehaviour])) {
+            $mustClose = in_array($nextBehaviour, $this->ends[$currentBehaviour]);
+        }
+
+        return $mustClose;
     }
 
 
