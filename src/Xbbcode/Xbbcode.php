@@ -36,14 +36,7 @@ class Xbbcode
      *
      * @var string
      */
-    public $tag = '';
-    /**
-     * Массив значений атрибутов тега, которому сопоставлен экземпляр класса.
-     * Пуст, если экземпляр не сопоставлен никакому тегу.
-     *
-     * @var array
-     */
-    public $attributes = array();
+    protected $tagName = '';
     /**
      * Текст BBCode
      *
@@ -61,12 +54,13 @@ class Xbbcode
      *
      * @var array
      */
-    public $tree = array();
+    protected $tree = array();
     /**
      * Список поддерживаемых тегов с указанием специализированных классов.
+     *
      * @var string[]
      */
-    public $tags = array(
+    protected $tags = array(
         // Основные теги
         '*'            => 'Xbbcode\Tag\Li'     ,
         'a'            => 'Xbbcode\Tag\A'      ,
@@ -358,7 +352,7 @@ class Xbbcode
      *
      * @var array
      */
-    public $mnemonics = array();
+    protected $mnemonics = array();
     /**
      * Флажок, включающий/выключающий автоматические ссылки.
      *
@@ -472,39 +466,92 @@ class Xbbcode
 
 
     /**
+     * Метод конечных автоматов
+     *
+     * Список возможных состояний автомата:
+     * 0  - Начало сканирования или находимся вне тега. Ожидаем что угодно.
+     * 1  - Встретили символ "[", который считаем началом тега. Ожидаем имя тега, или символ "/".
+     * 2  - Нашли в теге неожидавшийся символ "[". Считаем предыдущую строку ошибкой. Ожидаем имя тега, или символ "/".
+     * 3  - Нашли в теге синтаксическую ошибку. Текущий символ не является "[". Ожидаем что угодно.
+     * 4  - Сразу после "[" нашли символ "/". Предполагаем, что попали в закрывающий тег. Ожидаем имя тега или символ "]".
+     * 5  - Сразу после "[" нашли имя тега. Считаем, что находимся в открывающем теге. Ожидаем пробел или "=" или "/" или "]".
+     * 6  - Нашли завершение тега "]". Ожидаем что угодно.
+     * 7  - Сразу после "[/" нашли имя тега. Ожидаем "]".
+     * 8  - В открывающем теге нашли "=". Ожидаем пробел или значение атрибута.
+     * 9  - В открывающем теге нашли "/", означающий закрытие тега. Ожидаем "]".
+     * 10 - В открывающем теге нашли пробел после имени тега или имени атрибута. Ожидаем "=" или имя другого атрибута или "/" или "]".
+     * 11 - Нашли '"' начинающую значение атрибута, ограниченное кавычками. Ожидаем что угодно.
+     * 12 - Нашли "'" начинающий значение атрибута, ограниченное апострофами. Ожидаем что угодно.
+     * 13 - Нашли начало незакавыченного значения атрибута. Ожидаем что угодно.
+     * 14 - В открывающем теге после "=" нашли пробел. Ожидаем значение атрибута.
+     * 15 - Нашли имя атрибута. Ожидаем пробел или "=" или "/" или "]".
+     * 16 - Находимся внутри значения атрибута, ограниченного кавычками. Ожидаем что угодно.
+     * 17 - Завершение значения атрибута. Ожидаем пробел или имя следующего атрибута или "/" или "]".
+     * 18 - Находимся внутри значения атрибута, ограниченного апострофами. Ожидаем что угодно.
+     * 19 - Находимся внутри незакавыченного значения атрибута. Ожидаем что угодно.
+     * 20 - Нашли пробел после значения атрибута. Ожидаем имя следующего атрибута или "/" или "]".
+     *
+     * Описание конечного автомата:
+     */
+    protected $finiteAutomaton = array(
+    // Предыдущие |   Состояния для текущих событий (лексем)   |
+    //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
+        0 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ),
+        1 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 ),
+        2 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 ),
+        3 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ),
+        4 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  7 ),
+        5 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 ),
+        6 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ),
+        7 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ),
+        8 => array( 13 , 13 , 11 , 12 , 13 , 13 , 14 , 13 , 13 ),
+        9 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ),
+        10 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 ,  3 , 15 , 15 ),
+        11 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 ),
+        12 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 ),
+        13 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 17 , 19 , 19 ),
+        14 => array(  2 ,  3 , 11 , 12 , 13 , 13 ,  3 , 13 , 13 ),
+        15 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 ),
+        16 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 ),
+        17 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 , 20 , 15 , 15 ),
+        18 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 ),
+        19 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 20 , 19 , 19 ),
+        20 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 ,  3 , 15 , 15 ),
+    );
+
+
+    /**
      * Конструктор класса
      *
      * @param array|string $code Text
      * @param string $webPath Web path
      * @param array $allowed Allowed tags
      */
-    public function __construct ($code = null, $webPath = '', array $allowed = null)
+    public function __construct ($code, $webPath = '', array $allowed = null)
     {
-        if ($code !== null) {
-            $this->webPath = $webPath;
-            $this->mnemonics = $this->getSmiles();
+        $this->webPath = $webPath;
+        $this->setSmiles();
 
-            // Removing all traces of parsing of disallowed tags.
-            // In case if $allowed is not an array, assuming that everything is allowed
-            if (is_array($allowed)) {
-                foreach ($this->tags as $key => $value) {
-                    if (!in_array($key, $allowed)) {
-                        unset($this->tags[$key]);
-                    }
+        // Removing all traces of parsing of disallowed tags.
+        // In case if $allowed is not an array, assuming that everything is allowed
+        if ($allowed) {
+            foreach ($this->getTags() as $key => $value) {
+                if (!in_array($key, $allowed)) {
+                    unset($this->tags[$key]);
                 }
             }
-
-            $this->parse($code);
         }
+
+        $this->parse($code);
     }
 
 
     /**
      * Формируем набор смайликов
      *
-     * @return array
+     * @return Xbbcode
      */
-    protected function getSmiles()
+    protected function setSmiles()
     {
         $path = $this->webPath . '/resources/images/smiles';
         $pak = file(__DIR__ . '/resources/images/smiles/Set_Smiles_YarNET.pak');
@@ -518,7 +565,9 @@ class Xbbcode
             }
         }
 
-        return $smiles;
+        $this->setMnemonics($smiles);
+
+        return $this;
     }
 
 
@@ -629,11 +678,12 @@ class Xbbcode
     public function parse($code)
     {
         $time_start = microtime(true);
+
         if (is_array($code)) {
             $is_tree = false;
             foreach ($code as $val) {
                 if (isset($val['val'])) {
-                    $this->tree = $code;
+                    $this->setTree($code);
                     $this->syntax = $this->getSyntax();
                     $is_tree = true;
                     break;
@@ -641,86 +691,47 @@ class Xbbcode
             }
             if (!$is_tree) {
                 $this->syntax = $code;
-                $this->getTree();
+                $this->parseTree();
             }
             $this->text = '';
             foreach ($this->syntax as $val) {
                 $this->text .= $val['str'];
             }
             $this->statistics['time_parse'] = microtime(true) - $time_start;
+
             return $this->syntax;
         } else {
             $this->text = $code;
         }
-        /*
-        Используем метод конечных автоматов
-        Список возможных состояний автомата:
-        0  - Начало сканирования или находимся вне тега. Ожидаем что угодно.
-        1  - Встретили символ "[", который считаем началом тега. Ожидаем имя
-             тега, или символ "/".
-        2  - Нашли в теге неожидавшийся символ "[". Считаем предыдущую строку
-             ошибкой. Ожидаем имя тега, или символ "/".
-        3  - Нашли в теге синтаксическую ошибку. Текущий символ не является "[".
-             Ожидаем что угодно.
-        4  - Сразу после "[" нашли символ "/". Предполагаем, что попали в
-             закрывающий тег. Ожидаем имя тега или символ "]".
-        5  - Сразу после "[" нашли имя тега. Считаем, что находимся в
-             открывающем теге. Ожидаем пробел или "=" или "/" или "]".
-        6  - Нашли завершение тега "]". Ожидаем что угодно.
-        7  - Сразу после "[/" нашли имя тега. Ожидаем "]".
-        8  - В открывающем теге нашли "=". Ожидаем пробел или значение атрибута.
-        9  - В открывающем теге нашли "/", означающий закрытие тега. Ожидаем
-             "]".
-        10 - В открывающем теге нашли пробел после имени тега или имени
-             атрибута. Ожидаем "=" или имя другого атрибута или "/" или "]".
-        11 - Нашли '"' начинающую значение атрибута, ограниченное кавычками.
-             Ожидаем что угодно.
-        12 - Нашли "'" начинающий значение атрибута, ограниченное апострофами.
-             Ожидаем что угодно.
-        13 - Нашли начало незакавыченного значения атрибута. Ожидаем что угодно.
-        14 - В открывающем теге после "=" нашли пробел. Ожидаем значение
-             атрибута.
-        15 - Нашли имя атрибута. Ожидаем пробел или "=" или "/" или "]".
-        16 - Находимся внутри значения атрибута, ограниченного кавычками.
-             Ожидаем что угодно.
-        17 - Завершение значения атрибута. Ожидаем пробел или имя следующего
-             атрибута или "/" или "]".
-        18 - Находимся внутри значения атрибута, ограниченного апострофами.
-             Ожидаем что угодно.
-        19 - Находимся внутри незакавыченного значения атрибута. Ожидаем что
-             угодно.
-        20 - Нашли пробел после значения атрибута. Ожидаем имя следующего
-             атрибута или "/" или "]".
 
-        Описание конечного автомата:
-        */
-        $finite_automaton_orig = array(
-           // Предыдущие |   Состояния для текущих событий (лексем)   |
-           //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
-               0 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
-            ,  1 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 )
-            ,  2 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 )
-            ,  3 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
-            ,  4 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  7 )
-            ,  5 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 )
-            ,  6 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 )
-            ,  7 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 )
-            ,  8 => array( 13 , 13 , 11 , 12 , 13 , 13 , 14 , 13 , 13 )
-            ,  9 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 )
-            , 10 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 ,  3 , 15 , 15 )
-            , 11 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 )
-            , 12 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 )
-            , 13 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 17 , 19 , 19 )
-            , 14 => array(  2 ,  3 , 11 , 12 , 13 , 13 ,  3 , 13 , 13 )
-            , 15 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 )
-            , 16 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 )
-            , 17 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 , 20 , 15 , 15 )
-            , 18 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 )
-            , 19 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 20 , 19 , 19 )
-            , 20 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 ,  3 , 15 , 15 )
-        );
-        // Закончили описание конечного автомата
-        $finite_automaton = $finite_automaton_orig;
+        $finiteAutomaton = $this->finiteAutomaton();
+
+        if ($finiteAutomaton['decomposition']) {
+            $key = $finiteAutomaton['key'];
+
+            if ('text' === $finiteAutomaton['type']) {
+                $this->syntax[$key]['str'] .= $finiteAutomaton['decomposition']['str'];
+            } else {
+                $this->syntax[++$key] = array(
+                    'type' => 'text',
+                    'str' => $finiteAutomaton['decomposition']['str']
+                );
+            }
+        }
+
+        $this->parseTree();
+        $this->statistics['time_parse'] = microtime(true) - $time_start;
+
+        return $this->syntax;
+    }
+
+
+    /**
+     * @return array
+     */
+    protected function finiteAutomaton ()
+    {
+        $finite_automaton = $this->finiteAutomaton;
         $mode = 0;
         $this->syntax = array();
         $decomposition = array();
@@ -730,6 +741,7 @@ class Xbbcode
         $type = false;
         $this->cursor = 0;
         $spacesave = '';
+
         // Сканируем массив лексем с помощью построенного автомата:
         while ($token = $this->getToken()) {
             $previous_mode = $mode;
@@ -807,7 +819,7 @@ class Xbbcode
                         $decomposition['layout'][] = array(7, $value);
                     }
                     $decomposition['str'] .= ']';
-                    $decomposition['layout'][] = array( 0, ']' );
+                    $decomposition['layout'][] = array(0, ']');
                     $this->syntax[++$token_key] = $decomposition;
                     $decomposition = array();
                     break;
@@ -816,7 +828,7 @@ class Xbbcode
                     $decomposition['str'] .= $token[1];
                     $decomposition['layout'][] = array(2, $token[1]);
                     /* При выходе из тега возвращаем умолчальное значение пробельных незакавыченных тегов */
-                    $finite_automaton = $finite_automaton_orig;
+                    $finite_automaton = $this->finiteAutomaton;
                     break;
                 case 8:
                     $decomposition['str'] .= '=';
@@ -891,7 +903,7 @@ class Xbbcode
                     break;
                 case 20:
                     $decomposition['str'] .= $token[1];
-                    if ( 13 == $previous_mode || 19 == $previous_mode ) {
+                    if (13 == $previous_mode || 19 == $previous_mode) {
                         $decomposition['layout'][] = array(7, $value);
                     }
                     $value = '';
@@ -899,21 +911,12 @@ class Xbbcode
                     break;
             }
         }
-        if ($decomposition) {
-            if ('text' === $type) {
-                $this->syntax[$token_key]['str'] .= $decomposition['str'];
-            } else {
-                $this->syntax[++$token_key] = array(
-                    'type' => 'text',
-                    'str' => $decomposition['str']
-                );
-            }
-        }
 
-        $this->getTree();
-        $this->statistics['time_parse'] = microtime(true) - $time_start;
-
-        return $this->syntax;
+        return array(
+            'decomposition' => $decomposition,
+            'type' => $type,
+            'key' => $token_key,
+        );
     }
 
 
@@ -973,6 +976,113 @@ class Xbbcode
     public function getAutolinks()
     {
         return $this->autolinks;
+    }
+
+
+    /**
+     * @param array $tags
+     *
+     * @return Xbbcode
+     */
+    public function setTags(array $tags)
+    {
+        $this->tags = $tags;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+
+    /**
+     * @param string $tagName
+     * @param string $handler Имя класса отнаследованного от абстрактного Tag
+     *
+     * @return Xbbcode
+     */
+    public function setTagHandler($tagName, $handler)
+    {
+        $this->tags[$tagName] = $handler;
+
+        return $this;
+    }
+
+    /**
+     * @param string $tagName
+     * @return string
+     */
+    public function getTagHandler($tagName)
+    {
+        return $this->tags[$tagName];
+    }
+
+
+    /**
+     * @param array $mnemonics
+     *
+     * @return Xbbcode
+     */
+    public function setMnemonics(array $mnemonics)
+    {
+        $this->mnemonics = $mnemonics;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getMnemonics()
+    {
+        return $this->mnemonics;
+    }
+
+
+    /**
+     * @param string $tagName
+     *
+     * @return Xbbcode
+     */
+    public function setTagName($tagName)
+    {
+        $this->tagName = $tagName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTagName()
+    {
+        return $this->tagName;
+    }
+
+
+    /**
+     * @param array $tree
+     *
+     * @return Xbbcode
+     */
+    public function setTree(array $tree)
+    {
+        $this->tree = $tree;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getTree()
+    {
+        return $this->tree;
     }
 
 
@@ -1129,7 +1239,7 @@ class Xbbcode
                 case 'close':
                     if (!$open_tags) {
                         $type = (-1 < $structure_key) ? $structure[$structure_key]['type'] : false;
-                        if ( 'text' === $type ) {
+                        if ('text' === $type) {
                             $structure[$structure_key]['str'] .= $val['str'];
                         } else {
                             $structure[++$structure_key] = array(
@@ -1180,6 +1290,7 @@ class Xbbcode
                     unset($open_tags[$ult_key]);
             }
         }
+
         foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
             $structure[++$structure_key] = array(
                 'type'  => 'close',
@@ -1189,16 +1300,17 @@ class Xbbcode
             );
             unset($open_tags[$ult_key]);
         }
+
         return $structure;
     }
 
 
     /**
-     * getTree
+     * parseTree
      *
      * @return array
      */
-    protected function getTree()
+    protected function parseTree()
     {
         /* Превращаем $this->syntax в правильную скобочную структуру */
         $structure = $this->normalizeBracket($this->syntax);
@@ -1210,6 +1322,7 @@ class Xbbcode
         $open_tags = array();
         $not_tags = array();
         $this->statistics['count_tags'] = 0;
+
         foreach ($structure as $val) {
             switch ($val['type']) {
                 case 'text':
@@ -1224,11 +1337,11 @@ class Xbbcode
                 case 'open/close':
                     $this->includeTag($val['name']);
                     end($open_tags);
-                    $parent = $open_tags ? current($open_tags) : $this->tag;
+                    $parent = $open_tags ? current($open_tags) : $this->getTagName();
                     $permissibly = $this->isPermissiblyChild($parent, $val['name']);
                     if (!$permissibly) {
                         $type = (-1 < $normal_key) ? $normalized[$normal_key]['type'] : false;
-                        if ( 'text' === $type ) {
+                        if ('text' === $type) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = array(
@@ -1246,12 +1359,12 @@ class Xbbcode
                 case 'open':
                     $this->includeTag($val['name']);
                     end($open_tags);
-                    $parent = $open_tags ? current($open_tags) : $this->tag;
+                    $parent = $open_tags ? current($open_tags) : $this->getTagName();
                     $permissibly = $this->isPermissiblyChild($parent, $val['name']);
                     if (!$permissibly) {
                         $not_tags[$val['level']] = $val['name'];
                         $type = (-1 < $normal_key) ? $normalized[$normal_key]['type'] : false;
-                        if ( 'text' === $type ) {
+                        if ('text' === $type) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = array(
@@ -1273,7 +1386,7 @@ class Xbbcode
                     if ($not_normal) {
                         unset($not_tags[$val['level']]);
                         $type = (-1 < $normal_key) ? $normalized[$normal_key]['type'] : false;
-                        if ( 'text' === $type ) {
+                        if ('text' === $type) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = array(
@@ -1292,7 +1405,9 @@ class Xbbcode
                     break;
             }
         }
+
         unset($structure);
+
         // Формируем дерево элементов
         $result = array();
         $result_key = -1;
@@ -1352,9 +1467,9 @@ class Xbbcode
                 $this->statistics['count_level'] += 1;
             }
         }
-        $this->tree = $result;
+        $this->setTree($result);
 
-        return $result;
+        return $this->getTree();
     }
 
 
@@ -1367,7 +1482,7 @@ class Xbbcode
     protected function getSyntax($tree = false)
     {
         if (!is_array($tree)) {
-            $tree = $this->tree;
+            $tree = $this->getTree();
         }
         $syntax = array();
         foreach ($tree as $elem) {
@@ -1451,7 +1566,7 @@ class Xbbcode
             $text = preg_replace($search, $replace, $text);
         }
         $text = str_replace('  ', '&#160;&#160;', nl2br($text));
-        $text = strtr($text, $this->mnemonics);
+        $text = strtr($text, $this->getMnemonics());
 
         return $text;
     }
@@ -1475,10 +1590,11 @@ class Xbbcode
         $search = $this->pregAutolinks['pattern'];
         $replace = $this->pregAutolinks['highlight'];
         $str = '';
+
         foreach ($this->syntax as $elem) {
             if ('text' === $elem['type']) {
                 $elem['str'] = strtr(htmlspecialchars($elem['str']), $chars);
-                foreach ($this->mnemonics as $mnemonic => $value) {
+                foreach ($this->getMnemonics() as $mnemonic => $value) {
                     $elem['str'] = str_replace(
                         $mnemonic,
                         '<span class="bb_mnemonic">' . $mnemonic . '</span>',
@@ -1549,7 +1665,7 @@ class Xbbcode
     {
         $time_start = microtime(true);
         if (!is_array($elems)) {
-            $elems =& $this->tree;
+            $elems =& $this->getTree();
         }
         $result = '';
         $lbr = 0;
@@ -1580,14 +1696,16 @@ class Xbbcode
 
                 /* Обрабатываем содержимое элемента */
                 $tag->setAutolinks($this->getAutolinks());
-                $tag->tags = $this->tags;
-                $tag->mnemonics = $this->mnemonics;
-                $tag->tag = $elem['name'];
-                $tag->attributes = $elem['attributes'];
-                $tag->tree = $elem['val'];
+                $tag->setTags($this->getTags());
+                $tag->setMnemonics($this->getMnemonics());
+                $tag->setTagName($this->getTagName());
+                $tag->setTree($this->getTree());
+                $tag->setAttributes($elem['attributes']);
+
                 $result .= $tag; // вызывается __toString
             }
         }
+
         $result = preg_replace(
             "'\s*<br \/>\s*<br \/>\s*'si", "\n<br />&#160;<br />\n", $result
         );

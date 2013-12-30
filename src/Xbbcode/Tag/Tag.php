@@ -84,12 +84,26 @@ abstract class Tag extends Xbbcode
     abstract public function __toString();
 
 
+    public function __construct()
+    {
+        // не вызываем родительский конструктор
+    }
+
+
+    /**
+     * @param array $attributes
+     */
+    public function setAttributes(array $attributes)
+    {
+        $this->attributes = $attributes;
+    }
+
     /**
      *
      */
     protected function cleanText()
     {
-        foreach ($this->tree as $key => $item) {
+        foreach ($this->getTree() as $key => $item) {
             if ('text' === $item['type']) {
                 unset($this->tree[$key]);
             }
@@ -105,7 +119,7 @@ abstract class Tag extends Xbbcode
             $this->cleanText();
         }
 
-        return $this->getHtml($this->tree);
+        return $this->getHtml($this->getTree());
     }
 
     /**

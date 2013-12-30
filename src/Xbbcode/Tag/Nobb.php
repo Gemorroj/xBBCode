@@ -51,7 +51,7 @@ class Nobb extends Tag
     public function __toString()
     {
         $str = '';
-        foreach ($this->tree as $item) {
+        foreach ($this->getTree() as $item) {
             if ('text' === $item['type']) {
                 $str .= htmlspecialchars($item['str'], ENT_NOQUOTES);
             }

@@ -56,6 +56,7 @@ class Code extends Tag
     /* Конструктор класса */
     public function __construct()
     {
+        parent::__construct();
         $this->geshi = new \GeSHi('', 'text');
         $this->geshi->set_header_type(GESHI_HEADER_NONE);
     }
@@ -77,7 +78,7 @@ class Code extends Tag
      */
     protected function setLanguage()
     {
-        switch ($this->tag) {
+        switch ($this->getTagName()) {
             case 'code':
                 $language = $this->attributes['code'];
                 break;
@@ -85,7 +86,7 @@ class Code extends Tag
                 $language = $this->attributes['pre'];
                 break;
             default:
-                $language = $this->tag;
+                $language = $this->getTagName();
                 break;
         }
 
@@ -111,7 +112,7 @@ class Code extends Tag
     protected function setSource()
     {
         $source = '';
-        foreach ($this->tree as $item) {
+        foreach ($this->getTree() as $item) {
             if ('item' === $item['type']) {
                 continue;
             }

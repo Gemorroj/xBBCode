@@ -34,7 +34,7 @@ class Email extends A
     protected function getHref()
     {
         $text = '';
-        foreach ($this->tree as $val) {
+        foreach ($this->getTree() as $val) {
             if ('text' === $val['type']) {
                 $text .= $val['str'];
             }

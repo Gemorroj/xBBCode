@@ -40,6 +40,6 @@ class P extends Align
      */
     public function __toString()
     {
-        return '<' . $this->tag . ' ' . $this->getAttributes() . '>' . $this->getBody() . '</' . $this->tag . '>';
+        return '<' . $this->getTagName() . ' ' . $this->getAttributes() . '>' . $this->getBody() . '</' . $this->getTagName() . '>';
     }
 }

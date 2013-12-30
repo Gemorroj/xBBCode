@@ -42,7 +42,7 @@ class Youtube extends Tag
         $src = isset($this->attributes['src']) ? $this->attributes['src'] : '';
 
         if (!$src) {
-            foreach ($this->tree as $val) {
+            foreach ($this->getTree() as $val) {
                 if ('text' === $val['type']) {
                     $src .= $val['str'];
                 }

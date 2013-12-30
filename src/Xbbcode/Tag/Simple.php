@@ -51,16 +51,16 @@ class Simple extends Tag
      */
     public function __toString()
     {
-        switch ($this->tag) {
+        switch ($this->getTagName()) {
             case 'b':
-                $this->tag = 'strong';
+                $this->setTagName('strong');
                 break;
             case 's':
             case 'strike':
-                $this->tag = 'del';
+                $this->setTagName('del');
                 break;
         }
 
-        return '<' . $this->tag . ' ' . $this->getAttributes() . '>' . $this->getBody() . '</' . $this->tag . '>';
+        return '<' . $this->getTagName() . ' ' . $this->getAttributes() . '>' . $this->getBody() . '</' . $this->getTagName() . '>';
     }
 }

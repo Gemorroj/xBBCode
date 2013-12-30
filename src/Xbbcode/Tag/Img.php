@@ -40,7 +40,7 @@ class Img extends Tag
     protected function getSrc()
     {
         $text = '';
-        foreach ($this->tree as $val) {
+        foreach ($this->getTree() as $val) {
             if ('text' === $val['type']) {
                 $text .= $val['str'];
             }
