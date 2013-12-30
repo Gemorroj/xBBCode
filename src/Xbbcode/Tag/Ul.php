@@ -31,9 +31,9 @@ use Xbbcode\Attributes;
  */
 class Ul extends Tag
 {
-    public $lbr = 1;
-    public $rbr = 1;
-    public $behaviour = 'ul';
+    const BR_LEFT = 1;
+    const BR_RIGHT = 1;
+    const BEHAVIOUR = 'ul';
 
     /**
      * @return Attributes

@@ -31,8 +31,8 @@ use Xbbcode\Attributes;
  */
 class Table extends Tag
 {
-    public $rbr = 1;
-    public $behaviour = 'table';
+    const BR_RIGHT = 1;
+    const BEHAVIOUR = 'table';
 
     /**
      * @return Attributes

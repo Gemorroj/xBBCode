@@ -31,7 +31,7 @@ use Xbbcode\Attributes;
  */
 class Address extends Tag
 {
-    public $rbr = 1;
+    const BR_RIGHT = 1;
 
     /**
      * @return Attributes

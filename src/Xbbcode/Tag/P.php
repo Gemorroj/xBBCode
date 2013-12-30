@@ -29,9 +29,9 @@ namespace Xbbcode\Tag;
  */
 class P extends Align
 {
-    public $lbr = 2;
-    public $rbr = 2;
-    public $behaviour = 'p';
+    const BR_LEFT = 2;
+    const BR_RIGHT = 2;
+    const BEHAVIOUR = 'p';
 
     /**
      * Return html code

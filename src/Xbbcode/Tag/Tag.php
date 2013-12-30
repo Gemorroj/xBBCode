@@ -31,6 +31,50 @@ use Xbbcode\Xbbcode;
 abstract class Tag extends Xbbcode
 {
     /**
+     * Задаёт возможность наличия у последнего атрибута у тега значений без необходимости наличия кавычек для значений с пробелами.
+     * Пример: [altfont=Comic Sans MS]sometext[/altfont] или [altfont size="22" font=Comic Sans MS]sometext[/altfont]
+     * По умолчанию выключено
+     */
+    const ONE_ATTRIBUTE = false;
+    /**
+     * Модель поведения тега (в плане вложенности), которому сопоставлен экземпляр данного класса.
+     * Модели поведения могут быть следующими:
+     * 'a'       - ссылки, якоря
+     * 'caption' - заголовки таблиц
+     * 'code'    - линейные контейнеры кода
+     * 'div'     - блочные элементы
+     * 'hr'      - горизонтальные линии
+     * 'img'     - картинки
+     * 'li'      - элементы списков
+     * 'p'       - блочные элементы типа абзацев и заголовков
+     * 'pre'     - блочные контейнеры кода
+     * 'span'    - линейные элементы
+     * 'table'   - таблицы
+     * 'td'      - ячейки таблиц
+     * 'tr'      - строки таблиц
+     * 'ul'      - списки
+     * Конкретное содержание в понятие "модель поведения" вкладывается настройками
+     */
+    const BEHAVIOUR = 'div';
+    /**
+     * Число разрывов строк, которые должны быть проигнорированы перед тегом
+     */
+    const BR_LEFT = 0;
+    /**
+     * Число разрывов строк, которые должны быть проигнорированы после тега
+     */
+    const BR_RIGHT = 0;
+
+    const IS_CLOSE = false;
+
+    /**
+     * Массив значений атрибутов тега, которому сопоставлен экземпляр класса.
+     * Пуст, если экземпляр не сопоставлен никакому тегу.
+     */
+    protected $attributes = array();
+
+
+    /**
      * @return Attributes Tag attributes
      */
     abstract protected function getAttributes();
@@ -57,7 +101,7 @@ abstract class Tag extends Xbbcode
      */
     protected function getBody()
     {
-        if (in_array($this->tag, array('table', 'tr', 'ul', 'ol', 'list'))) {
+        if (in_array(self::BEHAVIOUR, array('table', 'tr', 'ul'))) {
             $this->cleanText();
         }
 

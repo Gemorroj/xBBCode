@@ -31,7 +31,7 @@ use Xbbcode\Attributes;
  */
 class Abbr extends Tag
 {
-    public $behaviour = 'span';
+    const BEHAVIOUR = 'span';
 
 
     /**

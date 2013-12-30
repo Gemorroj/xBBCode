@@ -31,7 +31,7 @@ use Xbbcode\Attributes;
  */
 class Bdo extends Tag
 {
-    public $behaviour = 'span';
+    const BEHAVIOUR = 'span';
 
     /**
      * @return Attributes

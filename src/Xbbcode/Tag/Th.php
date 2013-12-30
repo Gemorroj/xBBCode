@@ -29,7 +29,7 @@ namespace Xbbcode\Tag;
  */
 class Th extends Td
 {
-    public $behaviour = 'td';
+    const BEHAVIOUR = 'td';
 
     /**
      * Return html code

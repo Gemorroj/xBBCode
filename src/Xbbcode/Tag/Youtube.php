@@ -31,7 +31,8 @@ use Xbbcode\Attributes;
  */
 class Youtube extends Tag
 {
-    public $isClose = true;
+    const IS_CLOSE = true;
+    const BEHAVIOUR = 'img';
 
     /**
      * @return string

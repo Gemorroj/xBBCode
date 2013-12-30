@@ -31,9 +31,9 @@ use Xbbcode\Attributes;
  */
 class Hr extends Tag
 {
-    public $isClose = true;
-    public $rbr = 1;
-    public $behaviour = 'hr';
+    const IS_CLOSE = true;
+    const BR_RIGHT = 1;
+    const BEHAVIOUR = 'hr';
 
     /**
      * @return Attributes

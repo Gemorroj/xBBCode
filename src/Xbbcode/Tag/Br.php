@@ -31,8 +31,8 @@ use Xbbcode\Attributes;
  */
 class Br extends Tag
 {
-    public $isClose = true;
-    public $behaviour = 'span';
+    const IS_CLOSE = true;
+    const BEHAVIOUR = 'span';
 
     /**
      * @return Attributes

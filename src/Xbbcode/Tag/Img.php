@@ -31,8 +31,8 @@ use Xbbcode\Attributes;
  */
 class Img extends Tag
 {
-    public $behaviour = 'img';
-    public $isClose = true;
+    const BEHAVIOUR = 'img';
+    const IS_CLOSE = true;
 
     /**
      * @return string

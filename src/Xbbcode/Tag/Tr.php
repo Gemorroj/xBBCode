@@ -31,7 +31,7 @@ use Xbbcode\Attributes;
  */
 class Tr extends Tag
 {
-    public $behaviour = 'tr';
+    const BEHAVIOUR = 'tr';
 
     /**
      * @return Attributes

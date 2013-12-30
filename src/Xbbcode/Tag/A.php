@@ -31,7 +31,7 @@ use Xbbcode\Attributes;
  */
 class A extends Tag
 {
-    public $behaviour = 'a';
+    const BEHAVIOUR = 'a';
     public $autolinks = false;
 
 

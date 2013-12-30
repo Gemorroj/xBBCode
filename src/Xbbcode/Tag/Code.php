@@ -31,11 +31,9 @@ use Xbbcode\Attributes;
  */
 class Code extends Tag
 {
-    /* Число разрывов строк, которые должны быть игнорированы перед тегом */
-    public $lbr = 0;
-    /* Число разрывов строк, которые должны быть игнорированы после тега */
-    public $rbr = 1;
-    public $behaviour = 'pre';
+    const BR_RIGHT = 1;
+    const BEHAVIOUR = 'pre';
+
     /* Альтернативные названия языков и их трансляция в обозначения GeSHi */
     public $langSynonym = array(
         'algol'  => 'algol86',

@@ -31,7 +31,7 @@ use Xbbcode\Attributes;
  */
 class Caption extends Tag
 {
-    public $behaviour = 'caption';
+    const BEHAVIOUR = 'caption';
 
     /**
      * @return Attributes

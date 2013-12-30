@@ -31,8 +31,8 @@ use Xbbcode\Attributes;
  */
 class Altfont extends Tag
 {
-    public $behaviour = 'span';
-    public $oneAttribute = true;
+    const BEHAVIOUR = 'span';
+    const ONE_ATTRIBUTE = true;
 
     /**
      * @return Attributes

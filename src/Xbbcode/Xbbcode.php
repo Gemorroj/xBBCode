@@ -22,6 +22,8 @@
 
 namespace Xbbcode;
 
+use Xbbcode\Tag\Tag;
+
 
 /**
  * Class Xbbcode
@@ -31,6 +33,8 @@ class Xbbcode
     /**
      * Имя тега, которому сопоставлен экземпляр класса.
      * Пустая строка, если экземпляр не сопоставлен никакому тегу.
+     *
+     * @var string
      */
     public $tag = '';
     /**
@@ -38,12 +42,6 @@ class Xbbcode
      * Пуст, если экземпляр не сопоставлен никакому тегу.
      */
     public $attributes = array();
-    /**
-     * Задаёт возможность наличия у последнего атрибута у тега значений без необходимости наличия кавычек для значений с пробелами.
-     * Пример: [altfont=Comic Sans MS]sometext[/altfont] или [altfont size="22" font=Comic Sans MS]sometext[/altfont]
-     * По умолчанию выключено
-     */
-    public $oneAttribute = false;
     /**
      * Текст BBCode
      */
@@ -58,6 +56,7 @@ class Xbbcode
     public $tree = array();
     /**
      * Список поддерживаемых тегов с указанием специализированных классов.
+     * @var string[]
      */
     public $tags = array(
         // Основные теги
@@ -354,6 +353,7 @@ class Xbbcode
      * Флажок, включающий/выключающий автоматические ссылки.
      */
     public $autolinks = false;
+
     /**
      * Массив замен для автоматических ссылок.
      */
@@ -374,11 +374,9 @@ class Xbbcode
             '<span class="bb_autolink">$0</span>',
         ),
     );
-    public $isClose = false;
-    public $lbr = 0;
-    public $rbr = 0;
     /**
      * Статистические сведения по обработке BBCode
+     * @var array
      */
     public $stat = array(
         'time_parse'  => 0,  // Время парсинга
@@ -387,28 +385,9 @@ class Xbbcode
         'count_level' => 0   // Число уровней вложенности тегов BBCode
     );
     /**
-     * Модель поведения тега (в плане вложенности), которому сопоставлен экземпляр данного класса.
-     * Модели поведения могут быть следующими:
-     * 'a'       - ссылки, якоря
-     * 'caption' - заголовки таблиц
-     * 'code'    - линейные контейнеры кода
-     * 'div'     - блочные элементы
-     * 'hr'      - горизонтальные линии
-     * 'img'     - картинки
-     * 'li'      - элементы списков
-     * 'p'       - блочные элементы типа абзацев и заголовков
-     * 'pre'     - блочные контейнеры кода
-     * 'span'    - линейные элементы
-     * 'table'   - таблицы
-     * 'td'      - ячейки таблиц
-     * 'tr'      - строки таблиц
-     * 'ul'      - списки
-     * Конкретное содержание в понятие "модель поведения" вкладывается настройками
-     */
-    public $behaviour = 'div';
-    /**
      * Публичная WEB директория.
      * Ссылается на директорию resources для формирования смайликов и CSS стилей
+     * @var string
      */
     public $webPath = '';
     /**
@@ -417,6 +396,7 @@ class Xbbcode
     private $cursor;
     /**
      * Массив объектов, - представителей отдельных тегов.
+     * @var Tag[]
      */
     private $tagObjects = array();
     /**
@@ -843,16 +823,15 @@ class Xbbcode
                 /* Включаем режим пробельных незакавыченных тегов если нужно */
                 $this->includeTagFile($decomposition['name']);
                 $handler = $this->tags[$decomposition['name']];
-                $class_vars = get_class_vars($handler);
-                if ($class_vars['oneAttribute']) { // Переписываем некоторые обработки
+                if ($handler::ONE_ATTRIBUTE) { // Переписываем некоторые обработки
                     $finite_automaton[8][6] = 13;
                     $finite_automaton[20][7] = 19;
                     $finite_automaton[20][8] = 19;
                     $finite_automaton[13][6] = 19;
                     $finite_automaton[19][6] = 19;
                 }
-                $decomposition['attributes'][$name] = $spacesave.$token[1];
-                $value = $spacesave.$token[1];
+                $decomposition['attributes'][$name] = $spacesave . $token[1];
+                $value = $spacesave . $token[1];
                 $decomposition['str'] .= $token[1];
                 $spacesave = '';
                 break;
@@ -966,17 +945,15 @@ class Xbbcode
     {
         if (isset($this->tags[$current])) {
             $this->includeTagFile($current);
-            $class_vars = get_class_vars($this->tags[$current]);
-            $current_behaviour = $class_vars['behaviour'];
+            $current_behaviour = $this->tags[$current]::BEHAVIOUR;
         } else {
-            $current_behaviour = $this->behaviour;
+            $current_behaviour = Tag::BEHAVIOUR;
         }
         if (isset($this->tags[$next])) {
             $this->includeTagFile($next);
-            $class_vars = get_class_vars($this->tags[$next]);
-            $next_behaviour = $class_vars['behaviour'];
+            $next_behaviour = $this->tags[$next]::BEHAVIOUR;
         } else {
-            $next_behaviour = $this->behaviour;
+            $next_behaviour = Tag::BEHAVIOUR;
         }
         $must_close = false;
         if (isset($this->ends[$current_behaviour])) {
@@ -1002,17 +979,15 @@ class Xbbcode
         $child = (string) $child;
         if (isset($this->tags[$parent])) {
             $this->includeTagFile($parent);
-            $class_vars = get_class_vars($this->tags[$parent]);
-            $parent_behaviour = $class_vars['behaviour'];
+            $parent_behaviour = $this->tags[$parent]::BEHAVIOUR;
         } else {
-            $parent_behaviour = $this->behaviour;
+            $parent_behaviour = Tag::BEHAVIOUR;
         }
         if (isset($this->tags[$child])) {
             $this->includeTagFile($child);
-            $class_vars = get_class_vars($this->tags[$child]);
-            $child_behaviour = $class_vars['behaviour'];
+            $child_behaviour = $this->tags[$child]::BEHAVIOUR;
         } else {
-            $child_behaviour = $this->behaviour;
+            $child_behaviour = Tag::BEHAVIOUR;
         }
         $permissibly = true;
         if (isset($this->children[$parent_behaviour])) {
@@ -1088,8 +1063,7 @@ class Xbbcode
                             break;
                         }
                     }
-                    $class_vars = get_class_vars($this->tags[$val['name']]);
-                    if ($class_vars['isClose']) {
+                    if ($this->tags[$val['name']]::IS_CLOSE) {
                         $val['type'] = 'open/close';
                         $structure[++$structure_key] = $val;
                         $structure[$structure_key]['level'] = $level;
@@ -1550,9 +1524,8 @@ class Xbbcode
                 $handler = $this->tags[$elem['name']];
 
                 /* Убираем лишние переводы строк */
-                $class_vars = get_class_vars($handler);
-                $lbr = $class_vars['lbr'];
-                $rbr = $class_vars['rbr'];
+                $lbr = $handler::BR_LEFT;
+                $rbr = $handler::BR_RIGHT;
                 for ($i = 0; $i < $lbr; ++$i) {
                     $result = rtrim($result);
                     if ('<br />' === substr($result, -6)) {
