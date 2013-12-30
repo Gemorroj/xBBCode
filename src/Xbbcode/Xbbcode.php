@@ -49,13 +49,13 @@ class Xbbcode
      *
      * @var string
      */
-    public $text = '';
+    protected $text = '';
     /**
      * Массив, - результат синтаксического разбора текста BBCode. Описание смотрите в документации.
      *
      * @var array
      */
-    public $syntax = array();
+    protected $syntax = array();
     /**
      * Дерево семантического разбора текста BBCode. Описание смотрите в документации.
      *
