@@ -34,17 +34,6 @@ class Simple extends Tag
     const BEHAVIOUR = 'span';
 
     /**
-     * @return Attributes
-     */
-    protected function getAttributes()
-    {
-        $attr = new Attributes();
-
-        return $attr;
-    }
-
-
-    /**
      * Return html code
      *
      * @return string

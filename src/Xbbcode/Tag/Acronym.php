@@ -38,7 +38,7 @@ class Acronym extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         if ($this->attributes['acronym']) {
             $attr->set('title', $this->attributes['acronym']);

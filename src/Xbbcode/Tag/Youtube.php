@@ -61,7 +61,7 @@ class Youtube extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         $attr->set('frameborder', '0');
         $attr->set('allowfullscreen', 'allowfullscreen');

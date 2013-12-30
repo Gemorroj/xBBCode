@@ -59,7 +59,7 @@ class Img extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         $src = $this->getSrc();
         if ($src) {

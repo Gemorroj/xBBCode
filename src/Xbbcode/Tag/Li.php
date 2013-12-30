@@ -38,7 +38,7 @@ class Li extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         if (isset($this->attributes['*'])) {
             if ($this->isValidNumber($this->attributes['*'])) {

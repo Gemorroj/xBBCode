@@ -34,16 +34,6 @@ class Address extends Tag
     const BR_RIGHT = 1;
 
     /**
-     * @return Attributes
-     */
-    protected function getAttributes()
-    {
-        $attr = new Attributes();
-
-        return $attr;
-    }
-
-    /**
      * Return html code
      *
      * @return string

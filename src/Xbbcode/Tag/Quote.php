@@ -59,7 +59,7 @@ class Quote extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         $attr->add('class', 'bb_quote');
 

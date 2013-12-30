@@ -39,7 +39,7 @@ class Abbr extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         if ($this->attributes['abbr']) {
             $attr->set('title', $this->attributes['abbr']);

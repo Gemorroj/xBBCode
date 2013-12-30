@@ -38,7 +38,7 @@ class Size extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         if (isset($this->attributes['size'])) {
             if ($this->isValidFontSize($this->attributes['size'])) {

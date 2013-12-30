@@ -39,7 +39,7 @@ class Font extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         $face = '';
         if (isset($this->attributes['face'])) {

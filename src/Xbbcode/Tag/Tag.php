@@ -75,18 +75,25 @@ abstract class Tag extends Xbbcode
 
 
     /**
-     * @return Attributes Tag attributes
+     * Конструктор
      */
-    abstract protected function getAttributes();
+    public function __construct()
+    {
+        // не вызываем родительский конструктор
+    }
+
     /**
      * @return string HTML code
      */
     abstract public function __toString();
 
 
-    public function __construct()
+    /**
+     * @return Attributes Tag attributes
+     */
+    protected function getAttributes()
     {
-        // не вызываем родительский конструктор
+        return new Attributes();
     }
 
 

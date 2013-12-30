@@ -64,7 +64,7 @@ class A extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         $href = $this->getHref();
         if ($href) {

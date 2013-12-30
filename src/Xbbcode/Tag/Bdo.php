@@ -38,7 +38,7 @@ class Bdo extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         $dir = '';
         switch (strtolower($this->attributes['bdo'])) {

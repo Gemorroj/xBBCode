@@ -38,7 +38,7 @@ class Td extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         if (isset($this->attributes['width'])) {
             if ($this->isValidSize($this->attributes['width'])) {

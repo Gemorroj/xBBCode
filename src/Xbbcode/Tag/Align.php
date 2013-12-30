@@ -38,7 +38,7 @@ class Align extends Tag
      */
     protected function getAttributes()
     {
-        $attr = new Attributes();
+        $attr = parent::getAttributes();
 
         $align = '';
         if (isset($this->attributes['justify'])) {

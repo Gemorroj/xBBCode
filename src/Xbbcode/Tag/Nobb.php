@@ -34,16 +34,6 @@ class Nobb extends Tag
     const BEHAVIOUR = 'code';
 
     /**
-     * @return Attributes
-     */
-    protected function getAttributes()
-    {
-        $attr = new Attributes();
-
-        return $attr;
-    }
-
-    /**
      * Return html code
      *
      * @return string

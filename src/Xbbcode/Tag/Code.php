@@ -62,16 +62,6 @@ class Code extends Tag
     }
 
     /**
-     * @return Attributes
-     */
-    protected function getAttributes()
-    {
-        $attr = new Attributes();
-
-        return $attr;
-    }
-
-    /**
      * Язык для подсветки
      *
      * @return Code
