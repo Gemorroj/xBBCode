@@ -22,8 +22,6 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Attributes;
-
 
 /**
  * Class Nobb

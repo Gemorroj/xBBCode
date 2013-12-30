@@ -45,6 +45,9 @@ class Bbcode extends Tag
         return $attr;
     }
 
+    /**
+     * Парсим текст
+     */
     protected function build()
     {
         $this->parse($this->getTreeText());

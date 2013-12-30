@@ -22,8 +22,6 @@
 
 namespace Xbbcode\Tag;
 
-use Xbbcode\Attributes;
-
 
 /**
  * Class Code
@@ -107,6 +105,26 @@ class Code extends Tag
     }
 
     /**
+     * Ссылки на документацию
+     *
+     * @return Code
+     */
+    protected function setLinks()
+    {
+        if (isset($this->attributes['links'])) {
+            if ('1' === $this->attributes['links'] || 'true' === $this->attributes['links']) {
+                $this->geshi->enable_keyword_links(true);
+            } else {
+                $this->geshi->enable_keyword_links(false);
+            }
+        } else {
+            $this->geshi->enable_keyword_links($this->getKeywordLinks());
+        }
+
+        return $this;
+    }
+
+    /**
      * Нумерация строк
      *
      * @return Code
@@ -150,9 +168,6 @@ class Code extends Tag
     {
         if (isset($this->attributes['extra'])) {
             $extra = explode(',', $this->attributes['extra']);
-            foreach ($extra as $key => $val) {
-                $extra[$key] = (int) $val;
-            }
             $this->geshi->highlight_lines_extra($extra);
         }
 
@@ -203,6 +218,7 @@ class Code extends Tag
         $this->setNum();
         $this->setTab();
         $this->setExtra();
+        $this->setLinks();
 
         return '<div class="bb_code">' . $this->getHeader() . $this->geshi->parse_code() . $this->getFooter() . '</div>';
     }

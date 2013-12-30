@@ -92,7 +92,7 @@ class A extends Tag
      */
     public function __toString()
     {
-        $this->setAutolinks(false);
+        $this->setAutoLinks(false);
 
         return '<a ' . $this->getAttributes() . '>' . $this->getBody() . '</a>';
     }

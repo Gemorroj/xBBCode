@@ -358,13 +358,13 @@ class Xbbcode
      *
      * @var bool
      */
-    protected $autolinks = false;
+    protected $autoLinks = false;
     /**
      * Массив замен для автоматических ссылок.
      *
      * @var array
      */
-    protected $pregAutolinks = array(
+    protected $pregAutoLinks = array(
         'pattern' => array(
             "'[\w\+]+://[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+'si",
             "'([^/])(www\.[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+)'si",
@@ -382,15 +382,22 @@ class Xbbcode
         ),
     );
     /**
+     * Флажок, включающий/выключающий ссылки на документацию в подсветке кода.
+     *
+     * @var bool
+     */
+    protected $keywordLinks = false;
+    /**
      * Статистические сведения по обработке BBCode
      *
      * @var array
      */
     protected $statistics = array(
-        'time_parse'  => 0,  // Время парсинга
-        'time_html'   => 0,  // Время генерации HTML-а
-        'count_tags'  => 0,  // Число тегов BBCode
-        'count_level' => 0   // Число уровней вложенности тегов BBCode
+        'time_parse'        => 0, // Время парсинга
+        'time_html'         => 0, // Время генерации HTML-а
+        'count_tags'        => 0, // Число тегов BBCode
+        'count_level'       => 0, // Число уровней вложенности тегов BBCode
+        'memory_peak_usage' => 0, // Максимально выделенный объем памяти
     );
     /**
      * Публичная WEB директория.
@@ -523,11 +530,10 @@ class Xbbcode
     /**
      * Конструктор класса
      *
-     * @param array|string $code Text
      * @param string $webPath Web path
      * @param array $allowed Allowed tags
      */
-    public function __construct ($code, $webPath = '', array $allowed = null)
+    public function __construct ($webPath = '', array $allowed = null)
     {
         $this->webPath = $webPath;
         $this->setSmiles();
@@ -541,8 +547,6 @@ class Xbbcode
                 }
             }
         }
-
-        $this->parse($code);
     }
 
 
@@ -672,7 +676,6 @@ class Xbbcode
      * Парсер
      *
      * @param array|string $code
-     * @return array
      */
     public function parse($code)
     {
@@ -698,7 +701,7 @@ class Xbbcode
             }
             $this->statistics['time_parse'] = microtime(true) - $time_start;
 
-            return $this->syntax;
+            return;
         } else {
             $this->text = $code;
         }
@@ -720,8 +723,6 @@ class Xbbcode
 
         $this->parseTree();
         $this->statistics['time_parse'] = microtime(true) - $time_start;
-
-        return $this->syntax;
     }
 
 
@@ -958,13 +959,13 @@ class Xbbcode
 
 
     /**
-     * @param bool $autolinks
+     * @param bool $autoLinks
      *
      * @return Xbbcode
      */
-    public function setAutolinks($autolinks = false)
+    public function setAutoLinks($autoLinks = false)
     {
-        $this->autolinks = (bool)$autolinks;
+        $this->autoLinks = (bool)$autoLinks;
 
         return $this;
     }
@@ -972,11 +973,31 @@ class Xbbcode
     /**
      * @return bool
      */
-    public function getAutolinks()
+    public function getAutoLinks()
     {
-        return $this->autolinks;
+        return $this->autoLinks;
     }
 
+
+    /**
+     * @param bool $keywordLinks
+     *
+     * @return Xbbcode
+     */
+    public function setKeywordLinks($keywordLinks = false)
+    {
+        $this->keywordLinks = (bool)$keywordLinks;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getKeywordLinks()
+    {
+        return $this->keywordLinks;
+    }
 
     /**
      * @param array $tags
@@ -1306,8 +1327,6 @@ class Xbbcode
 
     /**
      * parseTree
-     *
-     * @return array
      */
     protected function parseTree()
     {
@@ -1466,9 +1485,8 @@ class Xbbcode
                 $this->statistics['count_level'] += 1;
             }
         }
-        $this->setTree($result);
 
-        return $this->getTree();
+        $this->setTree($result);
     }
 
 
@@ -1559,9 +1577,9 @@ class Xbbcode
     public function insertSmiles($text)
     {
         $text = htmlspecialchars($text, ENT_NOQUOTES);
-        if ($this->getAutolinks()) {
-            $search = $this->pregAutolinks['pattern'];
-            $replace = $this->pregAutolinks['replacement'];
+        if ($this->getAutoLinks()) {
+            $search = $this->pregAutoLinks['pattern'];
+            $replace = $this->pregAutoLinks['replacement'];
             $text = preg_replace($search, $replace, $text);
         }
         $text = str_replace('  ', '&#160;&#160;', nl2br($text));
@@ -1586,8 +1604,8 @@ class Xbbcode
             '@a;'  => '<span class="bb_spec_char">@a;</span>',
             '@at;' => '<span class="bb_spec_char">@at;</span>'
         );
-        $search = $this->pregAutolinks['pattern'];
-        $replace = $this->pregAutolinks['highlight'];
+        $search = $this->pregAutoLinks['pattern'];
+        $replace = $this->pregAutoLinks['highlight'];
         $str = '';
 
         foreach ($this->syntax as $elem) {
@@ -1694,7 +1712,8 @@ class Xbbcode
                 }
 
                 /* Обрабатываем содержимое элемента */
-                $tag->setAutolinks($this->getAutolinks());
+                $tag->setKeywordLinks($this->getKeywordLinks());
+                $tag->setAutoLinks($this->getAutoLinks());
                 $tag->setTags($this->getTags());
                 $tag->setMnemonics($this->getMnemonics());
                 $tag->setTagName($elem['name']);
@@ -1741,15 +1760,18 @@ class Xbbcode
     /**
      * Статистика работы парсера
      *
-     * 'time_parse'  => 0,  // Время парсинга
-     * 'time_html'   => 0,  // Время генерации HTML-а
-     * 'count_tags'  => 0,  // Число тегов BBCode
-     * 'count_level' => 0   // Число уровней вложенности тегов BBCode
+     * 'time_parse'        => 0, // Время парсинга
+     * 'time_html'         => 0, // Время генерации HTML-а
+     * 'count_tags'        => 0, // Число тегов BBCode
+     * 'count_level'       => 0  // Число уровней вложенности тегов BBCode
+     * 'memory_peak_usage' => 0, // Максимально выделенный объем памяти
      *
      * @return array
      */
     public function getStatistics()
     {
+        $this->statistics['memory_peak_usage'] = memory_get_peak_usage(true);
+
         return $this->statistics;
     }
 }

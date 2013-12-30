@@ -7,7 +7,8 @@
 use Xbbcode\Xbbcode;
 
 $text = 'Это [b]пример[/b] работы парсера [url=https://github.com/Gemorroj/xBBCode]Xbbcode[/url].';
-$xbbcode = new Xbbcode($text);
+$xbbcode = new Xbbcode();
+$xbbcode->parse($text);
 
 echo $xbbcode->getHtml();
 ```
