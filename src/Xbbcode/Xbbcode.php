@@ -40,18 +40,26 @@ class Xbbcode
     /**
      * Массив значений атрибутов тега, которому сопоставлен экземпляр класса.
      * Пуст, если экземпляр не сопоставлен никакому тегу.
+     *
+     * @var array
      */
     public $attributes = array();
     /**
      * Текст BBCode
+     *
+     * @var string
      */
     public $text = '';
     /**
      * Массив, - результат синтаксического разбора текста BBCode. Описание смотрите в документации.
+     *
+     * @var array
      */
     public $syntax = array();
     /**
      * Дерево семантического разбора текста BBCode. Описание смотрите в документации.
+     *
+     * @var array
      */
     public $tree = array();
     /**
@@ -347,15 +355,20 @@ class Xbbcode
     );
     /**
      * Смайлики и прочие мнемоники. Массив: 'мнемоника' => 'ее_замена'.
+     *
+     * @var array
      */
     public $mnemonics = array();
     /**
      * Флажок, включающий/выключающий автоматические ссылки.
+     *
+     * @var bool
      */
     public $autolinks = false;
-
     /**
      * Массив замен для автоматических ссылок.
+     *
+     * @var array
      */
     public $pregAutolinks = array(
         'pattern' => array(
@@ -376,9 +389,10 @@ class Xbbcode
     );
     /**
      * Статистические сведения по обработке BBCode
+     *
      * @var array
      */
-    public $stat = array(
+    protected $statistics = array(
         'time_parse'  => 0,  // Время парсинга
         'time_html'   => 0,  // Время генерации HTML-а
         'count_tags'  => 0,  // Число тегов BBCode
@@ -387,15 +401,19 @@ class Xbbcode
     /**
      * Публичная WEB директория.
      * Ссылается на директорию resources для формирования смайликов и CSS стилей
+     *
      * @var string
      */
-    public $webPath = '';
+    protected $webPath = '';
     /**
      * Для нужд парсера. - Позиция очередного обрабатываемого символа.
+     *
+     * @var int
      */
-    private $cursor;
+    private $cursor = 0;
     /**
      * Массив объектов, - представителей отдельных тегов.
+     *
      * @var Tag[]
      */
     private $tagObjects = array();
@@ -403,6 +421,8 @@ class Xbbcode
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
      * Накладывает ограничения на вложенность тегов.
      * Теги с моделями поведения, не указанными в массиве справа, вложенные в тег с моделью поведения, указанной слева, будут игнорироваться как неправильно вложенные.
+     *
+     * @var array
      */
     protected $children = array(
         'a'       => array('code', 'img', 'span'),
@@ -424,6 +444,8 @@ class Xbbcode
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
      * Накладывает ограничения на вложенность тегов.
      * Тег, принадлежащий указанной слева модели поведения тегов должен закрыться, как только начинается тег, принадлежащий какой-то из моделей поведения, указанных справа.
+     *
+     * @var array
      */
     protected $ends = array(
         'a'       => array(
@@ -447,6 +469,7 @@ class Xbbcode
         'tr'      => array('tr'),
         'ul'      => array(),
     );
+
 
     /**
      * Конструктор класса
@@ -528,7 +551,7 @@ class Xbbcode
         $char_type = false;
         while (true) {
             $token_type = $char_type;
-            if (! isset($this->text{$this->cursor})) {
+            if (!isset($this->text{$this->cursor})) {
                 if (false === $char_type) {
                     return false;
                 } else {
@@ -581,7 +604,7 @@ class Xbbcode
                 $token = $char;
             } elseif (5 >= $token_type) {
                 break;
-            } elseif ($char_type == $token_type) {
+            } elseif ($char_type === $token_type) {
                 $token .= $char;
             } else {
                 break;
@@ -616,7 +639,7 @@ class Xbbcode
                     break;
                 }
             }
-            if (! $is_tree) {
+            if (!$is_tree) {
                 $this->syntax = $code;
                 $this->getTree();
             }
@@ -624,7 +647,7 @@ class Xbbcode
             foreach ($this->syntax as $val) {
                 $this->text .= $val['str'];
             }
-            $this->stat['time_parse'] = microtime(true) - $time_start;
+            $this->statistics['time_parse'] = microtime(true) - $time_start;
             return $this->syntax;
         } else {
             $this->text = $code;
@@ -717,164 +740,164 @@ class Xbbcode
                 $type = false;
             }
             switch ($mode) {
-            case 0:
-                if ('text' === $type) {
-                    $this->syntax[$token_key]['str'] .= $token[1];
-                } else {
-                    $this->syntax[++$token_key] = array(
+                case 0:
+                    if ('text' === $type) {
+                        $this->syntax[$token_key]['str'] .= $token[1];
+                    } else {
+                        $this->syntax[++$token_key] = array(
                             'type' => 'text',
                             'str' => $token[1]
                         );
-                }
-                break;
-            case 1:
-                $decomposition = array(
-                    'name'   => '',
-                    'type'   => '',
-                    'str'    => '[',
-                    'layout' => array(array(0, '['))
-                );
-                break;
-            case 2:
-                if ('text' === $type) {
-                    $this->syntax[$token_key]['str'] .= $decomposition['str'];
-                } else {
-                    $this->syntax[++$token_key] = array(
-                        'type' => 'text',
-                        'str' => $decomposition['str']
+                    }
+                    break;
+                case 1:
+                    $decomposition = array(
+                        'name'   => '',
+                        'type'   => '',
+                        'str'    => '[',
+                        'layout' => array(array(0, '['))
                     );
-                }
-                $decomposition = array(
-                    'name'   => '',
-                    'type'   => '',
-                    'str'    => '[',
-                    'layout' => array(array(0, '['))
-                );
-                break;
-            case 3:
-                if ('text' === $type) {
-                    $this->syntax[$token_key]['str'] .= $decomposition['str'];
-                    $this->syntax[$token_key]['str'] .= $token[1];
-                } else {
-                    $this->syntax[++$token_key] = array(
-                        'type' => 'text',
-                        'str' => $decomposition['str'].$token[1]
+                    break;
+                case 2:
+                    if ('text' === $type) {
+                        $this->syntax[$token_key]['str'] .= $decomposition['str'];
+                    } else {
+                        $this->syntax[++$token_key] = array(
+                            'type' => 'text',
+                            'str' => $decomposition['str']
+                        );
+                    }
+                    $decomposition = array(
+                        'name'   => '',
+                        'type'   => '',
+                        'str'    => '[',
+                        'layout' => array(array(0, '['))
                     );
-                }
-                $decomposition = array();
-                break;
-            case 4:
-                $decomposition['type'] = 'close';
-                $decomposition['str'] .= '/';
-                $decomposition['layout'][] = array(1, '/');
-                break;
-            case 5:
-                $decomposition['type'] = 'open';
-                $name = strtolower($token[1]);
-                $decomposition['name'] = $name;
-                $decomposition['str'] .= $token[1];
-                $decomposition['layout'][] = array(2, $token[1]);
-                $decomposition['attributes'][$name] = '';
-                break;
-            case 6:
-                if (! isset($decomposition['name'])) {
-                    $decomposition['name'] = '';
-                }
-                if (13 == $previous_mode || 19 == $previous_mode) {
+                    break;
+                case 3:
+                    if ('text' === $type) {
+                        $this->syntax[$token_key]['str'] .= $decomposition['str'];
+                        $this->syntax[$token_key]['str'] .= $token[1];
+                    } else {
+                        $this->syntax[++$token_key] = array(
+                            'type' => 'text',
+                            'str' => $decomposition['str'].$token[1]
+                        );
+                    }
+                    $decomposition = array();
+                    break;
+                case 4:
+                    $decomposition['type'] = 'close';
+                    $decomposition['str'] .= '/';
+                    $decomposition['layout'][] = array(1, '/');
+                    break;
+                case 5:
+                    $decomposition['type'] = 'open';
+                    $name = strtolower($token[1]);
+                    $decomposition['name'] = $name;
+                    $decomposition['str'] .= $token[1];
+                    $decomposition['layout'][] = array(2, $token[1]);
+                    $decomposition['attributes'][$name] = '';
+                    break;
+                case 6:
+                    if (!isset($decomposition['name'])) {
+                        $decomposition['name'] = '';
+                    }
+                    if (13 === $previous_mode || 19 === $previous_mode) {
+                        $decomposition['layout'][] = array(7, $value);
+                    }
+                    $decomposition['str'] .= ']';
+                    $decomposition['layout'][] = array( 0, ']' );
+                    $this->syntax[++$token_key] = $decomposition;
+                    $decomposition = array();
+                    break;
+                case 7:
+                    $decomposition['name'] = strtolower($token[1]);
+                    $decomposition['str'] .= $token[1];
+                    $decomposition['layout'][] = array(2, $token[1]);
+                    /* При выходе из тега возвращаем умолчальное значение пробельных незакавыченных тегов */
+                    $finite_automaton = $finite_automaton_orig;
+                    break;
+                case 8:
+                    $decomposition['str'] .= '=';
+                    $decomposition['layout'][] = array(3, '=');
+                    $spacesave = '';
+                    break;
+                case 9:
+                    $decomposition['type'] = 'open/close';
+                    $decomposition['str'] .= '/';
+                    $decomposition['layout'][] = array(1, '/');
+                    break;
+                case 10:
+                    $decomposition['str'] .= $token[1];
+                    $decomposition['layout'][] = array(4, $token[1]);
+                    break;
+                case 11:
+                    $decomposition['str'] .= '"';
+                    $decomposition['layout'][] = array(5, '"');
+                    $value = '';
+                    break;
+                case 12:
+                    $decomposition['str'] .= "'";
+                    $decomposition['layout'][] = array(5, "'");
+                    $value = '';
+                    break;
+                case 13:
+                    /* Включаем режим пробельных незакавыченных тегов если нужно */
+                    $this->includeTagFile($decomposition['name']);
+                    $handler = $this->tags[$decomposition['name']];
+                    if ($handler::ONE_ATTRIBUTE) { // Переписываем некоторые обработки
+                        $finite_automaton[8][6] = 13;
+                        $finite_automaton[20][7] = 19;
+                        $finite_automaton[20][8] = 19;
+                        $finite_automaton[13][6] = 19;
+                        $finite_automaton[19][6] = 19;
+                    }
+                    $decomposition['attributes'][$name] = $spacesave . $token[1];
+                    $value = $spacesave . $token[1];
+                    $decomposition['str'] .= $token[1];
+                    $spacesave = '';
+                    break;
+                case 14:
+                    $decomposition['str'] .= $token[1];
+                    $decomposition['layout'][] = array(4, $token[1]);
+                    $spacesave .= $token[1];
+                    break;
+                case 15:
+                    $name = strtolower($token[1]);
+                    $decomposition['str'] .= $token[1];
+                    $decomposition['layout'][] = array(6, $token[1]);
+                    $decomposition['attributes'][$name] = '';
+                    break;
+                case 16:
+                    $decomposition['str'] .= $token[1];
+                    $decomposition['attributes'][$name] .= $token[1];
+                    $value .= $token[1];
+                    break;
+                case 17:
+                    $decomposition['str'] .= $token[1];
                     $decomposition['layout'][] = array(7, $value);
-                }
-                $decomposition['str'] .= ']';
-                $decomposition['layout'][] = array( 0, ']' );
-                $this->syntax[++$token_key] = $decomposition;
-                $decomposition = array();
-                break;
-            case 7:
-                $decomposition['name'] = strtolower($token[1]);
-                $decomposition['str'] .= $token[1];
-                $decomposition['layout'][] = array(2, $token[1]);
-                /* При выходе из тега возвращаем умолчальное значение пробельных незакавыченных тегов */
-                $finite_automaton = $finite_automaton_orig;
-                break;
-            case 8:
-                $decomposition['str'] .= '=';
-                $decomposition['layout'][] = array(3, '=');
-                $spacesave = '';
-                break;
-            case 9:
-                $decomposition['type'] = 'open/close';
-                $decomposition['str'] .= '/';
-                $decomposition['layout'][] = array(1, '/');
-                break;
-            case 10:
-                $decomposition['str'] .= $token[1];
-                $decomposition['layout'][] = array(4, $token[1]);
-                break;
-            case 11:
-                $decomposition['str'] .= '"';
-                $decomposition['layout'][] = array(5, '"');
-                $value = '';
-                break;
-            case 12:
-                $decomposition['str'] .= "'";
-                $decomposition['layout'][] = array(5, "'");
-                $value = '';
-                break;
-            case 13:
-                /* Включаем режим пробельных незакавыченных тегов если нужно */
-                $this->includeTagFile($decomposition['name']);
-                $handler = $this->tags[$decomposition['name']];
-                if ($handler::ONE_ATTRIBUTE) { // Переписываем некоторые обработки
-                    $finite_automaton[8][6] = 13;
-                    $finite_automaton[20][7] = 19;
-                    $finite_automaton[20][8] = 19;
-                    $finite_automaton[13][6] = 19;
-                    $finite_automaton[19][6] = 19;
-                }
-                $decomposition['attributes'][$name] = $spacesave . $token[1];
-                $value = $spacesave . $token[1];
-                $decomposition['str'] .= $token[1];
-                $spacesave = '';
-                break;
-            case 14:
-                $decomposition['str'] .= $token[1];
-                $decomposition['layout'][] = array(4, $token[1]);
-                $spacesave .= $token[1];
-                break;
-            case 15:
-                $name = strtolower($token[1]);
-                $decomposition['str'] .= $token[1];
-                $decomposition['layout'][] = array(6, $token[1]);
-                $decomposition['attributes'][$name] = '';
-                break;
-            case 16:
-                $decomposition['str'] .= $token[1];
-                $decomposition['attributes'][$name] .= $token[1];
-                $value .= $token[1];
-                break;
-            case 17:
-                $decomposition['str'] .= $token[1];
-                $decomposition['layout'][] = array(7, $value);
-                $value = '';
-                $decomposition['layout'][] = array(5, $token[1]);
-                break;
-            case 18:
-                $decomposition['str'] .= $token[1];
-                $decomposition['attributes'][$name] .= $token[1];
-                $value .= $token[1];
-                break;
-            case 19:
-                $decomposition['str'] .= $token[1];
-                $decomposition['attributes'][$name] .= $token[1];
-                $value .= $token[1];
-                break;
-            case 20:
-                $decomposition['str'] .= $token[1];
-                if ( 13 == $previous_mode || 19 == $previous_mode ) {
-                    $decomposition['layout'][] = array(7, $value);
-                }
-                $value = '';
-                $decomposition['layout'][] = array(4, $token[1]);
-                break;
+                    $value = '';
+                    $decomposition['layout'][] = array(5, $token[1]);
+                    break;
+                case 18:
+                    $decomposition['str'] .= $token[1];
+                    $decomposition['attributes'][$name] .= $token[1];
+                    $value .= $token[1];
+                    break;
+                case 19:
+                    $decomposition['str'] .= $token[1];
+                    $decomposition['attributes'][$name] .= $token[1];
+                    $value .= $token[1];
+                    break;
+                case 20:
+                    $decomposition['str'] .= $token[1];
+                    if ( 13 == $previous_mode || 19 == $previous_mode ) {
+                        $decomposition['layout'][] = array(7, $value);
+                    }
+                    $value = '';
+                    $decomposition['layout'][] = array(4, $token[1]);
+                    break;
             }
         }
         if ($decomposition) {
@@ -889,7 +912,7 @@ class Xbbcode
         }
 
         $this->getTree();
-        $this->stat['time_parse'] = microtime(true) - $time_start;
+        $this->statistics['time_parse'] = microtime(true) - $time_start;
 
         return $this->syntax;
     }
@@ -959,6 +982,7 @@ class Xbbcode
         if (isset($this->ends[$current_behaviour])) {
             $must_close = in_array($next_behaviour, $this->ends[$current_behaviour]);;
         }
+
         return $must_close;
     }
 
@@ -991,10 +1015,9 @@ class Xbbcode
         }
         $permissibly = true;
         if (isset($this->children[$parent_behaviour])) {
-            $permissibly = in_array(
-                $child_behaviour, $this->children[$parent_behaviour]
-            );
+            $permissibly = in_array($child_behaviour, $this->children[$parent_behaviour]);
         }
+
         return $permissibly;
     }
 
@@ -1016,8 +1039,8 @@ class Xbbcode
             switch ($val['type']) {
                 case 'text':
                     $val['str'] = $this->unspecialchars($val['str']);
-                    $type = (-1 < $structure_key)
-                        ? $structure[$structure_key]['type'] : false;
+
+                    $type = (-1 < $structure_key) ? $structure[$structure_key]['type'] : false;
                     if ('text' === $type) {
                         $structure[$structure_key]['str'] .= $val['str'];
                     } else {
@@ -1026,17 +1049,16 @@ class Xbbcode
                     }
                     break;
                 case 'open/close':
-                    $val['attributes'] = array_map(
-                        array($this, 'unspecialchars'), $val['attributes']
-                    );
+                    $val['attributes'] = array_map(array($this, 'unspecialchars'), $val['attributes']);
+
                     foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
                         if ($this->mustCloseTag($ultimate, $val['name'])) {
                             $structure[++$structure_key] = array(
-                                    'type'  => 'close',
-                                    'name'  => $ultimate,
-                                    'str'   => '',
-                                    'level' => --$level
-                                );
+                                'type'  => 'close',
+                                'name'  => $ultimate,
+                                'str'   => '',
+                                'level' => --$level
+                            );
                             unset($open_tags[$ult_key]);
                         } else {
                             break;
@@ -1047,17 +1069,15 @@ class Xbbcode
                     break;
                 case 'open':
                     $this->includeTagFile($val['name']);
-                    $val['attributes'] = array_map(
-                        array($this, 'unspecialchars'), $val['attributes']
-                    );
+                    $val['attributes'] = array_map(array($this, 'unspecialchars'), $val['attributes']);
                     foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
                         if ($this->mustCloseTag($ultimate, $val['name'])) {
                             $structure[++$structure_key] = array(
-                                    'type'  => 'close',
-                                    'name'  => $ultimate,
-                                    'str'   => '',
-                                    'level' => --$level
-                                );
+                                'type'  => 'close',
+                                'name'  => $ultimate,
+                                'str'   => '',
+                                'level' => --$level
+                            );
                             unset($open_tags[$ult_key]);
                         } else {
                             break;
@@ -1075,20 +1095,19 @@ class Xbbcode
                     break;
                 case 'close':
                     if (!$open_tags) {
-                        $type = (-1 < $structure_key)
-                            ? $structure[$structure_key]['type'] : false;
+                        $type = (-1 < $structure_key) ? $structure[$structure_key]['type'] : false;
                         if ( 'text' === $type ) {
                             $structure[$structure_key]['str'] .= $val['str'];
                         } else {
                             $structure[++$structure_key] = array(
-                                    'type'  => 'text',
-                                    'str'   => $val['str'],
-                                    'level' => 0
-                                );
+                                'type'  => 'text',
+                                'str'   => $val['str'],
+                                'level' => 0
+                            );
                         }
                         break;
                     }
-                    if (! $val['name']) {
+                    if (!$val['name']) {
                         end($open_tags);
                         list($ult_key, $ultimate) = each($open_tags);
                         $val['name'] = $ultimate;
@@ -1097,28 +1116,27 @@ class Xbbcode
                         unset($open_tags[$ult_key]);
                         break;
                     }
-                    if (! in_array($val['name'], $open_tags)) {
-                        $type = (-1 < $structure_key)
-                            ? $structure[$structure_key]['type'] : false;
+                    if (!in_array($val['name'], $open_tags)) {
+                        $type = (-1 < $structure_key) ? $structure[$structure_key]['type'] : false;
                         if ('text' === $type) {
                             $structure[$structure_key]['str'] .= $val['str'];
                         } else {
                             $structure[++$structure_key] = array(
-                                    'type'  => 'text',
-                                    'str'   => $val['str'],
-                                    'level' => $level
-                                );
+                                'type'  => 'text',
+                                'str'   => $val['str'],
+                                'level' => $level
+                            );
                         }
                         break;
                     }
                     foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
                         if ($ultimate != $val['name']) {
                             $structure[++$structure_key] = array(
-                                    'type'  => 'close',
-                                    'name'  => $ultimate,
-                                    'str'   => '',
-                                    'level' => --$level
-                                );
+                                'type'  => 'close',
+                                'name'  => $ultimate,
+                                'str'   => '',
+                                'level' => --$level
+                            );
                             unset($open_tags[$ult_key]);
                         } else {
                             break;
@@ -1131,11 +1149,11 @@ class Xbbcode
         }
         foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
             $structure[++$structure_key] = array(
-                    'type'  => 'close',
-                    'name'  => $ultimate,
-                    'str'   => '',
-                    'level' => --$level
-                );
+                'type'  => 'close',
+                'name'  => $ultimate,
+                'str'   => '',
+                'level' => --$level
+            );
             unset($open_tags[$ult_key]);
         }
         return $structure;
@@ -1158,12 +1176,11 @@ class Xbbcode
         $level = 0;
         $open_tags = array();
         $not_tags = array();
-        $this->stat['count_tags'] = 0;
+        $this->statistics['count_tags'] = 0;
         foreach ($structure as $val) {
             switch ($val['type']) {
                 case 'text':
-                    $type = (-1 < $normal_key)
-                        ? $normalized[$normal_key]['type'] : false;
+                    $type = (-1 < $normal_key) ? $normalized[$normal_key]['type'] : false;
                     if ('text' === $type) {
                         $normalized[$normal_key]['str'] .= $val['str'];
                     } else {
@@ -1176,41 +1193,39 @@ class Xbbcode
                     end($open_tags);
                     $parent = $open_tags ? current($open_tags) : $this->tag;
                     $permissibly = $this->isPermissiblyChild($parent, $val['name']);
-                    if (! $permissibly) {
-                        $type = (-1 < $normal_key)
-                            ? $normalized[$normal_key]['type'] : false;
+                    if (!$permissibly) {
+                        $type = (-1 < $normal_key) ? $normalized[$normal_key]['type'] : false;
                         if ( 'text' === $type ) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = array(
-                                    'type'  => 'text',
-                                    'str'   => $val['str'],
-                                    'level' => $level
-                                );
+                                'type'  => 'text',
+                                'str'   => $val['str'],
+                                'level' => $level
+                            );
                         }
                         break;
                     }
                     $normalized[++$normal_key] = $val;
                     $normalized[$normal_key]['level'] = $level;
-                    $this->stat['count_tags'] += 1;
+                    $this->statistics['count_tags'] += 1;
                     break;
                 case 'open':
                     $this->includeTagFile($val['name']);
                     end($open_tags);
                     $parent = $open_tags ? current($open_tags) : $this->tag;
                     $permissibly = $this->isPermissiblyChild($parent, $val['name']);
-                    if (! $permissibly) {
+                    if (!$permissibly) {
                         $not_tags[$val['level']] = $val['name'];
-                        $type = (-1 < $normal_key)
-                            ? $normalized[$normal_key]['type'] : false;
+                        $type = (-1 < $normal_key) ? $normalized[$normal_key]['type'] : false;
                         if ( 'text' === $type ) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = array(
-                                    'type'  => 'text',
-                                    'str'   => $val['str'],
-                                    'level' => $level
-                                );
+                                'type'  => 'text',
+                                'str'   => $val['str'],
+                                'level' => $level
+                            );
                         }
                         break;
                     }
@@ -1218,23 +1233,21 @@ class Xbbcode
                     $normalized[$normal_key]['level'] = $level++;
                     $ult_key = count($open_tags);
                     $open_tags[$ult_key] = $val['name'];
-                    $this->stat['count_tags'] += 1;
+                    $this->statistics['count_tags'] += 1;
                     break;
                 case 'close':
-                    $not_normal = isset($not_tags[$val['level']])
-                        && $not_tags[$val['level']] = $val['name'];
+                    $not_normal = isset($not_tags[$val['level']]) && $not_tags[$val['level']] = $val['name'];
                     if ($not_normal) {
                         unset($not_tags[$val['level']]);
-                        $type = (-1 < $normal_key)
-                            ? $normalized[$normal_key]['type'] : false;
+                        $type = (-1 < $normal_key) ? $normalized[$normal_key]['type'] : false;
                         if ( 'text' === $type ) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = array(
-                                    'type'  => 'text',
-                                    'str'   => $val['str'],
-                                    'level' => $level
-                                );
+                                'type'  => 'text',
+                                'str'   => $val['str'],
+                                'level' => $level
+                            );
                         }
                         break;
                     }
@@ -1242,7 +1255,7 @@ class Xbbcode
                     $normalized[$normal_key]['level'] = --$level;
                     $ult_key = count($open_tags) - 1;
                     unset($open_tags[$ult_key]);
-                    $this->stat['count_tags'] += 1;
+                    $this->statistics['count_tags'] += 1;
                     break;
             }
         }
@@ -1251,11 +1264,11 @@ class Xbbcode
         $result = array();
         $result_key = -1;
         $open_tags = array();
-        $this->stat['count_level'] = 0;
+        $this->statistics['count_level'] = 0;
         foreach ($normalized as $val) {
             switch ($val['type']) {
                 case 'text':
-                    if (! $val['level']) {
+                    if (!$val['level']) {
                         $result[++$result_key] = array(
                             'type' => 'text',
                             'str' => $val['str']
@@ -1263,12 +1276,12 @@ class Xbbcode
                         break;
                     }
                     $open_tags[$val['level'] - 1]['val'][] = array(
-                            'type' => 'text',
-                            'str' => $val['str']
-                        );
+                        'type' => 'text',
+                        'str' => $val['str']
+                    );
                     break;
                 case 'open/close':
-                    if (! $val['level']) {
+                    if (!$val['level']) {
                         $result[++$result_key] = array(
                             'type'   => 'item',
                             'name'   => $val['name'],
@@ -1293,7 +1306,7 @@ class Xbbcode
                     );
                     break;
                 case 'close':
-                    if (! $val['level']) {
+                    if (!$val['level']) {
                         $result[++$result_key] = $open_tags[0];
                         unset($open_tags[0]);
                         break;
@@ -1302,11 +1315,12 @@ class Xbbcode
                     unset($open_tags[$val['level']]);
                     break;
             }
-            if ($val['level'] > $this->stat['count_level']) {
-                $this->stat['count_level'] += 1;
+            if ($val['level'] > $this->statistics['count_level']) {
+                $this->statistics['count_level'] += 1;
             }
         }
         $this->tree = $result;
+
         return $result;
     }
 
@@ -1319,7 +1333,7 @@ class Xbbcode
      */
     protected function getSyntax($tree = false)
     {
-        if (! is_array($tree)) {
+        if (!is_array($tree)) {
             $tree = $this->tree;
         }
         $syntax = array();
@@ -1354,7 +1368,7 @@ class Xbbcode
                 if ($sub_elems) {
                     $str = '[' . $str . ']';
                 } else {
-                    $str = '['.$str.' /]';
+                    $str = '[' . $str . ' /]';
                     $layout[] = array(4, ' ');
                     $layout[] = array(1, '/');
                 }
@@ -1384,6 +1398,7 @@ class Xbbcode
                 }
             }
         }
+
         return $syntax;
     }
 
@@ -1404,6 +1419,7 @@ class Xbbcode
         }
         $text = str_replace('  ', '&#160;&#160;', nl2br($text));
         $text = strtr($text, $this->mnemonics);
+
         return $text;
     }
 
@@ -1443,15 +1459,13 @@ class Xbbcode
                 foreach ($elem['layout'] as $val) {
                     switch ($val[0]) {
                         case 0:
-                            $str .= '<span class="bb_bracket">' . $val[1]
-                                . '</span>';
+                            $str .= '<span class="bb_bracket">' . $val[1] . '</span>';
                             break;
                         case 1:
                             $str .= '<span class="bb_slash">/</span>';
                             break;
                         case 2:
-                            $str .= '<span class="bb_tagname">'.$val[1]
-                                .'</span>';
+                            $str .= '<span class="bb_tagname">'.$val[1] .'</span>';
                             break;
                         case 3:
                             $str .= '<span class="bb_equal">=</span>';
@@ -1460,28 +1474,25 @@ class Xbbcode
                             $str .= $val[1];
                             break;
                         case 5:
-                            if (! trim($val[1])) {
+                            if (!trim($val[1])) {
                                 $str .= $val[1];
                             } else {
-                                $str .= '<span class="bb_quote">' . $val[1]
-                                    . '</span>';
+                                $str .= '<span class="bb_quote">' . $val[1] . '</span>';
                             }
                             break;
                         case 6:
-                            $str .= '<span class="bb_attribute_name">'
-                                . htmlspecialchars($val[1]) . '</span>';
+                            $str .= '<span class="bb_attribute_name">' . htmlspecialchars($val[1]) . '</span>';
                             break;
                         case 7:
-                            if (! trim($val[1])) {
+                            if (!trim($val[1])) {
                                 $str .= $val[1];
                             } else {
-                                $str .= '<span class="bb_attribute_val">'
-                                    . strtr(htmlspecialchars($val[1]), $chars)
-                                    . '</span>';
+                                $str .= '<span class="bb_attribute_val">' . strtr(htmlspecialchars($val[1]), $chars) . '</span>';
                             }
                             break;
                         default:
                             $str .= $val[1];
+                            break;
                     }
                 }
                 $str .= '</span>';
@@ -1489,7 +1500,8 @@ class Xbbcode
         }
         $str = nl2br($str);
         $str = str_replace('  ', '&#160;&#160;', $str);
-        $this->stat['time_html'] = microtime(true) - $time_start;
+        $this->statistics['time_html'] = microtime(true) - $time_start;
+
         return $str;
     }
 
@@ -1503,12 +1515,13 @@ class Xbbcode
     public function getHtml($elems = null)
     {
         $time_start = microtime(true);
-        if (! is_array($elems)) {
+        if (!is_array($elems)) {
             $elems =& $this->tree;
         }
         $result = '';
         $lbr = 0;
         $rbr = 0;
+
         foreach ($elems as $elem) {
             if ('text' === $elem['type']) {
                 $elem['str'] = $this->insertSmiles($elem['str']);
@@ -1548,7 +1561,8 @@ class Xbbcode
         $result = preg_replace(
             "'\s*<br \/>\s*<br \/>\s*'si", "\n<br />&#160;<br />\n", $result
         );
-        $this->stat['time_html'] = microtime(true) - $time_start;
+        $this->statistics['time_html'] = microtime(true) - $time_start;
+
         return $result;
     }
 
@@ -1574,5 +1588,21 @@ class Xbbcode
         }
 
         return true;
+    }
+
+
+    /**
+     * Статистика работы парсера
+     *
+     * 'time_parse'  => 0,  // Время парсинга
+     * 'time_html'   => 0,  // Время генерации HTML-а
+     * 'count_tags'  => 0,  // Число тегов BBCode
+     * 'count_level' => 0   // Число уровней вложенности тегов BBCode
+     *
+     * @return array
+     */
+    public function getStatistics()
+    {
+        return $this->statistics;
     }
 }
