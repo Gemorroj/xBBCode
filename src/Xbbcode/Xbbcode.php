@@ -1664,8 +1664,8 @@ class Xbbcode
     public function getHtml(array $elems = null)
     {
         $time_start = microtime(true);
-        if (!is_array($elems)) {
-            $elems =& $this->getTree();
+        if (null === $elems) {
+            $elems = $this->getTree();
         }
         $result = '';
         $lbr = 0;
