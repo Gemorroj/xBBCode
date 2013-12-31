@@ -14,6 +14,7 @@ $text = '
 echo str_replace("github", "world", $str);
 [/]
 ссылка http://github.com/Gemorroj/xBBCode
+:)
 ';
 $xbbcode = new \Xbbcode\Xbbcode();
 $xbbcode->setKeywordLinks(true);
