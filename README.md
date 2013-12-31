@@ -1,6 +1,6 @@
 # Парсер BBcode
 
-[![Build Status](https://secure.travis-ci.org/Gemorroj/xBBcode.png?branch=master)](https://travis-ci.org/Gemorroj/xBBcode)
+[![Build Status](https://secure.travis-ci.org/Gemorroj/xBBCode.png?branch=master)](https://travis-ci.org/Gemorroj/xBBCode)
 
 
 ### Пример работы:
@@ -9,7 +9,7 @@
 <?php
 use Xbbcode\Xbbcode;
 
-$text = 'Это [b]пример[/b] работы парсера [url=https://github.com/Gemorroj/xBBCode]Xbbcode[/url].';
+$text = 'Это [b]пример[/b] работы парсера [url=https://github.com/Gemorroj/xBBCode]xBBCode[/url].';
 $xbbcode = new Xbbcode();
 $xbbcode->parse($text);
 
