@@ -1,5 +1,8 @@
 # Парсер BBcode
 
+[![Build Status](https://secure.travis-ci.org/Gemorroj/xBBcode.png?branch=master)](https://travis-ci.org/Gemorroj/xBBcode)
+
+
 ### Пример работы:
 
 ```php
