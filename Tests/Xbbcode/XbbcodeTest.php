@@ -13,6 +13,7 @@ class XbbcodeTest extends \PHPUnit_Framework_TestCase
 echo str_replace("github", "world", $str);
 [/]
 ссылка http://github.com/Gemorroj/xBBCode
+картинка [img]https://0.gravatar.com/avatar/ee4c19dc191da0b322d7cfbb29ae36dc[/img]
 :)
 ';
 
@@ -22,6 +23,7 @@ $result = '<br />
 <span style="color: #b1b100;">echo</span> <a href="http://www.php.net/str_replace"><span style="color: #990000;">str_replace</span></a><span style="color: #009900;">&#40;</span><span style="color: #0000ff;">&quot;github&quot;</span><span style="color: #339933;">,</span> <span style="color: #0000ff;">&quot;world&quot;</span><span style="color: #339933;">,</span> <span style="color: #000088;">$str</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><br />
 &nbsp;</div>
 ссылка <a href="http://github.com/Gemorroj/xBBCode" target="_blank">http://github.com/Gemorroj/xBBCode</a><br />
+картинка <img class="bb" src="https://0.gravatar.com/avatar/ee4c19dc191da0b322d7cfbb29ae36dc" alt="" /><br />
 <img src="/resources/images/smiles/2.gif" alt="Well" /><br />
 ';
 

@@ -32,7 +32,6 @@ use Xbbcode\Attributes;
 class Img extends Tag
 {
     const BEHAVIOUR = 'img';
-    const IS_CLOSE = true;
 
     /**
      * @return string

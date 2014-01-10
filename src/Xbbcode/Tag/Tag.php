@@ -65,6 +65,9 @@ abstract class Tag extends Xbbcode
      */
     const BR_RIGHT = 0;
 
+    /**
+     * Указывает на одиночные тэги типа [br] или [hr]
+     */
     const IS_CLOSE = false;
 
     /**
