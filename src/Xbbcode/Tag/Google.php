@@ -35,7 +35,10 @@ class Google extends A
     protected function getHref()
     {
         $href = '';
-        if (isset($this->attributes['q'])) {
+        if (isset($this->attributes['google'])) {
+            $href = $this->attributes['google'];
+        }
+        if (!$href && isset($this->attributes['q'])) {
             $href = $this->attributes['q'];
         }
         if (!$href) {

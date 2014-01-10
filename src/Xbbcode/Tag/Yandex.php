@@ -35,7 +35,10 @@ class Yandex extends A
     protected function getHref()
     {
         $href = '';
-        if (isset($this->attributes['q'])) {
+        if (isset($this->attributes['yandex'])) {
+            $href = $this->attributes['yandex'];
+        }
+        if (!$href && isset($this->attributes['q'])) {
             $href = $this->attributes['q'];
         }
         if (!$href) {
