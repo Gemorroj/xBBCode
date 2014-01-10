@@ -101,6 +101,7 @@ class Xbbcode
         'ins'          => 'Xbbcode\Tag\Simple' ,
         'justify'      => 'Xbbcode\Tag\Align'  ,
         'left'         => 'Xbbcode\Tag\Align'  ,
+        'li'           => 'Xbbcode\Tag\Li'     ,
         'list'         => 'Xbbcode\Tag\Ul'     ,
         'nobb'         => 'Xbbcode\Tag\Nobb'   ,
         'ol'           => 'Xbbcode\Tag\Ol'     ,
