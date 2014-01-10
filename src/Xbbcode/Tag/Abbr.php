@@ -33,7 +33,6 @@ class Abbr extends Tag
 {
     const BEHAVIOUR = 'span';
 
-
     /**
      * @return Attributes
      */

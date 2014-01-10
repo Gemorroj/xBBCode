@@ -73,6 +73,6 @@ class Align extends Tag
      */
     public function __toString()
     {
-        return '<div ' . $this->getAttributes() . '">' . $this->getBody() . '</div>';
+        return '<div ' . $this->getAttributes() . '>' . $this->getBody() . '</div>';
     }
 }
