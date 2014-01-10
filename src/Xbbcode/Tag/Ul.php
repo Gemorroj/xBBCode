@@ -31,8 +31,8 @@ use Xbbcode\Attributes;
  */
 class Ul extends Tag
 {
-    const BR_LEFT = 1;
-    const BR_RIGHT = 1;
+    //const BR_LEFT = 1;
+    //const BR_RIGHT = 1;
     const BEHAVIOUR = 'ul';
 
     /**
@@ -64,6 +64,6 @@ class Ul extends Tag
      */
     public function __toString()
     {
-        return '<ul ' . $this->getAttributes() . '>' . $this->getAttributes() . '</ul>';
+        return '<ul ' . $this->getAttributes() . '>' . $this->getBody() . '</ul>';
     }
 }

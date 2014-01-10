@@ -31,7 +31,7 @@ use Xbbcode\Attributes;
  */
 class Quote extends Tag
 {
-    const BR_RIGHT = 1;
+    //const BR_RIGHT = 1;
 
     /**
      * @return string
