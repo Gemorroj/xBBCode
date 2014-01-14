@@ -77,8 +77,10 @@ div.bb_code_footer {
 /* Стили подсветки BBCode: */
 
 code.bb_code {
-    font-size: 1em;
     color: #000000;
+    line-height: 1;
+    font-size: .81em;
+    font-family: "Monaco", "Courier New", monospace;
 }
 span.bb_spec_char {
     color: #000099;
