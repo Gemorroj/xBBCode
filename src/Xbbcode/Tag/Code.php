@@ -220,6 +220,6 @@ class Code extends Tag
         $this->setExtra();
         $this->setLinks();
 
-        return '<div class="bb_code">' . $this->getHeader() . $this->geshi->parse_code() . $this->getFooter() . '</div>';
+        return '<div class="bb_code">' . $this->getHeader() . '<code class="bb_code">' . $this->geshi->parse_code() . '</code>' . $this->getFooter() . '</div>';
     }
 }
