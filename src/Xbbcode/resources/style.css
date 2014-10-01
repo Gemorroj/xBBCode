@@ -44,19 +44,21 @@ div.bb_quote_author {
     text-align: center;
 }
 div.bb_code {
-    border: #d0d0d0 6px double;
+    white-space: nowrap;
+    overflow-x: auto;
+    border: #d0d0d0 1px dotted;
+    -webkit-border-radius: .3125em;
+    border-radius: .3125em;
     background-color: #f6f6f6;
     color: #404060;
     padding: 5px;
-    margin: 1em 0 0 0.8em;
-    font-family: Monaco,'Courier New',monospace;
-    overflow: auto;
+    margin: .8em 0 0 0;
+    font-family: "Monaco", "Courier New",monospace;
 }
 div.bb_code_header {
-    border: #d0d0d0 1px solid;
-    border-width: 1px 2px 2px 1px;
+    border-bottom: #d0d0d0 1px solid;
     padding-left: 5px;
-    margin-top: -1.6em;
+    margin: -5px -5px 0 -5px;
     background-color: #f6f6f6;
     white-space: nowrap;
     font-weight: bold;
