@@ -40,7 +40,10 @@ class Quote extends Tag
     {
         $author = '';
 
-        if (isset($this->attributes['quote'])) {
+        if (isset($this->attributes['author'])) {
+            $author = $this->attributes['author'];
+        }
+        if (!$author && isset($this->attributes['quote'])) {
             $author = $this->attributes['quote'];
         }
         if (!$author && isset($this->attributes['blockquote'])) {

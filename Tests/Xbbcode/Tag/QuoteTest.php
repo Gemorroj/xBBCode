@@ -21,5 +21,13 @@ class QuoteTest extends \PHPUnit_Framework_TestCase
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
         $this->assertEquals($result, $xbbcode->getHtml());
+
+
+        $text = 'test [quote author=test]xBBCode[/quote].';
+        $result = 'test <blockquote class="bb bb_quote"><div class="bb_quote_author">test:</div>xBBCode</blockquote>.';
+
+        $xbbcode = new Xbbcode();
+        $xbbcode->parse($text);
+        $this->assertEquals($result, $xbbcode->getHtml());
     }
 }
