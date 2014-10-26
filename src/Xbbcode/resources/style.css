@@ -21,6 +21,9 @@
 .bb {
 
 }
+iframe.bb {
+    max-width: 100%;
+}
 table.bb {
     border-collapse: collapse;
 }
