@@ -52,7 +52,7 @@ class Youtube extends Tag
             }
         }
 
-        return '//www.youtube.com/embed/' . rawurlencode($src);
+        return ($src ? '//www.youtube.com/embed/' . rawurlencode($src) : '');
     }
 
     /**
