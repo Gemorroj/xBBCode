@@ -8,7 +8,7 @@
         "easybook/geshi": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.3"
+        "phpunit/phpunit": "~4.8"
     },
     "homepage": "http://xbb.uz",
     "support": {
