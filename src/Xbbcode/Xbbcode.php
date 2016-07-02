@@ -1897,6 +1897,7 @@ class Xbbcode
                     $structure[++$structure_key] = $val;
                     $structure[$structure_key]['level'] = --$level;
                     unset($open_tags[$ult_key]);
+                    break;
             }
         }
 

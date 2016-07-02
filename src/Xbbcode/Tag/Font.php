@@ -23,7 +23,6 @@
 namespace Xbbcode\Tag;
 
 use Xbbcode\Attributes;
-use Xbbcode\Xbbcode;
 
 
 /**
