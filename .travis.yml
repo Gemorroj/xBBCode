@@ -14,7 +14,8 @@ matrix:
       dist: trusty
 
 before_script:
-  - composer self-update && composer install --no-interaction
+  - composer self-update
+  - composer install --no-interaction
 
 script: vendor/bin/phpunit --configuration phpunit.xml
 
