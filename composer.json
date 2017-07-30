@@ -28,7 +28,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "Xbbcode\\": "src/Xbbcode"
+            "Xbbcode\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Xbbcode\\Tests\\": "tests/"
         }
     }
 }
