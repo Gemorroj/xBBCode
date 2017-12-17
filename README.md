@@ -18,7 +18,7 @@ echo $xbbcode->getHtml();
 
 ### Требования:
 
-- PHP >= 5.4
+- PHP >= 5.6
 
 
 ### Установка через composer:
