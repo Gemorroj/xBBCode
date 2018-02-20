@@ -3,7 +3,7 @@
     "type": "library",
     "description": "BBCode parser",
     "keywords": ["xbbcode","bbcode"],
-    "license": "GPL-2.0",
+    "license": "GPL-2.0-or-later",
     "require": {
         "php": ">=5.6",
         "geshi/geshi": "^1.0.9"
