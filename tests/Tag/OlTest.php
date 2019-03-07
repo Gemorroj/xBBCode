@@ -5,10 +5,10 @@ use Xbbcode\Xbbcode;
 
 class OlTest extends \PHPUnit_Framework_TestCase
 {
-    public function testTag()
+    public function testTagWithoutLi()
     {
         $text = 'test [ol]xBBCode[/ol].';
-        $result = 'test <ol class="bb">xBBCode</ol>.';
+        $result = 'test <ol class="bb"></ol>.';
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);

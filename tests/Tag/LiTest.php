@@ -5,10 +5,20 @@ use Xbbcode\Xbbcode;
 
 class LiTest extends \PHPUnit_Framework_TestCase
 {
-    public function testTag()
+    public function testTagWithUl()
     {
         $text = 'test [ul][li]xBBCode[/li][/ul].';
         $result = 'test <ul class="bb"><li class="bb">xBBCode</li></ul>.';
+
+        $xbbcode = new Xbbcode();
+        $xbbcode->parse($text);
+        $this->assertEquals($result, $xbbcode->getHtml());
+    }
+
+    public function testTagWithOl()
+    {
+        $text = 'test [ol][li]xBBCode[/li][/ol].';
+        $result = 'test <ol class="bb"><li class="bb">xBBCode</li></ol>.';
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
