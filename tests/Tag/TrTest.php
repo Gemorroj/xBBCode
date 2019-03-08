@@ -5,10 +5,10 @@ use Xbbcode\Xbbcode;
 
 class TrTest extends \PHPUnit_Framework_TestCase
 {
-    public function testTag()
+    public function testTagWithoutTdCell()
     {
         $text = 'test [table][tr]xBBCode[/tr][/table].';
-        $result = 'test <table class="bb"><tr class="bb">xBBCode</tr></table>.';
+        $result = 'test <table class="bb"><tr class="bb"></tr></table>.';
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);

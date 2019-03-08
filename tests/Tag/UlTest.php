@@ -5,10 +5,10 @@ use Xbbcode\Xbbcode;
 
 class UlTest extends \PHPUnit_Framework_TestCase
 {
-    public function testTag()
+    public function testTagWithoutLi()
     {
         $text = 'test [ul]xBBCode[/ul].';
-        $result = 'test <ul class="bb">xBBCode</ul>.';
+        $result = 'test <ul class="bb"></ul>.';
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);

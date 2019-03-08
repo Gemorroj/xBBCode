@@ -141,7 +141,7 @@ abstract class Tag extends Xbbcode
      */
     protected function getBody()
     {
-        if (in_array(self::BEHAVIOUR, array('table', 'tr', 'ul'))) {
+        if (in_array(static::BEHAVIOUR, array('table', 'tr', 'ul'))) {
             $this->cleanTreeText();
         }
 
