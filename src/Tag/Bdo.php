@@ -24,7 +24,6 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Attributes;
 
-
 /**
  * Class Bdo
  * Класс для тега [bdo]
@@ -41,7 +40,7 @@ class Bdo extends Tag
         $attr = parent::getAttributes();
 
         $dir = '';
-        switch (strtolower($this->attributes['bdo'])) {
+        switch (\strtolower($this->attributes['bdo'])) {
             case 'ltr':
                 $dir = 'ltr';
                 break;

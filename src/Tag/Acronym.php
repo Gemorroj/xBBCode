@@ -24,7 +24,6 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Attributes;
 
-
 /**
  * Class Acronym
  * Класс для тега [acronym]

@@ -22,7 +22,6 @@
 
 namespace Xbbcode\Tag;
 
-
 /**
  * Class Caption
  * Класс для тега [caption]

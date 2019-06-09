@@ -22,7 +22,6 @@
 
 namespace Xbbcode\Tag;
 
-
 /**
  * Class Tr
  * Класс для тега [tr]

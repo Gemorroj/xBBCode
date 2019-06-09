@@ -24,7 +24,6 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Attributes;
 
-
 /**
  * Class Quote
  * Класс для тегов [quote] и [blockquote]
@@ -51,7 +50,7 @@ class Quote extends Tag
         }
 
         if ($author) {
-            return '<div class="bb_quote_author">' . htmlspecialchars($author, ENT_NOQUOTES) . ':</div>';
+            return '<div class="bb_quote_author">' . \htmlspecialchars($author, ENT_NOQUOTES) . ':</div>';
         }
 
         return '';

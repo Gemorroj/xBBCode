@@ -24,7 +24,6 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Attributes;
 
-
 /**
  * Class Spoiler
  * Класс для тегов [spoiler] и [hide]
@@ -40,12 +39,12 @@ class Spoiler extends Tag
      */
     protected function getSpoiler($id)
     {
-        return '<input class="bb_spoiler" type="button" value="' . htmlspecialchars(
+        return '<input class="bb_spoiler" type="button" value="' . \htmlspecialchars(
             $this->showButton
-        ) . '" onclick="var node = document.getElementById(\'' . $id . '\'); (node.style.display == \'none\' ? (node.style.display = \'block\', this.value = \'' . htmlspecialchars(
+        ) . '" onclick="var node = document.getElementById(\'' . $id . '\'); (node.style.display == \'none\' ? (node.style.display = \'block\', this.value = \'' . \htmlspecialchars(
             $this->hideButton,
             ENT_QUOTES
-        ) . '\') : (node.style.display = \'none\', this.value = \'' . htmlspecialchars(
+        ) . '\') : (node.style.display = \'none\', this.value = \'' . \htmlspecialchars(
             $this->showButton,
             ENT_QUOTES
         ) . '\'));" />';
@@ -61,7 +60,7 @@ class Spoiler extends Tag
         $attr->add('class', 'bb_spoiler');
         $attr->set('style', 'display: none');
 
-        $id = uniqid('xbbcode');
+        $id = \uniqid('xbbcode');
         $attr->set('id', $id);
 
         return $attr;

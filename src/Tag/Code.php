@@ -22,7 +22,6 @@
 
 namespace Xbbcode\Tag;
 
-
 /**
  * Class Code
  * Класс для тегов подсветки синтаксиса и для тегов [code] и [pre]
@@ -33,7 +32,7 @@ class Code extends Tag
     const BEHAVIOUR = 'pre';
 
     /* Альтернативные названия языков и их трансляция в обозначения GeSHi */
-    public $langSynonym = array(
+    public $langSynonym = [
         'algol'  => 'algol86',
         'c++'    => 'cpp',
         'c#'     => 'csharp',
@@ -45,7 +44,7 @@ class Code extends Tag
         'oracle' => 'oracle8',
         't-sql'  => 'tsql',
         'vb.net' => 'vbnet',
-    );
+    ];
     /**
      * @var \GeSHi
      */
@@ -167,7 +166,7 @@ class Code extends Tag
     protected function setExtra()
     {
         if (isset($this->attributes['extra'])) {
-            $extra = explode(',', $this->attributes['extra']);
+            $extra = \explode(',', $this->attributes['extra']);
             $this->geshi->highlight_lines_extra($extra);
         }
 
@@ -187,8 +186,7 @@ class Code extends Tag
             $title = $this->geshi->get_language_name();
         }
 
-        return '<div class="bb_code_header"><span class="bb_code_lang">' . htmlspecialchars($title, ENT_NOQUOTES) . '</span></div>';
-
+        return '<div class="bb_code_header"><span class="bb_code_lang">' . \htmlspecialchars($title, ENT_NOQUOTES) . '</span></div>';
     }
 
 
@@ -200,7 +198,7 @@ class Code extends Tag
     protected function getFooter()
     {
         if (isset($this->attributes['footer'])) {
-            return '<div class="bb_code_footer">' . htmlspecialchars($this->attributes['footer'], ENT_NOQUOTES) . '</div>';
+            return '<div class="bb_code_footer">' . \htmlspecialchars($this->attributes['footer'], ENT_NOQUOTES) . '</div>';
         }
 
         return '';

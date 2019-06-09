@@ -22,7 +22,6 @@
 
 namespace Xbbcode\Tag;
 
-
 /**
  * Class Hr
  * Класс для тега [hr]

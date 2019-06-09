@@ -24,7 +24,6 @@ namespace Xbbcode;
 
 use Xbbcode\Tag\Tag;
 
-
 /**
  * Class Xbbcode
  */
@@ -48,19 +47,19 @@ class Xbbcode
      *
      * @var array
      */
-    protected $syntax = array();
+    protected $syntax = [];
     /**
      * Дерево семантического разбора текста BBCode. Описание смотрите в документации.
      *
      * @var array
      */
-    protected $tree = array();
+    protected $tree = [];
     /**
      * Список поддерживаемых тегов с указанием специализированных классов.
      *
      * @var string[]
      */
-    protected $tags = array(
+    protected $tags = [
         // Основные теги
         '*'            => 'Xbbcode\Tag\Li'     ,
         'a'            => 'Xbbcode\Tag\A'      ,
@@ -347,13 +346,13 @@ class Xbbcode
         'yaml'              => 'Xbbcode\Tag\Code',
         'z80'               => 'Xbbcode\Tag\Code',
         'zxbasic'           => 'Xbbcode\Tag\Code',
-    );
+    ];
     /**
      * Смайлики и прочие мнемоники. Массив: 'мнемоника' => 'ее_замена'.
      *
      * @var array
      */
-    protected $mnemonics = array();
+    protected $mnemonics = [];
     /**
      * Флажок, включающий/выключающий автоматические ссылки.
      *
@@ -365,23 +364,23 @@ class Xbbcode
      *
      * @var array
      */
-    protected $pregAutoLinks = array(
-        'pattern' => array(
+    protected $pregAutoLinks = [
+        'pattern' => [
             "'[\w\+]+://[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+'si",
             "'([^/])(www\.[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+)'si",
             "'[\w]+[\w\-\.]+@[\w\-\.]+\.[\w]+'si",
-        ),
-        'replacement' => array(
+        ],
+        'replacement' => [
             '<a href="$0" target="_blank">$0</a>',
             '$1<a href="http://$2" target="_blank">$2</a>',
             '<a href="mailto:$0">$0</a>',
-        ),
-        'highlight' => array(
+        ],
+        'highlight' => [
             '<span class="bb_autolink">$0</span>',
             '$1<span class="bb_autolink">$2</span>',
             '<span class="bb_autolink">$0</span>',
-        ),
-    );
+        ],
+    ];
     /**
      * Флажок, включающий/выключающий ссылки на документацию в подсветке кода.
      *
@@ -401,13 +400,13 @@ class Xbbcode
      *
      * @var array
      */
-    protected $statistics = array(
+    protected $statistics = [
         'time_parse'        => 0, // Время парсинга
         'time_html'         => 0, // Время генерации HTML-а
         'count_tags'        => 0, // Число тегов BBCode
         'count_level'       => 0, // Число уровней вложенности тегов BBCode
         'memory_peak_usage' => 0, // Максимально выделенный объем памяти
-    );
+    ];
     /**
      * Публичная WEB директория.
      * Ссылается на директорию resources для формирования смайликов и CSS стилей
@@ -426,7 +425,7 @@ class Xbbcode
      *
      * @var Tag[]
      */
-    private $tagObjects = array();
+    private $tagObjects = [];
     /**
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
      * Накладывает ограничения на вложенность тегов.
@@ -434,22 +433,22 @@ class Xbbcode
      *
      * @var array
      */
-    protected $children = array(
-        'a'       => array('code', 'img', 'span'),
-        'caption' => array('a', 'code', 'img', 'span'),
-        'code'    => array(),
-        'div'     => array('a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'),
-        'hr'      => array(),
-        'img'     => array(),
-        'li'      => array('a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'),
-        'p'       => array('a', 'code', 'img', 'span'),
-        'pre'     => array(),
-        'span'    => array('a', 'code', 'img', 'span'),
-        'table'   => array('caption', 'tr'),
-        'td'      => array('a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'),
-        'tr'      => array('td'),
-        'ul'      => array('li'),
-    );
+    protected $children = [
+        'a'       => ['code', 'img', 'span'],
+        'caption' => ['a', 'code', 'img', 'span'],
+        'code'    => [],
+        'div'     => ['a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'],
+        'hr'      => [],
+        'img'     => [],
+        'li'      => ['a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'],
+        'p'       => ['a', 'code', 'img', 'span'],
+        'pre'     => [],
+        'span'    => ['a', 'code', 'img', 'span'],
+        'table'   => ['caption', 'tr'],
+        'td'      => ['a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'],
+        'tr'      => ['td'],
+        'ul'      => ['li'],
+    ];
     /**
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
      * Накладывает ограничения на вложенность тегов.
@@ -457,28 +456,28 @@ class Xbbcode
      *
      * @var array
      */
-    protected $ends = array(
-        'a'       => array(
+    protected $ends = [
+        'a'       => [
             'a', 'caption', 'div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'
-        ),
-        'caption' => array('tr'),
-        'code'    => array(),
-        'div'     => array('li', 'tr', 'td'),
-        'hr'      => array(
+        ],
+        'caption' => ['tr'],
+        'code'    => [],
+        'div'     => ['li', 'tr', 'td'],
+        'hr'      => [
             'a', 'caption', 'code', 'div', 'hr', 'img', 'li', 'p', 'pre', 'span', 'table', 'td', 'tr', 'ul'
-        ),
-        'img'     => array(
+        ],
+        'img'     => [
             'a', 'caption', 'code', 'div', 'hr', 'img', 'li', 'p', 'pre', 'span', 'table', 'td', 'tr', 'ul'
-        ),
-        'li'      => array('li', 'tr', 'td'),
-        'p'       => array('div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'),
-        'pre'     => array(),
-        'span'    => array('div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'),
-        'table'   => array('table'),
-        'td'      => array('td', 'tr'),
-        'tr'      => array('tr'),
-        'ul'      => array(),
-    );
+        ],
+        'li'      => ['li', 'tr', 'td'],
+        'p'       => ['div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'],
+        'pre'     => [],
+        'span'    => ['div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'],
+        'table'   => ['table'],
+        'td'      => ['td', 'tr'],
+        'tr'      => ['tr'],
+        'ul'      => [],
+    ];
 
 
     /**
@@ -509,534 +508,534 @@ class Xbbcode
      *
      * Описание конечного автомата:
      */
-    protected $finiteAutomaton = array(
+    protected $finiteAutomaton = [
     // Предыдущие |   Состояния для текущих событий (лексем)   |
     //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
-        0 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ),
-        1 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 ),
-        2 => array(  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 ),
-        3 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ),
-        4 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  7 ),
-        5 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 ),
-        6 => array(  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ),
-        7 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ),
-        8 => array( 13 , 13 , 11 , 12 , 13 , 13 , 14 , 13 , 13 ),
-        9 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ),
-        10 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 ,  3 , 15 , 15 ),
-        11 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 ),
-        12 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 ),
-        13 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 17 , 19 , 19 ),
-        14 => array(  2 ,  3 , 11 , 12 , 13 , 13 ,  3 , 13 , 13 ),
-        15 => array(  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 ),
-        16 => array( 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 ),
-        17 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 , 20 , 15 , 15 ),
-        18 => array( 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 ),
-        19 => array( 19 ,  6 , 19 , 19 , 19 , 19 , 20 , 19 , 19 ),
-        20 => array(  2 ,  6 ,  3 ,  3 ,  3 ,  9 ,  3 , 15 , 15 ),
-    );
+        0 => [  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ],
+        1 => [  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 ],
+        2 => [  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 ],
+        3 => [  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ],
+        4 => [  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  7 ],
+        5 => [  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 ],
+        6 => [  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ],
+        7 => [  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ],
+        8 => [ 13 , 13 , 11 , 12 , 13 , 13 , 14 , 13 , 13 ],
+        9 => [  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ],
+        10 => [  2 ,  6 ,  3 ,  3 ,  8 ,  9 ,  3 , 15 , 15 ],
+        11 => [ 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 ],
+        12 => [ 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 ],
+        13 => [ 19 ,  6 , 19 , 19 , 19 , 19 , 17 , 19 , 19 ],
+        14 => [  2 ,  3 , 11 , 12 , 13 , 13 ,  3 , 13 , 13 ],
+        15 => [  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 ],
+        16 => [ 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 ],
+        17 => [  2 ,  6 ,  3 ,  3 ,  3 ,  9 , 20 , 15 , 15 ],
+        18 => [ 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 ],
+        19 => [ 19 ,  6 , 19 , 19 , 19 , 19 , 20 , 19 , 19 ],
+        20 => [  2 ,  6 ,  3 ,  3 ,  3 ,  9 ,  3 , 15 , 15 ],
+    ];
 
     /**
      * Смайлы
      *
      * @var array
      */
-    protected $smiles = array (
+    protected $smiles = [
         ':D' =>
-            array (
+            [
                 'title' => 'Very we!',
                 'name' => 'resources/images/smiles/1.gif',
-            ),
+            ],
         ':)' =>
-            array (
+            [
                 'title' => 'Well',
                 'name' => 'resources/images/smiles/2.gif',
-            ),
+            ],
         ':(' =>
-            array (
+            [
                 'title' => 'Not so',
                 'name' => 'resources/images/smiles/3.gif',
-            ),
+            ],
         ':heap:' =>
-            array (
+            [
                 'title' => 'Eyes in a heap',
                 'name' => 'resources/images/smiles/4.gif',
-            ),
+            ],
         ':ooi:' =>
-            array (
+            [
                 'title' => 'Really?',
                 'name' => 'resources/images/smiles/5.gif',
-            ),
+            ],
         ':so:' =>
-            array (
+            [
                 'title' => 'So-so',
                 'name' => 'resources/images/smiles/6.gif',
-            ),
+            ],
         ':surp:' =>
-            array (
+            [
                 'title' => 'It is surprised',
                 'name' => 'resources/images/smiles/7.gif',
-            ),
+            ],
         ':ag:' =>
-            array (
+            [
                 'title' => 'Again',
                 'name' => 'resources/images/smiles/8.gif',
-            ),
+            ],
         ':ir:' =>
-            array (
+            [
                 'title' => 'I roll!',
                 'name' => 'resources/images/smiles/9.gif',
-            ),
+            ],
         ':oops:' =>
-            array (
+            [
                 'title' => 'Oops!',
                 'name' => 'resources/images/smiles/44.gif',
-            ),
+            ],
         ':P' =>
-            array (
+            [
                 'title' => 'To you',
                 'name' => 'resources/images/smiles/11.gif',
-            ),
+            ],
         ':cry:' =>
-            array (
+            [
                 'title' => 'Tears',
                 'name' => 'resources/images/smiles/12.gif',
-            ),
+            ],
         ':rage:' =>
-            array (
+            [
                 'title' => 'I am malicious',
                 'name' => 'resources/images/smiles/13.gif',
-            ),
+            ],
         ':B' =>
-            array (
+            [
                 'title' => 'All ok',
                 'name' => 'resources/images/smiles/14.gif',
-            ),
+            ],
         ':roll:' =>
-            array (
+            [
                 'title' => 'Not precisely',
                 'name' => 'resources/images/smiles/15.gif',
-            ),
+            ],
         ':wink:' =>
-            array (
+            [
                 'title' => 'To wink',
                 'name' => 'resources/images/smiles/16.gif',
-            ),
+            ],
         ':yes:' =>
-            array (
+            [
                 'title' => 'Yes',
                 'name' => 'resources/images/smiles/17.gif',
-            ),
+            ],
         ':bot:' =>
-            array (
+            [
                 'title' => 'Has bothered',
                 'name' => 'resources/images/smiles/18.gif',
-            ),
+            ],
         ':z)' =>
-            array (
+            [
                 'title' => 'Ridiculously',
                 'name' => 'resources/images/smiles/19.gif',
-            ),
+            ],
         ':arrow:' =>
-            array (
+            [
                 'title' => 'Here',
                 'name' => 'resources/images/smiles/20.gif',
-            ),
+            ],
         ':vip:' =>
-            array (
+            [
                 'title' => 'Attention',
                 'name' => 'resources/images/smiles/21.gif',
-            ),
+            ],
         ':Heppy:' =>
-            array (
+            [
                 'title' => 'I congratulate',
                 'name' => 'resources/images/smiles/22.gif',
-            ),
+            ],
         ':think:' =>
-            array (
+            [
                 'title' => 'I think',
                 'name' => 'resources/images/smiles/23.gif',
-            ),
+            ],
         ':bye:' =>
-            array (
+            [
                 'title' => 'Farewell',
                 'name' => 'resources/images/smiles/24.gif',
-            ),
+            ],
         ':roul:' =>
-            array (
+            [
                 'title' => 'Perfectly',
                 'name' => 'resources/images/smiles/25.gif',
-            ),
+            ],
         ':pst:' =>
-            array (
+            [
                 'title' => 'Fingers',
                 'name' => 'resources/images/smiles/26.gif',
-            ),
+            ],
         ':o' =>
-            array (
+            [
                 'title' => 'Poorly',
                 'name' => 'resources/images/smiles/27.gif',
-            ),
+            ],
         ':closed:' =>
-            array (
+            [
                 'title' => 'Veal closed',
                 'name' => 'resources/images/smiles/28.gif',
-            ),
+            ],
         ':cens:' =>
-            array (
+            [
                 'title' => 'Censorship',
                 'name' => 'resources/images/smiles/29.gif',
-            ),
+            ],
         ':tani:' =>
-            array (
+            [
                 'title' => 'Features',
                 'name' => 'resources/images/smiles/30.gif',
-            ),
+            ],
         ':appl:' =>
-            array (
+            [
                 'title' => 'Applause',
                 'name' => 'resources/images/smiles/31.gif',
-            ),
+            ],
         ':idnk:' =>
-            array (
+            [
                 'title' => 'I do not know',
                 'name' => 'resources/images/smiles/32.gif',
-            ),
+            ],
         ':sing:' =>
-            array (
+            [
                 'title' => 'Singing',
                 'name' => 'resources/images/smiles/33.gif',
-            ),
+            ],
         ':shock:' =>
-            array (
+            [
                 'title' => 'Shock',
                 'name' => 'resources/images/smiles/34.gif',
-            ),
+            ],
         ':tgu:' =>
-            array (
+            [
                 'title' => 'To give up',
                 'name' => 'resources/images/smiles/35.gif',
-            ),
+            ],
         ':res:' =>
-            array (
+            [
                 'title' => 'Respect',
                 'name' => 'resources/images/smiles/36.gif',
-            ),
+            ],
         ':alc:' =>
-            array (
+            [
                 'title' => 'Alcohol',
                 'name' => 'resources/images/smiles/37.gif',
-            ),
+            ],
         ':lam:' =>
-            array (
+            [
                 'title' => 'The lamer',
                 'name' => 'resources/images/smiles/38.gif',
-            ),
+            ],
         ':box:' =>
-            array (
+            [
                 'title' => 'Boxing',
                 'name' => 'resources/images/smiles/39.gif',
-            ),
+            ],
         ':tom:' =>
-            array (
+            [
                 'title' => 'Tomato',
                 'name' => 'resources/images/smiles/40.gif',
-            ),
+            ],
         ':lol:' =>
-            array (
+            [
                 'title' => 'Cheerfully',
                 'name' => 'resources/images/smiles/41.gif',
-            ),
+            ],
         ':vill:' =>
-            array (
+            [
                 'title' => 'The villain',
                 'name' => 'resources/images/smiles/42.gif',
-            ),
+            ],
         ':idea:' =>
-            array (
+            [
                 'title' => 'Idea',
                 'name' => 'resources/images/smiles/43.gif',
-            ),
+            ],
         ':E' =>
-            array (
+            [
                 'title' => 'The big rage',
                 'name' => 'resources/images/smiles/45.gif',
-            ),
+            ],
         ':sex:' =>
-            array (
+            [
                 'title' => 'Sex',
                 'name' => 'resources/images/smiles/46.gif',
-            ),
+            ],
         ':horns:' =>
-            array (
+            [
                 'title' => 'Horns',
                 'name' => 'resources/images/smiles/47.gif',
-            ),
+            ],
         ':love:' =>
-            array (
+            [
                 'title' => 'Love me',
                 'name' => 'resources/images/smiles/48.gif',
-            ),
+            ],
         ':poz:' =>
-            array (
+            [
                 'title' => 'Happy birthday',
                 'name' => 'resources/images/smiles/49.gif',
-            ),
+            ],
         ':roza:' =>
-            array (
+            [
                 'title' => 'Roza',
                 'name' => 'resources/images/smiles/50.gif',
-            ),
+            ],
         ':meg:' =>
-            array (
+            [
                 'title' => 'Megaphone',
                 'name' => 'resources/images/smiles/51.gif',
-            ),
+            ],
         ':dj:' =>
-            array (
+            [
                 'title' => 'The DJ',
                 'name' => 'resources/images/smiles/52.gif',
-            ),
+            ],
         ':rul:' =>
-            array (
+            [
                 'title' => 'Rules',
                 'name' => 'resources/images/smiles/53.gif',
-            ),
+            ],
         ':offln:' =>
-            array (
+            [
                 'title' => 'OffLine',
                 'name' => 'resources/images/smiles/54.gif',
-            ),
+            ],
         ':sp:' =>
-            array (
+            [
                 'title' => 'Spider',
                 'name' => 'resources/images/smiles/55.gif',
-            ),
+            ],
         ':stapp:' =>
-            array (
+            [
                 'title' => 'Storm of applause',
                 'name' => 'resources/images/smiles/56.gif',
-            ),
+            ],
         ':girl:' =>
-            array (
+            [
                 'title' => 'Beautiful girl',
                 'name' => 'resources/images/smiles/57.gif',
-            ),
+            ],
         ':heart:' =>
-            array (
+            [
                 'title' => 'Heart',
                 'name' => 'resources/images/smiles/58.gif',
-            ),
+            ],
         ':kiss:' =>
-            array (
+            [
                 'title' => 'Kiss',
                 'name' => 'resources/images/smiles/59.gif',
-            ),
+            ],
         ':spam:' =>
-            array (
+            [
                 'title' => 'Spam',
                 'name' => 'resources/images/smiles/60.gif',
-            ),
+            ],
         ':party:' =>
-            array (
+            [
                 'title' => 'Party',
                 'name' => 'resources/images/smiles/61.gif',
-            ),
+            ],
         ':ser:' =>
-            array (
+            [
                 'title' => 'Song',
                 'name' => 'resources/images/smiles/62.gif',
-            ),
+            ],
         ':eam:' =>
-            array (
+            [
                 'title' => 'Dream',
                 'name' => 'resources/images/smiles/63.gif',
-            ),
+            ],
         ':gift:' =>
-            array (
+            [
                 'title' => 'Gift',
                 'name' => 'resources/images/smiles/64.gif',
-            ),
+            ],
         ':adore:' =>
-            array (
+            [
                 'title' => 'I adore',
                 'name' => 'resources/images/smiles/65.gif',
-            ),
+            ],
         ':pie:' =>
-            array (
+            [
                 'title' => 'Pie',
                 'name' => 'resources/images/smiles/66.gif',
-            ),
+            ],
         ':egg:' =>
-            array (
+            [
                 'title' => 'Egg',
                 'name' => 'resources/images/smiles/67.gif',
-            ),
+            ],
         ':cnrt:' =>
-            array (
+            [
                 'title' => 'Concert',
                 'name' => 'resources/images/smiles/68.gif',
-            ),
+            ],
         ':oftop:' =>
-            array (
+            [
                 'title' => 'Off Topic',
                 'name' => 'resources/images/smiles/69.gif',
-            ),
+            ],
         ':foo:' =>
-            array (
+            [
                 'title' => 'Football',
                 'name' => 'resources/images/smiles/70.gif',
-            ),
+            ],
         ':mob:' =>
-            array (
+            [
                 'title' => 'Cellular',
                 'name' => 'resources/images/smiles/71.gif',
-            ),
+            ],
         ':hoo:' =>
-            array (
+            [
                 'title' => 'Not hooligan',
                 'name' => 'resources/images/smiles/72.gif',
-            ),
+            ],
         ':tog:' =>
-            array (
+            [
                 'title' => 'Together',
                 'name' => 'resources/images/smiles/73.gif',
-            ),
+            ],
         ':pnk:' =>
-            array (
+            [
                 'title' => 'Pancake',
                 'name' => 'resources/images/smiles/74.gif',
-            ),
+            ],
         ':pati:' =>
-            array (
+            [
                 'title' => 'Party Time',
                 'name' => 'resources/images/smiles/75.gif',
-            ),
+            ],
         ':-({|=:' =>
-            array (
+            [
                 'title' => 'I here',
                 'name' => 'resources/images/smiles/76.gif',
-            ),
+            ],
         ':haaw:' =>
-            array (
+            [
                 'title' => 'Head about a wall',
                 'name' => 'resources/images/smiles/77.gif',
-            ),
+            ],
         ':angel:' =>
-            array (
+            [
                 'title' => 'Angel',
                 'name' => 'resources/images/smiles/78.gif',
-            ),
+            ],
         ':kil:' =>
-            array (
+            [
                 'title' => 'killer',
                 'name' => 'resources/images/smiles/79.gif',
-            ),
+            ],
         ':died:' =>
-            array (
+            [
                 'title' => 'Cemetery',
                 'name' => 'resources/images/smiles/80.gif',
-            ),
+            ],
         ':cof:' =>
-            array (
+            [
                 'title' => 'Coffee',
                 'name' => 'resources/images/smiles/81.gif',
-            ),
+            ],
         ':fruit:' =>
-            array (
+            [
                 'title' => 'Forbidden fruit',
                 'name' => 'resources/images/smiles/82.gif',
-            ),
+            ],
         ':tease:' =>
-            array (
+            [
                 'title' => 'To tease',
                 'name' => 'resources/images/smiles/83.gif',
-            ),
+            ],
         ':evil:' =>
-            array (
+            [
                 'title' => 'Devil',
                 'name' => 'resources/images/smiles/84.gif',
-            ),
+            ],
         ':exc:' =>
-            array (
+            [
                 'title' => 'Excellently',
                 'name' => 'resources/images/smiles/85.gif',
-            ),
+            ],
         ':niah:' =>
-            array (
+            [
                 'title' => 'Not I, and he',
                 'name' => 'resources/images/smiles/86.gif',
-            ),
+            ],
         ':Head:' =>
-            array (
+            [
                 'title' => 'Studio',
                 'name' => 'resources/images/smiles/87.gif',
-            ),
+            ],
         ':gl:' =>
-            array (
+            [
                 'title' => 'girl',
                 'name' => 'resources/images/smiles/88.gif',
-            ),
+            ],
         ':granat:' =>
-            array (
+            [
                 'title' => 'Pomegranate',
                 'name' => 'resources/images/smiles/89.gif',
-            ),
+            ],
         ':gans:' =>
-            array (
+            [
                 'title' => 'Gangster',
                 'name' => 'resources/images/smiles/90.gif',
-            ),
+            ],
         ':user:' =>
-            array (
+            [
                 'title' => 'User',
                 'name' => 'resources/images/smiles/91.gif',
-            ),
+            ],
         ':ny:' =>
-            array (
+            [
                 'title' => 'New year',
                 'name' => 'resources/images/smiles/92.gif',
-            ),
+            ],
         ':mvol:' =>
-            array (
+            [
                 'title' => 'Megavolt',
                 'name' => 'resources/images/smiles/93.gif',
-            ),
+            ],
         ':boat:' =>
-            array (
+            [
                 'title' => 'In a boat',
                 'name' => 'resources/images/smiles/94.gif',
-            ),
+            ],
         ':phone:' =>
-            array (
+            [
                 'title' => 'Phone',
                 'name' => 'resources/images/smiles/95.gif',
-            ),
+            ],
         ':cop:' =>
-            array (
+            [
                 'title' => 'Cop',
                 'name' => 'resources/images/smiles/96.gif',
-            ),
+            ],
         ':smok:' =>
-            array (
+            [
                 'title' => 'Smoking',
                 'name' => 'resources/images/smiles/97.gif',
-            ),
+            ],
         ':bic:' =>
-            array (
+            [
                 'title' => 'Bicycle',
                 'name' => 'resources/images/smiles/98.gif',
-            ),
+            ],
         ':ban:' =>
-            array (
+            [
                 'title' => 'Ban?',
                 'name' => 'resources/images/smiles/99.gif',
-            ),
+            ],
         ':bar:' =>
-            array (
+            [
                 'title' => 'Bar',
                 'name' => 'resources/images/smiles/100.gif',
-            ),
-    );
+            ],
+    ];
 
 
     /**
@@ -1045,7 +1044,7 @@ class Xbbcode
      * @param string $webPath Web path
      * @param array $allowed Allowed tags
      */
-    public function __construct ($webPath = '', array $allowed = null)
+    public function __construct($webPath = '', array $allowed = null)
     {
         $this->webPath = $webPath;
         $this->reloadSmiles();
@@ -1054,7 +1053,7 @@ class Xbbcode
         // In case if $allowed is not an array, assuming that everything is allowed
         if ($allowed) {
             foreach ($this->getTags() as $key => $value) {
-                if (!in_array($key, $allowed)) {
+                if (!\in_array($key, $allowed)) {
                     unset($this->tags[$key]);
                 }
             }
@@ -1093,9 +1092,8 @@ class Xbbcode
             if (!isset($this->text{$this->cursor})) {
                 if (false === $charType) {
                     return false;
-                } else {
-                    break;
                 }
+                break;
             }
             $char = $this->text{$this->cursor};
             switch ($char) {
@@ -1151,11 +1149,11 @@ class Xbbcode
             $this->cursor += 1;
         }
 
-        if (isset($this->tags[strtolower($token)])) {
+        if (isset($this->tags[\strtolower($token)])) {
             $tokenType = 8;
         }
 
-        return array($tokenType, $token);
+        return [$tokenType, $token];
     }
 
 
@@ -1166,9 +1164,9 @@ class Xbbcode
      */
     public function parse($code)
     {
-        $time_start = microtime(true);
+        $time_start = \microtime(true);
 
-        if (is_array($code)) {
+        if (\is_array($code)) {
             $is_tree = false;
             foreach ($code as $val) {
                 if (isset($val['val'])) {
@@ -1186,12 +1184,12 @@ class Xbbcode
             foreach ($this->syntax as $val) {
                 $this->text .= $val['str'];
             }
-            $this->statistics['time_parse'] = microtime(true) - $time_start;
+            $this->statistics['time_parse'] = \microtime(true) - $time_start;
 
             return;
-        } else {
-            $this->text = $code;
         }
+        $this->text = $code;
+        
 
         $finiteAutomaton = $this->finiteAutomaton();
 
@@ -1201,27 +1199,27 @@ class Xbbcode
             if ('text' === $finiteAutomaton['type']) {
                 $this->syntax[$key]['str'] .= $finiteAutomaton['decomposition']['str'];
             } else {
-                $this->syntax[++$key] = array(
+                $this->syntax[++$key] = [
                     'type' => 'text',
                     'str' => $finiteAutomaton['decomposition']['str']
-                );
+                ];
             }
         }
 
         $this->parseTree();
-        $this->statistics['time_parse'] = microtime(true) - $time_start;
+        $this->statistics['time_parse'] = \microtime(true) - $time_start;
     }
 
 
     /**
      * @return array
      */
-    protected function finiteAutomaton ()
+    protected function finiteAutomaton()
     {
         $finite_automaton = $this->finiteAutomaton;
         $mode = 0;
-        $this->syntax = array();
-        $decomposition = array();
+        $this->syntax = [];
+        $decomposition = [];
         $token_key = -1;
         $value = '';
         $name = '';
@@ -1243,59 +1241,59 @@ class Xbbcode
                     if ('text' === $type) {
                         $this->syntax[$token_key]['str'] .= $token[1];
                     } else {
-                        $this->syntax[++$token_key] = array(
+                        $this->syntax[++$token_key] = [
                             'type' => 'text',
                             'str' => $token[1]
-                        );
+                        ];
                     }
                     break;
                 case 1:
-                    $decomposition = array(
+                    $decomposition = [
                         'name'   => '',
                         'type'   => '',
                         'str'    => '[',
-                        'layout' => array(array(0, '['))
-                    );
+                        'layout' => [[0, '[']]
+                    ];
                     break;
                 case 2:
                     if ('text' === $type) {
                         $this->syntax[$token_key]['str'] .= $decomposition['str'];
                     } else {
-                        $this->syntax[++$token_key] = array(
+                        $this->syntax[++$token_key] = [
                             'type' => 'text',
                             'str' => $decomposition['str']
-                        );
+                        ];
                     }
-                    $decomposition = array(
+                    $decomposition = [
                         'name'   => '',
                         'type'   => '',
                         'str'    => '[',
-                        'layout' => array(array(0, '['))
-                    );
+                        'layout' => [[0, '[']]
+                    ];
                     break;
                 case 3:
                     if ('text' === $type) {
                         $this->syntax[$token_key]['str'] .= $decomposition['str'];
                         $this->syntax[$token_key]['str'] .= $token[1];
                     } else {
-                        $this->syntax[++$token_key] = array(
+                        $this->syntax[++$token_key] = [
                             'type' => 'text',
                             'str' => $decomposition['str'].$token[1]
-                        );
+                        ];
                     }
-                    $decomposition = array();
+                    $decomposition = [];
                     break;
                 case 4:
                     $decomposition['type'] = 'close';
                     $decomposition['str'] .= '/';
-                    $decomposition['layout'][] = array(1, '/');
+                    $decomposition['layout'][] = [1, '/'];
                     break;
                 case 5:
                     $decomposition['type'] = 'open';
-                    $name = strtolower($token[1]);
+                    $name = \strtolower($token[1]);
                     $decomposition['name'] = $name;
                     $decomposition['str'] .= $token[1];
-                    $decomposition['layout'][] = array(2, $token[1]);
+                    $decomposition['layout'][] = [2, $token[1]];
                     $decomposition['attributes'][$name] = '';
                     break;
                 case 6:
@@ -1303,42 +1301,42 @@ class Xbbcode
                         $decomposition['name'] = '';
                     }
                     if (13 === $previous_mode || 19 === $previous_mode) {
-                        $decomposition['layout'][] = array(7, $value);
+                        $decomposition['layout'][] = [7, $value];
                     }
                     $decomposition['str'] .= ']';
-                    $decomposition['layout'][] = array(0, ']');
+                    $decomposition['layout'][] = [0, ']'];
                     $this->syntax[++$token_key] = $decomposition;
-                    $decomposition = array();
+                    $decomposition = [];
                     break;
                 case 7:
-                    $decomposition['name'] = strtolower($token[1]);
+                    $decomposition['name'] = \strtolower($token[1]);
                     $decomposition['str'] .= $token[1];
-                    $decomposition['layout'][] = array(2, $token[1]);
+                    $decomposition['layout'][] = [2, $token[1]];
                     /* При выходе из тега возвращаем умолчальное значение пробельных незакавыченных тегов */
                     $finite_automaton = $this->finiteAutomaton;
                     break;
                 case 8:
                     $decomposition['str'] .= '=';
-                    $decomposition['layout'][] = array(3, '=');
+                    $decomposition['layout'][] = [3, '='];
                     $spacesave = '';
                     break;
                 case 9:
                     $decomposition['type'] = 'open/close';
                     $decomposition['str'] .= '/';
-                    $decomposition['layout'][] = array(1, '/');
+                    $decomposition['layout'][] = [1, '/'];
                     break;
                 case 10:
                     $decomposition['str'] .= $token[1];
-                    $decomposition['layout'][] = array(4, $token[1]);
+                    $decomposition['layout'][] = [4, $token[1]];
                     break;
                 case 11:
                     $decomposition['str'] .= '"';
-                    $decomposition['layout'][] = array(5, '"');
+                    $decomposition['layout'][] = [5, '"'];
                     $value = '';
                     break;
                 case 12:
                     $decomposition['str'] .= "'";
-                    $decomposition['layout'][] = array(5, "'");
+                    $decomposition['layout'][] = [5, "'"];
                     $value = '';
                     break;
                 case 13:
@@ -1358,13 +1356,13 @@ class Xbbcode
                     break;
                 case 14:
                     $decomposition['str'] .= $token[1];
-                    $decomposition['layout'][] = array(4, $token[1]);
+                    $decomposition['layout'][] = [4, $token[1]];
                     $spacesave .= $token[1];
                     break;
                 case 15:
-                    $name = strtolower($token[1]);
+                    $name = \strtolower($token[1]);
                     $decomposition['str'] .= $token[1];
-                    $decomposition['layout'][] = array(6, $token[1]);
+                    $decomposition['layout'][] = [6, $token[1]];
                     $decomposition['attributes'][$name] = '';
                     break;
                 case 16:
@@ -1374,9 +1372,9 @@ class Xbbcode
                     break;
                 case 17:
                     $decomposition['str'] .= $token[1];
-                    $decomposition['layout'][] = array(7, $value);
+                    $decomposition['layout'][] = [7, $value];
                     $value = '';
-                    $decomposition['layout'][] = array(5, $token[1]);
+                    $decomposition['layout'][] = [5, $token[1]];
                     break;
                 case 18:
                     $decomposition['str'] .= $token[1];
@@ -1390,20 +1388,20 @@ class Xbbcode
                     break;
                 case 20:
                     $decomposition['str'] .= $token[1];
-                    if (13 == $previous_mode || 19 == $previous_mode) {
-                        $decomposition['layout'][] = array(7, $value);
+                    if (13 === $previous_mode || 19 === $previous_mode) {
+                        $decomposition['layout'][] = [7, $value];
                     }
                     $value = '';
-                    $decomposition['layout'][] = array(4, $token[1]);
+                    $decomposition['layout'][] = [4, $token[1]];
                     break;
             }
         }
 
-        return array(
+        return [
             'decomposition' => $decomposition,
             'type' => $type,
             'key' => $token_key,
-        );
+        ];
     }
 
 
@@ -1415,14 +1413,14 @@ class Xbbcode
      */
     protected function specialchars($str)
     {
-        $chars = array(
+        $chars = [
             '[' => '@l;',
             ']' => '@r;',
             '"' => '@q;',
             "'" => '@a;',
             '@' => '@at;'
-        );
-        return strtr($str, $chars);
+        ];
+        return \strtr($str, $chars);
     }
 
 
@@ -1434,14 +1432,14 @@ class Xbbcode
      */
     protected function unspecialchars($str)
     {
-        $chars = array(
+        $chars = [
             '@l;'  => '[',
             '@r;'  => ']',
             '@q;'  => '"',
             '@a;'  => "'",
             '@at;' => '@'
-        );
-        return strtr($str, $chars);
+        ];
+        return \strtr($str, $chars);
     }
 
 
@@ -1494,7 +1492,7 @@ class Xbbcode
      */
     public function setSmile($key, $name, $title = '')
     {
-        $this->setMnemonic($key, '<img src="' . htmlspecialchars($this->webPath . '/' . $name) . '" alt="' . htmlspecialchars($title) . '" />');
+        $this->setMnemonic($key, '<img src="' . \htmlspecialchars($this->webPath . '/' . $name) . '" alt="' . \htmlspecialchars($title) . '" />');
 
         return $this;
     }
@@ -1732,7 +1730,7 @@ class Xbbcode
 
         $mustClose = false;
         if (isset($this->ends[$currentBehaviour])) {
-            $mustClose = in_array($nextBehaviour, $this->ends[$currentBehaviour]);
+            $mustClose = \in_array($nextBehaviour, $this->ends[$currentBehaviour]);
         }
 
         return $mustClose;
@@ -1767,7 +1765,7 @@ class Xbbcode
         }
         $permissibly = true;
         if (isset($this->children[$parent_behaviour])) {
-            $permissibly = in_array($child_behaviour, $this->children[$parent_behaviour]);
+            $permissibly = \in_array($child_behaviour, $this->children[$parent_behaviour]);
         }
 
         return $permissibly;
@@ -1782,10 +1780,10 @@ class Xbbcode
      */
     protected function normalizeBracket(array $syntax)
     {
-        $structure = array();
+        $structure = [];
         $structure_key = -1;
         $level = 0;
-        $open_tags = array();
+        $open_tags = [];
         foreach ($syntax as $val) {
             unset($val['layout']);
             switch ($val['type']) {
@@ -1801,16 +1799,16 @@ class Xbbcode
                     }
                     break;
                 case 'open/close':
-                    $val['attributes'] = array_map(array($this, 'unspecialchars'), $val['attributes']);
+                    $val['attributes'] = \array_map([$this, 'unspecialchars'], $val['attributes']);
 
-                    foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
+                    foreach (\array_reverse($open_tags, true) as $ult_key => $ultimate) {
                         if ($this->mustCloseTag($ultimate, $val['name'])) {
-                            $structure[++$structure_key] = array(
+                            $structure[++$structure_key] = [
                                 'type'  => 'close',
                                 'name'  => $ultimate,
                                 'str'   => '',
                                 'level' => --$level
-                            );
+                            ];
                             unset($open_tags[$ult_key]);
                         } else {
                             break;
@@ -1821,15 +1819,15 @@ class Xbbcode
                     break;
                 case 'open':
                     $tag = $this->getTagObject($val['name']);
-                    $val['attributes'] = array_map(array($this, 'unspecialchars'), $val['attributes']);
-                    foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
+                    $val['attributes'] = \array_map([$this, 'unspecialchars'], $val['attributes']);
+                    foreach (\array_reverse($open_tags, true) as $ult_key => $ultimate) {
                         if ($this->mustCloseTag($ultimate, $val['name'])) {
-                            $structure[++$structure_key] = array(
+                            $structure[++$structure_key] = [
                                 'type'  => 'close',
                                 'name'  => $ultimate,
                                 'str'   => '',
                                 'level' => --$level
-                            );
+                            ];
                             unset($open_tags[$ult_key]);
                         } else {
                             break;
@@ -1851,44 +1849,44 @@ class Xbbcode
                         if ('text' === $type) {
                             $structure[$structure_key]['str'] .= $val['str'];
                         } else {
-                            $structure[++$structure_key] = array(
+                            $structure[++$structure_key] = [
                                 'type'  => 'text',
                                 'str'   => $val['str'],
                                 'level' => 0
-                            );
+                            ];
                         }
                         break;
                     }
                     if (!$val['name']) {
-                        $ultimate = end($open_tags);
-                        $ult_key = key($open_tags);
+                        $ultimate = \end($open_tags);
+                        $ult_key = \key($open_tags);
                         $val['name'] = $ultimate;
                         $structure[++$structure_key] = $val;
                         $structure[$structure_key]['level'] = --$level;
                         unset($open_tags[$ult_key]);
                         break;
                     }
-                    if (!in_array($val['name'], $open_tags)) {
+                    if (!\in_array($val['name'], $open_tags)) {
                         $type = (-1 < $structure_key) ? $structure[$structure_key]['type'] : false;
                         if ('text' === $type) {
                             $structure[$structure_key]['str'] .= $val['str'];
                         } else {
-                            $structure[++$structure_key] = array(
+                            $structure[++$structure_key] = [
                                 'type'  => 'text',
                                 'str'   => $val['str'],
                                 'level' => $level
-                            );
+                            ];
                         }
                         break;
                     }
-                    foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
-                        if ($ultimate != $val['name']) {
-                            $structure[++$structure_key] = array(
+                    foreach (\array_reverse($open_tags, true) as $ult_key => $ultimate) {
+                        if ($ultimate !== $val['name']) {
+                            $structure[++$structure_key] = [
                                 'type'  => 'close',
                                 'name'  => $ultimate,
                                 'str'   => '',
                                 'level' => --$level
-                            );
+                            ];
                             unset($open_tags[$ult_key]);
                         } else {
                             break;
@@ -1901,13 +1899,13 @@ class Xbbcode
             }
         }
 
-        foreach (array_reverse($open_tags, true) as $ult_key => $ultimate) {
-            $structure[++$structure_key] = array(
+        foreach (\array_reverse($open_tags, true) as $ult_key => $ultimate) {
+            $structure[++$structure_key] = [
                 'type'  => 'close',
                 'name'  => $ultimate,
                 'str'   => '',
                 'level' => --$level
-            );
+            ];
             unset($open_tags[$ult_key]);
         }
 
@@ -1924,11 +1922,11 @@ class Xbbcode
         $structure = $this->normalizeBracket($this->syntax);
         /* Отслеживаем, имеют ли элементы неразрешенные подэлементы.
            Соответственно этому исправляем $structure. */
-        $normalized = array();
+        $normalized = [];
         $normal_key = -1;
         $level = 0;
-        $open_tags = array();
-        $not_tags = array();
+        $open_tags = [];
+        $not_tags = [];
         $this->statistics['count_tags'] = 0;
 
         foreach ($structure as $val) {
@@ -1944,19 +1942,19 @@ class Xbbcode
                     break;
                 case 'open/close':
                     $this->includeTag($val['name']);
-                    end($open_tags);
-                    $parent = $open_tags ? current($open_tags) : $this->getTagName();
+                    \end($open_tags);
+                    $parent = $open_tags ? \current($open_tags) : $this->getTagName();
                     $permissibly = $this->isPermissiblyChild($parent, $val['name']);
                     if (!$permissibly) {
                         $type = (-1 < $normal_key) ? $normalized[$normal_key]['type'] : false;
                         if ('text' === $type) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
-                            $normalized[++$normal_key] = array(
+                            $normalized[++$normal_key] = [
                                 'type'  => 'text',
                                 'str'   => $val['str'],
                                 'level' => $level
-                            );
+                            ];
                         }
                         break;
                     }
@@ -1966,8 +1964,8 @@ class Xbbcode
                     break;
                 case 'open':
                     $this->includeTag($val['name']);
-                    end($open_tags);
-                    $parent = $open_tags ? current($open_tags) : $this->getTagName();
+                    \end($open_tags);
+                    $parent = $open_tags ? \current($open_tags) : $this->getTagName();
                     $permissibly = $this->isPermissiblyChild($parent, $val['name']);
                     if (!$permissibly) {
                         $not_tags[$val['level']] = $val['name'];
@@ -1975,17 +1973,17 @@ class Xbbcode
                         if ('text' === $type) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
-                            $normalized[++$normal_key] = array(
+                            $normalized[++$normal_key] = [
                                 'type'  => 'text',
                                 'str'   => $val['str'],
                                 'level' => $level
-                            );
+                            ];
                         }
                         break;
                     }
                     $normalized[++$normal_key] = $val;
                     $normalized[$normal_key]['level'] = $level++;
-                    $ult_key = count($open_tags);
+                    $ult_key = \count($open_tags);
                     $open_tags[$ult_key] = $val['name'];
                     $this->statistics['count_tags'] += 1;
                     break;
@@ -1997,17 +1995,17 @@ class Xbbcode
                         if ('text' === $type) {
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
-                            $normalized[++$normal_key] = array(
+                            $normalized[++$normal_key] = [
                                 'type'  => 'text',
                                 'str'   => $val['str'],
                                 'level' => $level
-                            );
+                            ];
                         }
                         break;
                     }
                     $normalized[++$normal_key] = $val;
                     $normalized[$normal_key]['level'] = --$level;
-                    $ult_key = count($open_tags) - 1;
+                    $ult_key = \count($open_tags) - 1;
                     unset($open_tags[$ult_key]);
                     $this->statistics['count_tags'] += 1;
                     break;
@@ -2017,49 +2015,49 @@ class Xbbcode
         unset($structure);
 
         // Формируем дерево элементов
-        $result = array();
+        $result = [];
         $result_key = -1;
-        $open_tags = array();
+        $open_tags = [];
         $this->statistics['count_level'] = 0;
         foreach ($normalized as $val) {
             switch ($val['type']) {
                 case 'text':
                     if (!$val['level']) {
-                        $result[++$result_key] = array(
+                        $result[++$result_key] = [
                             'type' => 'text',
                             'str' => $val['str']
-                        );
+                        ];
                         break;
                     }
-                    $open_tags[$val['level'] - 1]['val'][] = array(
+                    $open_tags[$val['level'] - 1]['val'][] = [
                         'type' => 'text',
                         'str' => $val['str']
-                    );
+                    ];
                     break;
                 case 'open/close':
                     if (!$val['level']) {
-                        $result[++$result_key] = array(
+                        $result[++$result_key] = [
                             'type'   => 'item',
                             'name'   => $val['name'],
                             'attributes' => $val['attributes'],
-                            'val'    => array()
-                        );
+                            'val'    => []
+                        ];
                         break;
                     }
-                    $open_tags[$val['level'] - 1]['val'][] = array(
+                    $open_tags[$val['level'] - 1]['val'][] = [
                         'type'   => 'item',
                         'name'   => $val['name'],
                         'attributes' => $val['attributes'],
-                        'val'    => array()
-                    );
+                        'val'    => []
+                    ];
                     break;
                 case 'open':
-                    $open_tags[$val['level']] = array(
+                    $open_tags[$val['level']] = [
                         'type'   => 'item',
                         'name'   => $val['name'],
                         'attributes' => $val['attributes'],
-                        'val'    => array()
-                    );
+                        'val'    => []
+                    ];
                     break;
                 case 'close':
                     if (!$val['level']) {
@@ -2088,68 +2086,68 @@ class Xbbcode
      */
     protected function getSyntax($tree = false)
     {
-        if (!is_array($tree)) {
+        if (!\is_array($tree)) {
             $tree = $this->getTree();
         }
-        $syntax = array();
+        $syntax = [];
         foreach ($tree as $elem) {
             if ('text' === $elem['type']) {
-                $syntax[] = array(
+                $syntax[] = [
                     'type' => 'text',
                     'str' => $this->specialchars($elem['str'])
-                );
+                ];
             } else {
                 $sub_elems = $this->getSyntax($elem['val']);
                 $str = '';
-                $layout = array(array(0, '['));
+                $layout = [[0, '[']];
                 foreach ($elem['attributes'] as $name => $val) {
                     $val = $this->specialchars($val);
                     if ($str) {
                         $str .= ' ';
-                        $layout[] = array(4, ' ');
-                        $layout[] = array(6, $name);
+                        $layout[] = [4, ' '];
+                        $layout[] = [6, $name];
                     } else {
-                        $layout[] = array(2, $name);
+                        $layout[] = [2, $name];
                     }
                     $str .= $name;
                     if ($val) {
                         $str .= '="' . $val . '"';
-                        $layout[] = array(3, '=');
-                        $layout[] = array(5, '"');
-                        $layout[] = array(7, $val);
-                        $layout[] = array(5, '"');
+                        $layout[] = [3, '='];
+                        $layout[] = [5, '"'];
+                        $layout[] = [7, $val];
+                        $layout[] = [5, '"'];
                     }
                 }
                 if ($sub_elems) {
                     $str = '[' . $str . ']';
                 } else {
                     $str = '[' . $str . ' /]';
-                    $layout[] = array(4, ' ');
-                    $layout[] = array(1, '/');
+                    $layout[] = [4, ' '];
+                    $layout[] = [1, '/'];
                 }
-                $layout[] = array(0, ']');
-                $syntax[] = array(
+                $layout[] = [0, ']'];
+                $syntax[] = [
                     'type' => $sub_elems ? 'open' : 'open/close',
                     'str' => $str,
                     'name' => $elem['name'],
                     'attributes' => $elem['attributes'],
                     'layout' => $layout
-                );
+                ];
                 foreach ($sub_elems as $sub_elem) {
                     $syntax[] = $sub_elem;
                 }
                 if ($sub_elems) {
-                    $syntax[] = array(
+                    $syntax[] = [
                         'type' => 'close',
                         'str' => '[/' . $elem['name'] . ']',
                         'name' => $elem['name'],
-                        'layout' => array(
-                            array(0, '['),
-                            array(1, '/'),
-                            array(2, $elem['name']),
-                            array(0, ']')
-                        )
-                    );
+                        'layout' => [
+                            [0, '['],
+                            [1, '/'],
+                            [2, $elem['name']],
+                            [0, ']']
+                        ]
+                    ];
                 }
             }
         }
@@ -2166,14 +2164,14 @@ class Xbbcode
      */
     protected function insertMnemonics($text)
     {
-        $text = htmlspecialchars($text, ENT_NOQUOTES);
+        $text = \htmlspecialchars($text, ENT_NOQUOTES);
         if ($this->getAutoLinks()) {
             $search = $this->pregAutoLinks['pattern'];
             $replace = $this->pregAutoLinks['replacement'];
-            $text = preg_replace($search, $replace, $text);
+            $text = \preg_replace($search, $replace, $text);
         }
-        $text = str_replace('  ', '&#160;&#160;', nl2br($text));
-        $text = strtr($text, $this->getMnemonics());
+        $text = \str_replace('  ', '&#160;&#160;', \nl2br($text));
+        $text = \strtr($text, $this->getMnemonics());
 
         return $text;
     }
@@ -2186,29 +2184,29 @@ class Xbbcode
      */
     public function highlight()
     {
-        $time_start = microtime(true);
-        $chars = array(
+        $time_start = \microtime(true);
+        $chars = [
             '@l;'  => '<span class="bb_spec_char">@l;</span>',
             '@r;'  => '<span class="bb_spec_char">@r;</span>',
             '@q;'  => '<span class="bb_spec_char">@q;</span>',
             '@a;'  => '<span class="bb_spec_char">@a;</span>',
             '@at;' => '<span class="bb_spec_char">@at;</span>'
-        );
+        ];
         $search = $this->pregAutoLinks['pattern'];
         $replace = $this->pregAutoLinks['highlight'];
         $str = '';
 
         foreach ($this->syntax as $elem) {
             if ('text' === $elem['type']) {
-                $elem['str'] = strtr(htmlspecialchars($elem['str']), $chars);
+                $elem['str'] = \strtr(\htmlspecialchars($elem['str']), $chars);
                 foreach ($this->getMnemonics() as $mnemonic => $value) {
-                    $elem['str'] = str_replace(
+                    $elem['str'] = \str_replace(
                         $mnemonic,
                         '<span class="bb_mnemonic">' . $mnemonic . '</span>',
                         $elem['str']
                     );
                 }
-                $elem['str'] = preg_replace($search, $replace, $elem['str']);
+                $elem['str'] = \preg_replace($search, $replace, $elem['str']);
                 $str .= $elem['str'];
             } else {
                 $str .= '<span class="bb_tag">';
@@ -2230,20 +2228,20 @@ class Xbbcode
                             $str .= $val[1];
                             break;
                         case 5:
-                            if (!trim($val[1])) {
+                            if (!\trim($val[1])) {
                                 $str .= $val[1];
                             } else {
                                 $str .= '<span class="bb_quote">' . $val[1] . '</span>';
                             }
                             break;
                         case 6:
-                            $str .= '<span class="bb_attribute_name">' . htmlspecialchars($val[1]) . '</span>';
+                            $str .= '<span class="bb_attribute_name">' . \htmlspecialchars($val[1]) . '</span>';
                             break;
                         case 7:
-                            if (!trim($val[1])) {
+                            if (!\trim($val[1])) {
                                 $str .= $val[1];
                             } else {
-                                $str .= '<span class="bb_attribute_val">' . strtr(htmlspecialchars($val[1]), $chars) . '</span>';
+                                $str .= '<span class="bb_attribute_val">' . \strtr(\htmlspecialchars($val[1]), $chars) . '</span>';
                             }
                             break;
                         default:
@@ -2254,9 +2252,9 @@ class Xbbcode
                 $str .= '</span>';
             }
         }
-        $str = nl2br($str);
-        $str = str_replace('  ', '&#160;&#160;', $str);
-        $this->statistics['time_html'] = microtime(true) - $time_start;
+        $str = \nl2br($str);
+        $str = \str_replace('  ', '&#160;&#160;', $str);
+        $this->statistics['time_html'] = \microtime(true) - $time_start;
 
         return $str;
     }
@@ -2270,7 +2268,7 @@ class Xbbcode
      */
     public function getHtml(array $elems = null)
     {
-        $time_start = microtime(true);
+        $time_start = \microtime(true);
         if (null === $elems) {
             $elems = $this->getTree();
         }
@@ -2281,9 +2279,9 @@ class Xbbcode
             if ('text' === $elem['type']) {
                 $elem['str'] = $this->insertMnemonics($elem['str']);
                 for ($i = 0; $i < $rbr; ++$i) {
-                    $elem['str'] = ltrim($elem['str']);
-                    if ('<br />' === substr($elem['str'], 0, 6)) {
-                        $elem['str'] = substr_replace($elem['str'], '', 0, 6);
+                    $elem['str'] = \ltrim($elem['str']);
+                    if ('<br />' === \substr($elem['str'], 0, 6)) {
+                        $elem['str'] = \substr_replace($elem['str'], '', 0, 6);
                     }
                 }
                 $result .= $elem['str'];
@@ -2294,9 +2292,9 @@ class Xbbcode
                 $lbr = $tag::BR_LEFT;
                 $rbr = $tag::BR_RIGHT;
                 for ($i = 0; $i < $lbr; ++$i) {
-                    $result = rtrim($result);
-                    if ('<br />' === substr($result, -6)) {
-                        $result = substr_replace($result, '', -6, 6);
+                    $result = \rtrim($result);
+                    if ('<br />' === \substr($result, -6)) {
+                        $result = \substr_replace($result, '', -6, 6);
                     }
                 }
 
@@ -2313,10 +2311,12 @@ class Xbbcode
             }
         }
 
-        $result = preg_replace(
-            "'\s*<br \/>\s*<br \/>\s*'si", "\n<br />&#160;<br />\n", $result
+        $result = \preg_replace(
+            "'\s*<br \/>\s*<br \/>\s*'si",
+            "\n<br />&#160;<br />\n",
+            $result
         );
-        $this->statistics['time_html'] = microtime(true) - $time_start;
+        $this->statistics['time_html'] = \microtime(true) - $time_start;
 
         return $result;
     }
@@ -2359,7 +2359,7 @@ class Xbbcode
      */
     public function getStatistics()
     {
-        $this->statistics['memory_peak_usage'] = memory_get_peak_usage(true);
+        $this->statistics['memory_peak_usage'] = \memory_get_peak_usage(true);
 
         return $this->statistics;
     }

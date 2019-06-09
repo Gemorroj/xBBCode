@@ -22,7 +22,6 @@
 
 namespace Xbbcode\Tag;
 
-
 /**
  * Class P
  * Класс для тега [p] и тегов [h1], [h2], [h3], [h4], [h5], [h6]

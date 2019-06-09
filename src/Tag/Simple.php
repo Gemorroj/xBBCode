@@ -22,7 +22,6 @@
 
 namespace Xbbcode\Tag;
 
-
 /**
  * Class Simple
  * Класс для простейших тегов, например, [b]

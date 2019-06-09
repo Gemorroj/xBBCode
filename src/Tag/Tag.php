@@ -74,7 +74,7 @@ abstract class Tag extends Xbbcode
      * Массив значений атрибутов тега, которому сопоставлен экземпляр класса.
      * Пуст, если экземпляр не сопоставлен никакому тегу.
      */
-    protected $attributes = array();
+    protected $attributes = [];
 
 
     /**
@@ -141,7 +141,7 @@ abstract class Tag extends Xbbcode
      */
     protected function getBody()
     {
-        if (in_array(static::BEHAVIOUR, array('table', 'tr', 'ul'))) {
+        if (\in_array(static::BEHAVIOUR, ['table', 'tr', 'ul'])) {
             $this->cleanTreeText();
         }
 
@@ -156,35 +156,35 @@ abstract class Tag extends Xbbcode
      */
     protected function parseUrl($url)
     {
-        $parse = parse_url($url);
+        $parse = \parse_url($url);
 
         $out = '';
         if (isset($parse['scheme'])) {
             $out .= $parse['scheme'] . '://';
         }
-        if (isset($parse['user']) && isset($parse['pass'])) {
-            $out .= rawurlencode($parse['user']) . ':' . rawurlencode($parse['pass']) . '@';
-        } else if (isset($parse['user'])) {
-            $out .= rawurlencode($parse['user']) . '@';
+        if (isset($parse['user'], $parse['pass'])) {
+            $out .= \rawurlencode($parse['user']) . ':' . \rawurlencode($parse['pass']) . '@';
+        } elseif (isset($parse['user'])) {
+            $out .= \rawurlencode($parse['user']) . '@';
         }
         if (isset($parse['host'])) {
-            $out .= rawurlencode($parse['host']);
+            $out .= \rawurlencode($parse['host']);
         }
         if (isset($parse['port'])) {
             $out .= ':' . $parse['port'];
         }
         if (isset($parse['path'])) {
-            $out .= str_replace('%2F', '/', rawurlencode($parse['path']));
+            $out .= \str_replace('%2F', '/', \rawurlencode($parse['path']));
         }
         if (isset($parse['query'])) {
             $query = $this->parseStr($parse['query']);
             //parse_str($parse['query'], $query); //replace spaces and dots
 
             // PHP 5.4.0 - PHP_QUERY_RFC3986
-            $out .= '?' . str_replace('+', '%20', rtrim(http_build_query($query, '', '&'), '='));
+            $out .= '?' . \str_replace('+', '%20', \rtrim(\http_build_query($query, '', '&'), '='));
         }
         if (isset($parse['fragment'])) {
-            $out .= '#' . rawurlencode($parse['fragment']);
+            $out .= '#' . \rawurlencode($parse['fragment']);
         }
 
         return $out;
@@ -198,16 +198,16 @@ abstract class Tag extends Xbbcode
      * @param string $str
      * @return array
      */
-    private function parseStr ($str)
+    private function parseStr($str)
     {
-        $original = array('.', ' ');
-        $replace = array("xbbdot\txbbdot", "xbbspace\txbbspace");
+        $original = ['.', ' '];
+        $replace = ["xbbdot\txbbdot", "xbbspace\txbbspace"];
 
-        parse_str(str_replace($original, $replace, $str), $query);
+        \parse_str(\str_replace($original, $replace, $str), $query);
 
         foreach ($query as $k => $v) {
             unset($query[$k]);
-            $query[str_replace($replace, $original, $k)] = str_replace($replace, $original, $v);
+            $query[\str_replace($replace, $original, $k)] = \str_replace($replace, $original, $v);
         }
 
         return $query;
@@ -220,7 +220,7 @@ abstract class Tag extends Xbbcode
      */
     protected function isValidSize($size)
     {
-        return (bool)preg_match('/^[0-9]+(?:px|%)?$/i', $size);
+        return (bool)\preg_match('/^[0-9]+(?:px|%)?$/i', $size);
     }
 
 
@@ -230,7 +230,7 @@ abstract class Tag extends Xbbcode
      */
     protected function isValidNumber($number)
     {
-        return (bool)preg_match('/^[0-9]+$/', $number);
+        return (bool)\preg_match('/^[0-9]+$/', $number);
     }
 
     /**
@@ -239,7 +239,7 @@ abstract class Tag extends Xbbcode
      */
     protected function isValidFontSize($size)
     {
-        return (bool)preg_match('/^(?:\+|-)?(?:1|2|3|4|5|6|7){1}$/', $size);
+        return (bool)\preg_match('/^(?:\+|-)?(?:1|2|3|4|5|6|7){1}$/', $size);
     }
 
     /**
@@ -248,7 +248,7 @@ abstract class Tag extends Xbbcode
      */
     protected function isValidAlign($align)
     {
-        return in_array(strtolower($align), array('left', 'right', 'center', 'justify'));
+        return \in_array(\strtolower($align), ['left', 'right', 'center', 'justify']);
     }
 
     /**
@@ -257,7 +257,7 @@ abstract class Tag extends Xbbcode
      */
     protected function isValidValign($valign)
     {
-        return in_array(strtolower($valign), array('top', 'middle', 'bottom', 'baseline'));
+        return \in_array(\strtolower($valign), ['top', 'middle', 'bottom', 'baseline']);
     }
 
     /**
@@ -266,7 +266,7 @@ abstract class Tag extends Xbbcode
      */
     protected function isValidUlType($ulType)
     {
-        return in_array(strtolower($ulType), array('disc', 'circle', 'square'));
+        return \in_array(\strtolower($ulType), ['disc', 'circle', 'square']);
     }
 
     /**
@@ -275,7 +275,7 @@ abstract class Tag extends Xbbcode
      */
     protected function isValidOlType($olType)
     {
-        return (bool)preg_match('/^[a-z0-9]+$/i', $olType);
+        return (bool)\preg_match('/^[a-z0-9]+$/i', $olType);
     }
 
     /**
@@ -284,6 +284,6 @@ abstract class Tag extends Xbbcode
      */
     protected function isValidTarget($target)
     {
-        return in_array(strtolower($target), array('_blank', '_self', '_parent', '_top'));
+        return \in_array(\strtolower($target), ['_blank', '_self', '_parent', '_top']);
     }
 }

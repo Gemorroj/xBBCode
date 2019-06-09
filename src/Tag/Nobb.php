@@ -22,7 +22,6 @@
 
 namespace Xbbcode\Tag;
 
-
 /**
  * Class Nobb
  * Класс для тега [nobb]
@@ -38,6 +37,6 @@ class Nobb extends Tag
      */
     public function __toString()
     {
-        return htmlspecialchars($this->getTreeText(), ENT_NOQUOTES);
+        return \htmlspecialchars($this->getTreeText(), ENT_NOQUOTES);
     }
 }

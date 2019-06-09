@@ -30,7 +30,7 @@ class Attributes extends \ArrayObject
     /**
      * @var array
      */
-    protected $attributes = array('class' => 'bb');
+    protected $attributes = ['class' => 'bb'];
 
     /**
      * @param string $name
@@ -95,9 +95,9 @@ class Attributes extends \ArrayObject
     {
         $str = '';
         foreach ($this->getIterator() as $name => $value) {
-            $str .= htmlspecialchars($name, ENT_NOQUOTES) . '="' . htmlspecialchars($value) . '" ';
+            $str .= \htmlspecialchars($name, ENT_NOQUOTES) . '="' . \htmlspecialchars($value) . '" ';
         }
 
-        return rtrim($str);
+        return \rtrim($str);
     }
 }

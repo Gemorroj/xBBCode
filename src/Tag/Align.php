@@ -24,7 +24,6 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Attributes;
 
-
 /**
  * Class Align
  * Класс для тегов [align], [center], [justify], [left] и [right]

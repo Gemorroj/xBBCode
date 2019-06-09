@@ -24,7 +24,6 @@ namespace Xbbcode\Tag;
 
 use Xbbcode\Attributes;
 
-
 /**
  * Class Youtube
  * Класс для тега [youtube]
@@ -44,15 +43,15 @@ class Youtube extends Tag
             $src = $this->getTreeText();
         }
 
-        $parse = parse_url($src);
-        if (isset($parse['path']) && isset($parse['query'])) {
-            parse_str($parse['query'], $query);
+        $parse = \parse_url($src);
+        if (isset($parse['path'], $parse['query'])) {
+            \parse_str($parse['query'], $query);
             if (isset($query['v'])) {
                 $src = $query['v'];
             }
         }
 
-        return ($src ? '//www.youtube.com/embed/' . rawurlencode($src) : '');
+        return ($src ? '//www.youtube.com/embed/' . \rawurlencode($src) : '');
     }
 
     /**
