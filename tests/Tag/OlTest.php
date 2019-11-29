@@ -3,7 +3,7 @@ namespace Xbbcode\Tests\Tag;
 
 use Xbbcode\Xbbcode;
 
-class OlTest extends \PHPUnit_Framework_TestCase
+class OlTest extends \PHPUnit\Framework\TestCase
 {
     public function testTagWithoutLi()
     {

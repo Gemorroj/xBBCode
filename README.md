@@ -17,7 +17,7 @@ echo $xbbcode->getHtml();
 ```
 
 ### Requirements:
- - PHP >= 5.6
+ - PHP >= 7.1.3
 
 
 ### Installation:

@@ -3,7 +3,7 @@ namespace Xbbcode\Tests\Tag;
 
 use Xbbcode\Xbbcode;
 
-class LiTest extends \PHPUnit_Framework_TestCase
+class LiTest extends \PHPUnit\Framework\TestCase
 {
     public function testTagWithUl()
     {

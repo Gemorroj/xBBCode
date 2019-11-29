@@ -3,7 +3,7 @@ namespace Xbbcode\Tests\Tag;
 
 use Xbbcode\Xbbcode;
 
-class TdTest extends \PHPUnit_Framework_TestCase
+class TdTest extends \PHPUnit\Framework\TestCase
 {
     public function testTag()
     {

@@ -3,7 +3,7 @@ namespace Xbbcode\Tests\Tag;
 
 use Xbbcode\Xbbcode;
 
-class YoutubeTest extends \PHPUnit_Framework_TestCase
+class YoutubeTest extends \PHPUnit\Framework\TestCase
 {
     public function testTag()
     {

@@ -1,9 +1,10 @@
 <?php
 namespace Xbbcode\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Xbbcode\Xbbcode;
 
-class XbbcodeTest extends \PHPUnit_Framework_TestCase
+class XbbcodeTest extends TestCase
 {
     public function testBase()
     {

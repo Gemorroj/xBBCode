@@ -3,7 +3,7 @@ namespace Xbbcode\Tests\Tag;
 
 use Xbbcode\Xbbcode;
 
-class AlignTest extends \PHPUnit_Framework_TestCase
+class AlignTest extends \PHPUnit\Framework\TestCase
 {
     public function testTag()
     {

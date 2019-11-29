@@ -3,7 +3,7 @@ namespace Xbbcode\Tests\Tag;
 
 use Xbbcode\Xbbcode;
 
-class TrTest extends \PHPUnit_Framework_TestCase
+class TrTest extends \PHPUnit\Framework\TestCase
 {
     public function testTagWithoutTdCell()
     {
