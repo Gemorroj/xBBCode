@@ -60,7 +60,7 @@ class Spoiler extends Tag
         $attr->add('class', 'bb_spoiler');
         $attr->set('style', 'display: none');
 
-        $id = \uniqid('xbbcode');
+        $id = \uniqid('xbbcode', true);
         $attr->set('id', $id);
 
         return $attr;

@@ -1053,7 +1053,7 @@ class Xbbcode
         // In case if $allowed is not an array, assuming that everything is allowed
         if ($allowed) {
             foreach ($this->getTags() as $key => $value) {
-                if (!\in_array($key, $allowed)) {
+                if (!\in_array($key, $allowed, true)) {
                     unset($this->tags[$key]);
                 }
             }
@@ -1146,7 +1146,7 @@ class Xbbcode
             } else {
                 break;
             }
-            $this->cursor += 1;
+            ++$this->cursor;
         }
 
         if (isset($this->tags[\strtolower($token)])) {
@@ -1730,7 +1730,7 @@ class Xbbcode
 
         $mustClose = false;
         if (isset($this->ends[$currentBehaviour])) {
-            $mustClose = \in_array($nextBehaviour, $this->ends[$currentBehaviour]);
+            $mustClose = \in_array($nextBehaviour, $this->ends[$currentBehaviour], true);
         }
 
         return $mustClose;
@@ -1765,7 +1765,7 @@ class Xbbcode
         }
         $permissibly = true;
         if (isset($this->children[$parent_behaviour])) {
-            $permissibly = \in_array($child_behaviour, $this->children[$parent_behaviour]);
+            $permissibly = \in_array($child_behaviour, $this->children[$parent_behaviour], true);
         }
 
         return $permissibly;
@@ -1866,7 +1866,7 @@ class Xbbcode
                         unset($open_tags[$ult_key]);
                         break;
                     }
-                    if (!\in_array($val['name'], $open_tags)) {
+                    if (!\in_array($val['name'], $open_tags, true)) {
                         $type = (-1 < $structure_key) ? $structure[$structure_key]['type'] : false;
                         if ('text' === $type) {
                             $structure[$structure_key]['str'] .= $val['str'];
@@ -1960,7 +1960,7 @@ class Xbbcode
                     }
                     $normalized[++$normal_key] = $val;
                     $normalized[$normal_key]['level'] = $level;
-                    $this->statistics['count_tags'] += 1;
+                    ++$this->statistics['count_tags'];
                     break;
                 case 'open':
                     $this->includeTag($val['name']);
@@ -1985,7 +1985,7 @@ class Xbbcode
                     $normalized[$normal_key]['level'] = $level++;
                     $ult_key = \count($open_tags);
                     $open_tags[$ult_key] = $val['name'];
-                    $this->statistics['count_tags'] += 1;
+                    ++$this->statistics['count_tags'];
                     break;
                 case 'close':
                     $not_normal = isset($not_tags[$val['level']]) && $not_tags[$val['level']] = $val['name'];
@@ -2007,7 +2007,7 @@ class Xbbcode
                     $normalized[$normal_key]['level'] = --$level;
                     $ult_key = \count($open_tags) - 1;
                     unset($open_tags[$ult_key]);
-                    $this->statistics['count_tags'] += 1;
+                    ++$this->statistics['count_tags'];
                     break;
             }
         }
@@ -2070,7 +2070,7 @@ class Xbbcode
                     break;
             }
             if ($val['level'] > $this->statistics['count_level']) {
-                $this->statistics['count_level'] += 1;
+                ++$this->statistics['count_level'];
             }
         }
 
@@ -2280,7 +2280,7 @@ class Xbbcode
                 $elem['str'] = $this->insertMnemonics($elem['str']);
                 for ($i = 0; $i < $rbr; ++$i) {
                     $elem['str'] = \ltrim($elem['str']);
-                    if ('<br />' === \substr($elem['str'], 0, 6)) {
+                    if (0 === \strpos($elem['str'], '<br />')) {
                         $elem['str'] = \substr_replace($elem['str'], '', 0, 6);
                     }
                 }
