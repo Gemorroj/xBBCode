@@ -1089,13 +1089,13 @@ class Xbbcode
         $charType = false;
         while (true) {
             $tokenType = $charType;
-            if (!isset($this->text{$this->cursor})) {
+            if (!isset($this->text[$this->cursor])) {
                 if (false === $charType) {
                     return false;
                 }
                 break;
             }
-            $char = $this->text{$this->cursor};
+            $char = $this->text[$this->cursor];
             switch ($char) {
                 case '[':
                     $charType = 0;
