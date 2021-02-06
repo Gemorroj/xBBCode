@@ -24,21 +24,21 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Hr
- * Класс для тега [hr]
+ * Класс для тега [hr].
  */
 class Hr extends Tag
 {
-    const IS_CLOSE = true;
+    public const IS_CLOSE = true;
     //const BR_RIGHT = 1;
-    const BEHAVIOUR = 'hr';
+    public const BEHAVIOUR = 'hr';
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<hr ' . $this->getAttributes() . ' />';
+        return '<hr '.$this->getAttributes().' />';
     }
 }

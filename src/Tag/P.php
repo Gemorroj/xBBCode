@@ -24,21 +24,21 @@ namespace Xbbcode\Tag;
 
 /**
  * Class P
- * Класс для тега [p] и тегов [h1], [h2], [h3], [h4], [h5], [h6]
+ * Класс для тега [p] и тегов [h1], [h2], [h3], [h4], [h5], [h6].
  */
 class P extends Align
 {
     //const BR_LEFT = 2;
     //const BR_RIGHT = 2;
-    const BEHAVIOUR = 'p';
+    public const BEHAVIOUR = 'p';
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<' . $this->getTagName() . ' ' . $this->getAttributes() . '>' . $this->getBody() . '</' . $this->getTagName() . '>';
+        return '<'.$this->getTagName().' '.$this->getAttributes().'>'.$this->getBody().'</'.$this->getTagName().'>';
     }
 }

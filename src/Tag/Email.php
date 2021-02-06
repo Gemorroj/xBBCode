@@ -24,7 +24,7 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Email
- * Класс для тега [email]
+ * Класс для тега [email].
  */
 class Email extends A
 {
@@ -45,6 +45,6 @@ class Email extends A
             $href = $this->getTreeText();
         }
 
-        return 'mailto:' . $href;
+        return 'mailto:'.$href;
     }
 }

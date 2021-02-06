@@ -26,11 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class Td
- * Класс для тега [td]
+ * Класс для тега [td].
  */
 class Td extends Tag
 {
-    const BEHAVIOUR = 'td';
+    public const BEHAVIOUR = 'td';
 
     /**
      * @return Attributes
@@ -78,14 +78,13 @@ class Td extends Tag
         return $attr;
     }
 
-
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<td ' . $this->getAttributes() . '>' . $this->getBody() . '</td>';
+        return '<td '.$this->getAttributes().'>'.$this->getBody().'</td>';
     }
 }

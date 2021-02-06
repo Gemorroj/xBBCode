@@ -26,11 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class Size
- * Класс для тега [size]
+ * Класс для тега [size].
  */
 class Size extends Tag
 {
-    const BEHAVIOUR = 'span';
+    public const BEHAVIOUR = 'span';
 
     /**
      * @return Attributes
@@ -49,12 +49,12 @@ class Size extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<font ' . $this->getAttributes() . '>' . $this->getBody() . '</font>';
+        return '<font '.$this->getAttributes().'>'.$this->getBody().'</font>';
     }
 }

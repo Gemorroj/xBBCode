@@ -1,4 +1,5 @@
 <?php
+
 namespace Xbbcode\Tests\Tag;
 
 use Xbbcode\Xbbcode;
@@ -12,7 +13,7 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 
     public function testTag()
@@ -22,46 +23,46 @@ class TableTest extends \PHPUnit\Framework\TestCase
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 
     public function testTagWithNewLines()
     {
         $text = <<<'BB'
-test [table]
-[tr]
-[td]
-xBBCode
-[/td]
-[/tr]
-[/table].
-BB;
+            test [table]
+            [tr]
+            [td]
+            xBBCode
+            [/td]
+            [/tr]
+            [/table].
+            BB;
         $result = <<<'HTML'
-test <table class="bb"><tr class="bb"><td class="bb"><br />
-xBBCode<br />
-</td></tr></table>.
-HTML;
+            test <table class="bb"><tr class="bb"><td class="bb"><br />
+            xBBCode<br />
+            </td></tr></table>.
+            HTML;
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 
     public function testTagWithNewLinesAndSpaces()
     {
         $text = <<<'BB'
-test [table]
-  [tr]
-    [td]xBBCode[/td]
-  [/tr]
-[/table].
-BB;
+            test [table]
+              [tr]
+                [td]xBBCode[/td]
+              [/tr]
+            [/table].
+            BB;
         $result = <<<'HTML'
-test <table class="bb"><tr class="bb"><td class="bb">xBBCode</td></tr></table>.
-HTML;
+            test <table class="bb"><tr class="bb"><td class="bb">xBBCode</td></tr></table>.
+            HTML;
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 }

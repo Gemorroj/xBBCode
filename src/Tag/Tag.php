@@ -26,16 +26,16 @@ use Xbbcode\Attributes;
 use Xbbcode\Xbbcode;
 
 /**
- * Abstract class Tag
+ * Abstract class Tag.
  */
 abstract class Tag extends Xbbcode
 {
     /**
      * Задаёт возможность наличия у последнего атрибута у тега значений без необходимости наличия кавычек для значений с пробелами.
      * Пример: [altfont=Comic Sans MS]sometext[/altfont] или [altfont size="22" font=Comic Sans MS]sometext[/altfont]
-     * По умолчанию выключено
+     * По умолчанию выключено.
      */
-    const ONE_ATTRIBUTE = false;
+    public const ONE_ATTRIBUTE = false;
     /**
      * Модель поведения тега (в плане вложенности), которому сопоставлен экземпляр данного класса.
      * Модели поведения могут быть следующими:
@@ -53,29 +53,28 @@ abstract class Tag extends Xbbcode
      * 'td'      - ячейки таблиц
      * 'tr'      - строки таблиц
      * 'ul'      - списки
-     * Конкретное содержание в понятие "модель поведения" вкладывается настройками
+     * Конкретное содержание в понятие "модель поведения" вкладывается настройками.
      */
-    const BEHAVIOUR = 'div';
+    public const BEHAVIOUR = 'div';
     /**
      * Число разрывов строк, которые должны быть проигнорированы перед тегом
      */
-    const BR_LEFT = 0;
+    public const BR_LEFT = 0;
     /**
-     * Число разрывов строк, которые должны быть проигнорированы после тега
+     * Число разрывов строк, которые должны быть проигнорированы после тега.
      */
-    const BR_RIGHT = 0;
+    public const BR_RIGHT = 0;
 
     /**
-     * Указывает на одиночные тэги типа [br] или [hr]
+     * Указывает на одиночные тэги типа [br] или [hr].
      */
-    const IS_CLOSE = false;
+    public const IS_CLOSE = false;
 
     /**
      * Массив значений атрибутов тега, которому сопоставлен экземпляр класса.
      * Пуст, если экземпляр не сопоставлен никакому тегу.
      */
     protected $attributes = [];
-
 
     /**
      * Конструктор
@@ -90,7 +89,6 @@ abstract class Tag extends Xbbcode
      */
     abstract public function __toString();
 
-
     /**
      * @return Attributes Tag attributes
      */
@@ -99,18 +97,11 @@ abstract class Tag extends Xbbcode
         return new Attributes();
     }
 
-
-    /**
-     * @param array $attributes
-     */
     public function setAttributes(array $attributes)
     {
         $this->attributes = $attributes;
     }
 
-    /**
-     *
-     */
     protected function cleanTreeText()
     {
         foreach ($this->getTree() as $key => $item) {
@@ -119,7 +110,6 @@ abstract class Tag extends Xbbcode
             }
         }
     }
-
 
     /**
      * @return string
@@ -149,9 +139,10 @@ abstract class Tag extends Xbbcode
     }
 
     /**
-     * Функция преобразует строку URL в соответствии с RFC 3986
+     * Функция преобразует строку URL в соответствии с RFC 3986.
      *
      * @param string $url
+     *
      * @return string
      */
     protected function parseUrl($url)
@@ -160,18 +151,18 @@ abstract class Tag extends Xbbcode
 
         $out = '';
         if (isset($parse['scheme'])) {
-            $out .= $parse['scheme'] . '://';
+            $out .= $parse['scheme'].'://';
         }
         if (isset($parse['user'], $parse['pass'])) {
-            $out .= \rawurlencode($parse['user']) . ':' . \rawurlencode($parse['pass']) . '@';
+            $out .= \rawurlencode($parse['user']).':'.\rawurlencode($parse['pass']).'@';
         } elseif (isset($parse['user'])) {
-            $out .= \rawurlencode($parse['user']) . '@';
+            $out .= \rawurlencode($parse['user']).'@';
         }
         if (isset($parse['host'])) {
             $out .= \rawurlencode($parse['host']);
         }
         if (isset($parse['port'])) {
-            $out .= ':' . $parse['port'];
+            $out .= ':'.$parse['port'];
         }
         if (isset($parse['path'])) {
             $out .= \str_replace('%2F', '/', \rawurlencode($parse['path']));
@@ -181,21 +172,22 @@ abstract class Tag extends Xbbcode
             //parse_str($parse['query'], $query); //replace spaces and dots
 
             // PHP 5.4.0 - PHP_QUERY_RFC3986
-            $out .= '?' . \str_replace('+', '%20', \rtrim(\http_build_query($query, '', '&'), '='));
+            $out .= '?'.\str_replace('+', '%20', \rtrim(\http_build_query($query, '', '&'), '='));
         }
         if (isset($parse['fragment'])) {
-            $out .= '#' . \rawurlencode($parse['fragment']);
+            $out .= '#'.\rawurlencode($parse['fragment']);
         }
 
         return $out;
     }
 
-
     /**
-     * Аналог parse_str но без преобразования точек и пробелов в подчеркивания
+     * Аналог parse_str но без преобразования точек и пробелов в подчеркивания.
      *
      * @todo не очень хорошая реализация
+     *
      * @param string $str
+     *
      * @return array
      */
     private function parseStr($str)
@@ -213,37 +205,39 @@ abstract class Tag extends Xbbcode
         return $query;
     }
 
-
     /**
      * @param string $size
+     *
      * @return bool
      */
     protected function isValidSize($size)
     {
-        return (bool)\preg_match('/^[0-9]+(?:px|%)?$/i', $size);
+        return (bool) \preg_match('/^[0-9]+(?:px|%)?$/i', $size);
     }
-
 
     /**
      * @param string $number
+     *
      * @return bool
      */
     protected function isValidNumber($number)
     {
-        return (bool)\preg_match('/^[0-9]+$/', $number);
+        return (bool) \preg_match('/^[0-9]+$/', $number);
     }
 
     /**
      * @param string $size
+     *
      * @return bool
      */
     protected function isValidFontSize($size)
     {
-        return (bool)\preg_match('/^(?:\+|-)?(?:1|2|3|4|5|6|7){1}$/', $size);
+        return (bool) \preg_match('/^(?:\+|-)?(?:1|2|3|4|5|6|7){1}$/', $size);
     }
 
     /**
      * @param string $align
+     *
      * @return bool
      */
     protected function isValidAlign($align)
@@ -253,6 +247,7 @@ abstract class Tag extends Xbbcode
 
     /**
      * @param string $valign
+     *
      * @return bool
      */
     protected function isValidValign($valign)
@@ -262,6 +257,7 @@ abstract class Tag extends Xbbcode
 
     /**
      * @param string $ulType
+     *
      * @return bool
      */
     protected function isValidUlType($ulType)
@@ -271,15 +267,17 @@ abstract class Tag extends Xbbcode
 
     /**
      * @param string $olType
+     *
      * @return bool
      */
     protected function isValidOlType($olType)
     {
-        return (bool)\preg_match('/^[a-z0-9]+$/i', $olType);
+        return (bool) \preg_match('/^[a-z0-9]+$/i', $olType);
     }
 
     /**
      * @param string $target
+     *
      * @return bool
      */
     protected function isValidTarget($target)

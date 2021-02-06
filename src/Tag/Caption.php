@@ -24,19 +24,19 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Caption
- * Класс для тега [caption]
+ * Класс для тега [caption].
  */
 class Caption extends Tag
 {
-    const BEHAVIOUR = 'caption';
+    public const BEHAVIOUR = 'caption';
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<caption ' . $this->getAttributes() . '>' . $this->getBody() . '</caption>';
+        return '<caption '.$this->getAttributes().'>'.$this->getBody().'</caption>';
     }
 }

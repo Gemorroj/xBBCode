@@ -24,14 +24,14 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Simple
- * Класс для простейших тегов, например, [b]
+ * Класс для простейших тегов, например, [b].
  */
 class Simple extends Tag
 {
-    const BEHAVIOUR = 'span';
+    public const BEHAVIOUR = 'span';
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
@@ -47,6 +47,6 @@ class Simple extends Tag
                 break;
         }
 
-        return '<' . $this->getTagName() . ' ' . $this->getAttributes() . '>' . $this->getBody() . '</' . $this->getTagName() . '>';
+        return '<'.$this->getTagName().' '.$this->getAttributes().'>'.$this->getBody().'</'.$this->getTagName().'>';
     }
 }

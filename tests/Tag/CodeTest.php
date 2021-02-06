@@ -1,4 +1,5 @@
 <?php
+
 namespace Xbbcode\Tests\Tag;
 
 use Xbbcode\Xbbcode;
@@ -12,7 +13,7 @@ class CodeTest extends \PHPUnit\Framework\TestCase
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 
     public function testTagPhp()
@@ -22,7 +23,7 @@ class CodeTest extends \PHPUnit\Framework\TestCase
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 
     public function testTagPhpKeywords()
@@ -33,6 +34,6 @@ class CodeTest extends \PHPUnit\Framework\TestCase
         $xbbcode = new Xbbcode();
         $xbbcode->setKeywordLinks(true);
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 }

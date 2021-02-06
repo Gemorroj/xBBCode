@@ -26,18 +26,18 @@ use Xbbcode\Attributes;
 
 /**
  * Class Youtube
- * Класс для тега [youtube]
+ * Класс для тега [youtube].
  */
 class Youtube extends Tag
 {
-    const BEHAVIOUR = 'img';
+    public const BEHAVIOUR = 'img';
 
     /**
      * @return string
      */
     protected function getSrc()
     {
-        $src = isset($this->attributes['src']) ? $this->attributes['src'] : '';
+        $src = $this->attributes['src'] ?? '';
 
         if (!$src) {
             $src = $this->getTreeText();
@@ -51,7 +51,7 @@ class Youtube extends Tag
             }
         }
 
-        return ($src ? '//www.youtube.com/embed/' . \rawurlencode($src) : '');
+        return $src ? '//www.youtube.com/embed/'.\rawurlencode($src) : '';
     }
 
     /**
@@ -86,14 +86,13 @@ class Youtube extends Tag
         return $attr;
     }
 
-
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<iframe ' . $this->getAttributes() . '></iframe>';
+        return '<iframe '.$this->getAttributes().'></iframe>';
     }
 }

@@ -26,11 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class Li
- * Класс для тега [*]
+ * Класс для тега [*].
  */
 class Li extends Tag
 {
-    const BEHAVIOUR = 'li';
+    public const BEHAVIOUR = 'li';
 
     /**
      * @return Attributes
@@ -49,12 +49,12 @@ class Li extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<li ' . $this->getAttributes() . '>' . $this->getBody() . '</li>';
+        return '<li '.$this->getAttributes().'>'.$this->getBody().'</li>';
     }
 }

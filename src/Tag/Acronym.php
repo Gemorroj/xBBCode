@@ -26,11 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class Acronym
- * Класс для тега [acronym]
+ * Класс для тега [acronym].
  */
 class Acronym extends Tag
 {
-    const BEHAVIOUR = 'span';
+    public const BEHAVIOUR = 'span';
 
     /**
      * @return Attributes
@@ -47,12 +47,12 @@ class Acronym extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<acronym ' . $this->getAttributes() . '>' . $this->getBody() . '</acronym>';
+        return '<acronym '.$this->getAttributes().'>'.$this->getBody().'</acronym>';
     }
 }

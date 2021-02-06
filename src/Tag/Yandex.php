@@ -24,7 +24,7 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Yandex
- * Класс для тега [yandex]
+ * Класс для тега [yandex].
  */
 class Yandex extends A
 {
@@ -44,6 +44,6 @@ class Yandex extends A
             $href = $this->getTreeText();
         }
 
-        return '//yandex.com/yandsearch?text=' . \rawurlencode($href);
+        return '//yandex.com/yandsearch?text='.\rawurlencode($href);
     }
 }

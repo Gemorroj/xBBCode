@@ -24,20 +24,20 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Br
- * Класс для тега [br]
+ * Класс для тега [br].
  */
 class Br extends Tag
 {
-    const IS_CLOSE = true;
-    const BEHAVIOUR = 'span';
+    public const IS_CLOSE = true;
+    public const BEHAVIOUR = 'span';
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<br ' . $this->getAttributes() . ' />';
+        return '<br '.$this->getAttributes().' />';
     }
 }

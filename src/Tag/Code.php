@@ -24,25 +24,25 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Code
- * Класс для тегов подсветки синтаксиса и для тегов [code] и [pre]
+ * Класс для тегов подсветки синтаксиса и для тегов [code] и [pre].
  */
 class Code extends Tag
 {
     //const BR_RIGHT = 1;
-    const BEHAVIOUR = 'pre';
+    public const BEHAVIOUR = 'pre';
 
     /* Альтернативные названия языков и их трансляция в обозначения GeSHi */
     public $langSynonym = [
-        'algol'  => 'algol86',
-        'c++'    => 'cpp',
-        'c#'     => 'csharp',
-        'f++'    => 'fsharp',
-        'html'   => 'html4strict',
-        'html4'  => 'html4strict',
-        'js'     => 'javascript',
-        'ocaml'  => 'ocaml-brief',
+        'algol' => 'algol86',
+        'c++' => 'cpp',
+        'c#' => 'csharp',
+        'f++' => 'fsharp',
+        'html' => 'html4strict',
+        'html4' => 'html4strict',
+        'js' => 'javascript',
+        'ocaml' => 'ocaml-brief',
         'oracle' => 'oracle8',
-        't-sql'  => 'tsql',
+        't-sql' => 'tsql',
         'vb.net' => 'vbnet',
     ];
     /**
@@ -59,7 +59,7 @@ class Code extends Tag
     }
 
     /**
-     * Язык для подсветки
+     * Язык для подсветки.
      *
      * @return Code
      */
@@ -90,9 +90,8 @@ class Code extends Tag
         return $this;
     }
 
-
     /**
-     * Подсвечиваемый код
+     * Подсвечиваемый код.
      *
      * @return Code
      */
@@ -104,7 +103,7 @@ class Code extends Tag
     }
 
     /**
-     * Ссылки на документацию
+     * Ссылки на документацию.
      *
      * @return Code
      */
@@ -124,7 +123,7 @@ class Code extends Tag
     }
 
     /**
-     * Нумерация строк
+     * Нумерация строк.
      *
      * @return Code
      */
@@ -142,7 +141,7 @@ class Code extends Tag
     }
 
     /**
-     * Величина табуляции
+     * Величина табуляции.
      *
      * @return Code
      */
@@ -159,7 +158,7 @@ class Code extends Tag
     }
 
     /**
-     * Выделение строк
+     * Выделение строк.
      *
      * @return Code
      */
@@ -174,7 +173,7 @@ class Code extends Tag
     }
 
     /**
-     * Получаем заголовок
+     * Получаем заголовок.
      *
      * @return string
      */
@@ -186,26 +185,25 @@ class Code extends Tag
             $title = $this->geshi->get_language_name();
         }
 
-        return '<div class="bb_code_header"><span class="bb_code_lang">' . \htmlspecialchars($title, ENT_NOQUOTES) . '</span></div>';
+        return '<div class="bb_code_header"><span class="bb_code_lang">'.\htmlspecialchars($title, \ENT_NOQUOTES).'</span></div>';
     }
 
-
     /**
-     * Получаем подвал
+     * Получаем подвал.
      *
      * @return string
      */
     protected function getFooter()
     {
         if (isset($this->attributes['footer'])) {
-            return '<div class="bb_code_footer">' . \htmlspecialchars($this->attributes['footer'], ENT_NOQUOTES) . '</div>';
+            return '<div class="bb_code_footer">'.\htmlspecialchars($this->attributes['footer'], \ENT_NOQUOTES).'</div>';
         }
 
         return '';
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
@@ -218,6 +216,6 @@ class Code extends Tag
         $this->setExtra();
         $this->setLinks();
 
-        return '<div class="bb_code">' . $this->getHeader() . '<code class="bb_code">' . $this->geshi->parse_code() . '</code>' . $this->getFooter() . '</div>';
+        return '<div class="bb_code">'.$this->getHeader().'<code class="bb_code">'.$this->geshi->parse_code().'</code>'.$this->getFooter().'</div>';
     }
 }

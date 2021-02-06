@@ -24,7 +24,7 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Google
- * Класс для тега [google]
+ * Класс для тега [google].
  */
 class Google extends A
 {
@@ -44,6 +44,6 @@ class Google extends A
             $href = $this->getTreeText();
         }
 
-        return '//www.google.com/search?q=' . \rawurlencode($href);
+        return '//www.google.com/search?q='.\rawurlencode($href);
     }
 }

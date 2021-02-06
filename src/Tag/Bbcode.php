@@ -26,11 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class Bbcode
- * Класс для тега [bbcode]
+ * Класс для тега [bbcode].
  */
 class Bbcode extends Tag
 {
-    const BEHAVIOUR = 'code';
+    public const BEHAVIOUR = 'code';
 
     /**
      * @return Attributes
@@ -53,7 +53,7 @@ class Bbcode extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
@@ -61,6 +61,6 @@ class Bbcode extends Tag
     {
         $this->build();
 
-        return '<code ' . $this->getAttributes() . '>' . $this->highlight() . '</code>';
+        return '<code '.$this->getAttributes().'>'.$this->highlight().'</code>';
     }
 }

@@ -26,13 +26,13 @@ use Xbbcode\Attributes;
 
 /**
  * Class Ol
- * Класс для тегов [ol]
+ * Класс для тегов [ol].
  */
 class Ol extends Tag
 {
     //const BR_LEFT = 1;
     //const BR_RIGHT = 1;
-    const BEHAVIOUR = 'ul';
+    public const BEHAVIOUR = 'ul';
 
     /**
      * @return Attributes
@@ -57,12 +57,12 @@ class Ol extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<ol ' . $this->getAttributes() . '>' . $this->getBody() . '</ol>';
+        return '<ol '.$this->getAttributes().'>'.$this->getBody().'</ol>';
     }
 }

@@ -26,11 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class Color
- * Класс для тега [color]
+ * Класс для тега [color].
  */
 class Color extends Tag
 {
-    const BEHAVIOUR = 'span';
+    public const BEHAVIOUR = 'span';
 
     /**
      * @return Attributes
@@ -47,12 +47,12 @@ class Color extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<font ' . $this->getAttributes() . '>' . $this->getBody() . '</font>';
+        return '<font '.$this->getAttributes().'>'.$this->getBody().'</font>';
     }
 }

@@ -26,12 +26,12 @@ use Xbbcode\Attributes;
 
 /**
  * Class Altfont
- * Класс для тега [altfont]
+ * Класс для тега [altfont].
  */
 class Altfont extends Tag
 {
-    const BEHAVIOUR = 'span';
-    const ONE_ATTRIBUTE = true;
+    public const BEHAVIOUR = 'span';
+    public const ONE_ATTRIBUTE = true;
 
     /**
      * @return Attributes
@@ -55,12 +55,12 @@ class Altfont extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<font ' . $this->getAttributes() . '>' . $this->getBody() . '</font>';
+        return '<font '.$this->getAttributes().'>'.$this->getBody().'</font>';
     }
 }

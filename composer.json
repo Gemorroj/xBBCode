@@ -5,12 +5,12 @@
     "keywords": ["xbbcode","bbcode"],
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": "^7.1.3",
-        "geshi/geshi": "^1.0.9"
+        "php": ">=7.3",
+        "geshi/geshi": "^1.0.9.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "^7.5",
-        "friendsofphp/php-cs-fixer": "^2.16"
+        "phpunit/phpunit": "^9.5",
+        "friendsofphp/php-cs-fixer": "^2.18"
     },
     "homepage": "http://xbb.uz",
     "support": {

@@ -26,7 +26,7 @@ use Xbbcode\Attributes;
 
 /**
  * Class Quote
- * Класс для тегов [quote] и [blockquote]
+ * Класс для тегов [quote] и [blockquote].
  */
 class Quote extends Tag
 {
@@ -50,7 +50,7 @@ class Quote extends Tag
         }
 
         if ($author) {
-            return '<div class="bb_quote_author">' . \htmlspecialchars($author, ENT_NOQUOTES) . ':</div>';
+            return '<div class="bb_quote_author">'.\htmlspecialchars($author, \ENT_NOQUOTES).':</div>';
         }
 
         return '';
@@ -68,14 +68,13 @@ class Quote extends Tag
         return $attr;
     }
 
-
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<blockquote ' . $this->getAttributes() . '>' . $this->getAuthor() . $this->getBody() . '</blockquote>';
+        return '<blockquote '.$this->getAttributes().'>'.$this->getAuthor().$this->getBody().'</blockquote>';
     }
 }

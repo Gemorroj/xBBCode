@@ -1,4 +1,5 @@
 <?php
+
 namespace Xbbcode\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -35,6 +36,6 @@ http://www.youtube.com/watch?v=qH5IQbpu9NU
         $xbbcode->setAutoLinks(true);
         $xbbcode->parse($text);
 
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 }

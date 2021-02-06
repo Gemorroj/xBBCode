@@ -26,11 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class Bdo
- * Класс для тега [bdo]
+ * Класс для тега [bdo].
  */
 class Bdo extends Tag
 {
-    const BEHAVIOUR = 'span';
+    public const BEHAVIOUR = 'span';
 
     /**
      * @return Attributes
@@ -64,12 +64,12 @@ class Bdo extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<bdo ' . $this->getAttributes() . '>' . $this->getBody() . '</bdo>';
+        return '<bdo '.$this->getAttributes().'>'.$this->getBody().'</bdo>';
     }
 }

@@ -26,12 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class A
- * Класс для тегов [a], [anchor] и [url]
+ * Класс для тегов [a], [anchor] и [url].
  */
 class A extends Tag
 {
-    const BEHAVIOUR = 'a';
-
+    public const BEHAVIOUR = 'a';
 
     /**
      * @return string
@@ -83,9 +82,8 @@ class A extends Tag
         return $attr;
     }
 
-
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
@@ -93,6 +91,6 @@ class A extends Tag
     {
         $this->setAutoLinks(false);
 
-        return '<a ' . $this->getAttributes() . '>' . $this->getBody() . '</a>';
+        return '<a '.$this->getAttributes().'>'.$this->getBody().'</a>';
     }
 }

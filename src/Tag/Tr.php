@@ -24,19 +24,19 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Tr
- * Класс для тега [tr]
+ * Класс для тега [tr].
  */
 class Tr extends Tag
 {
-    const BEHAVIOUR = 'tr';
+    public const BEHAVIOUR = 'tr';
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<tr ' . $this->getAttributes() . '>' . $this->getBody() . '</tr>';
+        return '<tr '.$this->getAttributes().'>'.$this->getBody().'</tr>';
     }
 }

@@ -26,11 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class Img
- * Класс для тега [img]
+ * Класс для тега [img].
  */
 class Img extends Tag
 {
-    const BEHAVIOUR = 'img';
+    public const BEHAVIOUR = 'img';
 
     /**
      * @return string
@@ -98,14 +98,13 @@ class Img extends Tag
         return $attr;
     }
 
-
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<img ' . $this->getAttributes() . ' />';
+        return '<img '.$this->getAttributes().' />';
     }
 }

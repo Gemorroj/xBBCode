@@ -24,19 +24,19 @@ namespace Xbbcode\Tag;
 
 /**
  * Class Address
- * Класс для тега [address]
+ * Класс для тега [address].
  */
 class Address extends Tag
 {
     //const BR_RIGHT = 1;
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<address ' . $this->getAttributes() . '>' . $this->getBody() . '</address>';
+        return '<address '.$this->getAttributes().'>'.$this->getBody().'</address>';
     }
 }

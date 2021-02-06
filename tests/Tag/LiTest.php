@@ -1,4 +1,5 @@
 <?php
+
 namespace Xbbcode\Tests\Tag;
 
 use Xbbcode\Xbbcode;
@@ -12,7 +13,7 @@ class LiTest extends \PHPUnit\Framework\TestCase
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 
     public function testTagWithOl()
@@ -22,7 +23,7 @@ class LiTest extends \PHPUnit\Framework\TestCase
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 
     public function testTagFail()
@@ -32,6 +33,6 @@ class LiTest extends \PHPUnit\Framework\TestCase
 
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
-        $this->assertEquals($result, $xbbcode->getHtml());
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 }

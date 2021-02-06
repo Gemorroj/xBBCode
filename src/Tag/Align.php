@@ -26,7 +26,7 @@ use Xbbcode\Attributes;
 
 /**
  * Class Align
- * Класс для тегов [align], [center], [justify], [left] и [right]
+ * Класс для тегов [align], [center], [justify], [left] и [right].
  */
 class Align extends Tag
 {
@@ -66,12 +66,12 @@ class Align extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<div ' . $this->getAttributes() . '>' . $this->getBody() . '</div>';
+        return '<div '.$this->getAttributes().'>'.$this->getBody().'</div>';
     }
 }

@@ -26,12 +26,12 @@ use Xbbcode\Attributes;
 
 /**
  * Class Table
- * Класс для тега [table]
+ * Класс для тега [table].
  */
 class Table extends Tag
 {
     //const BR_RIGHT = 1;
-    const BEHAVIOUR = 'table';
+    public const BEHAVIOUR = 'table';
 
     /**
      * @return Attributes
@@ -80,12 +80,12 @@ class Table extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<table ' . $this->getAttributes() . '>' . $this->getBody() . '</table>';
+        return '<table '.$this->getAttributes().'>'.$this->getBody().'</table>';
     }
 }

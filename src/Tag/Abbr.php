@@ -26,11 +26,11 @@ use Xbbcode\Attributes;
 
 /**
  * Class Abbr
- * Класс для тега [abbr]
+ * Класс для тега [abbr].
  */
 class Abbr extends Tag
 {
-    const BEHAVIOUR = 'span';
+    public const BEHAVIOUR = 'span';
 
     /**
      * @return Attributes
@@ -47,12 +47,12 @@ class Abbr extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
     public function __toString()
     {
-        return '<abbr ' . $this->getAttributes() . '>' . $this->getBody() . '</abbr>';
+        return '<abbr '.$this->getAttributes().'>'.$this->getBody().'</abbr>';
     }
 }

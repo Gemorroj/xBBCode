@@ -26,7 +26,7 @@ use Xbbcode\Attributes;
 
 /**
  * Class Spoiler
- * Класс для тегов [spoiler] и [hide]
+ * Класс для тегов [spoiler] и [hide].
  */
 class Spoiler extends Tag
 {
@@ -35,19 +35,20 @@ class Spoiler extends Tag
 
     /**
      * @param string $id
+     *
      * @return string
      */
     protected function getSpoiler($id)
     {
-        return '<input class="bb_spoiler" type="button" value="' . \htmlspecialchars(
+        return '<input class="bb_spoiler" type="button" value="'.\htmlspecialchars(
             $this->showButton
-        ) . '" onclick="var node = document.getElementById(\'' . $id . '\'); (node.style.display == \'none\' ? (node.style.display = \'block\', this.value = \'' . \htmlspecialchars(
+        ).'" onclick="var node = document.getElementById(\''.$id.'\'); (node.style.display == \'none\' ? (node.style.display = \'block\', this.value = \''.\htmlspecialchars(
             $this->hideButton,
-            ENT_QUOTES
-        ) . '\') : (node.style.display = \'none\', this.value = \'' . \htmlspecialchars(
+            \ENT_QUOTES
+        ).'\') : (node.style.display = \'none\', this.value = \''.\htmlspecialchars(
             $this->showButton,
-            ENT_QUOTES
-        ) . '\'));" />';
+            \ENT_QUOTES
+        ).'\'));" />';
     }
 
     /**
@@ -67,7 +68,7 @@ class Spoiler extends Tag
     }
 
     /**
-     * Return html code
+     * Return html code.
      *
      * @return string
      */
@@ -76,6 +77,6 @@ class Spoiler extends Tag
         $attr = $this->getAttributes();
         $id = $attr->getAttributeValue('id');
 
-        return $this->getSpoiler($id) . '<div ' . $attr . '>' . $this->getBody() . '</div>';
+        return $this->getSpoiler($id).'<div '.$attr.'>'.$this->getBody().'</div>';
     }
 }

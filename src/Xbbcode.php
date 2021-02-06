@@ -25,7 +25,7 @@ namespace Xbbcode;
 use Xbbcode\Tag\Tag;
 
 /**
- * Class Xbbcode
+ * Class Xbbcode.
  */
 class Xbbcode
 {
@@ -37,7 +37,7 @@ class Xbbcode
      */
     protected $tagName = '';
     /**
-     * Текст BBCode
+     * Текст BBCode.
      *
      * @var string
      */
@@ -61,291 +61,291 @@ class Xbbcode
      */
     protected $tags = [
         // Основные теги
-        '*'            => 'Xbbcode\Tag\Li'     ,
-        'a'            => 'Xbbcode\Tag\A'      ,
-        'abbr'         => 'Xbbcode\Tag\Abbr'   ,
-        'acronym'      => 'Xbbcode\Tag\Acronym',
-        'address'      => 'Xbbcode\Tag\Address',
-        'align'        => 'Xbbcode\Tag\Align'  ,
-        'anchor'       => 'Xbbcode\Tag\A'      ,
-        'b'            => 'Xbbcode\Tag\Simple' ,
-        'bbcode'       => 'Xbbcode\Tag\Bbcode' ,
-        'bdo'          => 'Xbbcode\Tag\Bdo'    ,
-        'big'          => 'Xbbcode\Tag\Simple' ,
-        'blockquote'   => 'Xbbcode\Tag\Quote'  ,
-        'br'           => 'Xbbcode\Tag\Br'     ,
-        'caption'      => 'Xbbcode\Tag\Caption',
-        'center'       => 'Xbbcode\Tag\Align'  ,
-        'cite'         => 'Xbbcode\Tag\Simple' ,
-        'color'        => 'Xbbcode\Tag\Color'  ,
-        'del'          => 'Xbbcode\Tag\Simple' ,
-        'em'           => 'Xbbcode\Tag\Simple' ,
-        'email'        => 'Xbbcode\Tag\Email'  ,
-        'font'         => 'Xbbcode\Tag\Font'   ,
-        'altfont'      => 'Xbbcode\Tag\Altfont',
-        'google'       => 'Xbbcode\Tag\Google' ,
-        'yandex'       => 'Xbbcode\Tag\Yandex' ,
-        'youtube'      => 'Xbbcode\Tag\Youtube',
-        'spoiler'      => 'Xbbcode\Tag\Spoiler',
-        'hide'         => 'Xbbcode\Tag\Spoiler',
-        'h1'           => 'Xbbcode\Tag\P'      ,
-        'h2'           => 'Xbbcode\Tag\P'      ,
-        'h3'           => 'Xbbcode\Tag\P'      ,
-        'h4'           => 'Xbbcode\Tag\P'      ,
-        'h5'           => 'Xbbcode\Tag\P'      ,
-        'h6'           => 'Xbbcode\Tag\P'      ,
-        'hr'           => 'Xbbcode\Tag\Hr'     ,
-        'i'            => 'Xbbcode\Tag\Simple' ,
-        'img'          => 'Xbbcode\Tag\Img'    ,
-        'ins'          => 'Xbbcode\Tag\Simple' ,
-        'justify'      => 'Xbbcode\Tag\Align'  ,
-        'left'         => 'Xbbcode\Tag\Align'  ,
-        'li'           => 'Xbbcode\Tag\Li'     ,
-        'list'         => 'Xbbcode\Tag\Ul'     ,
-        'nobb'         => 'Xbbcode\Tag\Nobb'   ,
-        'ol'           => 'Xbbcode\Tag\Ol'     ,
-        'p'            => 'Xbbcode\Tag\P'      ,
-        'quote'        => 'Xbbcode\Tag\Quote'  ,
-        'right'        => 'Xbbcode\Tag\Align'  ,
-        's'            => 'Xbbcode\Tag\Simple' ,
-        'size'         => 'Xbbcode\Tag\Size'   ,
-        'small'        => 'Xbbcode\Tag\Simple' ,
-        'strike'       => 'Xbbcode\Tag\Simple' ,
-        'strong'       => 'Xbbcode\Tag\Simple' ,
-        'sub'          => 'Xbbcode\Tag\Simple' ,
-        'sup'          => 'Xbbcode\Tag\Simple' ,
-        'table'        => 'Xbbcode\Tag\Table'  ,
-        'td'           => 'Xbbcode\Tag\Td'     ,
-        'th'           => 'Xbbcode\Tag\Th'     ,
-        'tr'           => 'Xbbcode\Tag\Tr'     ,
-        'tt'           => 'Xbbcode\Tag\Simple' ,
-        'u'            => 'Xbbcode\Tag\Simple' ,
-        'ul'           => 'Xbbcode\Tag\Ul'     ,
-        'url'          => 'Xbbcode\Tag\A'      ,
-        'var'          => 'Xbbcode\Tag\Simple' ,
+        '*' => 'Xbbcode\Tag\Li',
+        'a' => 'Xbbcode\Tag\A',
+        'abbr' => 'Xbbcode\Tag\Abbr',
+        'acronym' => 'Xbbcode\Tag\Acronym',
+        'address' => 'Xbbcode\Tag\Address',
+        'align' => 'Xbbcode\Tag\Align',
+        'anchor' => 'Xbbcode\Tag\A',
+        'b' => 'Xbbcode\Tag\Simple',
+        'bbcode' => 'Xbbcode\Tag\Bbcode',
+        'bdo' => 'Xbbcode\Tag\Bdo',
+        'big' => 'Xbbcode\Tag\Simple',
+        'blockquote' => 'Xbbcode\Tag\Quote',
+        'br' => 'Xbbcode\Tag\Br',
+        'caption' => 'Xbbcode\Tag\Caption',
+        'center' => 'Xbbcode\Tag\Align',
+        'cite' => 'Xbbcode\Tag\Simple',
+        'color' => 'Xbbcode\Tag\Color',
+        'del' => 'Xbbcode\Tag\Simple',
+        'em' => 'Xbbcode\Tag\Simple',
+        'email' => 'Xbbcode\Tag\Email',
+        'font' => 'Xbbcode\Tag\Font',
+        'altfont' => 'Xbbcode\Tag\Altfont',
+        'google' => 'Xbbcode\Tag\Google',
+        'yandex' => 'Xbbcode\Tag\Yandex',
+        'youtube' => 'Xbbcode\Tag\Youtube',
+        'spoiler' => 'Xbbcode\Tag\Spoiler',
+        'hide' => 'Xbbcode\Tag\Spoiler',
+        'h1' => 'Xbbcode\Tag\P',
+        'h2' => 'Xbbcode\Tag\P',
+        'h3' => 'Xbbcode\Tag\P',
+        'h4' => 'Xbbcode\Tag\P',
+        'h5' => 'Xbbcode\Tag\P',
+        'h6' => 'Xbbcode\Tag\P',
+        'hr' => 'Xbbcode\Tag\Hr',
+        'i' => 'Xbbcode\Tag\Simple',
+        'img' => 'Xbbcode\Tag\Img',
+        'ins' => 'Xbbcode\Tag\Simple',
+        'justify' => 'Xbbcode\Tag\Align',
+        'left' => 'Xbbcode\Tag\Align',
+        'li' => 'Xbbcode\Tag\Li',
+        'list' => 'Xbbcode\Tag\Ul',
+        'nobb' => 'Xbbcode\Tag\Nobb',
+        'ol' => 'Xbbcode\Tag\Ol',
+        'p' => 'Xbbcode\Tag\P',
+        'quote' => 'Xbbcode\Tag\Quote',
+        'right' => 'Xbbcode\Tag\Align',
+        's' => 'Xbbcode\Tag\Simple',
+        'size' => 'Xbbcode\Tag\Size',
+        'small' => 'Xbbcode\Tag\Simple',
+        'strike' => 'Xbbcode\Tag\Simple',
+        'strong' => 'Xbbcode\Tag\Simple',
+        'sub' => 'Xbbcode\Tag\Simple',
+        'sup' => 'Xbbcode\Tag\Simple',
+        'table' => 'Xbbcode\Tag\Table',
+        'td' => 'Xbbcode\Tag\Td',
+        'th' => 'Xbbcode\Tag\Th',
+        'tr' => 'Xbbcode\Tag\Tr',
+        'tt' => 'Xbbcode\Tag\Simple',
+        'u' => 'Xbbcode\Tag\Simple',
+        'ul' => 'Xbbcode\Tag\Ul',
+        'url' => 'Xbbcode\Tag\A',
+        'var' => 'Xbbcode\Tag\Simple',
 
         // Теги для вывода кода и подсветки синтаксисов (с помощью GeSHi)
-        '4cs'               => 'Xbbcode\Tag\Code',
-        '6502acme'          => 'Xbbcode\Tag\Code',
-        '6502kickass'       => 'Xbbcode\Tag\Code',
-        '6502tasm'          => 'Xbbcode\Tag\Code',
-        '68000devpac'       => 'Xbbcode\Tag\Code',
-        'abap'              => 'Xbbcode\Tag\Code',
-        'actionscript'      => 'Xbbcode\Tag\Code',
-        'actionscript3'     => 'Xbbcode\Tag\Code',
-        'ada'               => 'Xbbcode\Tag\Code',
-        'algol'             => 'Xbbcode\Tag\Code',
-        'apache'            => 'Xbbcode\Tag\Code',
-        'applescript'       => 'Xbbcode\Tag\Code',
-        'apt_sources'       => 'Xbbcode\Tag\Code',
-        'arm'               => 'Xbbcode\Tag\Code',
-        'asm'               => 'Xbbcode\Tag\Code',
-        'asp'               => 'Xbbcode\Tag\Code',
-        'asymptote'         => 'Xbbcode\Tag\Code',
-        'autoconf'          => 'Xbbcode\Tag\Code',
-        'autohotkey'        => 'Xbbcode\Tag\Code',
-        'autoit'            => 'Xbbcode\Tag\Code',
-        'avisynth'          => 'Xbbcode\Tag\Code',
-        'awk'               => 'Xbbcode\Tag\Code',
-        'bascomavr'         => 'Xbbcode\Tag\Code',
-        'bash'              => 'Xbbcode\Tag\Code',
-        'basic4gl'          => 'Xbbcode\Tag\Code',
-        'bf'                => 'Xbbcode\Tag\Code',
-        'bibtex'            => 'Xbbcode\Tag\Code',
-        'blitzbasic'        => 'Xbbcode\Tag\Code',
-        'bnf'               => 'Xbbcode\Tag\Code',
-        'boo'               => 'Xbbcode\Tag\Code',
-        'c'                 => 'Xbbcode\Tag\Code',
-        'c++'               => 'Xbbcode\Tag\Code',
-        'c#'                => 'Xbbcode\Tag\Code',
-        'c_loadrunner'      => 'Xbbcode\Tag\Code',
-        'c_mac'             => 'Xbbcode\Tag\Code',
-        'caddcl'            => 'Xbbcode\Tag\Code',
-        'cadlisp'           => 'Xbbcode\Tag\Code',
-        'cfdg'              => 'Xbbcode\Tag\Code',
-        'cfm'               => 'Xbbcode\Tag\Code',
-        'chaiscript'        => 'Xbbcode\Tag\Code',
-        'cil'               => 'Xbbcode\Tag\Code',
-        'clojure'           => 'Xbbcode\Tag\Code',
-        'cmake'             => 'Xbbcode\Tag\Code',
-        'cobol'             => 'Xbbcode\Tag\Code',
-        'code'              => 'Xbbcode\Tag\Code',
-        'coffeescript'      => 'Xbbcode\Tag\Code',
-        'cpp-qt'            => 'Xbbcode\Tag\Code',
-        'css'               => 'Xbbcode\Tag\Code',
-        'cuesheet'          => 'Xbbcode\Tag\Code',
-        'd'                 => 'Xbbcode\Tag\Code',
-        'dcl'               => 'Xbbcode\Tag\Code',
-        'dcpu16'            => 'Xbbcode\Tag\Code',
-        'dcs'               => 'Xbbcode\Tag\Code',
-        'delphi'            => 'Xbbcode\Tag\Code',
-        'diff'              => 'Xbbcode\Tag\Code',
-        'div'               => 'Xbbcode\Tag\Code',
-        'dos'               => 'Xbbcode\Tag\Code',
-        'e'                 => 'Xbbcode\Tag\Code',
-        'ecmascript'        => 'Xbbcode\Tag\Code',
-        'eiffel'            => 'Xbbcode\Tag\Code',
-        'epc'               => 'Xbbcode\Tag\Code',
-        'erlang'            => 'Xbbcode\Tag\Code',
-        'euphoria'          => 'Xbbcode\Tag\Code',
-        'f++'               => 'Xbbcode\Tag\Code',
-        'f#'                => 'Xbbcode\Tag\Code',
-        'f1'                => 'Xbbcode\Tag\Code',
-        'falcon'            => 'Xbbcode\Tag\Code',
-        'fo'                => 'Xbbcode\Tag\Code',
-        'fortran'           => 'Xbbcode\Tag\Code',
-        'freebasic'         => 'Xbbcode\Tag\Code',
-        'freeswitch'        => 'Xbbcode\Tag\Code',
-        'gambas'            => 'Xbbcode\Tag\Code',
-        'gdb'               => 'Xbbcode\Tag\Code',
-        'genero'            => 'Xbbcode\Tag\Code',
-        'genie'             => 'Xbbcode\Tag\Code',
-        'gettext'           => 'Xbbcode\Tag\Code',
-        'glsl'              => 'Xbbcode\Tag\Code',
-        'gml'               => 'Xbbcode\Tag\Code',
-        'gnuplot'           => 'Xbbcode\Tag\Code',
-        'go'                => 'Xbbcode\Tag\Code',
-        'groovy'            => 'Xbbcode\Tag\Code',
-        'gwbasic'           => 'Xbbcode\Tag\Code',
-        'haskell'           => 'Xbbcode\Tag\Code',
-        'haxe'              => 'Xbbcode\Tag\Code',
-        'hicest'            => 'Xbbcode\Tag\Code',
-        'hq9plus'           => 'Xbbcode\Tag\Code',
-        'html4'             => 'Xbbcode\Tag\Code',
-        'html5'             => 'Xbbcode\Tag\Code',
-        'icon'              => 'Xbbcode\Tag\Code',
-        'idl'               => 'Xbbcode\Tag\Code',
-        'ini'               => 'Xbbcode\Tag\Code',
-        'inno'              => 'Xbbcode\Tag\Code',
-        'intercal'          => 'Xbbcode\Tag\Code',
-        'io'                => 'Xbbcode\Tag\Code',
-        'j'                 => 'Xbbcode\Tag\Code',
-        'java'              => 'Xbbcode\Tag\Code',
-        'java5'             => 'Xbbcode\Tag\Code',
-        'jquery'            => 'Xbbcode\Tag\Code',
-        'js'                => 'Xbbcode\Tag\Code',
-        'kixtart'           => 'Xbbcode\Tag\Code',
-        'klonec'            => 'Xbbcode\Tag\Code',
-        'klonecpp'          => 'Xbbcode\Tag\Code',
-        'latex'             => 'Xbbcode\Tag\Code',
-        'lb'                => 'Xbbcode\Tag\Code',
-        'ldif'              => 'Xbbcode\Tag\Code',
-        'lisp'              => 'Xbbcode\Tag\Code',
-        'llvm'              => 'Xbbcode\Tag\Code',
-        'locobasic'         => 'Xbbcode\Tag\Code',
-        'logtalk'           => 'Xbbcode\Tag\Code',
-        'lolcode'           => 'Xbbcode\Tag\Code',
-        'lotusformulas'     => 'Xbbcode\Tag\Code',
-        'lotusscript'       => 'Xbbcode\Tag\Code',
-        'lscript'           => 'Xbbcode\Tag\Code',
-        'lsl2'              => 'Xbbcode\Tag\Code',
-        'lua'               => 'Xbbcode\Tag\Code',
-        'm68k'              => 'Xbbcode\Tag\Code',
-        'magiksf'           => 'Xbbcode\Tag\Code',
-        'make'              => 'Xbbcode\Tag\Code',
-        'mapbasic'          => 'Xbbcode\Tag\Code',
-        'matlab'            => 'Xbbcode\Tag\Code',
-        'mirc'              => 'Xbbcode\Tag\Code',
-        'mmix'              => 'Xbbcode\Tag\Code',
-        'modula2'           => 'Xbbcode\Tag\Code',
-        'modula3'           => 'Xbbcode\Tag\Code',
-        'mpasm'             => 'Xbbcode\Tag\Code',
-        'mxml'              => 'Xbbcode\Tag\Code',
-        'mysql'             => 'Xbbcode\Tag\Code',
-        'nagios'            => 'Xbbcode\Tag\Code',
-        'netrexx'           => 'Xbbcode\Tag\Code',
-        'newlisp'           => 'Xbbcode\Tag\Code',
-        'nsis'              => 'Xbbcode\Tag\Code',
-        'oberon2'           => 'Xbbcode\Tag\Code',
-        'objc'              => 'Xbbcode\Tag\Code',
-        'objeck'            => 'Xbbcode\Tag\Code',
-        'ocaml'             => 'Xbbcode\Tag\Code',
-        'octave'            => 'Xbbcode\Tag\Code',
-        'oobas'             => 'Xbbcode\Tag\Code',
-        'oorexx'            => 'Xbbcode\Tag\Code',
-        'oracle'            => 'Xbbcode\Tag\Code',
-        'oracle11'          => 'Xbbcode\Tag\Code',
-        'oxygene'           => 'Xbbcode\Tag\Code',
-        'oz'                => 'Xbbcode\Tag\Code',
-        'parasail'          => 'Xbbcode\Tag\Code',
-        'parigp'            => 'Xbbcode\Tag\Code',
-        'pascal'            => 'Xbbcode\Tag\Code',
-        'pcre'              => 'Xbbcode\Tag\Code',
-        'per'               => 'Xbbcode\Tag\Code',
-        'perl'              => 'Xbbcode\Tag\Code',
-        'perl6'             => 'Xbbcode\Tag\Code',
-        'pf'                => 'Xbbcode\Tag\Code',
-        'php'               => 'Xbbcode\Tag\Code',
-        'pic16'             => 'Xbbcode\Tag\Code',
-        'pike'              => 'Xbbcode\Tag\Code',
-        'pixelbender'       => 'Xbbcode\Tag\Code',
-        'pli'               => 'Xbbcode\Tag\Code',
-        'plsql'             => 'Xbbcode\Tag\Code',
-        'postgresql'        => 'Xbbcode\Tag\Code',
-        'povray'            => 'Xbbcode\Tag\Code',
-        'powershell'        => 'Xbbcode\Tag\Code',
-        'pre'               => 'Xbbcode\Tag\Code',
-        'proftpd'           => 'Xbbcode\Tag\Code',
-        'progress'          => 'Xbbcode\Tag\Code',
-        'prolog'            => 'Xbbcode\Tag\Code',
-        'properties'        => 'Xbbcode\Tag\Code',
-        'providex'          => 'Xbbcode\Tag\Code',
-        'purebasic'         => 'Xbbcode\Tag\Code',
-        'pycon'             => 'Xbbcode\Tag\Code',
-        'pys60'             => 'Xbbcode\Tag\Code',
-        'python'            => 'Xbbcode\Tag\Code',
-        'q'                 => 'Xbbcode\Tag\Code',
-        'qbasic'            => 'Xbbcode\Tag\Code',
-        'rails'             => 'Xbbcode\Tag\Code',
-        'rebol'             => 'Xbbcode\Tag\Code',
-        'reg'               => 'Xbbcode\Tag\Code',
-        'rexx'              => 'Xbbcode\Tag\Code',
-        'robots'            => 'Xbbcode\Tag\Code',
-        'rpmspec'           => 'Xbbcode\Tag\Code',
-        'rsplus'            => 'Xbbcode\Tag\Code',
-        'ruby'              => 'Xbbcode\Tag\Code',
-        'sas'               => 'Xbbcode\Tag\Code',
-        'scala'             => 'Xbbcode\Tag\Code',
-        'scheme'            => 'Xbbcode\Tag\Code',
-        'scilab'            => 'Xbbcode\Tag\Code',
-        'sdlbasic'          => 'Xbbcode\Tag\Code',
-        'smalltalk'         => 'Xbbcode\Tag\Code',
-        'smarty'            => 'Xbbcode\Tag\Code',
-        'spark'             => 'Xbbcode\Tag\Code',
-        'sparql'            => 'Xbbcode\Tag\Code',
-        'sql'               => 'Xbbcode\Tag\Code',
-        'stonescript'       => 'Xbbcode\Tag\Code',
-        'systemverilog'     => 'Xbbcode\Tag\Code',
-        't-sql'             => 'Xbbcode\Tag\Code',
-        'tcl'               => 'Xbbcode\Tag\Code',
-        'teraterm'          => 'Xbbcode\Tag\Code',
-        'text'              => 'Xbbcode\Tag\Code',
-        'thinbasic'         => 'Xbbcode\Tag\Code',
-        'twig'              => 'Xbbcode\Tag\Code',
-        'typoscript'        => 'Xbbcode\Tag\Code',
-        'unicon'            => 'Xbbcode\Tag\Code',
-        'upc'               => 'Xbbcode\Tag\Code',
-        'urbi'              => 'Xbbcode\Tag\Code',
-        'uscript'           => 'Xbbcode\Tag\Code',
-        'vala'              => 'Xbbcode\Tag\Code',
-        'vb'                => 'Xbbcode\Tag\Code',
-        'vb.net'            => 'Xbbcode\Tag\Code',
-        'vedit'             => 'Xbbcode\Tag\Code',
-        'verilog'           => 'Xbbcode\Tag\Code',
-        'vhdl'              => 'Xbbcode\Tag\Code',
-        'vim'               => 'Xbbcode\Tag\Code',
-        'visualfoxpro'      => 'Xbbcode\Tag\Code',
-        'visualprolog'      => 'Xbbcode\Tag\Code',
-        'whitespace'        => 'Xbbcode\Tag\Code',
-        'whois'             => 'Xbbcode\Tag\Code',
-        'winbatch'          => 'Xbbcode\Tag\Code',
-        'xbasic'            => 'Xbbcode\Tag\Code',
-        'xml'               => 'Xbbcode\Tag\Code',
-        'xorg_conf'         => 'Xbbcode\Tag\Code',
-        'xpp'               => 'Xbbcode\Tag\Code',
-        'yaml'              => 'Xbbcode\Tag\Code',
-        'z80'               => 'Xbbcode\Tag\Code',
-        'zxbasic'           => 'Xbbcode\Tag\Code',
+        '4cs' => 'Xbbcode\Tag\Code',
+        '6502acme' => 'Xbbcode\Tag\Code',
+        '6502kickass' => 'Xbbcode\Tag\Code',
+        '6502tasm' => 'Xbbcode\Tag\Code',
+        '68000devpac' => 'Xbbcode\Tag\Code',
+        'abap' => 'Xbbcode\Tag\Code',
+        'actionscript' => 'Xbbcode\Tag\Code',
+        'actionscript3' => 'Xbbcode\Tag\Code',
+        'ada' => 'Xbbcode\Tag\Code',
+        'algol' => 'Xbbcode\Tag\Code',
+        'apache' => 'Xbbcode\Tag\Code',
+        'applescript' => 'Xbbcode\Tag\Code',
+        'apt_sources' => 'Xbbcode\Tag\Code',
+        'arm' => 'Xbbcode\Tag\Code',
+        'asm' => 'Xbbcode\Tag\Code',
+        'asp' => 'Xbbcode\Tag\Code',
+        'asymptote' => 'Xbbcode\Tag\Code',
+        'autoconf' => 'Xbbcode\Tag\Code',
+        'autohotkey' => 'Xbbcode\Tag\Code',
+        'autoit' => 'Xbbcode\Tag\Code',
+        'avisynth' => 'Xbbcode\Tag\Code',
+        'awk' => 'Xbbcode\Tag\Code',
+        'bascomavr' => 'Xbbcode\Tag\Code',
+        'bash' => 'Xbbcode\Tag\Code',
+        'basic4gl' => 'Xbbcode\Tag\Code',
+        'bf' => 'Xbbcode\Tag\Code',
+        'bibtex' => 'Xbbcode\Tag\Code',
+        'blitzbasic' => 'Xbbcode\Tag\Code',
+        'bnf' => 'Xbbcode\Tag\Code',
+        'boo' => 'Xbbcode\Tag\Code',
+        'c' => 'Xbbcode\Tag\Code',
+        'c++' => 'Xbbcode\Tag\Code',
+        'c#' => 'Xbbcode\Tag\Code',
+        'c_loadrunner' => 'Xbbcode\Tag\Code',
+        'c_mac' => 'Xbbcode\Tag\Code',
+        'caddcl' => 'Xbbcode\Tag\Code',
+        'cadlisp' => 'Xbbcode\Tag\Code',
+        'cfdg' => 'Xbbcode\Tag\Code',
+        'cfm' => 'Xbbcode\Tag\Code',
+        'chaiscript' => 'Xbbcode\Tag\Code',
+        'cil' => 'Xbbcode\Tag\Code',
+        'clojure' => 'Xbbcode\Tag\Code',
+        'cmake' => 'Xbbcode\Tag\Code',
+        'cobol' => 'Xbbcode\Tag\Code',
+        'code' => 'Xbbcode\Tag\Code',
+        'coffeescript' => 'Xbbcode\Tag\Code',
+        'cpp-qt' => 'Xbbcode\Tag\Code',
+        'css' => 'Xbbcode\Tag\Code',
+        'cuesheet' => 'Xbbcode\Tag\Code',
+        'd' => 'Xbbcode\Tag\Code',
+        'dcl' => 'Xbbcode\Tag\Code',
+        'dcpu16' => 'Xbbcode\Tag\Code',
+        'dcs' => 'Xbbcode\Tag\Code',
+        'delphi' => 'Xbbcode\Tag\Code',
+        'diff' => 'Xbbcode\Tag\Code',
+        'div' => 'Xbbcode\Tag\Code',
+        'dos' => 'Xbbcode\Tag\Code',
+        'e' => 'Xbbcode\Tag\Code',
+        'ecmascript' => 'Xbbcode\Tag\Code',
+        'eiffel' => 'Xbbcode\Tag\Code',
+        'epc' => 'Xbbcode\Tag\Code',
+        'erlang' => 'Xbbcode\Tag\Code',
+        'euphoria' => 'Xbbcode\Tag\Code',
+        'f++' => 'Xbbcode\Tag\Code',
+        'f#' => 'Xbbcode\Tag\Code',
+        'f1' => 'Xbbcode\Tag\Code',
+        'falcon' => 'Xbbcode\Tag\Code',
+        'fo' => 'Xbbcode\Tag\Code',
+        'fortran' => 'Xbbcode\Tag\Code',
+        'freebasic' => 'Xbbcode\Tag\Code',
+        'freeswitch' => 'Xbbcode\Tag\Code',
+        'gambas' => 'Xbbcode\Tag\Code',
+        'gdb' => 'Xbbcode\Tag\Code',
+        'genero' => 'Xbbcode\Tag\Code',
+        'genie' => 'Xbbcode\Tag\Code',
+        'gettext' => 'Xbbcode\Tag\Code',
+        'glsl' => 'Xbbcode\Tag\Code',
+        'gml' => 'Xbbcode\Tag\Code',
+        'gnuplot' => 'Xbbcode\Tag\Code',
+        'go' => 'Xbbcode\Tag\Code',
+        'groovy' => 'Xbbcode\Tag\Code',
+        'gwbasic' => 'Xbbcode\Tag\Code',
+        'haskell' => 'Xbbcode\Tag\Code',
+        'haxe' => 'Xbbcode\Tag\Code',
+        'hicest' => 'Xbbcode\Tag\Code',
+        'hq9plus' => 'Xbbcode\Tag\Code',
+        'html4' => 'Xbbcode\Tag\Code',
+        'html5' => 'Xbbcode\Tag\Code',
+        'icon' => 'Xbbcode\Tag\Code',
+        'idl' => 'Xbbcode\Tag\Code',
+        'ini' => 'Xbbcode\Tag\Code',
+        'inno' => 'Xbbcode\Tag\Code',
+        'intercal' => 'Xbbcode\Tag\Code',
+        'io' => 'Xbbcode\Tag\Code',
+        'j' => 'Xbbcode\Tag\Code',
+        'java' => 'Xbbcode\Tag\Code',
+        'java5' => 'Xbbcode\Tag\Code',
+        'jquery' => 'Xbbcode\Tag\Code',
+        'js' => 'Xbbcode\Tag\Code',
+        'kixtart' => 'Xbbcode\Tag\Code',
+        'klonec' => 'Xbbcode\Tag\Code',
+        'klonecpp' => 'Xbbcode\Tag\Code',
+        'latex' => 'Xbbcode\Tag\Code',
+        'lb' => 'Xbbcode\Tag\Code',
+        'ldif' => 'Xbbcode\Tag\Code',
+        'lisp' => 'Xbbcode\Tag\Code',
+        'llvm' => 'Xbbcode\Tag\Code',
+        'locobasic' => 'Xbbcode\Tag\Code',
+        'logtalk' => 'Xbbcode\Tag\Code',
+        'lolcode' => 'Xbbcode\Tag\Code',
+        'lotusformulas' => 'Xbbcode\Tag\Code',
+        'lotusscript' => 'Xbbcode\Tag\Code',
+        'lscript' => 'Xbbcode\Tag\Code',
+        'lsl2' => 'Xbbcode\Tag\Code',
+        'lua' => 'Xbbcode\Tag\Code',
+        'm68k' => 'Xbbcode\Tag\Code',
+        'magiksf' => 'Xbbcode\Tag\Code',
+        'make' => 'Xbbcode\Tag\Code',
+        'mapbasic' => 'Xbbcode\Tag\Code',
+        'matlab' => 'Xbbcode\Tag\Code',
+        'mirc' => 'Xbbcode\Tag\Code',
+        'mmix' => 'Xbbcode\Tag\Code',
+        'modula2' => 'Xbbcode\Tag\Code',
+        'modula3' => 'Xbbcode\Tag\Code',
+        'mpasm' => 'Xbbcode\Tag\Code',
+        'mxml' => 'Xbbcode\Tag\Code',
+        'mysql' => 'Xbbcode\Tag\Code',
+        'nagios' => 'Xbbcode\Tag\Code',
+        'netrexx' => 'Xbbcode\Tag\Code',
+        'newlisp' => 'Xbbcode\Tag\Code',
+        'nsis' => 'Xbbcode\Tag\Code',
+        'oberon2' => 'Xbbcode\Tag\Code',
+        'objc' => 'Xbbcode\Tag\Code',
+        'objeck' => 'Xbbcode\Tag\Code',
+        'ocaml' => 'Xbbcode\Tag\Code',
+        'octave' => 'Xbbcode\Tag\Code',
+        'oobas' => 'Xbbcode\Tag\Code',
+        'oorexx' => 'Xbbcode\Tag\Code',
+        'oracle' => 'Xbbcode\Tag\Code',
+        'oracle11' => 'Xbbcode\Tag\Code',
+        'oxygene' => 'Xbbcode\Tag\Code',
+        'oz' => 'Xbbcode\Tag\Code',
+        'parasail' => 'Xbbcode\Tag\Code',
+        'parigp' => 'Xbbcode\Tag\Code',
+        'pascal' => 'Xbbcode\Tag\Code',
+        'pcre' => 'Xbbcode\Tag\Code',
+        'per' => 'Xbbcode\Tag\Code',
+        'perl' => 'Xbbcode\Tag\Code',
+        'perl6' => 'Xbbcode\Tag\Code',
+        'pf' => 'Xbbcode\Tag\Code',
+        'php' => 'Xbbcode\Tag\Code',
+        'pic16' => 'Xbbcode\Tag\Code',
+        'pike' => 'Xbbcode\Tag\Code',
+        'pixelbender' => 'Xbbcode\Tag\Code',
+        'pli' => 'Xbbcode\Tag\Code',
+        'plsql' => 'Xbbcode\Tag\Code',
+        'postgresql' => 'Xbbcode\Tag\Code',
+        'povray' => 'Xbbcode\Tag\Code',
+        'powershell' => 'Xbbcode\Tag\Code',
+        'pre' => 'Xbbcode\Tag\Code',
+        'proftpd' => 'Xbbcode\Tag\Code',
+        'progress' => 'Xbbcode\Tag\Code',
+        'prolog' => 'Xbbcode\Tag\Code',
+        'properties' => 'Xbbcode\Tag\Code',
+        'providex' => 'Xbbcode\Tag\Code',
+        'purebasic' => 'Xbbcode\Tag\Code',
+        'pycon' => 'Xbbcode\Tag\Code',
+        'pys60' => 'Xbbcode\Tag\Code',
+        'python' => 'Xbbcode\Tag\Code',
+        'q' => 'Xbbcode\Tag\Code',
+        'qbasic' => 'Xbbcode\Tag\Code',
+        'rails' => 'Xbbcode\Tag\Code',
+        'rebol' => 'Xbbcode\Tag\Code',
+        'reg' => 'Xbbcode\Tag\Code',
+        'rexx' => 'Xbbcode\Tag\Code',
+        'robots' => 'Xbbcode\Tag\Code',
+        'rpmspec' => 'Xbbcode\Tag\Code',
+        'rsplus' => 'Xbbcode\Tag\Code',
+        'ruby' => 'Xbbcode\Tag\Code',
+        'sas' => 'Xbbcode\Tag\Code',
+        'scala' => 'Xbbcode\Tag\Code',
+        'scheme' => 'Xbbcode\Tag\Code',
+        'scilab' => 'Xbbcode\Tag\Code',
+        'sdlbasic' => 'Xbbcode\Tag\Code',
+        'smalltalk' => 'Xbbcode\Tag\Code',
+        'smarty' => 'Xbbcode\Tag\Code',
+        'spark' => 'Xbbcode\Tag\Code',
+        'sparql' => 'Xbbcode\Tag\Code',
+        'sql' => 'Xbbcode\Tag\Code',
+        'stonescript' => 'Xbbcode\Tag\Code',
+        'systemverilog' => 'Xbbcode\Tag\Code',
+        't-sql' => 'Xbbcode\Tag\Code',
+        'tcl' => 'Xbbcode\Tag\Code',
+        'teraterm' => 'Xbbcode\Tag\Code',
+        'text' => 'Xbbcode\Tag\Code',
+        'thinbasic' => 'Xbbcode\Tag\Code',
+        'twig' => 'Xbbcode\Tag\Code',
+        'typoscript' => 'Xbbcode\Tag\Code',
+        'unicon' => 'Xbbcode\Tag\Code',
+        'upc' => 'Xbbcode\Tag\Code',
+        'urbi' => 'Xbbcode\Tag\Code',
+        'uscript' => 'Xbbcode\Tag\Code',
+        'vala' => 'Xbbcode\Tag\Code',
+        'vb' => 'Xbbcode\Tag\Code',
+        'vb.net' => 'Xbbcode\Tag\Code',
+        'vedit' => 'Xbbcode\Tag\Code',
+        'verilog' => 'Xbbcode\Tag\Code',
+        'vhdl' => 'Xbbcode\Tag\Code',
+        'vim' => 'Xbbcode\Tag\Code',
+        'visualfoxpro' => 'Xbbcode\Tag\Code',
+        'visualprolog' => 'Xbbcode\Tag\Code',
+        'whitespace' => 'Xbbcode\Tag\Code',
+        'whois' => 'Xbbcode\Tag\Code',
+        'winbatch' => 'Xbbcode\Tag\Code',
+        'xbasic' => 'Xbbcode\Tag\Code',
+        'xml' => 'Xbbcode\Tag\Code',
+        'xorg_conf' => 'Xbbcode\Tag\Code',
+        'xpp' => 'Xbbcode\Tag\Code',
+        'yaml' => 'Xbbcode\Tag\Code',
+        'z80' => 'Xbbcode\Tag\Code',
+        'zxbasic' => 'Xbbcode\Tag\Code',
     ];
     /**
      * Смайлики и прочие мнемоники. Массив: 'мнемоника' => 'ее_замена'.
@@ -396,20 +396,20 @@ class Xbbcode
     protected $enableSmiles = true;
 
     /**
-     * Статистические сведения по обработке BBCode
+     * Статистические сведения по обработке BBCode.
      *
      * @var array
      */
     protected $statistics = [
-        'time_parse'        => 0, // Время парсинга
-        'time_html'         => 0, // Время генерации HTML-а
-        'count_tags'        => 0, // Число тегов BBCode
-        'count_level'       => 0, // Число уровней вложенности тегов BBCode
+        'time_parse' => 0, // Время парсинга
+        'time_html' => 0, // Время генерации HTML-а
+        'count_tags' => 0, // Число тегов BBCode
+        'count_level' => 0, // Число уровней вложенности тегов BBCode
         'memory_peak_usage' => 0, // Максимально выделенный объем памяти
     ];
     /**
      * Публичная WEB директория.
-     * Ссылается на директорию resources для формирования смайликов и CSS стилей
+     * Ссылается на директорию resources для формирования смайликов и CSS стилей.
      *
      * @var string
      */
@@ -434,20 +434,20 @@ class Xbbcode
      * @var array
      */
     protected $children = [
-        'a'       => ['code', 'img', 'span'],
+        'a' => ['code', 'img', 'span'],
         'caption' => ['a', 'code', 'img', 'span'],
-        'code'    => [],
-        'div'     => ['a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'],
-        'hr'      => [],
-        'img'     => [],
-        'li'      => ['a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'],
-        'p'       => ['a', 'code', 'img', 'span'],
-        'pre'     => [],
-        'span'    => ['a', 'code', 'img', 'span'],
-        'table'   => ['caption', 'tr'],
-        'td'      => ['a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'],
-        'tr'      => ['td'],
-        'ul'      => ['li'],
+        'code' => [],
+        'div' => ['a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'],
+        'hr' => [],
+        'img' => [],
+        'li' => ['a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'],
+        'p' => ['a', 'code', 'img', 'span'],
+        'pre' => [],
+        'span' => ['a', 'code', 'img', 'span'],
+        'table' => ['caption', 'tr'],
+        'td' => ['a', 'code', 'div', 'hr', 'img', 'p', 'pre', 'span', 'table', 'ul'],
+        'tr' => ['td'],
+        'ul' => ['li'],
     ];
     /**
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
@@ -457,31 +457,30 @@ class Xbbcode
      * @var array
      */
     protected $ends = [
-        'a'       => [
-            'a', 'caption', 'div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'
+        'a' => [
+            'a', 'caption', 'div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul',
         ],
         'caption' => ['tr'],
-        'code'    => [],
-        'div'     => ['li', 'tr', 'td'],
-        'hr'      => [
-            'a', 'caption', 'code', 'div', 'hr', 'img', 'li', 'p', 'pre', 'span', 'table', 'td', 'tr', 'ul'
+        'code' => [],
+        'div' => ['li', 'tr', 'td'],
+        'hr' => [
+            'a', 'caption', 'code', 'div', 'hr', 'img', 'li', 'p', 'pre', 'span', 'table', 'td', 'tr', 'ul',
         ],
-        'img'     => [
-            'a', 'caption', 'code', 'div', 'hr', 'img', 'li', 'p', 'pre', 'span', 'table', 'td', 'tr', 'ul'
+        'img' => [
+            'a', 'caption', 'code', 'div', 'hr', 'img', 'li', 'p', 'pre', 'span', 'table', 'td', 'tr', 'ul',
         ],
-        'li'      => ['li', 'tr', 'td'],
-        'p'       => ['div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'],
-        'pre'     => [],
-        'span'    => ['div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'],
-        'table'   => ['table'],
-        'td'      => ['td', 'tr'],
-        'tr'      => ['tr'],
-        'ul'      => [],
+        'li' => ['li', 'tr', 'td'],
+        'p' => ['div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'],
+        'pre' => [],
+        'span' => ['div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul'],
+        'table' => ['table'],
+        'td' => ['td', 'tr'],
+        'tr' => ['tr'],
+        'ul' => [],
     ];
 
-
     /**
-     * Метод конечных автоматов
+     * Метод конечных автоматов.
      *
      * Список возможных состояний автомата:
      * 0  - Начало сканирования или находимся вне тега. Ожидаем что угодно.
@@ -511,538 +510,438 @@ class Xbbcode
     protected $finiteAutomaton = [
     // Предыдущие |   Состояния для текущих событий (лексем)   |
     //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
-        0 => [  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ],
-        1 => [  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 ],
-        2 => [  2 ,  3 ,  3 ,  3 ,  3 ,  4 ,  3 ,  3 ,  5 ],
-        3 => [  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ],
-        4 => [  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  7 ],
-        5 => [  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 ],
-        6 => [  1 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ,  0 ],
-        7 => [  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ],
-        8 => [ 13 , 13 , 11 , 12 , 13 , 13 , 14 , 13 , 13 ],
-        9 => [  2 ,  6 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ,  3 ],
-        10 => [  2 ,  6 ,  3 ,  3 ,  8 ,  9 ,  3 , 15 , 15 ],
-        11 => [ 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 ],
-        12 => [ 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 ],
-        13 => [ 19 ,  6 , 19 , 19 , 19 , 19 , 17 , 19 , 19 ],
-        14 => [  2 ,  3 , 11 , 12 , 13 , 13 ,  3 , 13 , 13 ],
-        15 => [  2 ,  6 ,  3 ,  3 ,  8 ,  9 , 10 ,  3 ,  3 ],
-        16 => [ 16 , 16 , 17 , 16 , 16 , 16 , 16 , 16 , 16 ],
-        17 => [  2 ,  6 ,  3 ,  3 ,  3 ,  9 , 20 , 15 , 15 ],
-        18 => [ 18 , 18 , 18 , 17 , 18 , 18 , 18 , 18 , 18 ],
-        19 => [ 19 ,  6 , 19 , 19 , 19 , 19 , 20 , 19 , 19 ],
-        20 => [  2 ,  6 ,  3 ,  3 ,  3 ,  9 ,  3 , 15 , 15 ],
+        0 => [1,  0,  0,  0,  0,  0,  0,  0,  0],
+        1 => [2,  3,  3,  3,  3,  4,  3,  3,  5],
+        2 => [2,  3,  3,  3,  3,  4,  3,  3,  5],
+        3 => [1,  0,  0,  0,  0,  0,  0,  0,  0],
+        4 => [2,  6,  3,  3,  3,  3,  3,  3,  7],
+        5 => [2,  6,  3,  3,  8,  9, 10,  3,  3],
+        6 => [1,  0,  0,  0,  0,  0,  0,  0,  0],
+        7 => [2,  6,  3,  3,  3,  3,  3,  3,  3],
+        8 => [13, 13, 11, 12, 13, 13, 14, 13, 13],
+        9 => [2,  6,  3,  3,  3,  3,  3,  3,  3],
+        10 => [2,  6,  3,  3,  8,  9,  3, 15, 15],
+        11 => [16, 16, 17, 16, 16, 16, 16, 16, 16],
+        12 => [18, 18, 18, 17, 18, 18, 18, 18, 18],
+        13 => [19,  6, 19, 19, 19, 19, 17, 19, 19],
+        14 => [2,  3, 11, 12, 13, 13,  3, 13, 13],
+        15 => [2,  6,  3,  3,  8,  9, 10,  3,  3],
+        16 => [16, 16, 17, 16, 16, 16, 16, 16, 16],
+        17 => [2,  6,  3,  3,  3,  9, 20, 15, 15],
+        18 => [18, 18, 18, 17, 18, 18, 18, 18, 18],
+        19 => [19,  6, 19, 19, 19, 19, 20, 19, 19],
+        20 => [2,  6,  3,  3,  3,  9,  3, 15, 15],
     ];
 
     /**
-     * Смайлы
+     * Смайлы.
      *
      * @var array
      */
     protected $smiles = [
-        ':D' =>
-            [
+        ':D' => [
                 'title' => 'Very we!',
                 'name' => 'resources/images/smiles/1.gif',
             ],
-        ':)' =>
-            [
+        ':)' => [
                 'title' => 'Well',
                 'name' => 'resources/images/smiles/2.gif',
             ],
-        ':(' =>
-            [
+        ':(' => [
                 'title' => 'Not so',
                 'name' => 'resources/images/smiles/3.gif',
             ],
-        ':heap:' =>
-            [
+        ':heap:' => [
                 'title' => 'Eyes in a heap',
                 'name' => 'resources/images/smiles/4.gif',
             ],
-        ':ooi:' =>
-            [
+        ':ooi:' => [
                 'title' => 'Really?',
                 'name' => 'resources/images/smiles/5.gif',
             ],
-        ':so:' =>
-            [
+        ':so:' => [
                 'title' => 'So-so',
                 'name' => 'resources/images/smiles/6.gif',
             ],
-        ':surp:' =>
-            [
+        ':surp:' => [
                 'title' => 'It is surprised',
                 'name' => 'resources/images/smiles/7.gif',
             ],
-        ':ag:' =>
-            [
+        ':ag:' => [
                 'title' => 'Again',
                 'name' => 'resources/images/smiles/8.gif',
             ],
-        ':ir:' =>
-            [
+        ':ir:' => [
                 'title' => 'I roll!',
                 'name' => 'resources/images/smiles/9.gif',
             ],
-        ':oops:' =>
-            [
+        ':oops:' => [
                 'title' => 'Oops!',
                 'name' => 'resources/images/smiles/44.gif',
             ],
-        ':P' =>
-            [
+        ':P' => [
                 'title' => 'To you',
                 'name' => 'resources/images/smiles/11.gif',
             ],
-        ':cry:' =>
-            [
+        ':cry:' => [
                 'title' => 'Tears',
                 'name' => 'resources/images/smiles/12.gif',
             ],
-        ':rage:' =>
-            [
+        ':rage:' => [
                 'title' => 'I am malicious',
                 'name' => 'resources/images/smiles/13.gif',
             ],
-        ':B' =>
-            [
+        ':B' => [
                 'title' => 'All ok',
                 'name' => 'resources/images/smiles/14.gif',
             ],
-        ':roll:' =>
-            [
+        ':roll:' => [
                 'title' => 'Not precisely',
                 'name' => 'resources/images/smiles/15.gif',
             ],
-        ':wink:' =>
-            [
+        ':wink:' => [
                 'title' => 'To wink',
                 'name' => 'resources/images/smiles/16.gif',
             ],
-        ':yes:' =>
-            [
+        ':yes:' => [
                 'title' => 'Yes',
                 'name' => 'resources/images/smiles/17.gif',
             ],
-        ':bot:' =>
-            [
+        ':bot:' => [
                 'title' => 'Has bothered',
                 'name' => 'resources/images/smiles/18.gif',
             ],
-        ':z)' =>
-            [
+        ':z)' => [
                 'title' => 'Ridiculously',
                 'name' => 'resources/images/smiles/19.gif',
             ],
-        ':arrow:' =>
-            [
+        ':arrow:' => [
                 'title' => 'Here',
                 'name' => 'resources/images/smiles/20.gif',
             ],
-        ':vip:' =>
-            [
+        ':vip:' => [
                 'title' => 'Attention',
                 'name' => 'resources/images/smiles/21.gif',
             ],
-        ':Heppy:' =>
-            [
+        ':Heppy:' => [
                 'title' => 'I congratulate',
                 'name' => 'resources/images/smiles/22.gif',
             ],
-        ':think:' =>
-            [
+        ':think:' => [
                 'title' => 'I think',
                 'name' => 'resources/images/smiles/23.gif',
             ],
-        ':bye:' =>
-            [
+        ':bye:' => [
                 'title' => 'Farewell',
                 'name' => 'resources/images/smiles/24.gif',
             ],
-        ':roul:' =>
-            [
+        ':roul:' => [
                 'title' => 'Perfectly',
                 'name' => 'resources/images/smiles/25.gif',
             ],
-        ':pst:' =>
-            [
+        ':pst:' => [
                 'title' => 'Fingers',
                 'name' => 'resources/images/smiles/26.gif',
             ],
-        ':o' =>
-            [
+        ':o' => [
                 'title' => 'Poorly',
                 'name' => 'resources/images/smiles/27.gif',
             ],
-        ':closed:' =>
-            [
+        ':closed:' => [
                 'title' => 'Veal closed',
                 'name' => 'resources/images/smiles/28.gif',
             ],
-        ':cens:' =>
-            [
+        ':cens:' => [
                 'title' => 'Censorship',
                 'name' => 'resources/images/smiles/29.gif',
             ],
-        ':tani:' =>
-            [
+        ':tani:' => [
                 'title' => 'Features',
                 'name' => 'resources/images/smiles/30.gif',
             ],
-        ':appl:' =>
-            [
+        ':appl:' => [
                 'title' => 'Applause',
                 'name' => 'resources/images/smiles/31.gif',
             ],
-        ':idnk:' =>
-            [
+        ':idnk:' => [
                 'title' => 'I do not know',
                 'name' => 'resources/images/smiles/32.gif',
             ],
-        ':sing:' =>
-            [
+        ':sing:' => [
                 'title' => 'Singing',
                 'name' => 'resources/images/smiles/33.gif',
             ],
-        ':shock:' =>
-            [
+        ':shock:' => [
                 'title' => 'Shock',
                 'name' => 'resources/images/smiles/34.gif',
             ],
-        ':tgu:' =>
-            [
+        ':tgu:' => [
                 'title' => 'To give up',
                 'name' => 'resources/images/smiles/35.gif',
             ],
-        ':res:' =>
-            [
+        ':res:' => [
                 'title' => 'Respect',
                 'name' => 'resources/images/smiles/36.gif',
             ],
-        ':alc:' =>
-            [
+        ':alc:' => [
                 'title' => 'Alcohol',
                 'name' => 'resources/images/smiles/37.gif',
             ],
-        ':lam:' =>
-            [
+        ':lam:' => [
                 'title' => 'The lamer',
                 'name' => 'resources/images/smiles/38.gif',
             ],
-        ':box:' =>
-            [
+        ':box:' => [
                 'title' => 'Boxing',
                 'name' => 'resources/images/smiles/39.gif',
             ],
-        ':tom:' =>
-            [
+        ':tom:' => [
                 'title' => 'Tomato',
                 'name' => 'resources/images/smiles/40.gif',
             ],
-        ':lol:' =>
-            [
+        ':lol:' => [
                 'title' => 'Cheerfully',
                 'name' => 'resources/images/smiles/41.gif',
             ],
-        ':vill:' =>
-            [
+        ':vill:' => [
                 'title' => 'The villain',
                 'name' => 'resources/images/smiles/42.gif',
             ],
-        ':idea:' =>
-            [
+        ':idea:' => [
                 'title' => 'Idea',
                 'name' => 'resources/images/smiles/43.gif',
             ],
-        ':E' =>
-            [
+        ':E' => [
                 'title' => 'The big rage',
                 'name' => 'resources/images/smiles/45.gif',
             ],
-        ':sex:' =>
-            [
+        ':sex:' => [
                 'title' => 'Sex',
                 'name' => 'resources/images/smiles/46.gif',
             ],
-        ':horns:' =>
-            [
+        ':horns:' => [
                 'title' => 'Horns',
                 'name' => 'resources/images/smiles/47.gif',
             ],
-        ':love:' =>
-            [
+        ':love:' => [
                 'title' => 'Love me',
                 'name' => 'resources/images/smiles/48.gif',
             ],
-        ':poz:' =>
-            [
+        ':poz:' => [
                 'title' => 'Happy birthday',
                 'name' => 'resources/images/smiles/49.gif',
             ],
-        ':roza:' =>
-            [
+        ':roza:' => [
                 'title' => 'Roza',
                 'name' => 'resources/images/smiles/50.gif',
             ],
-        ':meg:' =>
-            [
+        ':meg:' => [
                 'title' => 'Megaphone',
                 'name' => 'resources/images/smiles/51.gif',
             ],
-        ':dj:' =>
-            [
+        ':dj:' => [
                 'title' => 'The DJ',
                 'name' => 'resources/images/smiles/52.gif',
             ],
-        ':rul:' =>
-            [
+        ':rul:' => [
                 'title' => 'Rules',
                 'name' => 'resources/images/smiles/53.gif',
             ],
-        ':offln:' =>
-            [
+        ':offln:' => [
                 'title' => 'OffLine',
                 'name' => 'resources/images/smiles/54.gif',
             ],
-        ':sp:' =>
-            [
+        ':sp:' => [
                 'title' => 'Spider',
                 'name' => 'resources/images/smiles/55.gif',
             ],
-        ':stapp:' =>
-            [
+        ':stapp:' => [
                 'title' => 'Storm of applause',
                 'name' => 'resources/images/smiles/56.gif',
             ],
-        ':girl:' =>
-            [
+        ':girl:' => [
                 'title' => 'Beautiful girl',
                 'name' => 'resources/images/smiles/57.gif',
             ],
-        ':heart:' =>
-            [
+        ':heart:' => [
                 'title' => 'Heart',
                 'name' => 'resources/images/smiles/58.gif',
             ],
-        ':kiss:' =>
-            [
+        ':kiss:' => [
                 'title' => 'Kiss',
                 'name' => 'resources/images/smiles/59.gif',
             ],
-        ':spam:' =>
-            [
+        ':spam:' => [
                 'title' => 'Spam',
                 'name' => 'resources/images/smiles/60.gif',
             ],
-        ':party:' =>
-            [
+        ':party:' => [
                 'title' => 'Party',
                 'name' => 'resources/images/smiles/61.gif',
             ],
-        ':ser:' =>
-            [
+        ':ser:' => [
                 'title' => 'Song',
                 'name' => 'resources/images/smiles/62.gif',
             ],
-        ':eam:' =>
-            [
+        ':eam:' => [
                 'title' => 'Dream',
                 'name' => 'resources/images/smiles/63.gif',
             ],
-        ':gift:' =>
-            [
+        ':gift:' => [
                 'title' => 'Gift',
                 'name' => 'resources/images/smiles/64.gif',
             ],
-        ':adore:' =>
-            [
+        ':adore:' => [
                 'title' => 'I adore',
                 'name' => 'resources/images/smiles/65.gif',
             ],
-        ':pie:' =>
-            [
+        ':pie:' => [
                 'title' => 'Pie',
                 'name' => 'resources/images/smiles/66.gif',
             ],
-        ':egg:' =>
-            [
+        ':egg:' => [
                 'title' => 'Egg',
                 'name' => 'resources/images/smiles/67.gif',
             ],
-        ':cnrt:' =>
-            [
+        ':cnrt:' => [
                 'title' => 'Concert',
                 'name' => 'resources/images/smiles/68.gif',
             ],
-        ':oftop:' =>
-            [
+        ':oftop:' => [
                 'title' => 'Off Topic',
                 'name' => 'resources/images/smiles/69.gif',
             ],
-        ':foo:' =>
-            [
+        ':foo:' => [
                 'title' => 'Football',
                 'name' => 'resources/images/smiles/70.gif',
             ],
-        ':mob:' =>
-            [
+        ':mob:' => [
                 'title' => 'Cellular',
                 'name' => 'resources/images/smiles/71.gif',
             ],
-        ':hoo:' =>
-            [
+        ':hoo:' => [
                 'title' => 'Not hooligan',
                 'name' => 'resources/images/smiles/72.gif',
             ],
-        ':tog:' =>
-            [
+        ':tog:' => [
                 'title' => 'Together',
                 'name' => 'resources/images/smiles/73.gif',
             ],
-        ':pnk:' =>
-            [
+        ':pnk:' => [
                 'title' => 'Pancake',
                 'name' => 'resources/images/smiles/74.gif',
             ],
-        ':pati:' =>
-            [
+        ':pati:' => [
                 'title' => 'Party Time',
                 'name' => 'resources/images/smiles/75.gif',
             ],
-        ':-({|=:' =>
-            [
+        ':-({|=:' => [
                 'title' => 'I here',
                 'name' => 'resources/images/smiles/76.gif',
             ],
-        ':haaw:' =>
-            [
+        ':haaw:' => [
                 'title' => 'Head about a wall',
                 'name' => 'resources/images/smiles/77.gif',
             ],
-        ':angel:' =>
-            [
+        ':angel:' => [
                 'title' => 'Angel',
                 'name' => 'resources/images/smiles/78.gif',
             ],
-        ':kil:' =>
-            [
+        ':kil:' => [
                 'title' => 'killer',
                 'name' => 'resources/images/smiles/79.gif',
             ],
-        ':died:' =>
-            [
+        ':died:' => [
                 'title' => 'Cemetery',
                 'name' => 'resources/images/smiles/80.gif',
             ],
-        ':cof:' =>
-            [
+        ':cof:' => [
                 'title' => 'Coffee',
                 'name' => 'resources/images/smiles/81.gif',
             ],
-        ':fruit:' =>
-            [
+        ':fruit:' => [
                 'title' => 'Forbidden fruit',
                 'name' => 'resources/images/smiles/82.gif',
             ],
-        ':tease:' =>
-            [
+        ':tease:' => [
                 'title' => 'To tease',
                 'name' => 'resources/images/smiles/83.gif',
             ],
-        ':evil:' =>
-            [
+        ':evil:' => [
                 'title' => 'Devil',
                 'name' => 'resources/images/smiles/84.gif',
             ],
-        ':exc:' =>
-            [
+        ':exc:' => [
                 'title' => 'Excellently',
                 'name' => 'resources/images/smiles/85.gif',
             ],
-        ':niah:' =>
-            [
+        ':niah:' => [
                 'title' => 'Not I, and he',
                 'name' => 'resources/images/smiles/86.gif',
             ],
-        ':Head:' =>
-            [
+        ':Head:' => [
                 'title' => 'Studio',
                 'name' => 'resources/images/smiles/87.gif',
             ],
-        ':gl:' =>
-            [
+        ':gl:' => [
                 'title' => 'girl',
                 'name' => 'resources/images/smiles/88.gif',
             ],
-        ':granat:' =>
-            [
+        ':granat:' => [
                 'title' => 'Pomegranate',
                 'name' => 'resources/images/smiles/89.gif',
             ],
-        ':gans:' =>
-            [
+        ':gans:' => [
                 'title' => 'Gangster',
                 'name' => 'resources/images/smiles/90.gif',
             ],
-        ':user:' =>
-            [
+        ':user:' => [
                 'title' => 'User',
                 'name' => 'resources/images/smiles/91.gif',
             ],
-        ':ny:' =>
-            [
+        ':ny:' => [
                 'title' => 'New year',
                 'name' => 'resources/images/smiles/92.gif',
             ],
-        ':mvol:' =>
-            [
+        ':mvol:' => [
                 'title' => 'Megavolt',
                 'name' => 'resources/images/smiles/93.gif',
             ],
-        ':boat:' =>
-            [
+        ':boat:' => [
                 'title' => 'In a boat',
                 'name' => 'resources/images/smiles/94.gif',
             ],
-        ':phone:' =>
-            [
+        ':phone:' => [
                 'title' => 'Phone',
                 'name' => 'resources/images/smiles/95.gif',
             ],
-        ':cop:' =>
-            [
+        ':cop:' => [
                 'title' => 'Cop',
                 'name' => 'resources/images/smiles/96.gif',
             ],
-        ':smok:' =>
-            [
+        ':smok:' => [
                 'title' => 'Smoking',
                 'name' => 'resources/images/smiles/97.gif',
             ],
-        ':bic:' =>
-            [
+        ':bic:' => [
                 'title' => 'Bicycle',
                 'name' => 'resources/images/smiles/98.gif',
             ],
-        ':ban:' =>
-            [
+        ':ban:' => [
                 'title' => 'Ban?',
                 'name' => 'resources/images/smiles/99.gif',
             ],
-        ':bar:' =>
-            [
+        ':bar:' => [
                 'title' => 'Bar',
                 'name' => 'resources/images/smiles/100.gif',
             ],
     ];
 
-
     /**
-     * Конструктор класса
+     * Конструктор класса.
      *
      * @param string $webPath Web path
-     * @param array $allowed Allowed tags
+     * @param array  $allowed Allowed tags
      */
     public function __construct($webPath = '', array $allowed = null)
     {
@@ -1060,9 +959,8 @@ class Xbbcode
         }
     }
 
-
     /**
-     * Функция парсит текст BBCode и возвращает очередную пару
+     * Функция парсит текст BBCode и возвращает очередную пару.
      *
      *                     "число (тип лексемы) - лексема"
      *
@@ -1156,7 +1054,6 @@ class Xbbcode
         return [$tokenType, $token];
     }
 
-
     /**
      * Парсер
      *
@@ -1189,7 +1086,6 @@ class Xbbcode
             return;
         }
         $this->text = $code;
-        
 
         $finiteAutomaton = $this->finiteAutomaton();
 
@@ -1201,7 +1097,7 @@ class Xbbcode
             } else {
                 $this->syntax[++$key] = [
                     'type' => 'text',
-                    'str' => $finiteAutomaton['decomposition']['str']
+                    'str' => $finiteAutomaton['decomposition']['str'],
                 ];
             }
         }
@@ -1209,7 +1105,6 @@ class Xbbcode
         $this->parseTree();
         $this->statistics['time_parse'] = \microtime(true) - $time_start;
     }
-
 
     /**
      * @return array
@@ -1243,16 +1138,16 @@ class Xbbcode
                     } else {
                         $this->syntax[++$token_key] = [
                             'type' => 'text',
-                            'str' => $token[1]
+                            'str' => $token[1],
                         ];
                     }
                     break;
                 case 1:
                     $decomposition = [
-                        'name'   => '',
-                        'type'   => '',
-                        'str'    => '[',
-                        'layout' => [[0, '[']]
+                        'name' => '',
+                        'type' => '',
+                        'str' => '[',
+                        'layout' => [[0, '[']],
                     ];
                     break;
                 case 2:
@@ -1261,14 +1156,14 @@ class Xbbcode
                     } else {
                         $this->syntax[++$token_key] = [
                             'type' => 'text',
-                            'str' => $decomposition['str']
+                            'str' => $decomposition['str'],
                         ];
                     }
                     $decomposition = [
-                        'name'   => '',
-                        'type'   => '',
-                        'str'    => '[',
-                        'layout' => [[0, '[']]
+                        'name' => '',
+                        'type' => '',
+                        'str' => '[',
+                        'layout' => [[0, '[']],
                     ];
                     break;
                 case 3:
@@ -1278,7 +1173,7 @@ class Xbbcode
                     } else {
                         $this->syntax[++$token_key] = [
                             'type' => 'text',
-                            'str' => $decomposition['str'].$token[1]
+                            'str' => $decomposition['str'].$token[1],
                         ];
                     }
                     $decomposition = [];
@@ -1349,8 +1244,8 @@ class Xbbcode
                         $finite_automaton[13][6] = 19;
                         $finite_automaton[19][6] = 19;
                     }
-                    $decomposition['attributes'][$name] = $spacesave . $token[1];
-                    $value = $spacesave . $token[1];
+                    $decomposition['attributes'][$name] = $spacesave.$token[1];
+                    $value = $spacesave.$token[1];
                     $decomposition['str'] .= $token[1];
                     $spacesave = '';
                     break;
@@ -1404,11 +1299,11 @@ class Xbbcode
         ];
     }
 
-
     /**
-     * specialchars
+     * specialchars.
      *
      * @param string $str
+     *
      * @return string
      */
     protected function specialchars($str)
@@ -1418,30 +1313,31 @@ class Xbbcode
             ']' => '@r;',
             '"' => '@q;',
             "'" => '@a;',
-            '@' => '@at;'
+            '@' => '@at;',
         ];
+
         return \strtr($str, $chars);
     }
 
-
     /**
-     * unspecialchars
+     * unspecialchars.
      *
      * @param string $str
+     *
      * @return string
      */
     protected function unspecialchars($str)
     {
         $chars = [
-            '@l;'  => '[',
-            '@r;'  => ']',
-            '@q;'  => '"',
-            '@a;'  => "'",
-            '@at;' => '@'
+            '@l;' => '[',
+            '@r;' => ']',
+            '@q;' => '"',
+            '@a;' => "'",
+            '@at;' => '@',
         ];
+
         return \strtr($str, $chars);
     }
-
 
     /**
      * @param bool $autoLinks
@@ -1450,7 +1346,7 @@ class Xbbcode
      */
     public function setAutoLinks($autoLinks = false)
     {
-        $this->autoLinks = (bool)$autoLinks;
+        $this->autoLinks = (bool) $autoLinks;
 
         return $this;
     }
@@ -1463,7 +1359,6 @@ class Xbbcode
         return $this->autoLinks;
     }
 
-
     /**
      * @param bool $keywordLinks
      *
@@ -1471,7 +1366,7 @@ class Xbbcode
      */
     public function setKeywordLinks($keywordLinks = false)
     {
-        $this->keywordLinks = (bool)$keywordLinks;
+        $this->keywordLinks = (bool) $keywordLinks;
 
         return $this;
     }
@@ -1488,17 +1383,19 @@ class Xbbcode
      * @param string $key
      * @param string $name
      * @param string $title
+     *
      * @return Xbbcode
      */
     public function setSmile($key, $name, $title = '')
     {
-        $this->setMnemonic($key, '<img src="' . \htmlspecialchars($this->webPath . '/' . $name) . '" alt="' . \htmlspecialchars($title) . '" />');
+        $this->setMnemonic($key, '<img src="'.\htmlspecialchars($this->webPath.'/'.$name).'" alt="'.\htmlspecialchars($title).'" />');
 
         return $this;
     }
 
     /**
      * @param string $key
+     *
      * @return Xbbcode
      */
     public function removeMnemonic($key)
@@ -1508,7 +1405,6 @@ class Xbbcode
         return $this;
     }
 
-
     /**
      * @return array
      */
@@ -1517,9 +1413,7 @@ class Xbbcode
         return $this->mnemonics;
     }
 
-
     /**
-     * @param array $mnemonics
      * @return Xbbcode
      */
     public function setMnemonics(array $mnemonics)
@@ -1529,10 +1423,10 @@ class Xbbcode
         return $this;
     }
 
-
     /**
      * @param string $key
      * @param string $value
+     *
      * @return Xbbcode
      */
     public function setMnemonic($key, $value)
@@ -1542,7 +1436,6 @@ class Xbbcode
         return $this;
     }
 
-
     /**
      * @param bool $enableSmiles
      *
@@ -1550,13 +1443,12 @@ class Xbbcode
      */
     public function setEnableSmiles($enableSmiles = true)
     {
-        $this->enableSmiles = (bool)$enableSmiles;
+        $this->enableSmiles = (bool) $enableSmiles;
 
         $this->reloadSmiles();
 
         return $this;
     }
-
 
     /**
      * @return Xbbcode
@@ -1584,10 +1476,7 @@ class Xbbcode
         return $this->enableSmiles;
     }
 
-
     /**
-     * @param array $smiles
-     *
      * @return Xbbcode
      */
     public function setSmiles(array $smiles)
@@ -1608,8 +1497,6 @@ class Xbbcode
     }
 
     /**
-     * @param array $tags
-     *
      * @return Xbbcode
      */
     public function setTags(array $tags)
@@ -1627,7 +1514,6 @@ class Xbbcode
         return $this->tags;
     }
 
-
     /**
      * @param string $tagName
      * @param string $handler Имя класса отнаследованного от абстрактного Tag
@@ -1643,13 +1529,13 @@ class Xbbcode
 
     /**
      * @param string $tagName
+     *
      * @return string
      */
     public function getTagHandler($tagName)
     {
         return $this->tags[$tagName];
     }
-
 
     /**
      * @param string $tagName
@@ -1671,10 +1557,7 @@ class Xbbcode
         return $this->tagName;
     }
 
-
     /**
-     * @param array $tree
-     *
      * @return Xbbcode
      */
     public function setTree(array $tree)
@@ -1704,13 +1587,13 @@ class Xbbcode
         return $this->tagObjects[$this->tags[$tagName]];
     }
 
-
     /**
      * Функция проверяет, должен ли тег с именем $current закрыться,
      * если начинается тег с именем $next.
      *
      * @param string $current
      * @param string $next
+     *
      * @return bool
      */
     protected function mustCloseTag($current, $next)
@@ -1736,7 +1619,6 @@ class Xbbcode
         return $mustClose;
     }
 
-
     /**
      * Возвращает true, если тег с именем $parent может иметь непосредственным
      * потомком тег с именем $child. В противном случае - false.
@@ -1745,6 +1627,7 @@ class Xbbcode
      *
      * @param string $parent
      * @param string $child
+     *
      * @return bool
      */
     protected function isPermissiblyChild($parent, $child)
@@ -1771,11 +1654,9 @@ class Xbbcode
         return $permissibly;
     }
 
-
     /**
-     * normalizeBracket
+     * normalizeBracket.
      *
-     * @param array $syntax
      * @return array
      */
     protected function normalizeBracket(array $syntax)
@@ -1804,10 +1685,10 @@ class Xbbcode
                     foreach (\array_reverse($open_tags, true) as $ult_key => $ultimate) {
                         if ($this->mustCloseTag($ultimate, $val['name'])) {
                             $structure[++$structure_key] = [
-                                'type'  => 'close',
-                                'name'  => $ultimate,
-                                'str'   => '',
-                                'level' => --$level
+                                'type' => 'close',
+                                'name' => $ultimate,
+                                'str' => '',
+                                'level' => --$level,
                             ];
                             unset($open_tags[$ult_key]);
                         } else {
@@ -1823,10 +1704,10 @@ class Xbbcode
                     foreach (\array_reverse($open_tags, true) as $ult_key => $ultimate) {
                         if ($this->mustCloseTag($ultimate, $val['name'])) {
                             $structure[++$structure_key] = [
-                                'type'  => 'close',
-                                'name'  => $ultimate,
-                                'str'   => '',
-                                'level' => --$level
+                                'type' => 'close',
+                                'name' => $ultimate,
+                                'str' => '',
+                                'level' => --$level,
                             ];
                             unset($open_tags[$ult_key]);
                         } else {
@@ -1850,9 +1731,9 @@ class Xbbcode
                             $structure[$structure_key]['str'] .= $val['str'];
                         } else {
                             $structure[++$structure_key] = [
-                                'type'  => 'text',
-                                'str'   => $val['str'],
-                                'level' => 0
+                                'type' => 'text',
+                                'str' => $val['str'],
+                                'level' => 0,
                             ];
                         }
                         break;
@@ -1872,9 +1753,9 @@ class Xbbcode
                             $structure[$structure_key]['str'] .= $val['str'];
                         } else {
                             $structure[++$structure_key] = [
-                                'type'  => 'text',
-                                'str'   => $val['str'],
-                                'level' => $level
+                                'type' => 'text',
+                                'str' => $val['str'],
+                                'level' => $level,
                             ];
                         }
                         break;
@@ -1882,10 +1763,10 @@ class Xbbcode
                     foreach (\array_reverse($open_tags, true) as $ult_key => $ultimate) {
                         if ($ultimate !== $val['name']) {
                             $structure[++$structure_key] = [
-                                'type'  => 'close',
-                                'name'  => $ultimate,
-                                'str'   => '',
-                                'level' => --$level
+                                'type' => 'close',
+                                'name' => $ultimate,
+                                'str' => '',
+                                'level' => --$level,
                             ];
                             unset($open_tags[$ult_key]);
                         } else {
@@ -1901,10 +1782,10 @@ class Xbbcode
 
         foreach (\array_reverse($open_tags, true) as $ult_key => $ultimate) {
             $structure[++$structure_key] = [
-                'type'  => 'close',
-                'name'  => $ultimate,
-                'str'   => '',
-                'level' => --$level
+                'type' => 'close',
+                'name' => $ultimate,
+                'str' => '',
+                'level' => --$level,
             ];
             unset($open_tags[$ult_key]);
         }
@@ -1912,9 +1793,8 @@ class Xbbcode
         return $structure;
     }
 
-
     /**
-     * parseTree
+     * parseTree.
      */
     protected function parseTree()
     {
@@ -1951,9 +1831,9 @@ class Xbbcode
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = [
-                                'type'  => 'text',
-                                'str'   => $val['str'],
-                                'level' => $level
+                                'type' => 'text',
+                                'str' => $val['str'],
+                                'level' => $level,
                             ];
                         }
                         break;
@@ -1974,9 +1854,9 @@ class Xbbcode
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = [
-                                'type'  => 'text',
-                                'str'   => $val['str'],
-                                'level' => $level
+                                'type' => 'text',
+                                'str' => $val['str'],
+                                'level' => $level,
                             ];
                         }
                         break;
@@ -1996,9 +1876,9 @@ class Xbbcode
                             $normalized[$normal_key]['str'] .= $val['str'];
                         } else {
                             $normalized[++$normal_key] = [
-                                'type'  => 'text',
-                                'str'   => $val['str'],
-                                'level' => $level
+                                'type' => 'text',
+                                'str' => $val['str'],
+                                'level' => $level,
                             ];
                         }
                         break;
@@ -2025,38 +1905,38 @@ class Xbbcode
                     if (!$val['level']) {
                         $result[++$result_key] = [
                             'type' => 'text',
-                            'str' => $val['str']
+                            'str' => $val['str'],
                         ];
                         break;
                     }
                     $open_tags[$val['level'] - 1]['val'][] = [
                         'type' => 'text',
-                        'str' => $val['str']
+                        'str' => $val['str'],
                     ];
                     break;
                 case 'open/close':
                     if (!$val['level']) {
                         $result[++$result_key] = [
-                            'type'   => 'item',
-                            'name'   => $val['name'],
+                            'type' => 'item',
+                            'name' => $val['name'],
                             'attributes' => $val['attributes'],
-                            'val'    => []
+                            'val' => [],
                         ];
                         break;
                     }
                     $open_tags[$val['level'] - 1]['val'][] = [
-                        'type'   => 'item',
-                        'name'   => $val['name'],
+                        'type' => 'item',
+                        'name' => $val['name'],
                         'attributes' => $val['attributes'],
-                        'val'    => []
+                        'val' => [],
                     ];
                     break;
                 case 'open':
                     $open_tags[$val['level']] = [
-                        'type'   => 'item',
-                        'name'   => $val['name'],
+                        'type' => 'item',
+                        'name' => $val['name'],
                         'attributes' => $val['attributes'],
-                        'val'    => []
+                        'val' => [],
                     ];
                     break;
                 case 'close':
@@ -2077,11 +1957,11 @@ class Xbbcode
         $this->setTree($result);
     }
 
-
     /**
-     * getSyntax
+     * getSyntax.
      *
      * @param bool|array $tree
+     *
      * @return array
      */
     protected function getSyntax($tree = false)
@@ -2094,7 +1974,7 @@ class Xbbcode
             if ('text' === $elem['type']) {
                 $syntax[] = [
                     'type' => 'text',
-                    'str' => $this->specialchars($elem['str'])
+                    'str' => $this->specialchars($elem['str']),
                 ];
             } else {
                 $sub_elems = $this->getSyntax($elem['val']);
@@ -2111,7 +1991,7 @@ class Xbbcode
                     }
                     $str .= $name;
                     if ($val) {
-                        $str .= '="' . $val . '"';
+                        $str .= '="'.$val.'"';
                         $layout[] = [3, '='];
                         $layout[] = [5, '"'];
                         $layout[] = [7, $val];
@@ -2119,9 +1999,9 @@ class Xbbcode
                     }
                 }
                 if ($sub_elems) {
-                    $str = '[' . $str . ']';
+                    $str = '['.$str.']';
                 } else {
-                    $str = '[' . $str . ' /]';
+                    $str = '['.$str.' /]';
                     $layout[] = [4, ' '];
                     $layout[] = [1, '/'];
                 }
@@ -2131,7 +2011,7 @@ class Xbbcode
                     'str' => $str,
                     'name' => $elem['name'],
                     'attributes' => $elem['attributes'],
-                    'layout' => $layout
+                    'layout' => $layout,
                 ];
                 foreach ($sub_elems as $sub_elem) {
                     $syntax[] = $sub_elem;
@@ -2139,14 +2019,14 @@ class Xbbcode
                 if ($sub_elems) {
                     $syntax[] = [
                         'type' => 'close',
-                        'str' => '[/' . $elem['name'] . ']',
+                        'str' => '[/'.$elem['name'].']',
                         'name' => $elem['name'],
                         'layout' => [
                             [0, '['],
                             [1, '/'],
                             [2, $elem['name']],
-                            [0, ']']
-                        ]
+                            [0, ']'],
+                        ],
                     ];
                 }
             }
@@ -2155,16 +2035,16 @@ class Xbbcode
         return $syntax;
     }
 
-
     /**
-     * insertSmiles
+     * insertSmiles.
      *
      * @param string $text
+     *
      * @return string
      */
     protected function insertMnemonics($text)
     {
-        $text = \htmlspecialchars($text, ENT_NOQUOTES);
+        $text = \htmlspecialchars($text, \ENT_NOQUOTES);
         if ($this->getAutoLinks()) {
             $search = $this->pregAutoLinks['pattern'];
             $replace = $this->pregAutoLinks['replacement'];
@@ -2176,9 +2056,8 @@ class Xbbcode
         return $text;
     }
 
-
     /**
-     * highlight
+     * highlight.
      *
      * @return string
      */
@@ -2186,11 +2065,11 @@ class Xbbcode
     {
         $time_start = \microtime(true);
         $chars = [
-            '@l;'  => '<span class="bb_spec_char">@l;</span>',
-            '@r;'  => '<span class="bb_spec_char">@r;</span>',
-            '@q;'  => '<span class="bb_spec_char">@q;</span>',
-            '@a;'  => '<span class="bb_spec_char">@a;</span>',
-            '@at;' => '<span class="bb_spec_char">@at;</span>'
+            '@l;' => '<span class="bb_spec_char">@l;</span>',
+            '@r;' => '<span class="bb_spec_char">@r;</span>',
+            '@q;' => '<span class="bb_spec_char">@q;</span>',
+            '@a;' => '<span class="bb_spec_char">@a;</span>',
+            '@at;' => '<span class="bb_spec_char">@at;</span>',
         ];
         $search = $this->pregAutoLinks['pattern'];
         $replace = $this->pregAutoLinks['highlight'];
@@ -2202,7 +2081,7 @@ class Xbbcode
                 foreach ($this->getMnemonics() as $mnemonic => $value) {
                     $elem['str'] = \str_replace(
                         $mnemonic,
-                        '<span class="bb_mnemonic">' . $mnemonic . '</span>',
+                        '<span class="bb_mnemonic">'.$mnemonic.'</span>',
                         $elem['str']
                     );
                 }
@@ -2213,13 +2092,13 @@ class Xbbcode
                 foreach ($elem['layout'] as $val) {
                     switch ($val[0]) {
                         case 0:
-                            $str .= '<span class="bb_bracket">' . $val[1] . '</span>';
+                            $str .= '<span class="bb_bracket">'.$val[1].'</span>';
                             break;
                         case 1:
                             $str .= '<span class="bb_slash">/</span>';
                             break;
                         case 2:
-                            $str .= '<span class="bb_tagname">'.$val[1] .'</span>';
+                            $str .= '<span class="bb_tagname">'.$val[1].'</span>';
                             break;
                         case 3:
                             $str .= '<span class="bb_equal">=</span>';
@@ -2231,17 +2110,17 @@ class Xbbcode
                             if (!\trim($val[1])) {
                                 $str .= $val[1];
                             } else {
-                                $str .= '<span class="bb_quote">' . $val[1] . '</span>';
+                                $str .= '<span class="bb_quote">'.$val[1].'</span>';
                             }
                             break;
                         case 6:
-                            $str .= '<span class="bb_attribute_name">' . \htmlspecialchars($val[1]) . '</span>';
+                            $str .= '<span class="bb_attribute_name">'.\htmlspecialchars($val[1]).'</span>';
                             break;
                         case 7:
                             if (!\trim($val[1])) {
                                 $str .= $val[1];
                             } else {
-                                $str .= '<span class="bb_attribute_val">' . \strtr(\htmlspecialchars($val[1]), $chars) . '</span>';
+                                $str .= '<span class="bb_attribute_val">'.\strtr(\htmlspecialchars($val[1]), $chars).'</span>';
                             }
                             break;
                         default:
@@ -2259,11 +2138,11 @@ class Xbbcode
         return $str;
     }
 
-
     /**
-     * Возвращает HTML код
+     * Возвращает HTML код.
      *
      * @param array $elems
+     *
      * @return string
      */
     public function getHtml(array $elems = null)
@@ -2321,7 +2200,6 @@ class Xbbcode
         return $result;
     }
 
-
     /**
      * Функция проверяет, доступен ли класс - обработчик тега с именем $tagName и,
      * если нет, пытается подключить файл с соответствующим классом. Если это не
@@ -2329,6 +2207,7 @@ class Xbbcode
      * Затем инициализирует объект обработчика (если он еще не инициализирован).
      *
      * @param string $tagName
+     *
      * @return bool
      */
     protected function includeTag($tagName)
@@ -2339,15 +2218,14 @@ class Xbbcode
 
         $handler = $this->tags[$tagName];
         if (!isset($this->tagObjects[$handler])) {
-            $this->tagObjects[$handler] = new $handler;
+            $this->tagObjects[$handler] = new $handler();
         }
 
         return true;
     }
 
-
     /**
-     * Статистика работы парсера
+     * Статистика работы парсера.
      *
      * 'time_parse'        => 0, // Время парсинга
      * 'time_html'         => 0, // Время генерации HTML-а

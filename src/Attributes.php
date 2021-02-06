@@ -23,7 +23,7 @@
 namespace Xbbcode;
 
 /**
- * Class Attributes
+ * Class Attributes.
  */
 class Attributes extends \ArrayObject
 {
@@ -34,6 +34,7 @@ class Attributes extends \ArrayObject
 
     /**
      * @param string $name
+     *
      * @return string
      */
     public function getAttributeValue($name)
@@ -44,6 +45,7 @@ class Attributes extends \ArrayObject
     /**
      * @param string $name
      * @param string $value
+     *
      * @return Attributes
      */
     public function set($name, $value)
@@ -56,12 +58,13 @@ class Attributes extends \ArrayObject
     /**
      * @param string $name
      * @param string $value
+     *
      * @return Attributes
      */
     public function add($name, $value)
     {
         if (isset($this->attributes[$name])) {
-            $this->attributes[$name] .= ' ' . $value;
+            $this->attributes[$name] .= ' '.$value;
         } else {
             $this->set($name, $value);
         }
@@ -71,6 +74,7 @@ class Attributes extends \ArrayObject
 
     /**
      * @param string $name
+     *
      * @return Attributes
      */
     public function remove($name)
@@ -95,7 +99,7 @@ class Attributes extends \ArrayObject
     {
         $str = '';
         foreach ($this->getIterator() as $name => $value) {
-            $str .= \htmlspecialchars($name, ENT_NOQUOTES) . '="' . \htmlspecialchars($value) . '" ';
+            $str .= \htmlspecialchars($name, \ENT_NOQUOTES).'="'.\htmlspecialchars($value).'" ';
         }
 
         return \rtrim($str);
