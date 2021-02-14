@@ -30,8 +30,6 @@ use Xbbcode\Attributes;
  */
 class Ol extends Tag
 {
-    //const BR_LEFT = 1;
-    //const BR_RIGHT = 1;
     public const BEHAVIOUR = 'ul';
 
     /**

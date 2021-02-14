@@ -28,7 +28,6 @@ namespace Xbbcode\Tag;
  */
 class Code extends Tag
 {
-    //const BR_RIGHT = 1;
     public const BEHAVIOUR = 'pre';
 
     /* Альтернативные названия языков и их трансляция в обозначения GeSHi */

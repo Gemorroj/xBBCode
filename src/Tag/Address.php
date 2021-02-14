@@ -28,8 +28,6 @@ namespace Xbbcode\Tag;
  */
 class Address extends Tag
 {
-    //const BR_RIGHT = 1;
-
     /**
      * Return html code.
      *

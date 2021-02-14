@@ -28,8 +28,6 @@ namespace Xbbcode\Tag;
  */
 class P extends Align
 {
-    //const BR_LEFT = 2;
-    //const BR_RIGHT = 2;
     public const BEHAVIOUR = 'p';
 
     /**

@@ -184,8 +184,6 @@ abstract class Tag extends Xbbcode
     /**
      * Аналог parse_str но без преобразования точек и пробелов в подчеркивания.
      *
-     * @todo не очень хорошая реализация
-     *
      * @param string $str
      *
      * @return array

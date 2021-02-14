@@ -29,7 +29,6 @@ namespace Xbbcode\Tag;
 class Hr extends Tag
 {
     public const IS_CLOSE = true;
-    //const BR_RIGHT = 1;
     public const BEHAVIOUR = 'hr';
 
     /**

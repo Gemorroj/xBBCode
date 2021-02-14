@@ -30,7 +30,6 @@ use Xbbcode\Attributes;
  */
 class Table extends Tag
 {
-    //const BR_RIGHT = 1;
     public const BEHAVIOUR = 'table';
 
     /**
