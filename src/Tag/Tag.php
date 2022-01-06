@@ -87,7 +87,7 @@ abstract class Tag extends Xbbcode
     /**
      * @return string HTML code
      */
-    abstract public function __toString();
+    abstract public function __toString(): string;
 
     /**
      * @return Attributes Tag attributes
@@ -97,12 +97,12 @@ abstract class Tag extends Xbbcode
         return new Attributes();
     }
 
-    public function setAttributes(array $attributes)
+    public function setAttributes(array $attributes): void
     {
         $this->attributes = $attributes;
     }
 
-    protected function cleanTreeText()
+    protected function cleanTreeText(): void
     {
         foreach ($this->getTree() as $key => $item) {
             if ('text' === $item['type']) {
@@ -111,10 +111,7 @@ abstract class Tag extends Xbbcode
         }
     }
 
-    /**
-     * @return string
-     */
-    protected function getTreeText()
+    protected function getTreeText(): string
     {
         $text = '';
         foreach ($this->getTree() as $val) {
@@ -126,10 +123,7 @@ abstract class Tag extends Xbbcode
         return $text;
     }
 
-    /**
-     * @return string
-     */
-    protected function getBody()
+    protected function getBody(): string
     {
         if (\in_array(static::BEHAVIOUR, ['table', 'tr', 'ul'])) {
             $this->cleanTreeText();
@@ -140,12 +134,8 @@ abstract class Tag extends Xbbcode
 
     /**
      * Функция преобразует строку URL в соответствии с RFC 3986.
-     *
-     * @param string $url
-     *
-     * @return string
      */
-    protected function parseUrl($url)
+    protected function parseUrl(string $url): string
     {
         $parse = \parse_url($url);
 
@@ -183,16 +173,13 @@ abstract class Tag extends Xbbcode
 
     /**
      * Аналог parse_str но без преобразования точек и пробелов в подчеркивания.
-     *
-     * @param string $str
-     *
-     * @return array
      */
-    private function parseStr($str)
+    private function parseStr(string $str): array
     {
         $original = ['.', ' '];
         $replace = ["xbbdot\txbbdot", "xbbspace\txbbspace"];
 
+        $query = [];
         \parse_str(\str_replace($original, $replace, $str), $query);
 
         foreach ($query as $k => $v) {
@@ -203,83 +190,43 @@ abstract class Tag extends Xbbcode
         return $query;
     }
 
-    /**
-     * @param string $size
-     *
-     * @return bool
-     */
-    protected function isValidSize($size)
+    protected function isValidSize(string $size): bool
     {
         return (bool) \preg_match('/^[0-9]+(?:px|%)?$/i', $size);
     }
 
-    /**
-     * @param string $number
-     *
-     * @return bool
-     */
-    protected function isValidNumber($number)
+    protected function isValidNumber(string $number): bool
     {
         return (bool) \preg_match('/^[0-9]+$/', $number);
     }
 
-    /**
-     * @param string $size
-     *
-     * @return bool
-     */
-    protected function isValidFontSize($size)
+    protected function isValidFontSize(string $size): bool
     {
         return (bool) \preg_match('/^(?:\+|-)?(?:1|2|3|4|5|6|7){1}$/', $size);
     }
 
-    /**
-     * @param string $align
-     *
-     * @return bool
-     */
-    protected function isValidAlign($align)
+    protected function isValidAlign(string $align): bool
     {
-        return \in_array(\strtolower($align), ['left', 'right', 'center', 'justify']);
+        return \in_array(\strtolower($align), ['left', 'right', 'center', 'justify'], true);
     }
 
-    /**
-     * @param string $valign
-     *
-     * @return bool
-     */
-    protected function isValidValign($valign)
+    protected function isValidValign(string $valign): bool
     {
-        return \in_array(\strtolower($valign), ['top', 'middle', 'bottom', 'baseline']);
+        return \in_array(\strtolower($valign), ['top', 'middle', 'bottom', 'baseline'], true);
     }
 
-    /**
-     * @param string $ulType
-     *
-     * @return bool
-     */
-    protected function isValidUlType($ulType)
+    protected function isValidUlType(string $ulType): bool
     {
-        return \in_array(\strtolower($ulType), ['disc', 'circle', 'square']);
+        return \in_array(\strtolower($ulType), ['disc', 'circle', 'square'], true);
     }
 
-    /**
-     * @param string $olType
-     *
-     * @return bool
-     */
-    protected function isValidOlType($olType)
+    protected function isValidOlType(string $olType): bool
     {
         return (bool) \preg_match('/^[a-z0-9]+$/i', $olType);
     }
 
-    /**
-     * @param string $target
-     *
-     * @return bool
-     */
-    protected function isValidTarget($target)
+    protected function isValidTarget(string $target): bool
     {
-        return \in_array(\strtolower($target), ['_blank', '_self', '_parent', '_top']);
+        return \in_array(\strtolower($target), ['_blank', '_self', '_parent', '_top'], true);
     }
 }

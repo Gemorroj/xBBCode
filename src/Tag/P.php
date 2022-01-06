@@ -32,10 +32,8 @@ class P extends Align
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<'.$this->getTagName().' '.$this->getAttributes().'>'.$this->getBody().'</'.$this->getTagName().'>';
     }

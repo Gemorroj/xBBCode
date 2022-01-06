@@ -48,10 +48,8 @@ class Abbr extends Tag
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<abbr '.$this->getAttributes().'>'.$this->getBody().'</abbr>';
     }

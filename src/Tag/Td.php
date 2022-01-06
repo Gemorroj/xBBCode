@@ -80,10 +80,8 @@ class Td extends Tag
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<td '.$this->getAttributes().'>'.$this->getBody().'</td>';
     }

@@ -68,10 +68,8 @@ class Quote extends Tag
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<blockquote '.$this->getAttributes().'>'.$this->getAuthor().$this->getBody().'</blockquote>';
     }

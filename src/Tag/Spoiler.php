@@ -69,10 +69,8 @@ class Spoiler extends Tag
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         $attr = $this->getAttributes();
         $id = $attr->getAttributeValue('id');

@@ -57,7 +57,7 @@ class Xbbcode
     /**
      * Список поддерживаемых тегов с указанием специализированных классов.
      *
-     * @var string[]
+     * @var array<string, string>
      */
     protected $tags = [
         // Основные теги
@@ -398,7 +398,7 @@ class Xbbcode
     /**
      * Статистические сведения по обработке BBCode.
      *
-     * @var array
+     * @var array<string, float|int>
      */
     protected $statistics = [
         'time_parse' => 0, // Время парсинга
@@ -536,7 +536,7 @@ class Xbbcode
     /**
      * Смайлы.
      *
-     * @var array
+     * @var array<string, array<string, string>>
      */
     protected $smiles = [
         ':D' => [
@@ -940,10 +940,10 @@ class Xbbcode
     /**
      * Конструктор класса.
      *
-     * @param string $webPath Web path
-     * @param array  $allowed Allowed tags
+     * @param string     $webPath Web path
+     * @param array|null $allowed Allowed tags
      */
-    public function __construct($webPath = '', array $allowed = null)
+    public function __construct(string $webPath = '', ?array $allowed = null)
     {
         $this->webPath = $webPath;
         $this->reloadSmiles();
@@ -1059,7 +1059,7 @@ class Xbbcode
      *
      * @param array|string $code
      */
-    public function parse($code)
+    public function parse($code): void
     {
         $time_start = \microtime(true);
 
@@ -1106,10 +1106,7 @@ class Xbbcode
         $this->statistics['time_parse'] = \microtime(true) - $time_start;
     }
 
-    /**
-     * @return array
-     */
-    protected function finiteAutomaton()
+    protected function finiteAutomaton(): array
     {
         $finite_automaton = $this->finiteAutomaton;
         $mode = 0;
@@ -1299,14 +1296,7 @@ class Xbbcode
         ];
     }
 
-    /**
-     * specialchars.
-     *
-     * @param string $str
-     *
-     * @return string
-     */
-    protected function specialchars($str)
+    protected function specialchars(string $str): string
     {
         $chars = [
             '[' => '@l;',
@@ -1319,14 +1309,7 @@ class Xbbcode
         return \strtr($str, $chars);
     }
 
-    /**
-     * unspecialchars.
-     *
-     * @param string $str
-     *
-     * @return string
-     */
-    protected function unspecialchars($str)
+    protected function unspecialchars(string $str): string
     {
         $chars = [
             '@l;' => '[',
@@ -1339,121 +1322,73 @@ class Xbbcode
         return \strtr($str, $chars);
     }
 
-    /**
-     * @param bool $autoLinks
-     *
-     * @return Xbbcode
-     */
-    public function setAutoLinks($autoLinks = false)
+    public function setAutoLinks(bool $autoLinks = false): self
     {
-        $this->autoLinks = (bool) $autoLinks;
+        $this->autoLinks = $autoLinks;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getAutoLinks()
+    public function getAutoLinks(): bool
     {
         return $this->autoLinks;
     }
 
-    /**
-     * @param bool $keywordLinks
-     *
-     * @return Xbbcode
-     */
-    public function setKeywordLinks($keywordLinks = false)
+    public function setKeywordLinks(bool $keywordLinks = false): self
     {
-        $this->keywordLinks = (bool) $keywordLinks;
+        $this->keywordLinks = $keywordLinks;
 
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getKeywordLinks()
+    public function getKeywordLinks(): bool
     {
         return $this->keywordLinks;
     }
 
-    /**
-     * @param string $key
-     * @param string $name
-     * @param string $title
-     *
-     * @return Xbbcode
-     */
-    public function setSmile($key, $name, $title = '')
+    public function setSmile(string $key, string $name, string $title = ''): self
     {
         $this->setMnemonic($key, '<img src="'.\htmlspecialchars($this->webPath.'/'.$name).'" alt="'.\htmlspecialchars($title).'" />');
 
         return $this;
     }
 
-    /**
-     * @param string $key
-     *
-     * @return Xbbcode
-     */
-    public function removeMnemonic($key)
+    public function removeMnemonic(string $key): self
     {
         unset($this->mnemonics[$key]);
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getMnemonics()
+    public function getMnemonics(): array
     {
         return $this->mnemonics;
     }
 
-    /**
-     * @return Xbbcode
-     */
-    public function setMnemonics(array $mnemonics)
+    public function setMnemonics(array $mnemonics): self
     {
         $this->mnemonics = $mnemonics;
 
         return $this;
     }
 
-    /**
-     * @param string $key
-     * @param string $value
-     *
-     * @return Xbbcode
-     */
-    public function setMnemonic($key, $value)
+    public function setMnemonic(string $key, string $value): self
     {
         $this->mnemonics[$key] = $value;
 
         return $this;
     }
 
-    /**
-     * @param bool $enableSmiles
-     *
-     * @return Xbbcode
-     */
-    public function setEnableSmiles($enableSmiles = true)
+    public function setEnableSmiles(bool $enableSmiles = true): self
     {
-        $this->enableSmiles = (bool) $enableSmiles;
+        $this->enableSmiles = $enableSmiles;
 
         $this->reloadSmiles();
 
         return $this;
     }
 
-    /**
-     * @return Xbbcode
-     */
-    protected function reloadSmiles()
+    protected function reloadSmiles(): self
     {
         if ($this->getEnableSmiles()) {
             foreach ($this->getSmiles() as $key => $val) {
@@ -1468,18 +1403,15 @@ class Xbbcode
         return $this;
     }
 
-    /**
-     * @return bool
-     */
-    public function getEnableSmiles()
+    public function getEnableSmiles(): bool
     {
         return $this->enableSmiles;
     }
 
     /**
-     * @return Xbbcode
+     * @param array<string, array<string, string>> $smiles
      */
-    public function setSmiles(array $smiles)
+    public function setSmiles(array $smiles): self
     {
         $this->smiles = $smiles;
 
@@ -1489,17 +1421,17 @@ class Xbbcode
     }
 
     /**
-     * @return array
+     * @return array<string, array<string, string>>
      */
-    public function getSmiles()
+    public function getSmiles(): array
     {
         return $this->smiles;
     }
 
     /**
-     * @return Xbbcode
+     * @param array<string, string> $tags
      */
-    public function setTags(array $tags)
+    public function setTags(array $tags): self
     {
         $this->tags = $tags;
 
@@ -1507,80 +1439,53 @@ class Xbbcode
     }
 
     /**
-     * @return array
+     * @return array<string, string>
      */
-    public function getTags()
+    public function getTags(): array
     {
         return $this->tags;
     }
 
-    /**
-     * @param string $tagName
-     * @param string $handler Имя класса отнаследованного от абстрактного Tag
-     *
-     * @return Xbbcode
-     */
-    public function setTagHandler($tagName, $handler)
+    public function setTagHandler(string $tagName, string $handler): self
     {
+        if (!\is_subclass_of($handler, Tag::class, true)) {
+            throw new \RuntimeException(\sprintf('%s should implements the %s class', $handler, Tag::class));
+        }
         $this->tags[$tagName] = $handler;
 
         return $this;
     }
 
-    /**
-     * @param string $tagName
-     *
-     * @return string
-     */
-    public function getTagHandler($tagName)
+    public function getTagHandler(string $tagName): string
     {
         return $this->tags[$tagName];
     }
 
-    /**
-     * @param string $tagName
-     *
-     * @return Xbbcode
-     */
-    public function setTagName($tagName)
+    public function setTagName(string $tagName): self
     {
         $this->tagName = $tagName;
 
         return $this;
     }
 
-    /**
-     * @return string
-     */
-    public function getTagName()
+    public function getTagName(): string
     {
         return $this->tagName;
     }
 
-    /**
-     * @return Xbbcode
-     */
-    public function setTree(array $tree)
+    public function setTree(array $tree): self
     {
         $this->tree = $tree;
 
         return $this;
     }
 
-    /**
-     * @return array
-     */
-    public function getTree()
+    public function getTree(): array
     {
         return $this->tree;
     }
 
-    /**
-     * @param string $tagName
-     *
-     * @return Tag
-     */
-    protected function getTagObject($tagName)
+    protected function getTagObject(string $tagName): Tag
     {
         $this->includeTag($tagName);
 
@@ -1590,13 +1495,8 @@ class Xbbcode
     /**
      * Функция проверяет, должен ли тег с именем $current закрыться,
      * если начинается тег с именем $next.
-     *
-     * @param string $current
-     * @param string $next
-     *
-     * @return bool
      */
-    protected function mustCloseTag($current, $next)
+    protected function mustCloseTag(string $current, string $next): bool
     {
         if (isset($this->tags[$current])) {
             $tag = $this->getTagObject($current);
@@ -1624,16 +1524,9 @@ class Xbbcode
      * потомком тег с именем $child. В противном случае - false.
      * Если $parent - пустая строка, то проверяется, разрешено ли $child входить в
      * корень дерева BBCode.
-     *
-     * @param string $parent
-     * @param string $child
-     *
-     * @return bool
      */
-    protected function isPermissiblyChild($parent, $child)
+    protected function isPermissiblyChild(string $parent, string $child): bool
     {
-        $parent = (string) $parent;
-        $child = (string) $child;
         if (isset($this->tags[$parent])) {
             $tag = $this->getTagObject($parent);
             $parent_behaviour = $tag::BEHAVIOUR;
@@ -1654,12 +1547,7 @@ class Xbbcode
         return $permissibly;
     }
 
-    /**
-     * normalizeBracket.
-     *
-     * @return array
-     */
-    protected function normalizeBracket(array $syntax)
+    protected function normalizeBracket(array $syntax): array
     {
         $structure = [];
         $structure_key = -1;
@@ -1793,10 +1681,7 @@ class Xbbcode
         return $structure;
     }
 
-    /**
-     * parseTree.
-     */
-    protected function parseTree()
+    protected function parseTree(): void
     {
         /* Превращаем $this->syntax в правильную скобочную структуру */
         $structure = $this->normalizeBracket($this->syntax);
@@ -1958,13 +1843,9 @@ class Xbbcode
     }
 
     /**
-     * getSyntax.
-     *
      * @param bool|array $tree
-     *
-     * @return array
      */
-    protected function getSyntax($tree = false)
+    protected function getSyntax($tree = false): array
     {
         if (!\is_array($tree)) {
             $tree = $this->getTree();
@@ -2035,14 +1916,7 @@ class Xbbcode
         return $syntax;
     }
 
-    /**
-     * insertSmiles.
-     *
-     * @param string $text
-     *
-     * @return string
-     */
-    protected function insertMnemonics($text)
+    protected function insertMnemonics(string $text): string
     {
         $text = \htmlspecialchars($text, \ENT_NOQUOTES);
         if ($this->getAutoLinks()) {
@@ -2056,12 +1930,7 @@ class Xbbcode
         return $text;
     }
 
-    /**
-     * highlight.
-     *
-     * @return string
-     */
-    public function highlight()
+    public function highlight(): string
     {
         $time_start = \microtime(true);
         $chars = [
@@ -2138,14 +2007,7 @@ class Xbbcode
         return $str;
     }
 
-    /**
-     * Возвращает HTML код.
-     *
-     * @param array $elems
-     *
-     * @return string
-     */
-    public function getHtml(array $elems = null)
+    public function getHtml(array $elems = null): string
     {
         $time_start = \microtime(true);
         if (null === $elems) {
@@ -2205,12 +2067,8 @@ class Xbbcode
      * если нет, пытается подключить файл с соответствующим классом. Если это не
      * возможно, переназначает тегу обработчик, - сопоставляет ему класс bbcode.
      * Затем инициализирует объект обработчика (если он еще не инициализирован).
-     *
-     * @param string $tagName
-     *
-     * @return bool
      */
-    protected function includeTag($tagName)
+    protected function includeTag(string $tagName): void
     {
         if (!isset($this->tags[$tagName])) {
             $this->tags[$tagName] = 'bbcode';
@@ -2220,8 +2078,6 @@ class Xbbcode
         if (!isset($this->tagObjects[$handler])) {
             $this->tagObjects[$handler] = new $handler();
         }
-
-        return true;
     }
 
     /**
@@ -2233,9 +2089,9 @@ class Xbbcode
      * 'count_level'       => 0  // Число уровней вложенности тегов BBCode
      * 'memory_peak_usage' => 0, // Максимально выделенный объем памяти
      *
-     * @return array
+     * @return array<string, float|int>
      */
-    public function getStatistics()
+    public function getStatistics(): array
     {
         $this->statistics['memory_peak_usage'] = \memory_get_peak_usage(true);
 

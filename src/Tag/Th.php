@@ -32,10 +32,8 @@ class Th extends Td
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<th '.$this->getAttributes().'>'.$this->getBody().'</th>';
     }

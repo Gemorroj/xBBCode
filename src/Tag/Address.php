@@ -30,10 +30,8 @@ class Address extends Tag
 {
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<address '.$this->getAttributes().'>'.$this->getBody().'</address>';
     }

@@ -80,10 +80,8 @@ class Table extends Tag
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<table '.$this->getAttributes().'>'.$this->getBody().'</table>';
     }

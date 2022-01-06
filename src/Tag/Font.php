@@ -63,10 +63,8 @@ class Font extends Tag
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<font '.$this->getAttributes().'>'.$this->getBody().'</font>';
     }

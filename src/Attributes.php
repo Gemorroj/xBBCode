@@ -28,40 +28,23 @@ namespace Xbbcode;
 class Attributes extends \ArrayObject
 {
     /**
-     * @var array
+     * @var array<string, string>
      */
     protected $attributes = ['class' => 'bb'];
 
-    /**
-     * @param string $name
-     *
-     * @return string
-     */
-    public function getAttributeValue($name)
+    public function getAttributeValue(string $name): string
     {
         return $this->attributes[$name];
     }
 
-    /**
-     * @param string $name
-     * @param string $value
-     *
-     * @return Attributes
-     */
-    public function set($name, $value)
+    public function set(string $name, string $value): self
     {
         $this->attributes[$name] = $value;
 
         return $this;
     }
 
-    /**
-     * @param string $name
-     * @param string $value
-     *
-     * @return Attributes
-     */
-    public function add($name, $value)
+    public function add(string $name, string $value): self
     {
         if (isset($this->attributes[$name])) {
             $this->attributes[$name] .= ' '.$value;
@@ -72,30 +55,19 @@ class Attributes extends \ArrayObject
         return $this;
     }
 
-    /**
-     * @param string $name
-     *
-     * @return Attributes
-     */
-    public function remove($name)
+    public function remove(string $name): self
     {
         unset($this->attributes[$name]);
 
         return $this;
     }
 
-    /**
-     * @return \ArrayIterator
-     */
-    public function getIterator()
+    public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->attributes);
     }
 
-    /**
-     * @return string
-     */
-    public function __toString()
+    public function __toString(): string
     {
         $str = '';
         foreach ($this->getIterator() as $name => $value) {

@@ -56,10 +56,8 @@ class Ul extends Tag
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<ul '.$this->getAttributes().'>'.$this->getBody().'</ul>';
     }

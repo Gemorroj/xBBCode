@@ -48,10 +48,8 @@ class Acronym extends Tag
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return '<acronym '.$this->getAttributes().'>'.$this->getBody().'</acronym>';
     }

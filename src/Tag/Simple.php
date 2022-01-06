@@ -32,10 +32,8 @@ class Simple extends Tag
 
     /**
      * Return html code.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         switch ($this->getTagName()) {
             case 'b':
