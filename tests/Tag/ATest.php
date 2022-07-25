@@ -34,4 +34,19 @@ class ATest extends \PHPUnit\Framework\TestCase
         $xbbcode->parse($text);
         $this->assertEquals($result, $xbbcode->getHtml());
     }
+
+    public function testTargetValidate(): void {
+        $variants = [
+              ['[a target=_blank]/[/a]', '<a class="bb" href="/" target="_blank">/</a>'],
+              ['[a target=go_od]/[/a]', '<a class="bb" href="/" target="go_od">/</a>'],
+              ['[a target=_err]/[/a]', '<a class="bb" href="/">/</a>'],
+        ];
+
+        $xbbcode = new Xbbcode();
+        $xbbcode->setAutoLinks(false);
+        foreach ($variants as [$in, $out]) {
+            $xbbcode->parse($in);
+            $this->assertEquals($out, $xbbcode->getHtml());
+        }
+    }
 }

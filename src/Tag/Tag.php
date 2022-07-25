@@ -284,6 +284,7 @@ abstract class Tag extends Xbbcode
      */
     protected function isValidTarget($target)
     {
-        return \in_array(\strtolower($target), ['_blank', '_self', '_parent', '_top']);
+        return \in_array(\strtolower($target), ['_blank', '_self', '_parent', '_top'])
+              || preg_match('/^[^\W_][\w]+$/i', $target);
     }
 }
