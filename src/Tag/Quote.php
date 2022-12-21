@@ -30,10 +30,7 @@ use Xbbcode\Attributes;
  */
 class Quote extends Tag
 {
-    /**
-     * @return string
-     */
-    protected function getAuthor()
+    protected function getAuthor(): string
     {
         $author = '';
 
@@ -54,10 +51,7 @@ class Quote extends Tag
         return '';
     }
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

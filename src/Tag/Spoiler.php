@@ -30,15 +30,10 @@ use Xbbcode\Attributes;
  */
 class Spoiler extends Tag
 {
-    public $showButton = 'Показать';
-    public $hideButton = 'Скрыть';
+    public string $showButton = 'Показать';
+    public string $hideButton = 'Скрыть';
 
-    /**
-     * @param string $id
-     *
-     * @return string
-     */
-    protected function getSpoiler($id)
+    protected function getSpoiler(string $id): string
     {
         return '<input class="bb_spoiler" type="button" value="'.\htmlspecialchars(
             $this->showButton
@@ -51,10 +46,7 @@ class Spoiler extends Tag
         ).'\'));" />';
     }
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

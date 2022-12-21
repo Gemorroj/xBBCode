@@ -32,10 +32,7 @@ class A extends Tag
 {
     public const BEHAVIOUR = 'a';
 
-    /**
-     * @return string
-     */
-    protected function getHref()
+    protected function getHref(): string
     {
         $href = '';
         if (isset($this->attributes['url'])) {
@@ -57,10 +54,7 @@ class A extends Tag
         return $this->parseUrl($href);
     }
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

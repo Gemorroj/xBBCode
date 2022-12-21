@@ -30,10 +30,7 @@ use Xbbcode\Attributes;
  */
 class Align extends Tag
 {
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

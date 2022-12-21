@@ -32,10 +32,7 @@ class Size extends Tag
 {
     public const BEHAVIOUR = 'span';
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

@@ -32,10 +32,7 @@ class Li extends Tag
 {
     public const BEHAVIOUR = 'li';
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

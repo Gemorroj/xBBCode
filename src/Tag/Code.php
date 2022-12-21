@@ -30,8 +30,8 @@ class Code extends Tag
 {
     public const BEHAVIOUR = 'pre';
 
-    /* Альтернативные названия языков и их трансляция в обозначения GeSHi */
-    public $langSynonym = [
+    // Альтернативные названия языков и их трансляция в обозначения GeSHi
+    public array $langSynonym = [
         'algol' => 'algol86',
         'c++' => 'cpp',
         'c#' => 'csharp',
@@ -44,12 +44,9 @@ class Code extends Tag
         't-sql' => 'tsql',
         'vb.net' => 'vbnet',
     ];
-    /**
-     * @var \GeSHi
-     */
-    protected $geshi;
 
-    /* Конструктор класса */
+    protected \GeSHi $geshi;
+
     public function __construct()
     {
         parent::__construct();
@@ -59,10 +56,8 @@ class Code extends Tag
 
     /**
      * Язык для подсветки.
-     *
-     * @return Code
      */
-    protected function setLanguage()
+    protected function setLanguage(): self
     {
         switch ($this->getTagName()) {
             case 'code':
@@ -91,10 +86,8 @@ class Code extends Tag
 
     /**
      * Подсвечиваемый код.
-     *
-     * @return Code
      */
-    protected function setSource()
+    protected function setSource(): self
     {
         $this->geshi->set_source($this->getTreeText());
 
@@ -103,10 +96,8 @@ class Code extends Tag
 
     /**
      * Ссылки на документацию.
-     *
-     * @return Code
      */
-    protected function setLinks()
+    protected function setLinks(): self
     {
         if (isset($this->attributes['links'])) {
             if ('1' === $this->attributes['links'] || 'true' === $this->attributes['links']) {
@@ -123,10 +114,8 @@ class Code extends Tag
 
     /**
      * Нумерация строк.
-     *
-     * @return Code
      */
-    protected function setNum()
+    protected function setNum(): self
     {
         if (isset($this->attributes['num'])) {
             $this->geshi->enable_line_numbers(GESHI_FANCY_LINE_NUMBERS);
@@ -141,10 +130,8 @@ class Code extends Tag
 
     /**
      * Величина табуляции.
-     *
-     * @return Code
      */
-    protected function setTab()
+    protected function setTab(): self
     {
         if (isset($this->attributes['tab'])) {
             $this->attributes['tab'] = (int) $this->attributes['tab'];
@@ -158,10 +145,8 @@ class Code extends Tag
 
     /**
      * Выделение строк.
-     *
-     * @return Code
      */
-    protected function setExtra()
+    protected function setExtra(): self
     {
         if (isset($this->attributes['extra'])) {
             $extra = \explode(',', $this->attributes['extra']);
@@ -173,10 +158,8 @@ class Code extends Tag
 
     /**
      * Получаем заголовок.
-     *
-     * @return string
      */
-    protected function getHeader()
+    protected function getHeader(): string
     {
         if (isset($this->attributes['title'])) {
             $title = $this->attributes['title'];
@@ -189,10 +172,8 @@ class Code extends Tag
 
     /**
      * Получаем подвал.
-     *
-     * @return string
      */
-    protected function getFooter()
+    protected function getFooter(): string
     {
         if (isset($this->attributes['footer'])) {
             return '<div class="bb_code_footer">'.\htmlspecialchars($this->attributes['footer'], \ENT_NOQUOTES).'</div>';

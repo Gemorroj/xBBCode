@@ -30,7 +30,7 @@ class Attributes extends \ArrayObject
     /**
      * @var array<string, string>
      */
-    protected $attributes = ['class' => 'bb'];
+    protected array $attributes = ['class' => 'bb'];
 
     public function getAttributeValue(string $name): string
     {

@@ -32,10 +32,7 @@ class Table extends Tag
 {
     public const BEHAVIOUR = 'table';
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

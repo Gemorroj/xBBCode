@@ -33,10 +33,7 @@ class Altfont extends Tag
     public const BEHAVIOUR = 'span';
     public const ONE_ATTRIBUTE = true;
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

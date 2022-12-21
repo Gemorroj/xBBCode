@@ -35,7 +35,7 @@ class Youtube extends Tag
     /**
      * @return string
      */
-    protected function getSrc()
+    protected function getSrc(): string
     {
         $src = $this->attributes['src'] ?? '';
 
@@ -54,10 +54,7 @@ class Youtube extends Tag
         return $src ? '//www.youtube.com/embed/'.\rawurlencode($src) : '';
     }
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

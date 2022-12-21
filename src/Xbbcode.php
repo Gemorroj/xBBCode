@@ -32,34 +32,26 @@ class Xbbcode
     /**
      * Имя тега, которому сопоставлен экземпляр класса.
      * Пустая строка, если экземпляр не сопоставлен никакому тегу.
-     *
-     * @var string
      */
-    protected $tagName = '';
+    protected string $tagName = '';
     /**
      * Текст BBCode.
-     *
-     * @var string
      */
-    protected $text = '';
+    protected string $text = '';
     /**
      * Массив, - результат синтаксического разбора текста BBCode. Описание смотрите в документации.
-     *
-     * @var array
      */
-    protected $syntax = [];
+    protected array $syntax = [];
     /**
      * Дерево семантического разбора текста BBCode. Описание смотрите в документации.
-     *
-     * @var array
      */
-    protected $tree = [];
+    protected array $tree = [];
     /**
      * Список поддерживаемых тегов с указанием специализированных классов.
      *
      * @var array<string, string>
      */
-    protected $tags = [
+    protected array $tags = [
         // Основные теги
         '*' => 'Xbbcode\Tag\Li',
         'a' => 'Xbbcode\Tag\A',
@@ -349,22 +341,16 @@ class Xbbcode
     ];
     /**
      * Смайлики и прочие мнемоники. Массив: 'мнемоника' => 'ее_замена'.
-     *
-     * @var array
      */
-    protected $mnemonics = [];
+    protected array $mnemonics = [];
     /**
      * Флажок, включающий/выключающий автоматические ссылки.
-     *
-     * @var bool
      */
-    protected $autoLinks = false;
+    protected bool $autoLinks = false;
     /**
      * Массив замен для автоматических ссылок.
-     *
-     * @var array
      */
-    protected $pregAutoLinks = [
+    protected array $pregAutoLinks = [
         'pattern' => [
             "'[\w\+]+://[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+'si",
             "'([^/])(www\.[A-z0-9\.\?\+\-/_=&%#:;]+[\w/=]+)'si",
@@ -383,24 +369,20 @@ class Xbbcode
     ];
     /**
      * Флажок, включающий/выключающий ссылки на документацию в подсветке кода.
-     *
-     * @var bool
      */
-    protected $keywordLinks = false;
+    protected bool $keywordLinks = false;
 
     /**
      * Флажок, включающий/выключающий подстановку смайлов.
-     *
-     * @var bool
      */
-    protected $enableSmiles = true;
+    protected bool $enableSmiles = true;
 
     /**
      * Статистические сведения по обработке BBCode.
      *
      * @var array<string, float|int>
      */
-    protected $statistics = [
+    protected array $statistics = [
         'time_parse' => 0, // Время парсинга
         'time_html' => 0, // Время генерации HTML-а
         'count_tags' => 0, // Число тегов BBCode
@@ -410,30 +392,24 @@ class Xbbcode
     /**
      * Публичная WEB директория.
      * Ссылается на директорию resources для формирования смайликов и CSS стилей.
-     *
-     * @var string
      */
-    protected $webPath = '';
+    protected string $webPath = '';
     /**
      * Для нужд парсера. - Позиция очередного обрабатываемого символа.
-     *
-     * @var int
      */
-    private $cursor = 0;
+    private int $cursor = 0;
     /**
      * Массив объектов, - представителей отдельных тегов.
      *
      * @var Tag[]
      */
-    private $tagObjects = [];
+    private array $tagObjects = [];
     /**
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
      * Накладывает ограничения на вложенность тегов.
      * Теги с моделями поведения, не указанными в массиве справа, вложенные в тег с моделью поведения, указанной слева, будут игнорироваться как неправильно вложенные.
-     *
-     * @var array
      */
-    protected $children = [
+    protected array $children = [
         'a' => ['code', 'img', 'span'],
         'caption' => ['a', 'code', 'img', 'span'],
         'code' => [],
@@ -453,10 +429,8 @@ class Xbbcode
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
      * Накладывает ограничения на вложенность тегов.
      * Тег, принадлежащий указанной слева модели поведения тегов должен закрыться, как только начинается тег, принадлежащий какой-то из моделей поведения, указанных справа.
-     *
-     * @var array
      */
-    protected $ends = [
+    protected array $ends = [
         'a' => [
             'a', 'caption', 'div', 'hr', 'li', 'p', 'pre', 'table', 'td', 'tr', 'ul',
         ],
@@ -507,7 +481,7 @@ class Xbbcode
      *
      * Описание конечного автомата:
      */
-    protected $finiteAutomaton = [
+    protected array $finiteAutomaton = [
     // Предыдущие |   Состояния для текущих событий (лексем)   |
     //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
         0 => [1,  0,  0,  0,  0,  0,  0,  0,  0],
@@ -538,7 +512,7 @@ class Xbbcode
      *
      * @var array<string, array<string, string>>
      */
-    protected $smiles = [
+    protected array $smiles = [
         ':D' => [
                 'title' => 'Very we!',
                 'name' => 'resources/images/smiles/1.gif',
@@ -977,10 +951,8 @@ class Xbbcode
      * 6 - последовательность пробельных символов (" ", "\t", "\n", "\r", "\0" или "\x0B")
      * 7 - последовательность прочих символов, не являющаяся именем тега
      * 8 - имя тега
-     *
-     * @return array|bool
      */
-    protected function getToken()
+    protected function getToken(): ?array
     {
         $token = '';
         $tokenType = false;
@@ -989,7 +961,7 @@ class Xbbcode
             $tokenType = $charType;
             if (!isset($this->text[$this->cursor])) {
                 if (false === $charType) {
-                    return false;
+                    return null;
                 }
                 break;
             }

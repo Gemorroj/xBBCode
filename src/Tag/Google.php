@@ -28,10 +28,7 @@ namespace Xbbcode\Tag;
  */
 class Google extends A
 {
-    /**
-     * @return string
-     */
-    protected function getHref()
+    protected function getHref(): string
     {
         $href = '';
         if (isset($this->attributes['google'])) {

@@ -32,10 +32,7 @@ class Ol extends Tag
 {
     public const BEHAVIOUR = 'ul';
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

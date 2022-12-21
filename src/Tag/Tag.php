@@ -92,7 +92,7 @@ abstract class Tag extends Xbbcode
     /**
      * @return Attributes Tag attributes
      */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         return new Attributes();
     }

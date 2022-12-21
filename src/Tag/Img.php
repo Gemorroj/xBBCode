@@ -32,10 +32,7 @@ class Img extends Tag
 {
     public const BEHAVIOUR = 'img';
 
-    /**
-     * @return string
-     */
-    protected function getSrc()
+    protected function getSrc(): string
     {
         $href = '';
         if (isset($this->attributes['url'])) {
@@ -52,10 +49,7 @@ class Img extends Tag
         return $this->parseUrl($href);
     }
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 

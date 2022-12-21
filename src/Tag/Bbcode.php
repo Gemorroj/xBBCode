@@ -32,10 +32,7 @@ class Bbcode extends Tag
 {
     public const BEHAVIOUR = 'code';
 
-    /**
-     * @return Attributes
-     */
-    protected function getAttributes()
+    protected function getAttributes(): Attributes
     {
         $attr = parent::getAttributes();
 
@@ -47,7 +44,7 @@ class Bbcode extends Tag
     /**
      * Парсим текст
      */
-    protected function build()
+    protected function build(): void
     {
         $this->parse($this->getTreeText());
     }
