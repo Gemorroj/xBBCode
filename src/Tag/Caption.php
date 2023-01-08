@@ -22,13 +22,20 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
+
 /**
  * Class Caption
  * Класс для тега [caption].
  */
-class Caption extends Tag
+class Caption extends TagAbstract
 {
     public const BEHAVIOUR = 'caption';
+
+    protected function getAttributes(): Attributes
+    {
+        return new Attributes();
+    }
 
     /**
      * Return html code.

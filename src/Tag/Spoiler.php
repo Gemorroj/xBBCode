@@ -28,7 +28,7 @@ use Xbbcode\Attributes;
  * Class Spoiler
  * Класс для тегов [spoiler] и [hide].
  */
-class Spoiler extends Tag
+class Spoiler extends TagAbstract
 {
     public string $showButton = 'Показать';
     public string $hideButton = 'Скрыть';
@@ -48,7 +48,7 @@ class Spoiler extends Tag
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $attr->add('class', 'bb_spoiler');
         $attr->set('style', 'display: none');

@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Size
  * Класс для тега [size].
  */
-class Size extends Tag
+class Size extends TagAbstract
 {
     public const BEHAVIOUR = 'span';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         if (isset($this->attributes['size'])) {
             if ($this->isValidFontSize($this->attributes['size'])) {

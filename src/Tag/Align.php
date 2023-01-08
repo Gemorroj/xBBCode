@@ -28,11 +28,11 @@ use Xbbcode\Attributes;
  * Class Align
  * Класс для тегов [align], [center], [justify], [left] и [right].
  */
-class Align extends Tag
+class Align extends TagAbstract
 {
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $align = '';
         if (isset($this->attributes['justify'])) {

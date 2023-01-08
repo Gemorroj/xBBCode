@@ -22,13 +22,20 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
+
 /**
  * Class Nobb
  * Класс для тега [nobb].
  */
-class Nobb extends Tag
+class Nobb extends TagAbstract
 {
     public const BEHAVIOUR = 'code';
+
+    protected function getAttributes(): Attributes
+    {
+        return new Attributes();
+    }
 
     /**
      * Return html code.

@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Bdo
  * Класс для тега [bdo].
  */
-class Bdo extends Tag
+class Bdo extends TagAbstract
 {
     public const BEHAVIOUR = 'span';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $dir = '';
         switch (\strtolower($this->attributes['bdo'])) {

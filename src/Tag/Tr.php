@@ -22,13 +22,20 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
+
 /**
  * Class Tr
  * Класс для тега [tr].
  */
-class Tr extends Tag
+class Tr extends TagAbstract
 {
     public const BEHAVIOUR = 'tr';
+
+    protected function getAttributes(): Attributes
+    {
+        return new Attributes();
+    }
 
     /**
      * Return html code.

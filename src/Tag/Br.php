@@ -22,14 +22,21 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
+
 /**
  * Class Br
  * Класс для тега [br].
  */
-class Br extends Tag
+class Br extends TagAbstract
 {
     public const IS_CLOSE = true;
     public const BEHAVIOUR = 'span';
+
+    protected function getAttributes(): Attributes
+    {
+        return new Attributes();
+    }
 
     /**
      * Return html code.

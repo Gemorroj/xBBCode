@@ -22,13 +22,20 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
+
 /**
  * Class Simple
  * Класс для простейших тегов, например, [b].
  */
-class Simple extends Tag
+class Simple extends TagAbstract
 {
     public const BEHAVIOUR = 'span';
+
+    protected function getAttributes(): Attributes
+    {
+        return new Attributes();
+    }
 
     /**
      * Return html code.

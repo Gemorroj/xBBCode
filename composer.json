@@ -12,14 +12,9 @@
         "phpunit/phpunit": "^9.5",
         "friendsofphp/php-cs-fixer": "^3.0"
     },
-    "homepage": "http://xbb.uz",
-    "support": {
-        "forum": "http://xbb.uz/docs/"
-    },
     "authors": [
         {
             "name": "Dmitriy Skorobogatov",
-            "email": "info@xbb.uz",
             "role": "Owner"
         },
         {

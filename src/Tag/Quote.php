@@ -28,7 +28,7 @@ use Xbbcode\Attributes;
  * Class Quote
  * Класс для тегов [quote] и [blockquote].
  */
-class Quote extends Tag
+class Quote extends TagAbstract
 {
     protected function getAuthor(): string
     {
@@ -53,7 +53,7 @@ class Quote extends Tag
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $attr->add('class', 'bb_quote');
 

@@ -28,7 +28,7 @@ use Xbbcode\Attributes;
  * Class A
  * Класс для тегов [a], [anchor] и [url].
  */
-class A extends Tag
+class A extends TagAbstract
 {
     public const BEHAVIOUR = 'a';
 
@@ -56,7 +56,7 @@ class A extends Tag
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $href = $this->getHref();
         if ($href) {

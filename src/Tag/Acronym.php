@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Acronym
  * Класс для тега [acronym].
  */
-class Acronym extends Tag
+class Acronym extends TagAbstract
 {
     public const BEHAVIOUR = 'span';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         if ($this->attributes['acronym']) {
             $attr->set('title', $this->attributes['acronym']);

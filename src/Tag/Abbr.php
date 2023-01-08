@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Abbr
  * Класс для тега [abbr].
  */
-class Abbr extends Tag
+class Abbr extends TagAbstract
 {
     public const BEHAVIOUR = 'span';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         if ($this->attributes['abbr']) {
             $attr->set('title', $this->attributes['abbr']);

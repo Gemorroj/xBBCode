@@ -28,14 +28,14 @@ use Xbbcode\Attributes;
  * Class Altfont
  * Класс для тега [altfont].
  */
-class Altfont extends Tag
+class Altfont extends TagAbstract
 {
     public const BEHAVIOUR = 'span';
     public const ONE_ATTRIBUTE = true;
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $face = '';
         if (isset($this->attributes['font'])) {

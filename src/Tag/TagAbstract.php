@@ -25,10 +25,7 @@ namespace Xbbcode\Tag;
 use Xbbcode\Attributes;
 use Xbbcode\Xbbcode;
 
-/**
- * Abstract class Tag.
- */
-abstract class Tag extends Xbbcode
+abstract class TagAbstract extends Xbbcode
 {
     /**
      * Задаёт возможность наличия у последнего атрибута у тега значений без необходимости наличия кавычек для значений с пробелами.
@@ -74,7 +71,7 @@ abstract class Tag extends Xbbcode
      * Массив значений атрибутов тега, которому сопоставлен экземпляр класса.
      * Пуст, если экземпляр не сопоставлен никакому тегу.
      */
-    protected $attributes = [];
+    protected array $attributes = [];
 
     /**
      * Конструктор
@@ -92,10 +89,7 @@ abstract class Tag extends Xbbcode
     /**
      * @return Attributes Tag attributes
      */
-    protected function getAttributes(): Attributes
-    {
-        return new Attributes();
-    }
+    abstract protected function getAttributes(): Attributes;
 
     public function setAttributes(array $attributes): void
     {
@@ -159,7 +153,7 @@ abstract class Tag extends Xbbcode
         }
         if (isset($parse['query'])) {
             $query = $this->parseStr($parse['query']);
-            //parse_str($parse['query'], $query); //replace spaces and dots
+            // parse_str($parse['query'], $query); //replace spaces and dots
 
             // PHP 5.4.0 - PHP_QUERY_RFC3986
             $out .= '?'.\str_replace('+', '%20', \rtrim(\http_build_query($query, '', '&'), '='));

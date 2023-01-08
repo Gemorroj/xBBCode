@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Font
  * Класс для тега [font].
  */
-class Font extends Tag
+class Font extends TagAbstract
 {
     public const BEHAVIOUR = 'span';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $face = '';
         if (isset($this->attributes['face'])) {

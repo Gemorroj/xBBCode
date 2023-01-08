@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Color
  * Класс для тега [color].
  */
-class Color extends Tag
+class Color extends TagAbstract
 {
     public const BEHAVIOUR = 'span';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         if (isset($this->attributes['color'])) {
             $attr->set('color', $this->attributes['color']);

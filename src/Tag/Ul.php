@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Ul
  * Класс для тегов [list], [ul].
  */
-class Ul extends Tag
+class Ul extends TagAbstract
 {
     public const BEHAVIOUR = 'ul';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         if (isset($this->attributes['*'])) {
             if ($this->isValidNumber($this->attributes['*'])) {

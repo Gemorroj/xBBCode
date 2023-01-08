@@ -22,14 +22,21 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
+
 /**
  * Class Hr
  * Класс для тега [hr].
  */
-class Hr extends Tag
+class Hr extends TagAbstract
 {
     public const IS_CLOSE = true;
     public const BEHAVIOUR = 'hr';
+
+    protected function getAttributes(): Attributes
+    {
+        return new Attributes();
+    }
 
     /**
      * Return html code.

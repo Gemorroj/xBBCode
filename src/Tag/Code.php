@@ -22,11 +22,13 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
+
 /**
  * Class Code
  * Класс для тегов подсветки синтаксиса и для тегов [code] и [pre].
  */
-class Code extends Tag
+class Code extends TagAbstract
 {
     public const BEHAVIOUR = 'pre';
 
@@ -50,8 +52,13 @@ class Code extends Tag
     public function __construct()
     {
         parent::__construct();
-        $this->geshi = new \GeSHi('', 'text');
+        $this->geshi = new \GeSHi();
         $this->geshi->set_header_type(GESHI_HEADER_NONE);
+    }
+
+    protected function getAttributes(): Attributes
+    {
+        return new Attributes();
     }
 
     /**
@@ -161,11 +168,7 @@ class Code extends Tag
      */
     protected function getHeader(): string
     {
-        if (isset($this->attributes['title'])) {
-            $title = $this->attributes['title'];
-        } else {
-            $title = $this->geshi->get_language_name();
-        }
+        $title = $this->attributes['title'] ?? $this->geshi->get_language_name();
 
         return '<div class="bb_code_header"><span class="bb_code_lang">'.\htmlspecialchars($title, \ENT_NOQUOTES).'</span></div>';
     }
@@ -194,6 +197,9 @@ class Code extends Tag
         $this->setExtra();
         $this->setLinks();
 
-        return '<div class="bb_code">'.$this->getHeader().'<code class="bb_code">'.$this->geshi->parse_code().'</code>'.$this->getFooter().'</div>';
+        $result = $this->geshi->parse_code();
+        $result = \str_replace('&nbsp;', '&#160;', $result);
+
+        return '<div class="bb_code">'.$this->getHeader().'<code class="bb_code">'.$result.'</code>'.$this->getFooter().'</div>';
     }
 }

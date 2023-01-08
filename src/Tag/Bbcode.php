@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Bbcode
  * Класс для тега [bbcode].
  */
-class Bbcode extends Tag
+class Bbcode extends TagAbstract
 {
     public const BEHAVIOUR = 'code';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $attr->add('class', 'bb_code');
 

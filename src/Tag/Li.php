@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Li
  * Класс для тега [*].
  */
-class Li extends Tag
+class Li extends TagAbstract
 {
     public const BEHAVIOUR = 'li';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         if (isset($this->attributes['*'])) {
             if ($this->isValidNumber($this->attributes['*'])) {

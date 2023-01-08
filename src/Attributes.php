@@ -22,9 +22,6 @@
 
 namespace Xbbcode;
 
-/**
- * Class Attributes.
- */
 class Attributes extends \ArrayObject
 {
     /**

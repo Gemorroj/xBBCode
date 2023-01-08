@@ -22,11 +22,40 @@
 
 namespace Xbbcode;
 
-use Xbbcode\Tag\Tag;
+use Xbbcode\Tag\A;
+use Xbbcode\Tag\Abbr;
+use Xbbcode\Tag\Acronym;
+use Xbbcode\Tag\Address;
+use Xbbcode\Tag\Align;
+use Xbbcode\Tag\Altfont;
+use Xbbcode\Tag\Bbcode;
+use Xbbcode\Tag\Bdo;
+use Xbbcode\Tag\Br;
+use Xbbcode\Tag\Caption;
+use Xbbcode\Tag\Code;
+use Xbbcode\Tag\Color;
+use Xbbcode\Tag\Email;
+use Xbbcode\Tag\Font;
+use Xbbcode\Tag\Google;
+use Xbbcode\Tag\Hr;
+use Xbbcode\Tag\Img;
+use Xbbcode\Tag\Li;
+use Xbbcode\Tag\Nobb;
+use Xbbcode\Tag\Ol;
+use Xbbcode\Tag\P;
+use Xbbcode\Tag\Quote;
+use Xbbcode\Tag\Simple;
+use Xbbcode\Tag\Size;
+use Xbbcode\Tag\Spoiler;
+use Xbbcode\Tag\Table;
+use Xbbcode\Tag\TagAbstract;
+use Xbbcode\Tag\Td;
+use Xbbcode\Tag\Th;
+use Xbbcode\Tag\Tr;
+use Xbbcode\Tag\Ul;
+use Xbbcode\Tag\Yandex;
+use Xbbcode\Tag\Youtube;
 
-/**
- * Class Xbbcode.
- */
 class Xbbcode
 {
     /**
@@ -53,291 +82,298 @@ class Xbbcode
      */
     protected array $tags = [
         // Основные теги
-        '*' => 'Xbbcode\Tag\Li',
-        'a' => 'Xbbcode\Tag\A',
-        'abbr' => 'Xbbcode\Tag\Abbr',
-        'acronym' => 'Xbbcode\Tag\Acronym',
-        'address' => 'Xbbcode\Tag\Address',
-        'align' => 'Xbbcode\Tag\Align',
-        'anchor' => 'Xbbcode\Tag\A',
-        'b' => 'Xbbcode\Tag\Simple',
-        'bbcode' => 'Xbbcode\Tag\Bbcode',
-        'bdo' => 'Xbbcode\Tag\Bdo',
-        'big' => 'Xbbcode\Tag\Simple',
-        'blockquote' => 'Xbbcode\Tag\Quote',
-        'br' => 'Xbbcode\Tag\Br',
-        'caption' => 'Xbbcode\Tag\Caption',
-        'center' => 'Xbbcode\Tag\Align',
-        'cite' => 'Xbbcode\Tag\Simple',
-        'color' => 'Xbbcode\Tag\Color',
-        'del' => 'Xbbcode\Tag\Simple',
-        'em' => 'Xbbcode\Tag\Simple',
-        'email' => 'Xbbcode\Tag\Email',
-        'font' => 'Xbbcode\Tag\Font',
-        'altfont' => 'Xbbcode\Tag\Altfont',
-        'google' => 'Xbbcode\Tag\Google',
-        'yandex' => 'Xbbcode\Tag\Yandex',
-        'youtube' => 'Xbbcode\Tag\Youtube',
-        'spoiler' => 'Xbbcode\Tag\Spoiler',
-        'hide' => 'Xbbcode\Tag\Spoiler',
-        'h1' => 'Xbbcode\Tag\P',
-        'h2' => 'Xbbcode\Tag\P',
-        'h3' => 'Xbbcode\Tag\P',
-        'h4' => 'Xbbcode\Tag\P',
-        'h5' => 'Xbbcode\Tag\P',
-        'h6' => 'Xbbcode\Tag\P',
-        'hr' => 'Xbbcode\Tag\Hr',
-        'i' => 'Xbbcode\Tag\Simple',
-        'img' => 'Xbbcode\Tag\Img',
-        'ins' => 'Xbbcode\Tag\Simple',
-        'justify' => 'Xbbcode\Tag\Align',
-        'left' => 'Xbbcode\Tag\Align',
-        'li' => 'Xbbcode\Tag\Li',
-        'list' => 'Xbbcode\Tag\Ul',
-        'nobb' => 'Xbbcode\Tag\Nobb',
-        'ol' => 'Xbbcode\Tag\Ol',
-        'p' => 'Xbbcode\Tag\P',
-        'quote' => 'Xbbcode\Tag\Quote',
-        'right' => 'Xbbcode\Tag\Align',
-        's' => 'Xbbcode\Tag\Simple',
-        'size' => 'Xbbcode\Tag\Size',
-        'small' => 'Xbbcode\Tag\Simple',
-        'strike' => 'Xbbcode\Tag\Simple',
-        'strong' => 'Xbbcode\Tag\Simple',
-        'sub' => 'Xbbcode\Tag\Simple',
-        'sup' => 'Xbbcode\Tag\Simple',
-        'table' => 'Xbbcode\Tag\Table',
-        'td' => 'Xbbcode\Tag\Td',
-        'th' => 'Xbbcode\Tag\Th',
-        'tr' => 'Xbbcode\Tag\Tr',
-        'tt' => 'Xbbcode\Tag\Simple',
-        'u' => 'Xbbcode\Tag\Simple',
-        'ul' => 'Xbbcode\Tag\Ul',
-        'url' => 'Xbbcode\Tag\A',
-        'var' => 'Xbbcode\Tag\Simple',
+        '*' => Li::class,
+        'a' => A::class,
+        'abbr' => Abbr::class,
+        'acronym' => Acronym::class,
+        'address' => Address::class,
+        'align' => Align::class,
+        'anchor' => A::class,
+        'b' => Simple::class,
+        'bbcode' => Bbcode::class,
+        'bdo' => Bdo::class,
+        'big' => Simple::class,
+        'blockquote' => Quote::class,
+        'br' => Br::class,
+        'caption' => Caption::class,
+        'center' => Align::class,
+        'cite' => Simple::class,
+        'color' => Color::class,
+        'del' => Simple::class,
+        'em' => Simple::class,
+        'email' => Email::class,
+        'font' => Font::class,
+        'altfont' => Altfont::class,
+        'google' => Google::class,
+        'yandex' => Yandex::class,
+        'youtube' => Youtube::class,
+        'spoiler' => Spoiler::class,
+        'hide' => Spoiler::class,
+        'h1' => P::class,
+        'h2' => P::class,
+        'h3' => P::class,
+        'h4' => P::class,
+        'h5' => P::class,
+        'h6' => P::class,
+        'hr' => Hr::class,
+        'i' => Simple::class,
+        'img' => Img::class,
+        'ins' => Simple::class,
+        'justify' => Align::class,
+        'left' => Align::class,
+        'li' => Li::class,
+        'list' => Ul::class,
+        'nobb' => Nobb::class,
+        'ol' => Ol::class,
+        'p' => P::class,
+        'quote' => Quote::class,
+        'right' => Align::class,
+        's' => Simple::class,
+        'size' => Size::class,
+        'small' => Simple::class,
+        'strike' => Simple::class,
+        'strong' => Simple::class,
+        'sub' => Simple::class,
+        'sup' => Simple::class,
+        'table' => Table::class,
+        'td' => Td::class,
+        'th' => Th::class,
+        'tr' => Tr::class,
+        'tt' => Simple::class,
+        'u' => Simple::class,
+        'ul' => Ul::class,
+        'url' => A::class,
+        'var' => Simple::class,
 
         // Теги для вывода кода и подсветки синтаксисов (с помощью GeSHi)
-        '4cs' => 'Xbbcode\Tag\Code',
-        '6502acme' => 'Xbbcode\Tag\Code',
-        '6502kickass' => 'Xbbcode\Tag\Code',
-        '6502tasm' => 'Xbbcode\Tag\Code',
-        '68000devpac' => 'Xbbcode\Tag\Code',
-        'abap' => 'Xbbcode\Tag\Code',
-        'actionscript' => 'Xbbcode\Tag\Code',
-        'actionscript3' => 'Xbbcode\Tag\Code',
-        'ada' => 'Xbbcode\Tag\Code',
-        'algol' => 'Xbbcode\Tag\Code',
-        'apache' => 'Xbbcode\Tag\Code',
-        'applescript' => 'Xbbcode\Tag\Code',
-        'apt_sources' => 'Xbbcode\Tag\Code',
-        'arm' => 'Xbbcode\Tag\Code',
-        'asm' => 'Xbbcode\Tag\Code',
-        'asp' => 'Xbbcode\Tag\Code',
-        'asymptote' => 'Xbbcode\Tag\Code',
-        'autoconf' => 'Xbbcode\Tag\Code',
-        'autohotkey' => 'Xbbcode\Tag\Code',
-        'autoit' => 'Xbbcode\Tag\Code',
-        'avisynth' => 'Xbbcode\Tag\Code',
-        'awk' => 'Xbbcode\Tag\Code',
-        'bascomavr' => 'Xbbcode\Tag\Code',
-        'bash' => 'Xbbcode\Tag\Code',
-        'basic4gl' => 'Xbbcode\Tag\Code',
-        'bf' => 'Xbbcode\Tag\Code',
-        'bibtex' => 'Xbbcode\Tag\Code',
-        'blitzbasic' => 'Xbbcode\Tag\Code',
-        'bnf' => 'Xbbcode\Tag\Code',
-        'boo' => 'Xbbcode\Tag\Code',
-        'c' => 'Xbbcode\Tag\Code',
-        'c++' => 'Xbbcode\Tag\Code',
-        'c#' => 'Xbbcode\Tag\Code',
-        'c_loadrunner' => 'Xbbcode\Tag\Code',
-        'c_mac' => 'Xbbcode\Tag\Code',
-        'caddcl' => 'Xbbcode\Tag\Code',
-        'cadlisp' => 'Xbbcode\Tag\Code',
-        'cfdg' => 'Xbbcode\Tag\Code',
-        'cfm' => 'Xbbcode\Tag\Code',
-        'chaiscript' => 'Xbbcode\Tag\Code',
-        'cil' => 'Xbbcode\Tag\Code',
-        'clojure' => 'Xbbcode\Tag\Code',
-        'cmake' => 'Xbbcode\Tag\Code',
-        'cobol' => 'Xbbcode\Tag\Code',
-        'code' => 'Xbbcode\Tag\Code',
-        'coffeescript' => 'Xbbcode\Tag\Code',
-        'cpp-qt' => 'Xbbcode\Tag\Code',
-        'css' => 'Xbbcode\Tag\Code',
-        'cuesheet' => 'Xbbcode\Tag\Code',
-        'd' => 'Xbbcode\Tag\Code',
-        'dcl' => 'Xbbcode\Tag\Code',
-        'dcpu16' => 'Xbbcode\Tag\Code',
-        'dcs' => 'Xbbcode\Tag\Code',
-        'delphi' => 'Xbbcode\Tag\Code',
-        'diff' => 'Xbbcode\Tag\Code',
-        'div' => 'Xbbcode\Tag\Code',
-        'dos' => 'Xbbcode\Tag\Code',
-        'e' => 'Xbbcode\Tag\Code',
-        'ecmascript' => 'Xbbcode\Tag\Code',
-        'eiffel' => 'Xbbcode\Tag\Code',
-        'epc' => 'Xbbcode\Tag\Code',
-        'erlang' => 'Xbbcode\Tag\Code',
-        'euphoria' => 'Xbbcode\Tag\Code',
-        'f++' => 'Xbbcode\Tag\Code',
-        'f#' => 'Xbbcode\Tag\Code',
-        'f1' => 'Xbbcode\Tag\Code',
-        'falcon' => 'Xbbcode\Tag\Code',
-        'fo' => 'Xbbcode\Tag\Code',
-        'fortran' => 'Xbbcode\Tag\Code',
-        'freebasic' => 'Xbbcode\Tag\Code',
-        'freeswitch' => 'Xbbcode\Tag\Code',
-        'gambas' => 'Xbbcode\Tag\Code',
-        'gdb' => 'Xbbcode\Tag\Code',
-        'genero' => 'Xbbcode\Tag\Code',
-        'genie' => 'Xbbcode\Tag\Code',
-        'gettext' => 'Xbbcode\Tag\Code',
-        'glsl' => 'Xbbcode\Tag\Code',
-        'gml' => 'Xbbcode\Tag\Code',
-        'gnuplot' => 'Xbbcode\Tag\Code',
-        'go' => 'Xbbcode\Tag\Code',
-        'groovy' => 'Xbbcode\Tag\Code',
-        'gwbasic' => 'Xbbcode\Tag\Code',
-        'haskell' => 'Xbbcode\Tag\Code',
-        'haxe' => 'Xbbcode\Tag\Code',
-        'hicest' => 'Xbbcode\Tag\Code',
-        'hq9plus' => 'Xbbcode\Tag\Code',
-        'html4' => 'Xbbcode\Tag\Code',
-        'html5' => 'Xbbcode\Tag\Code',
-        'icon' => 'Xbbcode\Tag\Code',
-        'idl' => 'Xbbcode\Tag\Code',
-        'ini' => 'Xbbcode\Tag\Code',
-        'inno' => 'Xbbcode\Tag\Code',
-        'intercal' => 'Xbbcode\Tag\Code',
-        'io' => 'Xbbcode\Tag\Code',
-        'j' => 'Xbbcode\Tag\Code',
-        'java' => 'Xbbcode\Tag\Code',
-        'java5' => 'Xbbcode\Tag\Code',
-        'jquery' => 'Xbbcode\Tag\Code',
-        'js' => 'Xbbcode\Tag\Code',
-        'kixtart' => 'Xbbcode\Tag\Code',
-        'klonec' => 'Xbbcode\Tag\Code',
-        'klonecpp' => 'Xbbcode\Tag\Code',
-        'latex' => 'Xbbcode\Tag\Code',
-        'lb' => 'Xbbcode\Tag\Code',
-        'ldif' => 'Xbbcode\Tag\Code',
-        'lisp' => 'Xbbcode\Tag\Code',
-        'llvm' => 'Xbbcode\Tag\Code',
-        'locobasic' => 'Xbbcode\Tag\Code',
-        'logtalk' => 'Xbbcode\Tag\Code',
-        'lolcode' => 'Xbbcode\Tag\Code',
-        'lotusformulas' => 'Xbbcode\Tag\Code',
-        'lotusscript' => 'Xbbcode\Tag\Code',
-        'lscript' => 'Xbbcode\Tag\Code',
-        'lsl2' => 'Xbbcode\Tag\Code',
-        'lua' => 'Xbbcode\Tag\Code',
-        'm68k' => 'Xbbcode\Tag\Code',
-        'magiksf' => 'Xbbcode\Tag\Code',
-        'make' => 'Xbbcode\Tag\Code',
-        'mapbasic' => 'Xbbcode\Tag\Code',
-        'matlab' => 'Xbbcode\Tag\Code',
-        'mirc' => 'Xbbcode\Tag\Code',
-        'mmix' => 'Xbbcode\Tag\Code',
-        'modula2' => 'Xbbcode\Tag\Code',
-        'modula3' => 'Xbbcode\Tag\Code',
-        'mpasm' => 'Xbbcode\Tag\Code',
-        'mxml' => 'Xbbcode\Tag\Code',
-        'mysql' => 'Xbbcode\Tag\Code',
-        'nagios' => 'Xbbcode\Tag\Code',
-        'netrexx' => 'Xbbcode\Tag\Code',
-        'newlisp' => 'Xbbcode\Tag\Code',
-        'nsis' => 'Xbbcode\Tag\Code',
-        'oberon2' => 'Xbbcode\Tag\Code',
-        'objc' => 'Xbbcode\Tag\Code',
-        'objeck' => 'Xbbcode\Tag\Code',
-        'ocaml' => 'Xbbcode\Tag\Code',
-        'octave' => 'Xbbcode\Tag\Code',
-        'oobas' => 'Xbbcode\Tag\Code',
-        'oorexx' => 'Xbbcode\Tag\Code',
-        'oracle' => 'Xbbcode\Tag\Code',
-        'oracle11' => 'Xbbcode\Tag\Code',
-        'oxygene' => 'Xbbcode\Tag\Code',
-        'oz' => 'Xbbcode\Tag\Code',
-        'parasail' => 'Xbbcode\Tag\Code',
-        'parigp' => 'Xbbcode\Tag\Code',
-        'pascal' => 'Xbbcode\Tag\Code',
-        'pcre' => 'Xbbcode\Tag\Code',
-        'per' => 'Xbbcode\Tag\Code',
-        'perl' => 'Xbbcode\Tag\Code',
-        'perl6' => 'Xbbcode\Tag\Code',
-        'pf' => 'Xbbcode\Tag\Code',
-        'php' => 'Xbbcode\Tag\Code',
-        'pic16' => 'Xbbcode\Tag\Code',
-        'pike' => 'Xbbcode\Tag\Code',
-        'pixelbender' => 'Xbbcode\Tag\Code',
-        'pli' => 'Xbbcode\Tag\Code',
-        'plsql' => 'Xbbcode\Tag\Code',
-        'postgresql' => 'Xbbcode\Tag\Code',
-        'povray' => 'Xbbcode\Tag\Code',
-        'powershell' => 'Xbbcode\Tag\Code',
-        'pre' => 'Xbbcode\Tag\Code',
-        'proftpd' => 'Xbbcode\Tag\Code',
-        'progress' => 'Xbbcode\Tag\Code',
-        'prolog' => 'Xbbcode\Tag\Code',
-        'properties' => 'Xbbcode\Tag\Code',
-        'providex' => 'Xbbcode\Tag\Code',
-        'purebasic' => 'Xbbcode\Tag\Code',
-        'pycon' => 'Xbbcode\Tag\Code',
-        'pys60' => 'Xbbcode\Tag\Code',
-        'python' => 'Xbbcode\Tag\Code',
-        'q' => 'Xbbcode\Tag\Code',
-        'qbasic' => 'Xbbcode\Tag\Code',
-        'rails' => 'Xbbcode\Tag\Code',
-        'rebol' => 'Xbbcode\Tag\Code',
-        'reg' => 'Xbbcode\Tag\Code',
-        'rexx' => 'Xbbcode\Tag\Code',
-        'robots' => 'Xbbcode\Tag\Code',
-        'rpmspec' => 'Xbbcode\Tag\Code',
-        'rsplus' => 'Xbbcode\Tag\Code',
-        'ruby' => 'Xbbcode\Tag\Code',
-        'sas' => 'Xbbcode\Tag\Code',
-        'scala' => 'Xbbcode\Tag\Code',
-        'scheme' => 'Xbbcode\Tag\Code',
-        'scilab' => 'Xbbcode\Tag\Code',
-        'sdlbasic' => 'Xbbcode\Tag\Code',
-        'smalltalk' => 'Xbbcode\Tag\Code',
-        'smarty' => 'Xbbcode\Tag\Code',
-        'spark' => 'Xbbcode\Tag\Code',
-        'sparql' => 'Xbbcode\Tag\Code',
-        'sql' => 'Xbbcode\Tag\Code',
-        'stonescript' => 'Xbbcode\Tag\Code',
-        'systemverilog' => 'Xbbcode\Tag\Code',
-        't-sql' => 'Xbbcode\Tag\Code',
-        'tcl' => 'Xbbcode\Tag\Code',
-        'teraterm' => 'Xbbcode\Tag\Code',
-        'text' => 'Xbbcode\Tag\Code',
-        'thinbasic' => 'Xbbcode\Tag\Code',
-        'twig' => 'Xbbcode\Tag\Code',
-        'typoscript' => 'Xbbcode\Tag\Code',
-        'unicon' => 'Xbbcode\Tag\Code',
-        'upc' => 'Xbbcode\Tag\Code',
-        'urbi' => 'Xbbcode\Tag\Code',
-        'uscript' => 'Xbbcode\Tag\Code',
-        'vala' => 'Xbbcode\Tag\Code',
-        'vb' => 'Xbbcode\Tag\Code',
-        'vb.net' => 'Xbbcode\Tag\Code',
-        'vedit' => 'Xbbcode\Tag\Code',
-        'verilog' => 'Xbbcode\Tag\Code',
-        'vhdl' => 'Xbbcode\Tag\Code',
-        'vim' => 'Xbbcode\Tag\Code',
-        'visualfoxpro' => 'Xbbcode\Tag\Code',
-        'visualprolog' => 'Xbbcode\Tag\Code',
-        'whitespace' => 'Xbbcode\Tag\Code',
-        'whois' => 'Xbbcode\Tag\Code',
-        'winbatch' => 'Xbbcode\Tag\Code',
-        'xbasic' => 'Xbbcode\Tag\Code',
-        'xml' => 'Xbbcode\Tag\Code',
-        'xorg_conf' => 'Xbbcode\Tag\Code',
-        'xpp' => 'Xbbcode\Tag\Code',
-        'yaml' => 'Xbbcode\Tag\Code',
-        'z80' => 'Xbbcode\Tag\Code',
-        'zxbasic' => 'Xbbcode\Tag\Code',
+        '4cs' => Code::class,
+        '6502acme' => Code::class,
+        '6502kickass' => Code::class,
+        '6502tasm' => Code::class,
+        '68000devpac' => Code::class,
+        'abap' => Code::class,
+        'actionscript' => Code::class,
+        'actionscript3' => Code::class,
+        'ada' => Code::class,
+        'algol' => Code::class,
+        'apache' => Code::class,
+        'applescript' => Code::class,
+        'apt_sources' => Code::class,
+        'arm' => Code::class,
+        'asm' => Code::class,
+        'asp' => Code::class,
+        'asymptote' => Code::class,
+        'autoconf' => Code::class,
+        'autohotkey' => Code::class,
+        'autoit' => Code::class,
+        'avisynth' => Code::class,
+        'awk' => Code::class,
+        'bascomavr' => Code::class,
+        'bash' => Code::class,
+        'basic4gl' => Code::class,
+        'bf' => Code::class,
+        'bibtex' => Code::class,
+        'blitzbasic' => Code::class,
+        'bnf' => Code::class,
+        'boo' => Code::class,
+        'c' => Code::class,
+        'c++' => Code::class,
+        'c#' => Code::class,
+        'c_loadrunner' => Code::class,
+        'c_mac' => Code::class,
+        'caddcl' => Code::class,
+        'cadlisp' => Code::class,
+        'cfdg' => Code::class,
+        'cfm' => Code::class,
+        'chaiscript' => Code::class,
+        'cil' => Code::class,
+        'clojure' => Code::class,
+        'cmake' => Code::class,
+        'cobol' => Code::class,
+        'code' => Code::class,
+        'coffeescript' => Code::class,
+        'cpp-qt' => Code::class,
+        'css' => Code::class,
+        'cuesheet' => Code::class,
+        'd' => Code::class,
+        'dart' => Code::class,
+        'dcl' => Code::class,
+        'dcpu16' => Code::class,
+        'dcs' => Code::class,
+        'delphi' => Code::class,
+        'diff' => Code::class,
+        'div' => Code::class,
+        'dos' => Code::class,
+        'e' => Code::class,
+        'ecmascript' => Code::class,
+        'eiffel' => Code::class,
+        'epc' => Code::class,
+        'erlang' => Code::class,
+        'euphoria' => Code::class,
+        'f++' => Code::class,
+        'f#' => Code::class,
+        'f1' => Code::class,
+        'falcon' => Code::class,
+        'fo' => Code::class,
+        'fortran' => Code::class,
+        'freebasic' => Code::class,
+        'freeswitch' => Code::class,
+        'gambas' => Code::class,
+        'gdb' => Code::class,
+        'genero' => Code::class,
+        'genie' => Code::class,
+        'gettext' => Code::class,
+        'glsl' => Code::class,
+        'gml' => Code::class,
+        'gnuplot' => Code::class,
+        'go' => Code::class,
+        'groovy' => Code::class,
+        'gwbasic' => Code::class,
+        'haskell' => Code::class,
+        'haxe' => Code::class,
+        'hicest' => Code::class,
+        'hq9plus' => Code::class,
+        'html4' => Code::class,
+        'html5' => Code::class,
+        'icon' => Code::class,
+        'idl' => Code::class,
+        'ini' => Code::class,
+        'inno' => Code::class,
+        'intercal' => Code::class,
+        'io' => Code::class,
+        'j' => Code::class,
+        'java' => Code::class,
+        'java5' => Code::class,
+        'jquery' => Code::class,
+        'js' => Code::class,
+        'julia' => Code::class,
+        'kixtart' => Code::class,
+        'klonec' => Code::class,
+        'klonecpp' => Code::class,
+        'kotlin' => Code::class,
+        'latex' => Code::class,
+        'lb' => Code::class,
+        'ldif' => Code::class,
+        'lisp' => Code::class,
+        'llvm' => Code::class,
+        'locobasic' => Code::class,
+        'logtalk' => Code::class,
+        'lolcode' => Code::class,
+        'lotusformulas' => Code::class,
+        'lotusscript' => Code::class,
+        'lscript' => Code::class,
+        'lsl2' => Code::class,
+        'lua' => Code::class,
+        'm68k' => Code::class,
+        'magiksf' => Code::class,
+        'make' => Code::class,
+        'mapbasic' => Code::class,
+        'matlab' => Code::class,
+        'mirc' => Code::class,
+        'mmix' => Code::class,
+        'modula2' => Code::class,
+        'modula3' => Code::class,
+        'mpasm' => Code::class,
+        'mxml' => Code::class,
+        'mysql' => Code::class,
+        'nagios' => Code::class,
+        'netrexx' => Code::class,
+        'newlisp' => Code::class,
+        'nginx' => Code::class,
+        'nsis' => Code::class,
+        'oberon2' => Code::class,
+        'objc' => Code::class,
+        'objeck' => Code::class,
+        'ocaml' => Code::class,
+        'octave' => Code::class,
+        'oobas' => Code::class,
+        'oorexx' => Code::class,
+        'oracle' => Code::class,
+        'oracle11' => Code::class,
+        'oxygene' => Code::class,
+        'oz' => Code::class,
+        'parasail' => Code::class,
+        'parigp' => Code::class,
+        'pascal' => Code::class,
+        'pcre' => Code::class,
+        'per' => Code::class,
+        'perl' => Code::class,
+        'perl6' => Code::class,
+        'pf' => Code::class,
+        'php' => Code::class,
+        'pic16' => Code::class,
+        'pike' => Code::class,
+        'pixelbender' => Code::class,
+        'pli' => Code::class,
+        'plsql' => Code::class,
+        'postgresql' => Code::class,
+        'povray' => Code::class,
+        'powershell' => Code::class,
+        'pre' => Code::class,
+        'proftpd' => Code::class,
+        'progress' => Code::class,
+        'prolog' => Code::class,
+        'properties' => Code::class,
+        'providex' => Code::class,
+        'purebasic' => Code::class,
+        'pycon' => Code::class,
+        'pys60' => Code::class,
+        'python' => Code::class,
+        'q' => Code::class,
+        'qbasic' => Code::class,
+        'rails' => Code::class,
+        'rebol' => Code::class,
+        'reg' => Code::class,
+        'rexx' => Code::class,
+        'robots' => Code::class,
+        'rpmspec' => Code::class,
+        'rsplus' => Code::class,
+        'ruby' => Code::class,
+        'rust' => Code::class,
+        'sas' => Code::class,
+        'sass' => Code::class,
+        'scala' => Code::class,
+        'scheme' => Code::class,
+        'scilab' => Code::class,
+        'sdlbasic' => Code::class,
+        'smalltalk' => Code::class,
+        'smarty' => Code::class,
+        'spark' => Code::class,
+        'sparql' => Code::class,
+        'sql' => Code::class,
+        'stonescript' => Code::class,
+        'swift' => Code::class,
+        'systemverilog' => Code::class,
+        't-sql' => Code::class,
+        'tcl' => Code::class,
+        'teraterm' => Code::class,
+        'text' => Code::class,
+        'thinbasic' => Code::class,
+        'twig' => Code::class,
+        'typoscript' => Code::class,
+        'unicon' => Code::class,
+        'upc' => Code::class,
+        'urbi' => Code::class,
+        'uscript' => Code::class,
+        'vala' => Code::class,
+        'vb' => Code::class,
+        'vb.net' => Code::class,
+        'vedit' => Code::class,
+        'verilog' => Code::class,
+        'vhdl' => Code::class,
+        'vim' => Code::class,
+        'visualfoxpro' => Code::class,
+        'visualprolog' => Code::class,
+        'whitespace' => Code::class,
+        'whois' => Code::class,
+        'winbatch' => Code::class,
+        'xbasic' => Code::class,
+        'xml' => Code::class,
+        'xorg_conf' => Code::class,
+        'xpp' => Code::class,
+        'yaml' => Code::class,
+        'z80' => Code::class,
+        'zxbasic' => Code::class,
     ];
     /**
      * Смайлики и прочие мнемоники. Массив: 'мнемоника' => 'ее_замена'.
@@ -380,11 +416,11 @@ class Xbbcode
     /**
      * Статистические сведения по обработке BBCode.
      *
-     * @var array<string, float|int>
+     * @var array{time_parse: float, time_html: float, count_tags: int, count_level: int, memory_peak_usage: int}
      */
     protected array $statistics = [
-        'time_parse' => 0, // Время парсинга
-        'time_html' => 0, // Время генерации HTML-а
+        'time_parse' => 0.0, // Время парсинга
+        'time_html' => 0.0, // Время генерации HTML-а
         'count_tags' => 0, // Число тегов BBCode
         'count_level' => 0, // Число уровней вложенности тегов BBCode
         'memory_peak_usage' => 0, // Максимально выделенный объем памяти
@@ -401,7 +437,7 @@ class Xbbcode
     /**
      * Массив объектов, - представителей отдельных тегов.
      *
-     * @var Tag[]
+     * @var TagAbstract[]
      */
     private array $tagObjects = [];
     /**
@@ -1420,8 +1456,8 @@ class Xbbcode
 
     public function setTagHandler(string $tagName, string $handler): self
     {
-        if (!\is_subclass_of($handler, Tag::class, true)) {
-            throw new \RuntimeException(\sprintf('%s should implements the %s class', $handler, Tag::class));
+        if (!\is_subclass_of($handler, TagAbstract::class, true)) {
+            throw new \RuntimeException(\sprintf('%s should implements the %s class', $handler, TagAbstract::class));
         }
         $this->tags[$tagName] = $handler;
 
@@ -1457,7 +1493,7 @@ class Xbbcode
         return $this->tree;
     }
 
-    protected function getTagObject(string $tagName): Tag
+    protected function getTagObject(string $tagName): TagAbstract
     {
         $this->includeTag($tagName);
 
@@ -1474,13 +1510,13 @@ class Xbbcode
             $tag = $this->getTagObject($current);
             $currentBehaviour = $tag::BEHAVIOUR;
         } else {
-            $currentBehaviour = Tag::BEHAVIOUR;
+            $currentBehaviour = TagAbstract::BEHAVIOUR;
         }
         if (isset($this->tags[$next])) {
             $tag = $this->getTagObject($next);
             $nextBehaviour = $tag::BEHAVIOUR;
         } else {
-            $nextBehaviour = Tag::BEHAVIOUR;
+            $nextBehaviour = TagAbstract::BEHAVIOUR;
         }
 
         $mustClose = false;
@@ -1503,13 +1539,13 @@ class Xbbcode
             $tag = $this->getTagObject($parent);
             $parent_behaviour = $tag::BEHAVIOUR;
         } else {
-            $parent_behaviour = Tag::BEHAVIOUR;
+            $parent_behaviour = TagAbstract::BEHAVIOUR;
         }
         if (isset($this->tags[$child])) {
             $tag = $this->getTagObject($child);
             $child_behaviour = $tag::BEHAVIOUR;
         } else {
-            $child_behaviour = Tag::BEHAVIOUR;
+            $child_behaviour = TagAbstract::BEHAVIOUR;
         }
         $permissibly = true;
         if (isset($this->children[$parent_behaviour])) {
@@ -2025,7 +2061,7 @@ class Xbbcode
         }
 
         $result = \preg_replace(
-            "'\s*<br \/>\s*<br \/>\s*'si",
+            "'\s*<br \/>\s*<br \/>\s*'i",
             "\n<br />&#160;<br />\n",
             $result
         );
@@ -2055,13 +2091,13 @@ class Xbbcode
     /**
      * Статистика работы парсера.
      *
-     * 'time_parse'        => 0, // Время парсинга
-     * 'time_html'         => 0, // Время генерации HTML-а
-     * 'count_tags'        => 0, // Число тегов BBCode
-     * 'count_level'       => 0  // Число уровней вложенности тегов BBCode
-     * 'memory_peak_usage' => 0, // Максимально выделенный объем памяти
+     * time_parse - Время парсинга
+     * time_html - Время генерации HTML-а
+     * count_tags - Число тегов BBCode
+     * count_level - Число уровней вложенности тегов BBCode
+     * memory_peak_usage - Максимально выделенный объем памяти
      *
-     * @return array<string, float|int>
+     * @return array{time_parse: float, time_html: float, count_tags: int, count_level: int, memory_peak_usage: int}
      */
     public function getStatistics(): array
     {

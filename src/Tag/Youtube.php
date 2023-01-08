@@ -28,13 +28,10 @@ use Xbbcode\Attributes;
  * Class Youtube
  * Класс для тега [youtube].
  */
-class Youtube extends Tag
+class Youtube extends TagAbstract
 {
     public const BEHAVIOUR = 'img';
 
-    /**
-     * @return string
-     */
     protected function getSrc(): string
     {
         $src = $this->attributes['src'] ?? '';
@@ -56,7 +53,7 @@ class Youtube extends Tag
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $attr->set('frameborder', '0');
         $attr->set('allowfullscreen', 'allowfullscreen');

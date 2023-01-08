@@ -28,7 +28,7 @@ use Xbbcode\Attributes;
  * Class Img
  * Класс для тега [img].
  */
-class Img extends Tag
+class Img extends TagAbstract
 {
     public const BEHAVIOUR = 'img';
 
@@ -51,7 +51,7 @@ class Img extends Tag
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         $src = $this->getSrc();
         if ($src) {

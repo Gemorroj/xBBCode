@@ -22,12 +22,19 @@
 
 namespace Xbbcode\Tag;
 
+use Xbbcode\Attributes;
+
 /**
  * Class Address
  * Класс для тега [address].
  */
-class Address extends Tag
+class Address extends TagAbstract
 {
+    protected function getAttributes(): Attributes
+    {
+        return new Attributes();
+    }
+
     /**
      * Return html code.
      */

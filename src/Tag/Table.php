@@ -28,13 +28,13 @@ use Xbbcode\Attributes;
  * Class Table
  * Класс для тега [table].
  */
-class Table extends Tag
+class Table extends TagAbstract
 {
     public const BEHAVIOUR = 'table';
 
     protected function getAttributes(): Attributes
     {
-        $attr = parent::getAttributes();
+        $attr = new Attributes();
 
         if (isset($this->attributes['width'])) {
             if ($this->isValidSize($this->attributes['width'])) {
