@@ -161,6 +161,8 @@ abstract class Tag extends Xbbcode
         $out = '';
         if (isset($parse['scheme'])) {
             $out .= $parse['scheme'] . '://';
+        }elseif('//' == substr($url, 0, 2)){
+            $out .= '//';
         }
         if (isset($parse['user'], $parse['pass'])) {
             $out .= \rawurlencode($parse['user']) . ':' . \rawurlencode($parse['pass']) . '@';
