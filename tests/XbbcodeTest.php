@@ -7,7 +7,7 @@ use Xbbcode\Xbbcode;
 
 class XbbcodeTest extends TestCase
 {
-    public function testBase()
+    public function testBase(): void
     {
         $text = '
 Это [b]пример[/b] работы парсера [url=https://github.com/Gemorroj/xBBCode]xBBCode[/url].

@@ -227,6 +227,6 @@ abstract class Tag extends Xbbcode
 
     protected function isValidTarget(string $target): bool
     {
-        return \in_array(\strtolower($target), ['_blank', '_self', '_parent', '_top'], true);
+        return \in_array(\strtolower($target), ['_blank', '_self', '_parent', '_top'], true) || \preg_match('/^[^\W_]\w+$/', $target);
     }
 }
