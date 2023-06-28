@@ -943,7 +943,7 @@ class Xbbcode
      * @param string     $webPath Web path
      * @param array|null $allowed Allowed tags
      */
-    public function __construct(string $webPath = '', ?array $allowed = null)
+    public function __construct(string $webPath = '', array $allowed = null)
     {
         $this->webPath = $webPath;
         $this->reloadSmiles();
