@@ -25,7 +25,7 @@ namespace Xbbcode\Tag;
 use Xbbcode\Attributes;
 use Xbbcode\Xbbcode;
 
-abstract class TagAbstract extends Xbbcode
+abstract class TagAbstract extends Xbbcode implements \Stringable
 {
     /**
      * Задаёт возможность наличия у последнего атрибута у тега значений без необходимости наличия кавычек для значений с пробелами.
@@ -136,7 +136,7 @@ abstract class TagAbstract extends Xbbcode
         $out = '';
         if (isset($parse['scheme'])) {
             $out .= $parse['scheme'].'://';
-        } elseif (0 === \strpos($url, '//')) {
+        } elseif (\str_starts_with($url, '//')) {
             $out .= '//';
         }
 

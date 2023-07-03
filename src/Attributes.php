@@ -22,7 +22,7 @@
 
 namespace Xbbcode;
 
-class Attributes extends \ArrayObject
+class Attributes extends \ArrayObject implements \Stringable
 {
     /**
      * @var array<string, string>

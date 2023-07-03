@@ -78,7 +78,7 @@ class Xbbcode
     /**
      * Список поддерживаемых тегов с указанием специализированных классов.
      *
-     * @var array<string, string>
+     * @var array<string, class-string<TagAbstract>>
      */
     protected array $tags = [
         // Основные теги
@@ -1002,47 +1002,21 @@ class Xbbcode
                 break;
             }
             $char = $this->text[$this->cursor];
-            switch ($char) {
-                case '[':
-                    $charType = 0;
-                    break;
-                case ']':
-                    $charType = 1;
-                    break;
-                case '"':
-                    $charType = 2;
-                    break;
-                case "'":
-                    $charType = 3;
-                    break;
-                case '=':
-                    $charType = 4;
-                    break;
-                case '/':
-                    $charType = 5;
-                    break;
-                case ' ':
-                    $charType = 6;
-                    break;
-                case "\t":
-                    $charType = 6;
-                    break;
-                case "\n":
-                    $charType = 6;
-                    break;
-                case "\r":
-                    $charType = 6;
-                    break;
-                case "\0":
-                    $charType = 6;
-                    break;
-                case "\x0B":
-                    $charType = 6;
-                    break;
-                default:
-                    $charType = 7;
-                    break;
-            }
+            $charType = match ($char) {
+                '[' => 0,
+                ']' => 1,
+                '"' => 2,
+                "'" => 3,
+                '=' => 4,
+                '/' => 5,
+                ' ' => 6,
+                "\t" => 6,
+                "\n" => 6,
+                "\r" => 6,
+                "\0" => 6,
+                "\x0B" => 6,
+                default => 7,
+            };
             if (false === $tokenType) {
                 $token = $char;
             } elseif (5 >= $tokenType) {
@@ -1062,12 +1036,7 @@ class Xbbcode
         return [$tokenType, $token];
     }
 
-    /**
-     * Парсер
-     *
-     * @param array|string $code
-     */
-    public function parse($code): void
+    public function parse(array|string $code): void
     {
         $time_start = \microtime(true);
 
@@ -1850,10 +1819,7 @@ class Xbbcode
         $this->setTree($result);
     }
 
-    /**
-     * @param bool|array $tree
-     */
-    protected function getSyntax($tree = false): array
+    protected function getSyntax(bool|array $tree = false): array
     {
         if (!\is_array($tree)) {
             $tree = $this->getTree();
@@ -2029,7 +1995,7 @@ class Xbbcode
                 $elem['str'] = $this->insertMnemonics($elem['str']);
                 for ($i = 0; $i < $rbr; ++$i) {
                     $elem['str'] = \ltrim($elem['str']);
-                    if (0 === \strpos($elem['str'], '<br />')) {
+                    if (\str_starts_with($elem['str'], '<br />')) {
                         $elem['str'] = \substr_replace($elem['str'], '', 0, 6);
                     }
                 }
@@ -2042,7 +2008,7 @@ class Xbbcode
                 $rbr = $tag::BR_RIGHT;
                 for ($i = 0; $i < $lbr; ++$i) {
                     $result = \rtrim($result);
-                    if ('<br />' === \substr($result, -6)) {
+                    if (\str_ends_with($result, '<br />')) {
                         $result = \substr_replace($result, '', -6, 6);
                     }
                 }
