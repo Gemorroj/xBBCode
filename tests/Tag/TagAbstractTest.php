@@ -3,7 +3,7 @@
 namespace Xbbcode\Tests\Tag;
 
 use PHPUnit\Framework\TestCase;
-use Xbbcode\Tag\TagAbstract;
+use Xbbcode\Tag\Tag;
 
 class TagAbstractTest extends TestCase
 {
@@ -12,7 +12,7 @@ class TagAbstractTest extends TestCase
         $validTargets = ['_blank', '_self', '_parent', '_top', 'any_anchor', '123'];
         $invalidTargets = ['_fake', '_123'];
 
-        $mock = $this->getMockForAbstractClass(TagAbstract::class);
+        $mock = $this->getMockForAbstractClass(Tag::class);
         $method = new \ReflectionMethod($mock, 'isValidTarget');
         $method->setAccessible(true);
 
