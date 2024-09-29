@@ -25,10 +25,10 @@ namespace Xbbcode\Tag;
 use Xbbcode\Attributes;
 
 /**
- * Class Youtube
- * Класс для тега [youtube].
+ * Class VK Video
+ * Класс для тега [vk].
  */
-class Youtube extends TagAbstract
+class VkVideo extends TagAbstract
 {
     public const BEHAVIOUR = 'img';
     public int $width = 560;
@@ -42,15 +42,25 @@ class Youtube extends TagAbstract
             $src = $this->getTreeText();
         }
 
+        // https://vk.com/video-177129873_456239415 or https://vk.com/video?z=video-177129873_456239415%2Fpl_cat_trends or https://m.vk.com/video-177129873_456239415?from=video
+        // to
+        // https://vk.com/video_ext.php?id=456239415
         $parse = \parse_url($src);
-        if (isset($parse['path'], $parse['query'])) {
+        $path = '';
+        if (isset($parse['query'])) {
             \parse_str($parse['query'], $query);
-            if (isset($query['v'])) {
-                $src = $query['v'];
+            if (isset($query['z'])) {
+                $path = $query['z'];
             }
         }
+        if (!$path && isset($parse['path'])) {
+            $path = $parse['path'];
+        }
 
-        return $src ? '//www.youtube.com/embed/'.\rawurlencode($src) : '';
+        $id = \substr($path, \strpos($path, '_') + 1);
+        $id = \strtok($id, '/');
+
+        return $id ? '//vk.com/video_ext.php?id='.\rawurlencode($id) : '';
     }
 
     protected function getAttributes(): Attributes
@@ -61,6 +71,7 @@ class Youtube extends TagAbstract
         $attr->set('allowfullscreen', 'allowfullscreen');
         $attr->set('width', (string) $this->width);
         $attr->set('height', (string) $this->height);
+        $attr->set('allow', 'autoplay; encrypted-media; fullscreen; picture-in-picture;');
 
         $src = $this->getSrc();
         if ($src) {

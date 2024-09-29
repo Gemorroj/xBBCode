@@ -32,7 +32,11 @@ class Code extends TagAbstract
 {
     public const BEHAVIOUR = 'pre';
 
-    // Альтернативные названия языков и их трансляция в обозначения GeSHi
+    /**
+     * Альтернативные названия языков и их трансляция в обозначения GeSHi.
+     *
+     * @var array<string, string>
+     */
     public array $langSynonym = [
         'algol' => 'algol86',
         'c++' => 'cpp',

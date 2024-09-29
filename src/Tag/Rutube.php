@@ -25,14 +25,14 @@ namespace Xbbcode\Tag;
 use Xbbcode\Attributes;
 
 /**
- * Class Youtube
- * Класс для тега [youtube].
+ * Class Rutube
+ * Класс для тега [rutube].
  */
-class Youtube extends TagAbstract
+class Rutube extends TagAbstract
 {
-    public const BEHAVIOUR = 'img';
     public int $width = 560;
     public int $height = 315;
+    public const BEHAVIOUR = 'img';
 
     protected function getSrc(): string
     {
@@ -42,15 +42,19 @@ class Youtube extends TagAbstract
             $src = $this->getTreeText();
         }
 
+        // https://rutube.ru/video/e21f509b303c3672897cfcf85098ae80/ or https://rutube.ru/video/e21f509b303c3672897cfcf85098ae80/?r=wd
+        // to
+        // https://rutube.ru/play/embed/e21f509b303c3672897cfcf85098ae80/
         $parse = \parse_url($src);
-        if (isset($parse['path'], $parse['query'])) {
-            \parse_str($parse['query'], $query);
-            if (isset($query['v'])) {
-                $src = $query['v'];
-            }
+
+        if (isset($parse['path'])) {
+            $id = \substr($parse['path'], \strlen('/video/'));
+            $id = \strtok($id, '/');
+        } else {
+            $id = '';
         }
 
-        return $src ? '//www.youtube.com/embed/'.\rawurlencode($src) : '';
+        return $id ? '//rutube.ru/play/embed/'.\rawurlencode($id) : '';
     }
 
     protected function getAttributes(): Attributes
@@ -61,6 +65,7 @@ class Youtube extends TagAbstract
         $attr->set('allowfullscreen', 'allowfullscreen');
         $attr->set('width', (string) $this->width);
         $attr->set('height', (string) $this->height);
+        $attr->set('allow', 'autoplay; encrypted-media; fullscreen; picture-in-picture;');
 
         $src = $this->getSrc();
         if ($src) {

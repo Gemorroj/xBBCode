@@ -44,6 +44,7 @@ use Xbbcode\Tag\Nobb;
 use Xbbcode\Tag\Ol;
 use Xbbcode\Tag\P;
 use Xbbcode\Tag\Quote;
+use Xbbcode\Tag\Rutube;
 use Xbbcode\Tag\Simple;
 use Xbbcode\Tag\Size;
 use Xbbcode\Tag\Spoiler;
@@ -53,6 +54,7 @@ use Xbbcode\Tag\Td;
 use Xbbcode\Tag\Th;
 use Xbbcode\Tag\Tr;
 use Xbbcode\Tag\Ul;
+use Xbbcode\Tag\VkVideo;
 use Xbbcode\Tag\Yandex;
 use Xbbcode\Tag\Youtube;
 
@@ -128,6 +130,7 @@ class Xbbcode
         'p' => P::class,
         'quote' => Quote::class,
         'right' => Align::class,
+        'rutube' => Rutube::class,
         's' => Simple::class,
         'size' => Size::class,
         'small' => Simple::class,
@@ -144,6 +147,7 @@ class Xbbcode
         'ul' => Ul::class,
         'url' => A::class,
         'var' => Simple::class,
+        'vk' => VkVideo::class,
 
         // Теги для вывода кода и подсветки синтаксисов (с помощью GeSHi)
         '4cs' => Code::class,
@@ -377,6 +381,8 @@ class Xbbcode
     ];
     /**
      * Смайлики и прочие мнемоники. Массив: 'мнемоника' => 'ее_замена'.
+     *
+     * @var array<string, string>
      */
     protected array $mnemonics = [];
     /**
@@ -385,6 +391,8 @@ class Xbbcode
     protected bool $autoLinks = false;
     /**
      * Массив замен для автоматических ссылок.
+     *
+     * @var array{pattern: string[], replacement: string[], highlight: string[]}
      */
     protected array $pregAutoLinks = [
         'pattern' => [
@@ -444,6 +452,8 @@ class Xbbcode
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
      * Накладывает ограничения на вложенность тегов.
      * Теги с моделями поведения, не указанными в массиве справа, вложенные в тег с моделью поведения, указанной слева, будут игнорироваться как неправильно вложенные.
+     *
+     * @var array<string, string[]>
      */
     protected array $children = [
         'a' => ['code', 'img', 'span'],
@@ -465,6 +475,8 @@ class Xbbcode
      * Массив пар: 'модель_поведения_тегов' => массив_моделей_поведений_тегов.
      * Накладывает ограничения на вложенность тегов.
      * Тег, принадлежащий указанной слева модели поведения тегов должен закрыться, как только начинается тег, принадлежащий какой-то из моделей поведения, указанных справа.
+     *
+     * @var array<string, string[]>
      */
     protected array $ends = [
         'a' => [
@@ -516,10 +528,12 @@ class Xbbcode
      * 20 - Нашли пробел после значения атрибута. Ожидаем имя следующего атрибута или "/" или "]".
      *
      * Описание конечного автомата:
+     *
+     * @var array<int, int[]>
      */
     protected array $finiteAutomaton = [
-    // Предыдущие |   Состояния для текущих событий (лексем)   |
-    //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
+        // Предыдущие |   Состояния для текущих событий (лексем)   |
+        //  состояния |  0 |  1 |  2 |  3 |  4 |  5 |  6 |  7 |  8 |
         0 => [1,  0,  0,  0,  0,  0,  0,  0,  0],
         1 => [2,  3,  3,  3,  3,  4,  3,  3,  5],
         2 => [2,  3,  3,  3,  3,  4,  3,  3,  5],
@@ -550,401 +564,401 @@ class Xbbcode
      */
     protected array $smiles = [
         ':D' => [
-                'title' => 'Very we!',
-                'name' => 'resources/images/smiles/1.gif',
-            ],
+            'title' => 'Very we!',
+            'name' => 'resources/images/smiles/1.gif',
+        ],
         ':)' => [
-                'title' => 'Well',
-                'name' => 'resources/images/smiles/2.gif',
-            ],
+            'title' => 'Well',
+            'name' => 'resources/images/smiles/2.gif',
+        ],
         ':(' => [
-                'title' => 'Not so',
-                'name' => 'resources/images/smiles/3.gif',
-            ],
+            'title' => 'Not so',
+            'name' => 'resources/images/smiles/3.gif',
+        ],
         ':heap:' => [
-                'title' => 'Eyes in a heap',
-                'name' => 'resources/images/smiles/4.gif',
-            ],
+            'title' => 'Eyes in a heap',
+            'name' => 'resources/images/smiles/4.gif',
+        ],
         ':ooi:' => [
-                'title' => 'Really?',
-                'name' => 'resources/images/smiles/5.gif',
-            ],
+            'title' => 'Really?',
+            'name' => 'resources/images/smiles/5.gif',
+        ],
         ':so:' => [
-                'title' => 'So-so',
-                'name' => 'resources/images/smiles/6.gif',
-            ],
+            'title' => 'So-so',
+            'name' => 'resources/images/smiles/6.gif',
+        ],
         ':surp:' => [
-                'title' => 'It is surprised',
-                'name' => 'resources/images/smiles/7.gif',
-            ],
+            'title' => 'It is surprised',
+            'name' => 'resources/images/smiles/7.gif',
+        ],
         ':ag:' => [
-                'title' => 'Again',
-                'name' => 'resources/images/smiles/8.gif',
-            ],
+            'title' => 'Again',
+            'name' => 'resources/images/smiles/8.gif',
+        ],
         ':ir:' => [
-                'title' => 'I roll!',
-                'name' => 'resources/images/smiles/9.gif',
-            ],
+            'title' => 'I roll!',
+            'name' => 'resources/images/smiles/9.gif',
+        ],
         ':oops:' => [
-                'title' => 'Oops!',
-                'name' => 'resources/images/smiles/44.gif',
-            ],
+            'title' => 'Oops!',
+            'name' => 'resources/images/smiles/44.gif',
+        ],
         ':P' => [
-                'title' => 'To you',
-                'name' => 'resources/images/smiles/11.gif',
-            ],
+            'title' => 'To you',
+            'name' => 'resources/images/smiles/11.gif',
+        ],
         ':cry:' => [
-                'title' => 'Tears',
-                'name' => 'resources/images/smiles/12.gif',
-            ],
+            'title' => 'Tears',
+            'name' => 'resources/images/smiles/12.gif',
+        ],
         ':rage:' => [
-                'title' => 'I am malicious',
-                'name' => 'resources/images/smiles/13.gif',
-            ],
+            'title' => 'I am malicious',
+            'name' => 'resources/images/smiles/13.gif',
+        ],
         ':B' => [
-                'title' => 'All ok',
-                'name' => 'resources/images/smiles/14.gif',
-            ],
+            'title' => 'All ok',
+            'name' => 'resources/images/smiles/14.gif',
+        ],
         ':roll:' => [
-                'title' => 'Not precisely',
-                'name' => 'resources/images/smiles/15.gif',
-            ],
+            'title' => 'Not precisely',
+            'name' => 'resources/images/smiles/15.gif',
+        ],
         ':wink:' => [
-                'title' => 'To wink',
-                'name' => 'resources/images/smiles/16.gif',
-            ],
+            'title' => 'To wink',
+            'name' => 'resources/images/smiles/16.gif',
+        ],
         ':yes:' => [
-                'title' => 'Yes',
-                'name' => 'resources/images/smiles/17.gif',
-            ],
+            'title' => 'Yes',
+            'name' => 'resources/images/smiles/17.gif',
+        ],
         ':bot:' => [
-                'title' => 'Has bothered',
-                'name' => 'resources/images/smiles/18.gif',
-            ],
+            'title' => 'Has bothered',
+            'name' => 'resources/images/smiles/18.gif',
+        ],
         ':z)' => [
-                'title' => 'Ridiculously',
-                'name' => 'resources/images/smiles/19.gif',
-            ],
+            'title' => 'Ridiculously',
+            'name' => 'resources/images/smiles/19.gif',
+        ],
         ':arrow:' => [
-                'title' => 'Here',
-                'name' => 'resources/images/smiles/20.gif',
-            ],
+            'title' => 'Here',
+            'name' => 'resources/images/smiles/20.gif',
+        ],
         ':vip:' => [
-                'title' => 'Attention',
-                'name' => 'resources/images/smiles/21.gif',
-            ],
+            'title' => 'Attention',
+            'name' => 'resources/images/smiles/21.gif',
+        ],
         ':Heppy:' => [
-                'title' => 'I congratulate',
-                'name' => 'resources/images/smiles/22.gif',
-            ],
+            'title' => 'I congratulate',
+            'name' => 'resources/images/smiles/22.gif',
+        ],
         ':think:' => [
-                'title' => 'I think',
-                'name' => 'resources/images/smiles/23.gif',
-            ],
+            'title' => 'I think',
+            'name' => 'resources/images/smiles/23.gif',
+        ],
         ':bye:' => [
-                'title' => 'Farewell',
-                'name' => 'resources/images/smiles/24.gif',
-            ],
+            'title' => 'Farewell',
+            'name' => 'resources/images/smiles/24.gif',
+        ],
         ':roul:' => [
-                'title' => 'Perfectly',
-                'name' => 'resources/images/smiles/25.gif',
-            ],
+            'title' => 'Perfectly',
+            'name' => 'resources/images/smiles/25.gif',
+        ],
         ':pst:' => [
-                'title' => 'Fingers',
-                'name' => 'resources/images/smiles/26.gif',
-            ],
+            'title' => 'Fingers',
+            'name' => 'resources/images/smiles/26.gif',
+        ],
         ':o' => [
-                'title' => 'Poorly',
-                'name' => 'resources/images/smiles/27.gif',
-            ],
+            'title' => 'Poorly',
+            'name' => 'resources/images/smiles/27.gif',
+        ],
         ':closed:' => [
-                'title' => 'Veal closed',
-                'name' => 'resources/images/smiles/28.gif',
-            ],
+            'title' => 'Veal closed',
+            'name' => 'resources/images/smiles/28.gif',
+        ],
         ':cens:' => [
-                'title' => 'Censorship',
-                'name' => 'resources/images/smiles/29.gif',
-            ],
+            'title' => 'Censorship',
+            'name' => 'resources/images/smiles/29.gif',
+        ],
         ':tani:' => [
-                'title' => 'Features',
-                'name' => 'resources/images/smiles/30.gif',
-            ],
+            'title' => 'Features',
+            'name' => 'resources/images/smiles/30.gif',
+        ],
         ':appl:' => [
-                'title' => 'Applause',
-                'name' => 'resources/images/smiles/31.gif',
-            ],
+            'title' => 'Applause',
+            'name' => 'resources/images/smiles/31.gif',
+        ],
         ':idnk:' => [
-                'title' => 'I do not know',
-                'name' => 'resources/images/smiles/32.gif',
-            ],
+            'title' => 'I do not know',
+            'name' => 'resources/images/smiles/32.gif',
+        ],
         ':sing:' => [
-                'title' => 'Singing',
-                'name' => 'resources/images/smiles/33.gif',
-            ],
+            'title' => 'Singing',
+            'name' => 'resources/images/smiles/33.gif',
+        ],
         ':shock:' => [
-                'title' => 'Shock',
-                'name' => 'resources/images/smiles/34.gif',
-            ],
+            'title' => 'Shock',
+            'name' => 'resources/images/smiles/34.gif',
+        ],
         ':tgu:' => [
-                'title' => 'To give up',
-                'name' => 'resources/images/smiles/35.gif',
-            ],
+            'title' => 'To give up',
+            'name' => 'resources/images/smiles/35.gif',
+        ],
         ':res:' => [
-                'title' => 'Respect',
-                'name' => 'resources/images/smiles/36.gif',
-            ],
+            'title' => 'Respect',
+            'name' => 'resources/images/smiles/36.gif',
+        ],
         ':alc:' => [
-                'title' => 'Alcohol',
-                'name' => 'resources/images/smiles/37.gif',
-            ],
+            'title' => 'Alcohol',
+            'name' => 'resources/images/smiles/37.gif',
+        ],
         ':lam:' => [
-                'title' => 'The lamer',
-                'name' => 'resources/images/smiles/38.gif',
-            ],
+            'title' => 'The lamer',
+            'name' => 'resources/images/smiles/38.gif',
+        ],
         ':box:' => [
-                'title' => 'Boxing',
-                'name' => 'resources/images/smiles/39.gif',
-            ],
+            'title' => 'Boxing',
+            'name' => 'resources/images/smiles/39.gif',
+        ],
         ':tom:' => [
-                'title' => 'Tomato',
-                'name' => 'resources/images/smiles/40.gif',
-            ],
+            'title' => 'Tomato',
+            'name' => 'resources/images/smiles/40.gif',
+        ],
         ':lol:' => [
-                'title' => 'Cheerfully',
-                'name' => 'resources/images/smiles/41.gif',
-            ],
+            'title' => 'Cheerfully',
+            'name' => 'resources/images/smiles/41.gif',
+        ],
         ':vill:' => [
-                'title' => 'The villain',
-                'name' => 'resources/images/smiles/42.gif',
-            ],
+            'title' => 'The villain',
+            'name' => 'resources/images/smiles/42.gif',
+        ],
         ':idea:' => [
-                'title' => 'Idea',
-                'name' => 'resources/images/smiles/43.gif',
-            ],
+            'title' => 'Idea',
+            'name' => 'resources/images/smiles/43.gif',
+        ],
         ':E' => [
-                'title' => 'The big rage',
-                'name' => 'resources/images/smiles/45.gif',
-            ],
+            'title' => 'The big rage',
+            'name' => 'resources/images/smiles/45.gif',
+        ],
         ':sex:' => [
-                'title' => 'Sex',
-                'name' => 'resources/images/smiles/46.gif',
-            ],
+            'title' => 'Sex',
+            'name' => 'resources/images/smiles/46.gif',
+        ],
         ':horns:' => [
-                'title' => 'Horns',
-                'name' => 'resources/images/smiles/47.gif',
-            ],
+            'title' => 'Horns',
+            'name' => 'resources/images/smiles/47.gif',
+        ],
         ':love:' => [
-                'title' => 'Love me',
-                'name' => 'resources/images/smiles/48.gif',
-            ],
+            'title' => 'Love me',
+            'name' => 'resources/images/smiles/48.gif',
+        ],
         ':poz:' => [
-                'title' => 'Happy birthday',
-                'name' => 'resources/images/smiles/49.gif',
-            ],
+            'title' => 'Happy birthday',
+            'name' => 'resources/images/smiles/49.gif',
+        ],
         ':roza:' => [
-                'title' => 'Roza',
-                'name' => 'resources/images/smiles/50.gif',
-            ],
+            'title' => 'Roza',
+            'name' => 'resources/images/smiles/50.gif',
+        ],
         ':meg:' => [
-                'title' => 'Megaphone',
-                'name' => 'resources/images/smiles/51.gif',
-            ],
+            'title' => 'Megaphone',
+            'name' => 'resources/images/smiles/51.gif',
+        ],
         ':dj:' => [
-                'title' => 'The DJ',
-                'name' => 'resources/images/smiles/52.gif',
-            ],
+            'title' => 'The DJ',
+            'name' => 'resources/images/smiles/52.gif',
+        ],
         ':rul:' => [
-                'title' => 'Rules',
-                'name' => 'resources/images/smiles/53.gif',
-            ],
+            'title' => 'Rules',
+            'name' => 'resources/images/smiles/53.gif',
+        ],
         ':offln:' => [
-                'title' => 'OffLine',
-                'name' => 'resources/images/smiles/54.gif',
-            ],
+            'title' => 'OffLine',
+            'name' => 'resources/images/smiles/54.gif',
+        ],
         ':sp:' => [
-                'title' => 'Spider',
-                'name' => 'resources/images/smiles/55.gif',
-            ],
+            'title' => 'Spider',
+            'name' => 'resources/images/smiles/55.gif',
+        ],
         ':stapp:' => [
-                'title' => 'Storm of applause',
-                'name' => 'resources/images/smiles/56.gif',
-            ],
+            'title' => 'Storm of applause',
+            'name' => 'resources/images/smiles/56.gif',
+        ],
         ':girl:' => [
-                'title' => 'Beautiful girl',
-                'name' => 'resources/images/smiles/57.gif',
-            ],
+            'title' => 'Beautiful girl',
+            'name' => 'resources/images/smiles/57.gif',
+        ],
         ':heart:' => [
-                'title' => 'Heart',
-                'name' => 'resources/images/smiles/58.gif',
-            ],
+            'title' => 'Heart',
+            'name' => 'resources/images/smiles/58.gif',
+        ],
         ':kiss:' => [
-                'title' => 'Kiss',
-                'name' => 'resources/images/smiles/59.gif',
-            ],
+            'title' => 'Kiss',
+            'name' => 'resources/images/smiles/59.gif',
+        ],
         ':spam:' => [
-                'title' => 'Spam',
-                'name' => 'resources/images/smiles/60.gif',
-            ],
+            'title' => 'Spam',
+            'name' => 'resources/images/smiles/60.gif',
+        ],
         ':party:' => [
-                'title' => 'Party',
-                'name' => 'resources/images/smiles/61.gif',
-            ],
+            'title' => 'Party',
+            'name' => 'resources/images/smiles/61.gif',
+        ],
         ':ser:' => [
-                'title' => 'Song',
-                'name' => 'resources/images/smiles/62.gif',
-            ],
+            'title' => 'Song',
+            'name' => 'resources/images/smiles/62.gif',
+        ],
         ':eam:' => [
-                'title' => 'Dream',
-                'name' => 'resources/images/smiles/63.gif',
-            ],
+            'title' => 'Dream',
+            'name' => 'resources/images/smiles/63.gif',
+        ],
         ':gift:' => [
-                'title' => 'Gift',
-                'name' => 'resources/images/smiles/64.gif',
-            ],
+            'title' => 'Gift',
+            'name' => 'resources/images/smiles/64.gif',
+        ],
         ':adore:' => [
-                'title' => 'I adore',
-                'name' => 'resources/images/smiles/65.gif',
-            ],
+            'title' => 'I adore',
+            'name' => 'resources/images/smiles/65.gif',
+        ],
         ':pie:' => [
-                'title' => 'Pie',
-                'name' => 'resources/images/smiles/66.gif',
-            ],
+            'title' => 'Pie',
+            'name' => 'resources/images/smiles/66.gif',
+        ],
         ':egg:' => [
-                'title' => 'Egg',
-                'name' => 'resources/images/smiles/67.gif',
-            ],
+            'title' => 'Egg',
+            'name' => 'resources/images/smiles/67.gif',
+        ],
         ':cnrt:' => [
-                'title' => 'Concert',
-                'name' => 'resources/images/smiles/68.gif',
-            ],
+            'title' => 'Concert',
+            'name' => 'resources/images/smiles/68.gif',
+        ],
         ':oftop:' => [
-                'title' => 'Off Topic',
-                'name' => 'resources/images/smiles/69.gif',
-            ],
+            'title' => 'Off Topic',
+            'name' => 'resources/images/smiles/69.gif',
+        ],
         ':foo:' => [
-                'title' => 'Football',
-                'name' => 'resources/images/smiles/70.gif',
-            ],
+            'title' => 'Football',
+            'name' => 'resources/images/smiles/70.gif',
+        ],
         ':mob:' => [
-                'title' => 'Cellular',
-                'name' => 'resources/images/smiles/71.gif',
-            ],
+            'title' => 'Cellular',
+            'name' => 'resources/images/smiles/71.gif',
+        ],
         ':hoo:' => [
-                'title' => 'Not hooligan',
-                'name' => 'resources/images/smiles/72.gif',
-            ],
+            'title' => 'Not hooligan',
+            'name' => 'resources/images/smiles/72.gif',
+        ],
         ':tog:' => [
-                'title' => 'Together',
-                'name' => 'resources/images/smiles/73.gif',
-            ],
+            'title' => 'Together',
+            'name' => 'resources/images/smiles/73.gif',
+        ],
         ':pnk:' => [
-                'title' => 'Pancake',
-                'name' => 'resources/images/smiles/74.gif',
-            ],
+            'title' => 'Pancake',
+            'name' => 'resources/images/smiles/74.gif',
+        ],
         ':pati:' => [
-                'title' => 'Party Time',
-                'name' => 'resources/images/smiles/75.gif',
-            ],
+            'title' => 'Party Time',
+            'name' => 'resources/images/smiles/75.gif',
+        ],
         ':-({|=:' => [
-                'title' => 'I here',
-                'name' => 'resources/images/smiles/76.gif',
-            ],
+            'title' => 'I here',
+            'name' => 'resources/images/smiles/76.gif',
+        ],
         ':haaw:' => [
-                'title' => 'Head about a wall',
-                'name' => 'resources/images/smiles/77.gif',
-            ],
+            'title' => 'Head about a wall',
+            'name' => 'resources/images/smiles/77.gif',
+        ],
         ':angel:' => [
-                'title' => 'Angel',
-                'name' => 'resources/images/smiles/78.gif',
-            ],
+            'title' => 'Angel',
+            'name' => 'resources/images/smiles/78.gif',
+        ],
         ':kil:' => [
-                'title' => 'killer',
-                'name' => 'resources/images/smiles/79.gif',
-            ],
+            'title' => 'killer',
+            'name' => 'resources/images/smiles/79.gif',
+        ],
         ':died:' => [
-                'title' => 'Cemetery',
-                'name' => 'resources/images/smiles/80.gif',
-            ],
+            'title' => 'Cemetery',
+            'name' => 'resources/images/smiles/80.gif',
+        ],
         ':cof:' => [
-                'title' => 'Coffee',
-                'name' => 'resources/images/smiles/81.gif',
-            ],
+            'title' => 'Coffee',
+            'name' => 'resources/images/smiles/81.gif',
+        ],
         ':fruit:' => [
-                'title' => 'Forbidden fruit',
-                'name' => 'resources/images/smiles/82.gif',
-            ],
+            'title' => 'Forbidden fruit',
+            'name' => 'resources/images/smiles/82.gif',
+        ],
         ':tease:' => [
-                'title' => 'To tease',
-                'name' => 'resources/images/smiles/83.gif',
-            ],
+            'title' => 'To tease',
+            'name' => 'resources/images/smiles/83.gif',
+        ],
         ':evil:' => [
-                'title' => 'Devil',
-                'name' => 'resources/images/smiles/84.gif',
-            ],
+            'title' => 'Devil',
+            'name' => 'resources/images/smiles/84.gif',
+        ],
         ':exc:' => [
-                'title' => 'Excellently',
-                'name' => 'resources/images/smiles/85.gif',
-            ],
+            'title' => 'Excellently',
+            'name' => 'resources/images/smiles/85.gif',
+        ],
         ':niah:' => [
-                'title' => 'Not I, and he',
-                'name' => 'resources/images/smiles/86.gif',
-            ],
+            'title' => 'Not I, and he',
+            'name' => 'resources/images/smiles/86.gif',
+        ],
         ':Head:' => [
-                'title' => 'Studio',
-                'name' => 'resources/images/smiles/87.gif',
-            ],
+            'title' => 'Studio',
+            'name' => 'resources/images/smiles/87.gif',
+        ],
         ':gl:' => [
-                'title' => 'girl',
-                'name' => 'resources/images/smiles/88.gif',
-            ],
+            'title' => 'girl',
+            'name' => 'resources/images/smiles/88.gif',
+        ],
         ':granat:' => [
-                'title' => 'Pomegranate',
-                'name' => 'resources/images/smiles/89.gif',
-            ],
+            'title' => 'Pomegranate',
+            'name' => 'resources/images/smiles/89.gif',
+        ],
         ':gans:' => [
-                'title' => 'Gangster',
-                'name' => 'resources/images/smiles/90.gif',
-            ],
+            'title' => 'Gangster',
+            'name' => 'resources/images/smiles/90.gif',
+        ],
         ':user:' => [
-                'title' => 'User',
-                'name' => 'resources/images/smiles/91.gif',
-            ],
+            'title' => 'User',
+            'name' => 'resources/images/smiles/91.gif',
+        ],
         ':ny:' => [
-                'title' => 'New year',
-                'name' => 'resources/images/smiles/92.gif',
-            ],
+            'title' => 'New year',
+            'name' => 'resources/images/smiles/92.gif',
+        ],
         ':mvol:' => [
-                'title' => 'Megavolt',
-                'name' => 'resources/images/smiles/93.gif',
-            ],
+            'title' => 'Megavolt',
+            'name' => 'resources/images/smiles/93.gif',
+        ],
         ':boat:' => [
-                'title' => 'In a boat',
-                'name' => 'resources/images/smiles/94.gif',
-            ],
+            'title' => 'In a boat',
+            'name' => 'resources/images/smiles/94.gif',
+        ],
         ':phone:' => [
-                'title' => 'Phone',
-                'name' => 'resources/images/smiles/95.gif',
-            ],
+            'title' => 'Phone',
+            'name' => 'resources/images/smiles/95.gif',
+        ],
         ':cop:' => [
-                'title' => 'Cop',
-                'name' => 'resources/images/smiles/96.gif',
-            ],
+            'title' => 'Cop',
+            'name' => 'resources/images/smiles/96.gif',
+        ],
         ':smok:' => [
-                'title' => 'Smoking',
-                'name' => 'resources/images/smiles/97.gif',
-            ],
+            'title' => 'Smoking',
+            'name' => 'resources/images/smiles/97.gif',
+        ],
         ':bic:' => [
-                'title' => 'Bicycle',
-                'name' => 'resources/images/smiles/98.gif',
-            ],
+            'title' => 'Bicycle',
+            'name' => 'resources/images/smiles/98.gif',
+        ],
         ':ban:' => [
-                'title' => 'Ban?',
-                'name' => 'resources/images/smiles/99.gif',
-            ],
+            'title' => 'Ban?',
+            'name' => 'resources/images/smiles/99.gif',
+        ],
         ':bar:' => [
-                'title' => 'Bar',
-                'name' => 'resources/images/smiles/100.gif',
-            ],
+            'title' => 'Bar',
+            'name' => 'resources/images/smiles/100.gif',
+        ],
     ];
 
     /**
@@ -953,7 +967,7 @@ class Xbbcode
      * @param string     $webPath Web path
      * @param array|null $allowed Allowed tags
      */
-    public function __construct(string $webPath = '', array $allowed = null)
+    public function __construct(string $webPath = '', ?array $allowed = null)
     {
         $this->webPath = $webPath;
         $this->reloadSmiles();
@@ -1981,7 +1995,7 @@ class Xbbcode
         return $str;
     }
 
-    public function getHtml(array $elems = null): string
+    public function getHtml(?array $elems = null): string
     {
         $time_start = \microtime(true);
         if (null === $elems) {
