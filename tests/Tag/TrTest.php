@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class TrTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTagWithoutTdCell()
+    public function testTagWithoutTdCell(): void
     {
         $text = 'test [table][tr]xBBCode[/tr][/table].';
         $result = 'test <table class="bb"><tr class="bb"></tr></table>.';
@@ -16,7 +16,7 @@ class TrTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($result, $xbbcode->getHtml());
     }
 
-    public function testTagFail()
+    public function testTagFail(): void
     {
         $text = 'test [tr]xBBCode[/tr].';
         $result = 'test [tr]xBBCode[/tr].';

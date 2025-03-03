@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class GoogleTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [google]xBBCode[/google].';
         $result = 'test <a class="bb" href="//www.google.com/search?q=xBBCode">xBBCode</a>.';

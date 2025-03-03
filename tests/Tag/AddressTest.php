@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class AddressTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [address]xBBCode[/address].';
         $result = 'test <address class="bb">xBBCode</address>.';

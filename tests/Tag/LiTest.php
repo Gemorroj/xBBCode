@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class LiTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTagWithUl()
+    public function testTagWithUl(): void
     {
         $text = 'test [ul][li]xBBCode[/li][/ul].';
         $result = 'test <ul class="bb"><li class="bb">xBBCode</li></ul>.';
@@ -16,7 +16,7 @@ class LiTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($result, $xbbcode->getHtml());
     }
 
-    public function testTagWithOl()
+    public function testTagWithOl(): void
     {
         $text = 'test [ol][li]xBBCode[/li][/ol].';
         $result = 'test <ol class="bb"><li class="bb">xBBCode</li></ol>.';
@@ -26,7 +26,7 @@ class LiTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($result, $xbbcode->getHtml());
     }
 
-    public function testTagFail()
+    public function testTagFail(): void
     {
         $text = 'test [li]xBBCode[/li].';
         $result = 'test [li]xBBCode[/li].';

@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class NobbTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [nobb][p]xBBCode[/p][/nobb].';
         $result = 'test [p]xBBCode[/p].';

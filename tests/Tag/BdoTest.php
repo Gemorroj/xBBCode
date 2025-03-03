@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class BdoTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [bdo=ltr]xBBCode[/bdo].';
         $result = 'test <bdo class="bb" dir="ltr">xBBCode</bdo>.';

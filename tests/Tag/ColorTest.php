@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class ColorTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [color=red]xBBCode[/color].';
         $result = 'test <font class="bb" color="red">xBBCode</font>.';

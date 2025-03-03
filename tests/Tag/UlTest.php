@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class UlTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTagWithoutLi()
+    public function testTagWithoutLi(): void
     {
         $text = 'test [ul]xBBCode[/ul].';
         $result = 'test <ul class="bb"></ul>.';

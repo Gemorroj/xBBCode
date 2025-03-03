@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class AcronymTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [acronym=test]xBBCode[/acronym].';
         $result = 'test <acronym class="bb" title="test">xBBCode</acronym>.';

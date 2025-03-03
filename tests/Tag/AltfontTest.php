@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class AltfontTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [font=verdana]xBBCode[/font].';
         $result = 'test <font class="bb" face="verdana">xBBCode</font>.';

@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class YandexTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [yandex]xBBCode[/yandex].';
         $result = 'test <a class="bb" href="//yandex.com/yandsearch?text=xBBCode">xBBCode</a>.';

@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class SimpleTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [b]xBBCode[/b].';
         $result = 'test <strong class="bb">xBBCode</strong>.';

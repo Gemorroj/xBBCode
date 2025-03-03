@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class BrTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [br]xBBCode.';
         $result = 'test <br class="bb" />xBBCode.';

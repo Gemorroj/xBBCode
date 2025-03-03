@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class HrTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [hr]xBBCode.';
         $result = 'test <hr class="bb" />xBBCode.';

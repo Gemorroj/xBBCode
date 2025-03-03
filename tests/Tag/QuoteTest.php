@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class QuoteTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [quote]xBBCode[/quote].';
         $result = 'test <blockquote class="bb bb_quote">xBBCode</blockquote>.';

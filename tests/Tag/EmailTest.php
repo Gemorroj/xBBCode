@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class EmailTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [email]xBBCode@xBBCode.xBBCode[/email].';
         $result = 'test <a class="bb" href="mailto:xBBCode@xBBCode.xBBCode">xBBCode@xBBCode.xBBCode</a>.';

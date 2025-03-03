@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class OlTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTagWithoutLi()
+    public function testTagWithoutLi(): void
     {
         $text = 'test [ol]xBBCode[/ol].';
         $result = 'test <ol class="bb"></ol>.';

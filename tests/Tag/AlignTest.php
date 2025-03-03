@@ -6,7 +6,7 @@ use Xbbcode\Xbbcode;
 
 class AlignTest extends \PHPUnit\Framework\TestCase
 {
-    public function testTag()
+    public function testTag(): void
     {
         $text = 'test [align=justify]xBBCode[/align].';
         $result = 'test <div class="bb" align="justify">xBBCode</div>.';
