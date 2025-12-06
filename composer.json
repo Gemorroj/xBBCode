@@ -5,7 +5,7 @@
     "keywords": ["xbbcode","bbcode"],
     "license": "GPL-2.0-or-later",
     "require": {
-        "php": ">=8.0.2",
+        "php": ">=8.1",
         "geshi/geshi": "^v1.0.9.1"
     },
     "require-dev": {
