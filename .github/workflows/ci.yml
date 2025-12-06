@@ -99,7 +99,7 @@ jobs:
           max_attempts: 5
           retry_wait_seconds: 30
           command: |
-            composer update --optimize-autoloader --no-interaction --ansi --no-progress --prefer-dist ${{ matrix.composer-flags }}
+            composer update --no-security-blocking --optimize-autoloader --no-interaction --ansi --no-progress --prefer-dist ${{ matrix.composer-flags }}
             composer info -D
 
       - name: Tests
