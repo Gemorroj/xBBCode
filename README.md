@@ -20,9 +20,15 @@ echo $xbbcode->getHtml();
  - PHP >= 8.1
 
 
+### Security Note:
+- Geshi has security problem https://github.com/GeSHi/geshi-1.0/issues/159
+- This doesn't seem relevant for XbbCode.
+- To avoid composer blocking, use `--no-security-blocking` option.
+
+
 ### Installation:
 ```bash
-composer require gemorroj/xbbcode
+composer require gemorroj/xbbcode --no-security-blocking
 ```
 
 
