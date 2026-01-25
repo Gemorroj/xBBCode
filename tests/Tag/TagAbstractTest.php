@@ -12,9 +12,8 @@ class TagAbstractTest extends TestCase
         $validTargets = ['_blank', '_self', '_parent', '_top', 'any_anchor', '123'];
         $invalidTargets = ['_fake', '_123'];
 
-        $mock = $this->getMockForAbstractClass(TagAbstract::class);
+        $mock = $this->getMockBuilder(TagAbstract::class)->getMock();
         $method = new \ReflectionMethod($mock, 'isValidTarget');
-        $method->setAccessible(true);
 
         foreach ($validTargets as $target) {
             self::assertTrue($method->invoke($mock, $target));
