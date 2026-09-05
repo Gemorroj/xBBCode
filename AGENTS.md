@@ -22,7 +22,6 @@ vendor/bin/php-cs-fixer fix
 ## Code conventions
 
 - Style: Symfony + PHP 8.2 migration rules (see `.php-cs-fixer.dist.php`).
-- No `declare(strict_types=1)`.
 - Always run `vendor/bin/php-cs-fixer fix` and `vendor/bin/phpunit` after making changes.
 - When adding a new tag: create a class in `src/Tag/` and a test in `tests/Tag/`.
 
