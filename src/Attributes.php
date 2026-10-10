@@ -24,27 +24,27 @@ namespace Xbbcode;
 
 class Attributes extends \ArrayObject implements \Stringable
 {
-    /**
-     * @var array<string, string>
-     */
-    protected array $attributes = ['class' => 'bb'];
+    public function __construct()
+    {
+        parent::__construct(['class' => 'bb']);
+    }
 
     public function getAttributeValue(string $name): string
     {
-        return $this->attributes[$name];
+        return $this->offsetGet($name);
     }
 
     public function set(string $name, string $value): self
     {
-        $this->attributes[$name] = $value;
+        $this->offsetSet($name, $value);
 
         return $this;
     }
 
     public function add(string $name, string $value): self
     {
-        if (isset($this->attributes[$name])) {
-            $this->attributes[$name] .= ' '.$value;
+        if ($this->offsetExists($name)) {
+            $this->offsetSet($name, $this->offsetGet($name).' '.$value);
         } else {
             $this->set($name, $value);
         }
@@ -54,14 +54,9 @@ class Attributes extends \ArrayObject implements \Stringable
 
     public function remove(string $name): self
     {
-        unset($this->attributes[$name]);
+        $this->offsetUnset($name);
 
         return $this;
-    }
-
-    public function getIterator(): \ArrayIterator
-    {
-        return new \ArrayIterator($this->attributes);
     }
 
     public function __toString(): string

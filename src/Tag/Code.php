@@ -92,6 +92,12 @@ class Code extends TagAbstract
 
         $this->geshi->set_language($language);
 
+        // GeSHi raises "Undefined array key LANG_NAME" when highlighting an unknown
+        // language. Fall back to plain text instead of leaving the broken language set.
+        if (false !== $this->geshi->error()) {
+            $this->geshi->set_language('text');
+        }
+
         return $this;
     }
 

@@ -36,21 +36,31 @@ class Youtube extends TagAbstract
 
     protected function getSrc(): string
     {
-        $src = $this->attributes['src'] ?? '';
+        $src = $this->attributes['src'] ?? $this->attributes['youtube'] ?? '';
 
         if (!$src) {
             $src = $this->getTreeText();
         }
 
+        // https://www.youtube.com/watch?v=qH5IQbpu9NU , https://youtu.be/qH5IQbpu9NU ,
+        // https://www.youtube.com/embed/qH5IQbpu9NU , https://www.youtube.com/shorts/qH5IQbpu9NU
+        // to
+        // https://www.youtube.com/embed/qH5IQbpu9NU
+        $id = $src;
         $parse = \parse_url($src);
-        if (isset($parse['path'], $parse['query'])) {
-            \parse_str($parse['query'], $query);
+        if (isset($parse['host'])) {
+            $query = [];
+            if (isset($parse['query'])) {
+                \parse_str($parse['query'], $query);
+            }
             if (isset($query['v'])) {
-                $src = $query['v'];
+                $id = $query['v'];
+            } else {
+                $id = $this->getLastPathSegment($parse['path'] ?? '');
             }
         }
 
-        return $src ? '//www.youtube.com/embed/'.\rawurlencode($src) : '';
+        return $id ? '//www.youtube.com/embed/'.\rawurlencode($id) : '';
     }
 
     protected function getAttributes(): Attributes

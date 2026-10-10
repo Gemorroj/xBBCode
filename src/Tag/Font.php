@@ -52,7 +52,9 @@ class Font extends TagAbstract
         }
 
         if (isset($this->attributes['size'])) {
-            $attr->set('size', $this->attributes['size']);
+            if ($this->isValidFontSize($this->attributes['size'])) {
+                $attr->set('size', $this->attributes['size']);
+            }
         }
 
         return $attr;

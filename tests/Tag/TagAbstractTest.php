@@ -10,7 +10,7 @@ class TagAbstractTest extends TestCase
 {
     public function testTarget(): void
     {
-        $validTargets = ['_blank', '_self', '_parent', '_top', 'any_anchor', '123'];
+        $validTargets = ['_blank', '_self', '_parent', '_top', 'any_anchor', '123', 'a'];
         $invalidTargets = ['_fake', '_123'];
 
         $mock = new class extends TagAbstract {

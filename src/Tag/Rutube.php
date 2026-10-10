@@ -36,25 +36,21 @@ class Rutube extends TagAbstract
 
     protected function getSrc(): string
     {
-        $src = $this->attributes['src'] ?? '';
+        $src = $this->attributes['src'] ?? $this->attributes['rutube'] ?? '';
 
         if (!$src) {
             $src = $this->getTreeText();
         }
 
-        // https://rutube.ru/video/e21f509b303c3672897cfcf85098ae80/ or https://rutube.ru/video/e21f509b303c3672897cfcf85098ae80/?r=wd
+        // https://rutube.ru/video/<id>/ , https://rutube.ru/video/<id>/?r=wd ,
+        // https://rutube.ru/play/embed/<id>/ , https://rutube.ru/shorts/<id>/
         // to
-        // https://rutube.ru/play/embed/e21f509b303c3672897cfcf85098ae80/
+        // https://rutube.ru/play/embed/<id>/
+        // Video id is always the last path segment.
         $parse = \parse_url($src);
+        $id = isset($parse['path']) ? $this->getLastPathSegment($parse['path']) : '';
 
-        if (isset($parse['path'])) {
-            $id = \substr($parse['path'], \strlen('/video/'));
-            $id = \strtok($id, '/');
-        } else {
-            $id = '';
-        }
-
-        return $id ? '//rutube.ru/play/embed/'.\rawurlencode($id) : '';
+        return '' !== $id ? '//rutube.ru/play/embed/'.\rawurlencode($id) : '';
     }
 
     protected function getAttributes(): Attributes

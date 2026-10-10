@@ -36,7 +36,7 @@ class VkVideo extends TagAbstract
 
     protected function getSrc(): string
     {
-        $src = $this->attributes['src'] ?? '';
+        $src = $this->attributes['src'] ?? $this->attributes['vk'] ?? '';
 
         if (!$src) {
             $src = $this->getTreeText();
@@ -46,19 +46,20 @@ class VkVideo extends TagAbstract
         // to
         // https://vk.com/video_ext.php?id=456239415
         $parse = \parse_url($src);
-        $path = '';
+        $value = '';
         if (isset($parse['query'])) {
             \parse_str($parse['query'], $query);
             if (isset($query['z'])) {
-                $path = $query['z'];
+                $value = $query['z'];
             }
         }
-        if (!$path && isset($parse['path'])) {
-            $path = $parse['path'];
+        if (!$value && isset($parse['path'])) {
+            $value = $parse['path'];
         }
 
-        $id = \substr($path, \strpos($path, '_') + 1);
-        $id = \strtok($id, '/');
+        // Video id follows the "owner_id" part: video-<owner>_<id>.
+        $separator = \strpos($value, '_');
+        $id = false === $separator ? '' : \explode('/', \substr($value, $separator + 1))[0];
 
         return $id ? '//vk.com/video_ext.php?id='.\rawurlencode($id) : '';
     }

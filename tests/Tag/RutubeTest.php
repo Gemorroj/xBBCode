@@ -21,5 +21,23 @@ class RutubeTest extends \PHPUnit\Framework\TestCase
         $xbbcode = new Xbbcode();
         $xbbcode->parse($text);
         self::assertEquals($result, $xbbcode->getHtml());
+
+        $text = 'test [rutube]https://rutube.ru/play/embed/e21f509b303c3672897cfcf85098ae80/[/rutube].';
+
+        $xbbcode = new Xbbcode();
+        $xbbcode->parse($text);
+        self::assertEquals($result, $xbbcode->getHtml());
+
+        $text = 'test [rutube]https://rutube.ru/shorts/e21f509b303c3672897cfcf85098ae80/[/rutube].';
+
+        $xbbcode = new Xbbcode();
+        $xbbcode->parse($text);
+        self::assertEquals($result, $xbbcode->getHtml());
+
+        $text = 'test [rutube=e21f509b303c3672897cfcf85098ae80][/rutube].';
+
+        $xbbcode = new Xbbcode();
+        $xbbcode->parse($text);
+        self::assertEquals($result, $xbbcode->getHtml());
     }
 }

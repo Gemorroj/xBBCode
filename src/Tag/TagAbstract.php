@@ -127,6 +127,16 @@ abstract class TagAbstract extends Xbbcode implements \Stringable
     }
 
     /**
+     * Возвращает последний непустой сегмент пути URL-а.
+     */
+    protected function getLastPathSegment(string $path): string
+    {
+        $segments = \explode('/', \trim($path, '/'));
+
+        return (string) \end($segments);
+    }
+
+    /**
      * Функция преобразует строку URL в соответствии с RFC 3986.
      */
     protected function parseUrl(string $url): string
@@ -224,6 +234,6 @@ abstract class TagAbstract extends Xbbcode implements \Stringable
 
     protected function isValidTarget(string $target): bool
     {
-        return \in_array(\strtolower($target), ['_blank', '_self', '_parent', '_top'], true) || \preg_match('/^[^\W_]\w+$/', $target);
+        return \in_array(\strtolower($target), ['_blank', '_self', '_parent', '_top'], true) || \preg_match('/^[^\W_]\w*$/', $target);
     }
 }

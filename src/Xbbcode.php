@@ -542,13 +542,13 @@ class Xbbcode
         5 => [2,  6,  3,  3,  8,  9, 10,  3,  3],
         6 => [1,  0,  0,  0,  0,  0,  0,  0,  0],
         7 => [2,  6,  3,  3,  3,  3,  3,  3,  3],
-        8 => [13, 13, 11, 12, 13, 13, 14, 13, 13],
+        8 => [13,  6, 11, 12, 13, 13, 14, 13, 13],
         9 => [2,  6,  3,  3,  3,  3,  3,  3,  3],
         10 => [2,  6,  3,  3,  8,  9,  3, 15, 15],
         11 => [16, 16, 17, 16, 16, 16, 16, 16, 16],
         12 => [18, 18, 18, 17, 18, 18, 18, 18, 18],
         13 => [19,  6, 19, 19, 19, 19, 17, 19, 19],
-        14 => [2,  3, 11, 12, 13, 13,  3, 13, 13],
+        14 => [2,  6, 11, 12, 13, 13,  3, 13, 13],
         15 => [2,  6,  3,  3,  8,  9, 10,  3,  3],
         16 => [16, 16, 17, 16, 16, 16, 16, 16, 16],
         17 => [2,  6,  3,  3,  3,  9, 20, 15, 15],
@@ -2002,30 +2002,17 @@ class Xbbcode
             $elems = $this->getTree();
         }
         $result = '';
-        $lbr = 0;
         $rbr = 0;
         foreach ($elems as $elem) {
             if ('text' === $elem['type']) {
-                $elem['str'] = $this->insertMnemonics($elem['str']);
-                for ($i = 0; $i < $rbr; ++$i) {
-                    $elem['str'] = \ltrim($elem['str']);
-                    if (\str_starts_with($elem['str'], '<br />')) {
-                        $elem['str'] = \substr_replace($elem['str'], '', 0, 6);
-                    }
-                }
+                $elem['str'] = $this->removeLeadingLineBreaks($this->insertMnemonics($elem['str']), $rbr);
                 $result .= $elem['str'];
             } else {
                 $tag = $this->getTagObject($elem['name']);
 
                 /* Убираем лишние переводы строк */
-                $lbr = $tag::BR_LEFT;
+                $result = $this->removeTrailingLineBreaks($result, $tag::BR_LEFT);
                 $rbr = $tag::BR_RIGHT;
-                for ($i = 0; $i < $lbr; ++$i) {
-                    $result = \rtrim($result);
-                    if (\str_ends_with($result, '<br />')) {
-                        $result = \substr_replace($result, '', -6, 6);
-                    }
-                }
 
                 /* Обрабатываем содержимое элемента */
                 $tag->setKeywordLinks($this->getKeywordLinks());
@@ -2051,6 +2038,36 @@ class Xbbcode
     }
 
     /**
+     * Убирает до $count разрывов строк в конце HTML-а.
+     */
+    private function removeTrailingLineBreaks(string $html, int $count): string
+    {
+        for ($i = 0; $i < $count; ++$i) {
+            $html = \rtrim($html);
+            if (\str_ends_with($html, '<br />')) {
+                $html = \substr_replace($html, '', -6, 6);
+            }
+        }
+
+        return $html;
+    }
+
+    /**
+     * Убирает до $count разрывов строк в начале HTML-а.
+     */
+    private function removeLeadingLineBreaks(string $html, int $count): string
+    {
+        for ($i = 0; $i < $count; ++$i) {
+            $html = \ltrim($html);
+            if (\str_starts_with($html, '<br />')) {
+                $html = \substr_replace($html, '', 0, 6);
+            }
+        }
+
+        return $html;
+    }
+
+    /**
      * Функция проверяет, доступен ли класс - обработчик тега с именем $tagName и,
      * если нет, пытается подключить файл с соответствующим классом. Если это не
      * возможно, переназначает тегу обработчик, - сопоставляет ему класс bbcode.
@@ -2059,7 +2076,7 @@ class Xbbcode
     protected function includeTag(string $tagName): void
     {
         if (!isset($this->tags[$tagName])) {
-            $this->tags[$tagName] = 'bbcode';
+            $this->tags[$tagName] = Bbcode::class;
         }
 
         $handler = $this->tags[$tagName];

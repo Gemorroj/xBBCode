@@ -37,6 +37,16 @@ class CodeTest extends \PHPUnit\Framework\TestCase
         self::assertEquals($result, $xbbcode->getHtml());
     }
 
+    public function testTagUnknownLanguage(): void
+    {
+        $text = 'test [code=doesnotexist]xBBCode[/code].';
+        $result = 'test <div class="bb_code"><div class="bb_code_header"><span class="bb_code_lang">Text</span></div><code class="bb_code">xBBCode</code></div>.';
+
+        $xbbcode = new Xbbcode();
+        $xbbcode->parse($text);
+        self::assertEquals($result, $xbbcode->getHtml());
+    }
+
     public function testTagRust(): void
     {
         $text = 'test [rust]fn main() {'."\n".

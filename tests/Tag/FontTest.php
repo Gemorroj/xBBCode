@@ -15,4 +15,21 @@ class FontTest extends \PHPUnit\Framework\TestCase
         $xbbcode->parse($text);
         self::assertEquals($result, $xbbcode->getHtml());
     }
+
+    public function testTagSize(): void
+    {
+        $text = 'test [font size=5]xBBCode[/font].';
+        $result = 'test <font class="bb" size="5">xBBCode</font>.';
+
+        $xbbcode = new Xbbcode();
+        $xbbcode->parse($text);
+        self::assertEquals($result, $xbbcode->getHtml());
+
+        $text = 'test [font size=99]xBBCode[/font].';
+        $result = 'test <font class="bb">xBBCode</font>.';
+
+        $xbbcode = new Xbbcode();
+        $xbbcode->parse($text);
+        self::assertEquals($result, $xbbcode->getHtml());
+    }
 }
