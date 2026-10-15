@@ -19,6 +19,10 @@ vendor/bin/phpunit
 vendor/bin/php-cs-fixer fix
 ```
 
+## Conventions
+
+- Commit messages follow [Conventional Commits](https://www.conventionalcommits.org/).
+
 ## Code conventions
 
 - Style: Symfony + PHP 8.2 migration rules (see `.php-cs-fixer.dist.php`).
