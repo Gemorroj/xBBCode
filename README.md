@@ -33,7 +33,7 @@ composer require gemorroj/xbbcode --no-security-blocking
 
 
 ### Styling:
-The bundled `src/resources/style.css` is optional. It uses CSS custom properties (`--xbbcode-*`) so a site can override colors without forking the stylesheet. Quotes automatically switch to a dark palette when `prefers-color-scheme: dark`. Links inherit the host page theme; autolinks and syntax-highlighting colors keep the light palette, so override the `--xbbcode-*` variables for dark host themes.
+The bundled `resources/style.css` is optional. It uses CSS custom properties (`--xbbcode-*`) so a site can override colors without forking the stylesheet. Quotes automatically switch to a dark palette when `prefers-color-scheme: dark`. Links inherit the host page theme; autolinks and syntax-highlighting colors keep the light palette, so override the `--xbbcode-*` variables for dark host themes.
 
 
 ### License: 
