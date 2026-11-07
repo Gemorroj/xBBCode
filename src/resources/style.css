@@ -18,6 +18,45 @@
  *                                                                            *
  ******************************************************************************/
 
+:root {
+    --xbbcode-border-color: #b0b0b0;
+    --xbbcode-quote-border-color: #d0d0d0;
+    --xbbcode-quote-background: #f6f6f6;
+    --xbbcode-quote-text-color: #333333;
+    --xbbcode-quote-author-text-color: #333333;
+    --xbbcode-code-border-color: #d0d0d0;
+    --xbbcode-code-background: #f6f6f6;
+    --xbbcode-code-text-color: #404060;
+    --xbbcode-code-footer-border-color: #a9b8c2;
+    --xbbcode-code-footer-text-color: #333333;
+    --xbbcode-inline-code-text-color: #000000;
+    --xbbcode-spec-char-color: #000099;
+    --xbbcode-mnemonic-color: #ff0000;
+    --xbbcode-tag-color: #009900;
+    --xbbcode-tagname-color: #990099;
+    --xbbcode-equal-color: #999900;
+    --xbbcode-syntax-quote-color: #009999;
+    --xbbcode-attribute-name-color: #999900;
+    --xbbcode-attribute-value-color: #009999;
+    --xbbcode-autolink-color: #0000ff;
+}
+
+/*
+ * The parser output is plain HTML, so it can be embedded into any website.
+ * Only the quote gets a dark palette: it has its own background and explicit
+ * text color, so it stays readable even when the host page uses another theme.
+ * Links inherit the host page theme. Autolinks and syntax-highlighting colors
+ * keep the light palette; sites can override the --xbbcode-* variables for dark themes.
+ */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --xbbcode-quote-border-color: #4b5563;
+        --xbbcode-quote-background: #1f2937;
+        --xbbcode-quote-text-color: #e5e7eb;
+        --xbbcode-quote-author-text-color: #e5e7eb;
+    }
+}
+
 .bb {
 
 }
@@ -28,19 +67,21 @@ table.bb {
     border-collapse: collapse;
 }
 td.bb {
-    border: #b0b0b0 1px solid;
+    border: var(--xbbcode-border-color) 1px solid;
 }
 blockquote.bb_quote {
-    border: #d0d0d0 1px solid;
-    background-color: #f6f6f6;
+    border: var(--xbbcode-quote-border-color) 1px solid;
+    background-color: var(--xbbcode-quote-background);
+    color: var(--xbbcode-quote-text-color);
     padding: 5px;
     margin: 1em 0 0 .75em;
 }
 div.bb_quote_author {
-    border: #d0d0d0 1px solid;
+    border: var(--xbbcode-quote-border-color) 1px solid;
     border-width: 1px 2px 2px 1px;
     margin-top: -1.2em;
-    background-color: #f6f6f6;
+    background-color: var(--xbbcode-quote-background);
+    color: var(--xbbcode-quote-author-text-color);
     width: 150px;
     white-space: nowrap;
     font-weight: bold;
@@ -49,23 +90,23 @@ div.bb_quote_author {
 div.bb_code {
     white-space: nowrap;
     overflow-x: auto;
-    border: #d0d0d0 1px dotted;
+    border: var(--xbbcode-code-border-color) 1px dotted;
     -webkit-border-radius: .3125em;
     border-radius: .3125em;
-    background-color: #f6f6f6;
-    color: #404060;
+    background-color: var(--xbbcode-code-background);
+    color: var(--xbbcode-code-text-color);
     padding: 5px;
     margin: .8em 0 0 0;
     font-family: "Monaco", "Courier New",monospace;
 }
 div.bb_code_header {
-    border-bottom: #d0d0d0 1px solid;
+    border-bottom: var(--xbbcode-code-border-color) 1px solid;
     padding-left: 5px;
     margin: -5px -5px 0 -5px;
-    background-color: #f6f6f6;
+    background-color: var(--xbbcode-code-background);
     white-space: nowrap;
     font-weight: bold;
-    color: #404060;
+    color: var(--xbbcode-code-text-color);
     text-align: left;
 }
 div.bb_code_footer {
@@ -73,8 +114,8 @@ div.bb_code_footer {
     padding: 4px;
     border-width: 1px 0 0 0;
     border-style: solid;
-    border-color: #a9b8c2;
-    color: #333333;
+    border-color: var(--xbbcode-code-footer-border-color);
+    color: var(--xbbcode-code-footer-text-color);
     font-weight: bold;
     text-align: center;
 }
@@ -82,19 +123,19 @@ div.bb_code_footer {
 /* Стили подсветки BBCode: */
 
 code.bb_code {
-    color: #000000;
+    color: var(--xbbcode-inline-code-text-color);
     line-height: 1;
     font-size: .81em;
     font-family: "Monaco", "Courier New", monospace;
 }
 span.bb_spec_char {
-    color: #000099;
+    color: var(--xbbcode-spec-char-color);
 }
 span.bb_mnemonic {
-    color: #ff0000;
+    color: var(--xbbcode-mnemonic-color);
 }
 span.bb_tag {
-    color: #009900;
+    color: var(--xbbcode-tag-color);
 }
 span.bb_bracket {
     font-weight: bold;
@@ -103,22 +144,22 @@ span.bb_slash {
     font-weight: normal;
 }
 span.bb_tagname {
-    color: #990099;
+    color: var(--xbbcode-tagname-color);
 }
 span.bb_equal {
-    color: #999900;
+    color: var(--xbbcode-equal-color);
 }
 span.bb_quote {
-    color: #009999;
+    color: var(--xbbcode-syntax-quote-color);
 }
 span.bb_attribute_name {
-    color: #999900;
+    color: var(--xbbcode-attribute-name-color);
 }
 span.bb_attribute_val {
-    color: #009999;
+    color: var(--xbbcode-attribute-value-color);
 }
 span.bb_autolink {
-    color: #0000ff;
+    color: var(--xbbcode-autolink-color);
 }
 caption {
     font-weight: bold;
