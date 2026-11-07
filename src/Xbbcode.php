@@ -47,7 +47,7 @@ use Xbbcode\Tag\Quote;
 use Xbbcode\Tag\Rutube;
 use Xbbcode\Tag\Simple;
 use Xbbcode\Tag\Size;
-use Xbbcode\Tag\Spoiler;
+use Xbbcode\Tag\SpoilerDetails;
 use Xbbcode\Tag\Table;
 use Xbbcode\Tag\TagAbstract;
 use Xbbcode\Tag\Td;
@@ -109,8 +109,8 @@ class Xbbcode
         'google' => Google::class,
         'yandex' => Yandex::class,
         'youtube' => Youtube::class,
-        'spoiler' => Spoiler::class,
-        'hide' => Spoiler::class,
+        'spoiler' => SpoilerDetails::class,
+        'hide' => SpoilerDetails::class,
         'h1' => P::class,
         'h2' => P::class,
         'h3' => P::class,

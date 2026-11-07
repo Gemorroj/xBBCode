@@ -87,6 +87,18 @@ div.bb_quote_author {
     font-weight: bold;
     text-align: center;
 }
+details.bb_spoiler {
+    margin: .5em 0;
+}
+details.bb_spoiler > summary {
+    cursor: pointer;
+}
+details.bb_spoiler[open] > summary .bb_spoiler_show {
+    display: none;
+}
+details.bb_spoiler[open] > summary .bb_spoiler_hide {
+    display: inline;
+}
 div.bb_code {
     white-space: nowrap;
     overflow-x: auto;

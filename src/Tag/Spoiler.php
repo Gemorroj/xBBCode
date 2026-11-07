@@ -27,6 +27,9 @@ use Xbbcode\Attributes;
 /**
  * Class Spoiler
  * Класс для тегов [spoiler] и [hide].
+ *
+ * @deprecated Use {@see SpoilerDetails} for native <details> output. This class
+ *             remains for custom handlers that need the legacy inline-JS markup.
  */
 class Spoiler extends TagAbstract
 {
