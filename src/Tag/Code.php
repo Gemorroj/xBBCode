@@ -51,6 +51,23 @@ class Code extends TagAbstract
         'vb.net' => 'vbnet',
     ];
 
+    /**
+     * Client-side highlighter names for the plain (no GeSHi) mode.
+     *
+     * @var array<string, string>
+     */
+    public array $plainLangSynonym = [
+        'c++' => 'cpp',
+        'c#' => 'csharp',
+        'f++' => 'fsharp',
+        'html4' => 'html',
+        'js' => 'javascript',
+        'oracle' => 'sql',
+        't-sql' => 'sql',
+        'tsql' => 'sql',
+        'vb.net' => 'vbnet',
+    ];
+
     protected \GeSHi $geshi;
 
     public function __construct()
@@ -60,37 +77,57 @@ class Code extends TagAbstract
         $this->geshi->set_header_type(GESHI_HEADER_NONE);
     }
 
-    protected function getAttributes(): Attributes
-    {
-        return new Attributes();
-    }
-
     /**
-     * Язык для подсветки.
+     * Язык в том виде, в котором его указал автор BBCode.
      */
-    protected function setLanguage(): self
+    protected function getRawLanguage(): string
     {
         switch ($this->getTagName()) {
             case 'code':
-                $language = $this->attributes['code'];
+                $language = $this->attributes['code'] ?? '';
                 break;
             case 'pre':
-                $language = $this->attributes['pre'];
+                $language = $this->attributes['pre'] ?? '';
                 break;
             default:
                 $language = $this->getTagName();
                 break;
         }
 
-        if (!$language) {
-            $language = 'text';
-        }
+        return '' !== $language ? $language : 'text';
+    }
 
-        if (isset($this->langSynonym[$language])) {
-            $language = $this->langSynonym[$language];
-        }
+    /**
+     * Язык подсветки с учётом синонимов GeSHi.
+     */
+    protected function getLanguage(): string
+    {
+        $language = $this->getRawLanguage();
 
-        $this->geshi->set_language($language);
+        return $this->langSynonym[$language] ?? $language;
+    }
+
+    /**
+     * Язык для клиентского хайлайтера.
+     */
+    protected function getPlainLanguage(): string
+    {
+        $language = $this->getRawLanguage();
+
+        return $this->plainLangSynonym[$language] ?? $language;
+    }
+
+    protected function getAttributes(): Attributes
+    {
+        return new Attributes();
+    }
+
+    /**
+     * Устанавливает язык в GeSHi.
+     */
+    protected function setLanguage(): self
+    {
+        $this->geshi->set_language($this->getLanguage());
 
         // GeSHi raises "Undefined array key LANG_NAME" when highlighting an unknown
         // language. Fall back to plain text instead of leaving the broken language set.
@@ -196,10 +233,60 @@ class Code extends TagAbstract
     }
 
     /**
+     * Data attributes for client-side highlighters.
+     */
+    protected function getPlainDataAttributes(): string
+    {
+        $attributes = '';
+
+        if (isset($this->attributes['num'])) {
+            $line = '' !== $this->attributes['num'] ? (int) $this->attributes['num'] : 1;
+            $attributes .= ' data-start="'.$line.'"';
+        }
+
+        if (isset($this->attributes['tab'])) {
+            $tab = (int) $this->attributes['tab'];
+
+            if ($tab > 0) {
+                $attributes .= ' data-tab-width="'.$tab.'"';
+            }
+        }
+
+        if (isset($this->attributes['extra'])) {
+            $attributes .= ' data-highlight-lines="'.\htmlspecialchars($this->attributes['extra'], \ENT_QUOTES).'"';
+        }
+
+        if (isset($this->attributes['links'])) {
+            $attributes .= ' data-keyword-links="'.\htmlspecialchars($this->attributes['links'], \ENT_QUOTES).'"';
+        }
+
+        return $attributes;
+    }
+
+    /**
+     * Return HTML optimized for client-side syntax highlighting.
+     */
+    protected function getPlainHtml(): string
+    {
+        $language = $this->getPlainLanguage();
+        $languageClass = \preg_replace('/[^a-z0-9_-]+/', '-', \strtolower($language)) ?: 'text';
+        $title = $this->attributes['title'] ?? \strtoupper($this->getRawLanguage());
+        $header = '<div class="bb_code_header"><span class="bb_code_lang">'.\htmlspecialchars($title, \ENT_NOQUOTES).'</span></div>';
+        $footer = $this->getFooter();
+        $source = \htmlspecialchars($this->getTreeText(), \ENT_QUOTES | \ENT_SUBSTITUTE, 'UTF-8');
+
+        return '<div class="bb_code">'.$header.'<pre'.$this->getPlainDataAttributes().'><code class="language-'.$languageClass.'">'.$source.'</code></pre>'.$footer.'</div>';
+    }
+
+    /**
      * Return html code.
      */
     public function __toString(): string
     {
+        if (!$this->getCodeHighlighting()) {
+            return $this->getPlainHtml();
+        }
+
         $this->setLanguage();
         $this->setSource();
         $this->setNum();

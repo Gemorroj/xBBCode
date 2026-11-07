@@ -415,6 +415,7 @@ class Xbbcode
      * Флажок, включающий/выключающий ссылки на документацию в подсветке кода.
      */
     protected bool $keywordLinks = false;
+    protected bool $codeHighlighting = true;
 
     /**
      * Флажок, включающий/выключающий подстановку смайлов.
@@ -1337,6 +1338,24 @@ class Xbbcode
         return $this->keywordLinks;
     }
 
+    /**
+     * Enables or disables server-side GeSHi highlighting for code tags.
+     *
+     * When disabled, code tags produce semantic `<pre><code class="language-*">`
+     * markup so a client-side highlighter can process it.
+     */
+    public function setCodeHighlighting(bool $codeHighlighting = true): self
+    {
+        $this->codeHighlighting = $codeHighlighting;
+
+        return $this;
+    }
+
+    public function getCodeHighlighting(): bool
+    {
+        return $this->codeHighlighting;
+    }
+
     public function setSmile(string $key, string $name, string $title = ''): self
     {
         $this->setMnemonic($key, '<img src="'.\htmlspecialchars($this->webPath.'/'.$name).'" alt="'.\htmlspecialchars($title).'" />');
@@ -1480,7 +1499,10 @@ class Xbbcode
     {
         $this->includeTag($tagName);
 
-        return $this->tagObjects[$this->tags[$tagName]];
+        $tag = $this->tagObjects[$this->tags[$tagName]];
+        $tag->setCodeHighlighting($this->codeHighlighting);
+
+        return $tag;
     }
 
     /**

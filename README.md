@@ -32,8 +32,10 @@ composer require gemorroj/xbbcode --no-security-blocking
 ```
 
 
-### Styling:
-The bundled `resources/style.css` is optional. It uses CSS custom properties (`--xbbcode-*`) so a site can override colors without forking the stylesheet. Quotes automatically switch to a dark palette when `prefers-color-scheme: dark`. Links inherit the host page theme; autolinks and syntax-highlighting colors keep the light palette, so override the `--xbbcode-*` variables for dark host themes.
+### Notes:
+- Optional styling: `resources/style.css`; override colors with `--xbbcode-*` variables.
+- Code tags use GeSHi by default; call `$xbbcode->setCodeHighlighting(false)` to emit `<pre><code class="language-*">` for a client-side highlighter (`num` → `data-start`, `tab` → `data-tab-width`, `extra` → `data-highlight-lines`, `links` → `data-keyword-links`).
+- `[spoiler]`/`[hide]` render native `<details>`; the legacy `Spoiler` handler is deprecated.
 
 
 ### License: 
