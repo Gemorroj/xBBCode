@@ -71,7 +71,10 @@ class CodePlainTest extends \PHPUnit\Framework\TestCase
         $xbbcode = new Xbbcode();
         $xbbcode->parse('[php]echo 1;[/php]');
 
-        self::assertStringContainsString('<span style=', $xbbcode->getHtml());
+        $html = $xbbcode->getHtml();
+
+        self::assertStringContainsString('<span class="kw1">echo</span>', $html);
+        self::assertStringNotContainsString('style=', $html);
     }
 
     public function testCodeHighlightingCanBeToggled(): void

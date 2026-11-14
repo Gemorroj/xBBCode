@@ -75,6 +75,8 @@ class Code extends TagAbstract
         parent::__construct();
         $this->geshi = new \GeSHi();
         $this->geshi->set_header_type(GESHI_HEADER_NONE);
+        // Colors come from resources/style.css, so the markup stays themeable.
+        $this->geshi->enable_classes(true);
     }
 
     /**

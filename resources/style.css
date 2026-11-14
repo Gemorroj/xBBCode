@@ -3,12 +3,12 @@
  *   Copyright (C) 2006-2007  Dmitriy Skorobogatov  dima@pc.uz                *
  *                                                                            *
  *   This program is free software; you can redistribute it and/or modify     *
- *   it under the terms of the GNU General Public License as published by     *
+ *   it under the terms of the GNU General Public License as published by      *
  *   the Free Software Foundation; either version 2 of the License, or        *
  *   (at your option) any later version.                                      *
  *                                                                            *
  *   This program is distributed in the hope that it will be useful,          *
- *   but WITHOUT ANY WARRANTY; without even the implied warranty of           *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of            *
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            *
  *   GNU General Public License for more details.                             *
  *                                                                            *
@@ -18,66 +18,71 @@
  *                                                                            *
  ******************************************************************************/
 
-:root {
-    --xbbcode-border-color: #b0b0b0;
-    --xbbcode-quote-border-color: #d0d0d0;
-    --xbbcode-quote-background: #f6f6f6;
-    --xbbcode-quote-text-color: #333333;
-    --xbbcode-quote-author-text-color: #333333;
-    --xbbcode-code-border-color: #d0d0d0;
-    --xbbcode-code-background: #f6f6f6;
-    --xbbcode-code-text-color: #404060;
-    --xbbcode-code-footer-border-color: #a9b8c2;
-    --xbbcode-code-footer-text-color: #333333;
-    --xbbcode-inline-code-text-color: #000000;
-    --xbbcode-spec-char-color: #000099;
-    --xbbcode-mnemonic-color: #ff0000;
-    --xbbcode-tag-color: #009900;
-    --xbbcode-tagname-color: #990099;
-    --xbbcode-equal-color: #999900;
-    --xbbcode-syntax-quote-color: #009999;
-    --xbbcode-attribute-name-color: #999900;
-    --xbbcode-attribute-value-color: #009999;
-    --xbbcode-autolink-color: #0000ff;
-}
-
 /*
- * The parser output is plain HTML, so it can be embedded into any website.
- * Only the quote gets a dark palette: it has its own background and explicit
- * text color, so it stays readable even when the host page uses another theme.
- * Links inherit the host page theme. Autolinks and syntax-highlighting colors
- * keep the light palette; sites can override the --xbbcode-* variables for dark themes.
+ * Palette follows the page color-scheme via light-dark() (Chrome 123+,
+ * Firefox 120+, Safari 17.5+); declare `color-scheme: dark` for the dark
+ * one. Any --xbbcode-* variable can be overridden.
  */
-@media (prefers-color-scheme: dark) {
-    :root {
-        --xbbcode-quote-border-color: #4b5563;
-        --xbbcode-quote-background: #1f2937;
-        --xbbcode-quote-text-color: #e5e7eb;
-        --xbbcode-quote-author-text-color: #e5e7eb;
-    }
+:root {
+    --xbbcode-border-color: light-dark(#b0b0b0, #4b5563);
+
+    --xbbcode-quote-border-color: light-dark(#d0d0d0, #4b5563);
+    --xbbcode-quote-background: light-dark(#f6f6f6, #1f2937);
+    --xbbcode-quote-text-color: light-dark(#333333, #e5e7eb);
+    --xbbcode-quote-author-text-color: light-dark(#333333, #e5e7eb);
+
+    --xbbcode-code-border-color: light-dark(#d0d0d0, #3d444d);
+    --xbbcode-code-background: light-dark(#f6f6f6, #151b23);
+    --xbbcode-code-text-color: light-dark(#404060, #e5e7eb);
+    --xbbcode-code-footer-border-color: light-dark(#a9b8c2, #3d444d);
+    --xbbcode-code-footer-text-color: light-dark(#333333, #9198a1);
+    --xbbcode-code-highlight-background: light-dark(#fff8c5, #3b2300);
+    --xbbcode-inline-code-text-color: light-dark(#000000, #e5e7eb);
+
+    /* GeSHi token classes. */
+    --xbbcode-code-keyword-color: light-dark(#cf222e, #ff7b72);
+    --xbbcode-code-keyword-2-color: light-dark(#953800, #ffa657);
+    --xbbcode-code-keyword-3-color: light-dark(#8250df, #d2a8ff);
+    --xbbcode-code-keyword-4-color: light-dark(#116329, #7ee787);
+    --xbbcode-code-string-color: light-dark(#0a3069, #a5d6ff);
+    --xbbcode-code-escape-color: light-dark(#1b7c83, #56d4dd);
+    --xbbcode-code-comment-color: light-dark(#57606a, #9198a1);
+    --xbbcode-code-number-color: light-dark(#0550ae, #79c0ff);
+    --xbbcode-code-symbol-color: light-dark(#57606a, #c9d1d9);
+
+    --xbbcode-spec-char-color: light-dark(#000099, #79c0ff);
+    --xbbcode-mnemonic-color: light-dark(#ff0000, #ff7b72);
+    --xbbcode-tag-color: light-dark(#009900, #7ee787);
+    --xbbcode-tagname-color: light-dark(#990099, #d2a8ff);
+    --xbbcode-equal-color: light-dark(#999900, #d4a72c);
+    --xbbcode-syntax-quote-color: light-dark(#009999, #56d4dd);
+    --xbbcode-attribute-name-color: light-dark(#999900, #d4a72c);
+    --xbbcode-attribute-value-color: light-dark(#009999, #56d4dd);
+    --xbbcode-autolink-color: light-dark(#0000ff, #4493f8);
 }
 
-.bb {
-
-}
 iframe.bb {
     max-width: 100%;
 }
+
 table.bb {
     border-collapse: collapse;
 }
+
 td.bb {
-    border: var(--xbbcode-border-color) 1px solid;
+    border: 1px solid var(--xbbcode-border-color);
 }
+
 blockquote.bb_quote {
-    border: var(--xbbcode-quote-border-color) 1px solid;
+    border: 1px solid var(--xbbcode-quote-border-color);
     background-color: var(--xbbcode-quote-background);
     color: var(--xbbcode-quote-text-color);
     padding: 5px;
     margin: 1em 0 0 .75em;
 }
+
 div.bb_quote_author {
-    border: var(--xbbcode-quote-border-color) 1px solid;
+    border: 1px solid var(--xbbcode-quote-border-color);
     border-width: 1px 2px 2px 1px;
     margin-top: -1.2em;
     background-color: var(--xbbcode-quote-background);
@@ -87,36 +92,60 @@ div.bb_quote_author {
     font-weight: bold;
     text-align: center;
 }
+
 details.bb_spoiler {
     margin: .5em 0;
 }
+
 details.bb_spoiler > summary {
     cursor: pointer;
 }
+
 details.bb_spoiler[open] > summary .bb_spoiler_show {
     display: none;
 }
+
 details.bb_spoiler[open] > summary .bb_spoiler_hide {
     display: inline;
 }
+
 div.bb_code {
     white-space: nowrap;
     overflow-x: auto;
-    border: var(--xbbcode-code-border-color) 1px dotted;
-    -webkit-border-radius: .3125em;
+    border: 1px dotted var(--xbbcode-code-border-color);
     border-radius: .3125em;
     background-color: var(--xbbcode-code-background);
     color: var(--xbbcode-code-text-color);
     padding: 5px;
-    margin: .8em 0 0 0;
-    font-family: "Monaco", "Courier New",monospace;
+    margin: .8em 0 0;
+    font-family: Monaco, "Courier New", monospace;
 }
+
 div.bb_code pre {
     margin: 0;
     padding: 0;
 }
+
+div.bb_code ol {
+    margin: 0;
+    padding-left: 2.5em;
+}
+
+div.bb_code li {
+    list-style: decimal;
+}
+
+div.bb_code code.bb_code {
+    color: var(--xbbcode-code-text-color);
+}
+
+/* Keyword links. */
+div.bb_code a {
+    color: inherit;
+}
+
 div.bb_code_header {
-    border-bottom: var(--xbbcode-code-border-color) 1px solid;
+    border-bottom: 1px solid var(--xbbcode-code-border-color);
     padding-left: 5px;
     margin: -5px -5px 0 -5px;
     background-color: var(--xbbcode-code-background);
@@ -125,6 +154,7 @@ div.bb_code_header {
     color: var(--xbbcode-code-text-color);
     text-align: left;
 }
+
 div.bb_code_footer {
     margin: 5px -5px -5px -5px;
     padding: 4px;
@@ -136,47 +166,115 @@ div.bb_code_footer {
     text-align: center;
 }
 
-/* Стили подсветки BBCode: */
+/* GeSHi tokens, see https://github.com/GeSHi/geshi-1.0 for the class names. */
+
+div.bb_code [class^="kw"] {
+    color: var(--xbbcode-code-keyword-color);
+}
+
+div.bb_code .kw2 {
+    color: var(--xbbcode-code-keyword-2-color);
+}
+
+div.bb_code .kw3 {
+    color: var(--xbbcode-code-keyword-3-color);
+}
+
+div.bb_code .kw4 {
+    color: var(--xbbcode-code-keyword-4-color);
+}
+
+div.bb_code [class^="me"] {
+    color: var(--xbbcode-code-keyword-3-color);
+}
+
+div.bb_code [class^="st"],
+div.bb_code [class^="re"],
+div.bb_code [class^="sc"] {
+    color: var(--xbbcode-code-string-color);
+}
+
+div.bb_code [class^="es"] {
+    color: var(--xbbcode-code-escape-color);
+}
+
+div.bb_code [class^="co"] {
+    color: var(--xbbcode-code-comment-color);
+    font-style: italic;
+}
+
+div.bb_code [class^="nu"] {
+    color: var(--xbbcode-code-number-color);
+}
+
+div.bb_code [class^="sy"],
+div.bb_code .br0 {
+    color: var(--xbbcode-code-symbol-color);
+}
+
+div.bb_code .imp {
+    font-weight: bold;
+}
+
+div.bb_code .ln-xtra {
+    background-color: var(--xbbcode-code-highlight-background);
+}
+
+/* Inline code */
 
 code.bb_code {
     color: var(--xbbcode-inline-code-text-color);
     line-height: 1;
     font-size: .81em;
-    font-family: "Monaco", "Courier New", monospace;
+    font-family: Monaco, "Courier New", monospace;
 }
+
+/* BBCode source highlighting */
+
 span.bb_spec_char {
     color: var(--xbbcode-spec-char-color);
 }
+
 span.bb_mnemonic {
     color: var(--xbbcode-mnemonic-color);
 }
+
 span.bb_tag {
     color: var(--xbbcode-tag-color);
 }
+
 span.bb_bracket {
     font-weight: bold;
 }
+
 span.bb_slash {
     font-weight: normal;
 }
+
 span.bb_tagname {
     color: var(--xbbcode-tagname-color);
 }
+
 span.bb_equal {
     color: var(--xbbcode-equal-color);
 }
+
 span.bb_quote {
     color: var(--xbbcode-syntax-quote-color);
 }
+
 span.bb_attribute_name {
     color: var(--xbbcode-attribute-name-color);
 }
+
 span.bb_attribute_val {
     color: var(--xbbcode-attribute-value-color);
 }
+
 span.bb_autolink {
     color: var(--xbbcode-autolink-color);
 }
+
 caption {
     font-weight: bold;
 }

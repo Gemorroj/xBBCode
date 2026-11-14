@@ -31,5 +31,5 @@ vendor/bin/php-cs-fixer fix
 
 ## Misc
 
-- Installation: `composer require gemorroj/xbbcode --no-security-blocking` (Geshi has a known vulnerability, not relevant for xBBCode).
+- Installation: `composer require gemorroj/xbbcode --no-blocking` (Geshi has a known vulnerability, not relevant for xBBCode).
 - Do not commit changes unless explicitly asked.
