@@ -34,13 +34,80 @@ class CodePlainTest extends \PHPUnit\Framework\TestCase
 
     public function testPlainLanguageNamesDoNotUseGeshiSuffixes(): void
     {
-        foreach (['html' => 'html', 'oracle' => 'sql', 'tsql' => 'sql', 'ocaml' => 'ocaml', 'algol' => 'algol'] as $input => $expected) {
+        $cases = [
+            'algol' => 'algol',
+            'c#' => 'csharp',
+            'c++' => 'cpp',
+            'c_loadrunner' => 'c',
+            'c_mac' => 'c',
+            'c_winapi' => 'c',
+            'cpp-qt' => 'cpp',
+            'cpp-winapi' => 'cpp',
+            'ecmascript' => 'javascript',
+            'f#' => 'fsharp',
+            'f++' => 'fsharp',
+            'html' => 'html',
+            'html4strict' => 'html',
+            'html5' => 'html',
+            'java5' => 'java',
+            'jquery' => 'javascript',
+            'js' => 'javascript',
+            'mxml' => 'xml',
+            'mysql' => 'sql',
+            'objc' => 'objectivec',
+            'ocaml' => 'ocaml',
+            'oracle' => 'sql',
+            'oracle8' => 'sql',
+            'oracle11' => 'sql',
+            'pgsql' => 'sql',
+            'php-brief' => 'php',
+            'plsql' => 'sql',
+            'postgresql' => 'sql',
+            'properties' => 'ini',
+            'rails' => 'ruby',
+            'rsplus' => 'r',
+            'sass' => 'scss',
+            't-sql' => 'sql',
+            'tsql' => 'sql',
+            'vb' => 'vbnet',
+            'vb.net' => 'vbnet',
+        ];
+
+        foreach ($cases as $input => $expected) {
             $xbbcode = new Xbbcode();
             $xbbcode->setCodeHighlighting(false);
             $xbbcode->parse('[code='.$input.']x[/code]');
 
-            self::assertStringContainsString('<code class="language-'.$expected.'">', $xbbcode->getHtml());
+            self::assertStringContainsString('<code class="language-'.$expected.'">', $xbbcode->getHtml(), $input);
         }
+    }
+
+    public function testLanguageLookupIsCaseInsensitive(): void
+    {
+        $cases = [
+            'HTML5' => 'html',
+            'JS' => 'javascript',
+            'Oracle8' => 'sql',
+            'PHP' => 'php',
+            'TSQL' => 'sql',
+        ];
+
+        foreach ($cases as $input => $expected) {
+            $xbbcode = new Xbbcode();
+            $xbbcode->setCodeHighlighting(false);
+            $xbbcode->parse('[code='.$input.']x[/code]');
+
+            self::assertStringContainsString('<code class="language-'.$expected.'">', $xbbcode->getHtml(), $input);
+        }
+    }
+
+    public function testOriginalLanguageCaseIsKeptForTitle(): void
+    {
+        $xbbcode = new Xbbcode();
+        $xbbcode->setCodeHighlighting(false);
+        $xbbcode->parse('[code=HTML5]x[/code]');
+
+        self::assertStringContainsString('<span class="bb_code_lang">HTML5</span>', $xbbcode->getHtml());
     }
 
     public function testPlainModeExposesDataAttributes(): void

@@ -41,6 +41,7 @@ class Code extends TagAbstract
         'algol' => 'algol86',
         'c++' => 'cpp',
         'c#' => 'csharp',
+        'f#' => 'fsharp',
         'f++' => 'fsharp',
         'html' => 'html4strict',
         'html4' => 'html4strict',
@@ -59,12 +60,37 @@ class Code extends TagAbstract
     public array $plainLangSynonym = [
         'c++' => 'cpp',
         'c#' => 'csharp',
+        'c_loadrunner' => 'c',
+        'c_mac' => 'c',
+        'c_winapi' => 'c',
+        'cpp-qt' => 'cpp',
+        'cpp-winapi' => 'cpp',
+        'ecmascript' => 'javascript',
+        'f#' => 'fsharp',
         'f++' => 'fsharp',
         'html4' => 'html',
+        'html4strict' => 'html',
+        'html5' => 'html',
+        'java5' => 'java',
         'js' => 'javascript',
+        'jquery' => 'javascript',
+        'mxml' => 'xml',
+        'mysql' => 'sql',
+        'objc' => 'objectivec',
         'oracle' => 'sql',
+        'oracle8' => 'sql',
+        'oracle11' => 'sql',
+        'pgsql' => 'sql',
+        'php-brief' => 'php',
+        'plsql' => 'sql',
+        'postgresql' => 'sql',
+        'properties' => 'ini',
+        'rails' => 'ruby',
+        'rsplus' => 'r',
+        'sass' => 'scss',
         't-sql' => 'sql',
         'tsql' => 'sql',
+        'vb' => 'vbnet',
         'vb.net' => 'vbnet',
     ];
 
@@ -80,7 +106,7 @@ class Code extends TagAbstract
     }
 
     /**
-     * Язык в том виде, в котором его указал автор BBCode.
+     * Язык в том виде, в котором его указал автор BBCode (в нижнем регистре).
      */
     protected function getRawLanguage(): string
     {
@@ -96,7 +122,9 @@ class Code extends TagAbstract
                 break;
         }
 
-        return '' !== $language ? $language : 'text';
+        // Синонимы и имена языков GeSHi/highlight.js — в нижнем регистре,
+        // поэтому [code=HTML5] и [code=html5] должны обрабатываться одинаково.
+        return '' !== $language ? \strtolower($language) : 'text';
     }
 
     /**
